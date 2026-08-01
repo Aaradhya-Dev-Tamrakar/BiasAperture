@@ -155,7 +155,7 @@
 \newtheorem{note}[theorem]{Note}
 
 % GLOSSARIES
-\RequirePackage[acronym,symbols,nomain,nonumberlist,nopostdot,translate=false,nogroupskip]{glossaries}
+\RequirePackage[acronym,symbols,nomain,nonumberlist,nopostdot,translate=false,nogroupskip,toc]{glossaries}
 \makeglossaries
 
 % Custom glossary style with uniform spacing
