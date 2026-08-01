@@ -17,7 +17,7 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 ├── report/                     # Report source (build this)
 │   ├── main.tex                # Entry point
 │   ├── vars.tex                # Title, authors, supervisor metadata
-│   ├── fuse_aif.cls            # Document class (renamed from AaradhyaTisha_fuse_aif.cls)
+│   ├── at_fuse_aif.cls         # Document class (renamed from AaradhyaTisha_fuse_aif.cls)
 │   ├── references.bib
 │   ├── main.pdf                # Compiled proposal (tracked; build artifacts are not)
 │   └── src/
@@ -33,7 +33,7 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 └── README.md
 ```
 
-**Changes from previous layout:** `LaTex/` → `report/`; `Agent dependencies/` → `vendor/` (no spaces); `AaradhyaTisha_fuse_aif.cls` → `fuse_aif.cls`; the stale `BiasAperture.zip` snapshot and tracked build artifacts (`.aux`, `.bbl`, `.toc`, etc.) have been removed from version control — they were already covered by `.gitignore` but had been committed prior to it being added.
+**Changes from previous layout:** `LaTex/` → `report/`; `Agent dependencies/` → `vendor/` (no spaces); `AaradhyaTisha_fuse_aif.cls` → `at_fuse_aif.cls`; the stale `BiasAperture.zip` snapshot and tracked build artifacts (`.aux`, `.bbl`, `.toc`, etc.) have been removed from version control — they were already covered by `.gitignore` but had been committed prior to it being added.
 
 ## Building the Report
 
