@@ -57,7 +57,7 @@
 % ============================================================
 % TYPOGRAPHY
 % ============================================================
-\RequirePackage[protrusion=false,expansion=false]{microtype} % Micro-typography; protrusion/expansion disabled (compute cost, no meaningful visual gain at 12pt)
+\RequirePackage[]{microtype} % Micro-typography (protrusion disabled to avoid LOA issues)
 \RequirePackage[none]{hyphenat} % Disable hyphenation
 
 \RequirePackage{xspace}
@@ -96,7 +96,18 @@
 \RequirePackage{tabularx}
 \RequirePackage{multirow}
 \RequirePackage{listings}
+\RequirePackage{siunitx}
 \RequirePackage{float}
+\RequirePackage{pdfpages}       % For including PDF pages
+\RequirePackage{lscape}
+\RequirePackage{adjustbox}
+\RequirePackage{rotating}       % For rotating tables, figures
+\RequirePackage{lipsum}         % Dummy text generation
+\RequirePackage{csvsimple}
+\RequirePackage{datetime2}      % For date management
+\RequirePackage{textcase}       % For managing text-cases
+\RequirePackage{multicol}       % For multi-column use
+\RequirePackage[subpreambles=true]{standalone}     % Standalone figures use their own preambles
 
 % LISTS
 \RequirePackage{enumitem}

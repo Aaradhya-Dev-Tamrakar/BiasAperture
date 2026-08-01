@@ -31,28 +31,28 @@
 \contentsline {section}{\numberline {4.1}Design Principles}{10}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Architectural Modules}{10}{section.4.2}%
 \contentsline {subsection}{\numberline {4.2.1}Data Ingestion and Preprocessing Module}{10}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Model Interface Module}{11}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Fairness Metrics Computation Engine}{11}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.2}Model Interface Module}{12}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Fairness Metrics Computation Engine}{12}{subsection.4.2.3}%
 \contentsline {subsection}{\numberline {4.2.4}Explainability Layer}{12}{subsection.4.2.4}%
 \contentsline {subsection}{\numberline {4.2.5}Report Generation Module}{12}{subsection.4.2.5}%
-\contentsline {subsection}{\numberline {4.2.6}Orchestration and Configuration Layer}{12}{subsection.4.2.6}%
-\contentsline {section}{\numberline {4.3}End-to-End Workflow}{12}{section.4.3}%
+\contentsline {subsection}{\numberline {4.2.6}Orchestration and Configuration Layer}{13}{subsection.4.2.6}%
+\contentsline {section}{\numberline {4.3}End-to-End Workflow}{13}{section.4.3}%
 \contentsline {section}{\numberline {4.4}Design Patterns}{13}{section.4.4}%
 \contentsline {section}{\numberline {4.5}Regulatory Traceability Mapping}{13}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Work Breakdown Structure}{14}{section.4.6}%
-\contentsline {section}{\numberline {4.7}Project Plan and Schedule}{14}{section.4.7}%
-\contentsline {section}{\numberline {4.8}Descoping Strategy}{16}{section.4.8}%
-\contentsline {section}{\numberline {4.9}Verification and Validation Strategy}{17}{section.4.9}%
-\contentsline {chapter}{\numberline {5}Conclusion}{18}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Summary}{18}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Future Work}{18}{section.5.2}%
+\contentsline {section}{\numberline {4.6}Work Breakdown Structure}{15}{section.4.6}%
+\contentsline {section}{\numberline {4.7}Project Plan and Schedule}{15}{section.4.7}%
+\contentsline {section}{\numberline {4.8}Descoping Strategy}{17}{section.4.8}%
+\contentsline {section}{\numberline {4.9}Verification and Validation Strategy}{18}{section.4.9}%
+\contentsline {chapter}{\numberline {5}Conclusion}{19}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Summary}{19}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Future Work}{19}{section.5.2}%
 \def \@chapapp {\appendixname }
-\contentsline {chapter}{APPENDICES}{20}{section.5.2}%
-\contentsline {chapter}{\numberline {A}Project Budget}{20}{chapter.A}%
-\contentsline {section}{\numberline {A.1}Cloud Computing and Development Services}{20}{section.A.1}%
-\contentsline {section}{\numberline {A.2}Documentation and Miscellaneous}{20}{section.A.2}%
-\contentsline {chapter}{\numberline {B}Project Timeline}{21}{chapter.B}%
-\contentsline {chapter}{\numberline {C}Locked Internal Schema}{22}{chapter.C}%
-\contentsline {chapter}{\numberline {D}Risk Register}{23}{chapter.D}%
-\contentsline {chapter}{\nonumberline REFERENCES}{25}{chapter*.18}%
+\contentsline {chapter}{APPENDICES}{21}{section.5.2}%
+\contentsline {chapter}{\numberline {A}Project Budget}{21}{chapter.A}%
+\contentsline {section}{\numberline {A.1}Cloud Computing and Development Services}{21}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Documentation and Miscellaneous}{21}{section.A.2}%
+\contentsline {chapter}{\numberline {B}Project Timeline}{22}{chapter.B}%
+\contentsline {chapter}{\numberline {C}Locked Internal Schema}{23}{chapter.C}%
+\contentsline {chapter}{\numberline {D}Risk Register}{24}{chapter.D}%
+\contentsline {chapter}{\nonumberline REFERENCES}{26}{chapter*.18}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
