@@ -10,7 +10,7 @@
 % krishna@tcioe.edu.np
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{AaradhyaTisha_fuse_aif}[2025/12/15 Fusemachines AI Fellowship report Class]
+\ProvidesClass{at_fuse_aif}[2025/12/15 Fusemachines AI Fellowship report Class]
 
 % CLASS OPTIONS
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{scrreprt}}
