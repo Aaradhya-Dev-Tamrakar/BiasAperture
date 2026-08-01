@@ -1,6 +1,6 @@
 # BiasAperture
 
-*A Diagnostic and Evaluative Framework for Auditing Demographic Bias in Facial Analysis Systems*
+* A Diagnostic and Evaluative Framework for Auditing Demographic Bias in Facial Analysis Systems *
 
 A fairness and bias audit system proposal report submitted for the Fusemachines AI Fellowship Program, Kathmandu, Nepal.
 
@@ -13,8 +13,7 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 
 ## Repository Structure
 
-```
-BiasAperture/
+```BiasAperture/
 ├── report/                     # Report source (build this)
 │   ├── main.tex                # Entry point
 │   ├── vars.tex                # Title, authors, supervisor metadata
@@ -59,8 +58,8 @@ Build artifacts (`.aux`, `.bbl`, `.toc`, `.synctex.gz`, etc.) are git-ignored; o
 
 Recommended extensions for editing/compiling `report/`:
 
-- **[LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop)** (James Yu) — compile, preview, autocomplete, SyncTeX
-- **[LaTeX Utilities](https://marketplace.visualstudio.com/items?itemName=tecosaur.latex-utilities)** (tecosaur) — glossary/word-count add-ons on top of Workshop
+* **[LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop)** (James Yu) — compile, preview, autocomplete, SyncTeX
+* **[LaTeX Utilities](https://marketplace.visualstudio.com/items?itemName=tecosaur.latex-utilities)** (tecosaur) — glossary/word-count add-ons on top of Workshop
 
 Skip generic "LaTeX" language-support extensions (e.g. Mathematic Inc's) — redundant with Workshop and can conflict on snippets/keybindings.
 
