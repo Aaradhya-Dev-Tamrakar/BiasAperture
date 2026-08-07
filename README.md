@@ -25,15 +25,29 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 │       ├── chapters/           # Intro, literature review, requirements, methodology, conclusion
 │       ├── backmatter/         # Appendices: budget, timeline, schema, risk register
 │       └── images/
+├── docs/                       # TA/reviewer-facing meta-documentation (not compiled into main.pdf)
+│   ├── literature-review-matrix.md   # Paper matrix: framework, RQ, dataset, method, findings
+│   └── CHANGELOG.md            # Auto-updated by sync.ps1 on each sync
 ├── vendor/                     # Offline copies of newtx, IEEEtran, kastrup (renamed from
 │                                # "Agent dependencies") for environments without live CTAN/network
 │                                # access. Not read by any .tex file — extract and install into
 │                                # your local TeX tree only if pdflatex reports these missing.
+├── sync.ps1                    # Local git workflow: stage, conventional-commit, pull --rebase, push
 ├── LICENSE                     # MIT
 └── README.md
 ```
 
-**Changes from previous layout:** `LaTex/` → `report/`; `Agent dependencies/` → `vendor/` (no spaces); `AaradhyaTisha_fuse_aif.cls` → `at_fuse_aif.cls`; the stale `BiasAperture.zip` snapshot and tracked build artifacts (`.aux`, `.bbl`, `.toc`, etc.) have been removed from version control — they were already covered by `.gitignore` but had been committed prior to it being added.
+**Changes from previous layout:** `LaTex/` → `report/`; `Agent dependencies/` → `vendor/` (no spaces); `AaradhyaTisha_fuse_aif.cls` → `at_fuse_aif.cls`; the stale `BiasAperture.zip` snapshot and tracked build artifacts (`.aux`, `.bbl`, `.toc`, etc.) have been removed from version control — they were already covered by `.gitignore` but had been committed prior to it being added. `docs/` and `sync.ps1` added for TA-facing reference material and local sync convenience, respectively.
+
+## Local Git Workflow & Auto-Sync (`sync.ps1`)
+
+```powershell
+.\sync.ps1                                  # stage all, conventional-commit, pull --rebase, push
+.\sync.ps1 -m "feat(scope): detailed summary"  # same, with an explicit commit message
+.\sync.ps1 -PullOnly                        # git pull --autostash only, no commit/push
+```
+
+Every run (except `-PullOnly`) appends a timestamp entry to `docs/CHANGELOG.md` before committing.
 
 ## Building the Report
 
