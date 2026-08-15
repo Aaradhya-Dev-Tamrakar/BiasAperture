@@ -1,0 +1,32 @@
+# BiasAperture — pinned dependencies (NFR-006: Reproducibility).
+# "Third-party dependency versions ... shall be pinned in a lock-file to
+# prevent silent behavioural drift between runs."
+#
+# Python: 3.10+ (requirements.tex System Requirements). Verified against
+# 3.12 in this environment.
+
+# --- WP1: schema + model interface (in use now) ---
+pandas==3.0.2
+pytest==9.1.1
+
+# --- WP2 (Stream A): image preprocessing (requirements.tex Software
+# Requirements) — pin when Stream A's ingestion code lands, not before,
+# so this file never claims a version was tested that wasn't. ---
+# opencv-python==<pin-on-first-use>
+# numpy==<pin-on-first-use>
+
+# --- WP2/WP4: model interface + torch adapter, once InProcessInterface's
+# PyTorch branch is implemented (currently NotImplementedError, WP2) ---
+# torch==<pin-on-first-use>
+
+# --- WP4: fairness computation backends (requirements.tex FR-003) ---
+# aif360==<pin-on-first-use>
+# fairlearn==<pin-on-first-use>
+# scikit-learn==<pin-on-first-use>
+# scipy==<pin-on-first-use>
+
+# --- WP4: explainability (FR-005) ---
+# shap==<pin-on-first-use>
+
+# --- WP3 (Stream B): report templating (FR-006) ---
+# jinja2==<pin-on-first-use>

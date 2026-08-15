@@ -32,6 +32,8 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 │                                # "Agent dependencies") for environments without live CTAN/network
 │                                # access. Not read by any .tex file — extract and install into
 │                                # your local TeX tree only if pdflatex reports these missing.
+├── src/                        # Implementation (WP1+): bias_aperture/ package (schema, model
+│                                # interface), tests/, requirements.txt (NFR-006 pinned deps)
 ├── sync.ps1                    # Local git workflow: stage, conventional-commit, pull --rebase, push
 ├── LICENSE                     # MIT
 └── README.md
