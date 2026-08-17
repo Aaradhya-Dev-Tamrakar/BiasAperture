@@ -1,36 +1,99 @@
 \chapter{Literature Review}
 \label{chap:litreview}
 
-\Cref{chap:intro} established that a mature body of fairness research has not yet converged into a reusable auditing platform. This chapter surveys that body of research in the specific areas that shape BiasAperture's design: the formal definitions behind its Core~Four metrics, the critiques that justify pairing every disparity with a significance test, the finding that motivates its explainability layer, the conventions that shape its report structure, the benchmark datasets against which it is validated, and the regulatory frameworks its output is designed to evidence.
+\Cref{chap:intro} established that a mature body of fairness research has not yet converged into a reusable auditing platform. To discuss the works that shape BiasAperture's design, this chapter reviews each contributing paper in turn, what it studied, what we learned from it, and how our project adopts, extends, or departs from it, covering the formal definitions behind the Core~Four metrics, the critiques that justify pairing every disparity with a significance test, the finding that motivates the explainability layer, the conventions that shape the report structure, the benchmark datasets against which the platform is validated, and the regulatory-technical bridge its output is designed to evidence. A summary table at the end of the chapter consolidates these contributions and the concepts BiasAperture adopts from each.
 
-\section{Foundational Bias Discovery}
+Buolamwini and Gebru's Gender Shades study audited commercial gender-classification services and found that they performed markedly worse on darker-skinned female subjects than on lighter-skinned male subjects, with intersectional error rates as high as 34.7\% for the worst-performing subgroup against as low as 0.8\% for the best-performing one \cite{buolamwini2018gendershades}. What we take from this is both the empirical case for facial-analysis auditing in the first place and the methodological template it uses, stratifying error rates by demographic subgroup and by demographic intersection rather than reporting a single aggregate accuracy figure. Where Gender Shades is a single, manual, point-in-time external audit of three commercial services, BiasAperture is designed to be the reusable software artefact that a Gender-Shades-style analysis was never built as: an auditor can point it at an arbitrary facial-analysis model and it repeats the same subgroup and intersectional comparison automatically, with significance testing Gender Shades' original methodology did not itself formalise.
 
-The empirical case for facial-analysis auditing rests on Buolamwini and Gebru's Gender Shades study, which showed that commercial gender-classification services performed markedly worse on darker-skinned female subjects than on lighter-skinned male subjects \cite{buolamwini2018gendershades}, discussed already in \cref{chap:intro}. Dehdashtian et al.'s subsequent survey situates that single finding within a wider taxonomy, cataloguing where bias enters the computer-vision pipeline, data collection, annotation, training, and deployment, and the corresponding families of fairness metrics and mitigation techniques the field has proposed in response \cite{dehdashtian2024survey}. Their survey is the clearest evidence that the metrics and mitigation literature is mature while the auditing-workflow literature is not: a rich taxonomy of \emph{what} to measure exists, but comparatively little standardises \emph{how} to measure it repeatably.
+Dehdashtian et al. survey the broader computer-vision fairness literature, cataloguing where bias enters the pipeline, data collection, annotation, training, and deployment, and the families of fairness metrics and mitigation techniques the field has proposed at each stage \cite{dehdashtian2024survey}. This survey is what tells us the shape of the gap BiasAperture fills: it shows that a rich taxonomy of \emph{what} to measure and \emph{how} to mitigate already exists, but that comparatively little of the literature standardises \emph{how} to run that measurement repeatably as a workflow. Rather than proposing another mitigation technique or another metric, our project sits deliberately on the diagnostic side of the taxonomy Dehdashtian et al. draw, building the reusable auditing pipeline their survey shows is largely absent, while explicitly declining to fold mitigation into the same platform.
 
-\section{Formal Fairness Metrics}
+Hardt et al. introduce the formal definitions of equalized odds and equal opportunity, two error-rate-based fairness criteria for supervised classifiers \cite{hardt2016equality}. Equalized odds requires parity in both the true-positive rate and the false-positive rate across demographic groups, while equal opportunity relaxes this to parity in the true-positive rate alone for the positive outcome class. What we learn from this paper is that these are two genuinely different fairness questions rather than one being a stricter version of an otherwise-interchangeable other, so neither is a general substitute for the other. Our project adopts both definitions directly as two of the Core~Four metrics, \gls{eod} and \gls{eop}, computing them side by side rather than picking one, and pairs them with \gls{dpd} and \gls{dir} to supply the outcome-rate and ratio-based perspectives that Hardt et al.'s error-rate framing does not itself cover.
 
-Two of BiasAperture's Core~Four metrics, \gls{eod} and \gls{eop}, are direct operationalisations of definitions introduced by Hardt et al. \cite{hardt2016equality}. Equalized odds is the stricter of the two: it requires parity in both the true-positive rate and the false-positive rate across demographic groups, so that the model performs equally well for every group regardless of the true label. Equal opportunity relaxes this to parity in the true-positive rate alone, for the positive outcome class specifically, prioritising equitable allocation of favourable outcomes over symmetric error rates across both classes. BiasAperture computes both rather than choosing one, since the two definitions answer different fairness questions and neither is a general substitute for the other; \gls{dpd} and \gls{dir} then supply the outcome-rate and ratio-based perspectives Hardt et al.'s error-rate framing does not itself cover.
+Watkins et al. critique the U.S. four-fifths rule as it has been imported into algorithmic fairness practice, arguing that treating an 80\% disparate-impact threshold borrowed from employment-discrimination law as a binary pass/fail test is an instance of epistemic trespassing that can grant a false sense of legal and ethical safety while conflating bare compliance with actual fairness \cite{watkins2022fourfifths}. This paper is the direct reason BiasAperture never reports a disparity as a ratio against an implicit cut-off. We differ from the naive-threshold practice the paper criticises by pairing every reported \gls{dir} value, and every other Core~Four metric, with a chi-squared test of independence and a bootstrap confidence interval, so that a disparity is characterised by its statistical strength rather than measured against a borrowed and contested threshold.
 
-\section{Critiques of Naive Fairness Thresholds}
+Kurian et al. study how convolutional networks trained on medical images can learn to encode demographic information as a proxy through unrelated, seemingly neutral visual features, such as texture or lighting, even when no demographic label appears anywhere in the training data \cite{kurian2024bias}. What we learn from this, applied to facial analysis, is that a detected subgroup disparity cannot be assumed to arise only from the demographic label an audit is stratifying on; it may instead be an artefact of a correlated visual feature the model has entangled with that label. Our project adopts this finding directly by requiring \gls{shap}-based feature attribution on every flagged disparity rather than treating a Core~Four result as self-explanatory, so the explainability layer can help distinguish a genuinely demographic effect from an unrelated confound before a finding is reported as evidence.
 
-A disparate-impact ratio is only as trustworthy as the threshold used to interpret it, and Watkins et al. show this is a genuine hazard rather than a theoretical one \cite{watkins2022fourfifths}. Their critique of the U.S. four-fifths rule argues that importing an 80\% threshold from employment-discrimination law into algorithmic fairness without its original statistical and sociotechnical context is an instance of what they term epistemic trespassing, and that treating the resulting ratio as a binary pass or fail can grant a false sense of legal and ethical safety while conflating compliance with actual fairness. This finding is the direct justification for FR-004 and NFR-001: BiasAperture never reports \gls{dir} as a bare ratio against an implicit threshold, but always alongside a chi-squared test of independence and a bootstrap confidence interval, so that a disparity is characterised by its statistical strength rather than measured against a borrowed and contested cut-off.
+Mitchell et al. propose Model Cards, a standardised, structured summary format for a model's intended use, performance characteristics, and evaluation results, aimed at making that information legible to both technical and non-technical stakeholders \cite{mitchell2019modelcards}. We learn from this paper a documentation convention the field already recognises, rather than needing to invent a report format from scratch. Our project adopts the Model Cards structure directly for the model-performance side of the generated fairness report, so that a reader familiar with Model Cards from elsewhere does not have to learn an ad hoc format specific to BiasAperture.
 
-\section{Proxy Variables and Explainability}
+Gebru et al. propose the complementary Datasheets for Datasets convention, documenting a dataset's motivation, composition, collection process, and recommended uses so that downstream users can reason about its limitations \cite{gebru2018datasheets}. This paper supplies the dataset-side counterpart to Model Cards that our own report structure needed. We adopt the Datasheets convention for the dataset-provenance section of the generated report, so that FairFace's and UTKFace's collection processes and known limitations, such as UTKFace's model-estimated age labels, are documented in a recognised structure rather than an ad hoc one.
 
-Kurian et al.'s study of bias encoding in convolutional networks trained on medical images provides the finding that motivates \cref{chap:methodology}'s explainability layer: a \gls{cnn} can learn to exploit demographic information even when no demographic label is present anywhere in its training data, by encoding it as a proxy through unrelated, seemingly neutral visual features such as texture or lighting \cite{kurian2024bias}. Applied to facial analysis, this means a detected subgroup disparity cannot be assumed to arise only from the demographic label the audit is stratifying on; it may instead be an artefact of a correlated visual feature the model has entangled with that label. This is precisely why FR-005 requires \gls{shap}-based attribution on every flagged disparity rather than treating a Core~Four result as self-explanatory: the explainability layer exists to help distinguish a genuinely demographic effect from an unrelated confound before the finding is reported as evidence.
+Karkkainen and Joo construct FairFace, a face-attribute dataset explicitly built for balanced representation across race, gender, and age, using a seven-category race taxonomy designed to reduce the classification skew present in earlier face datasets \cite{karkkainen2021fairface}. What we learn from this paper is that FairFace's balanced construction makes it a more trustworthy basis for subgroup comparison than a dataset whose subgroup sample sizes are skewed by construction. Our project adopts FairFace as its principal validation benchmark for exactly this reason, and uses UTKFace only as a secondary benchmark, since UTKFace's age labels are model-estimated rather than human-annotated, a source of label noise the platform's sample-size and confidence-interval reporting is designed to make transparent rather than obscure.
 
-\section{Reporting and Documentation Conventions}
+Buscemi et al. decompose the EU AI Act's high-risk-system obligations into a stable taxonomy of high-level requirements and sub-requirements, mapping each to a concrete, technology-agnostic technical verification activity \cite{buscemi2025assessing}. This is the paper that shows us how to turn a legal article into a specific, checkable test rather than a general statement of intent. Our project follows the same operational spirit at the scale of a single Article~10 mapping: \Cref{sec:regmapping} ties each Core~Four metric, each significance test, and each sample-size guard to the specific data-governance clause it evidences, rather than the generated report gesturing at compliance in general terms.
 
-BiasAperture's report structure is not invented from scratch. Mitchell et al.'s Model Cards propose a standardised, structured summary of a model's intended use, performance characteristics, and evaluation results, aimed explicitly at making that information legible to both technical and non-technical stakeholders \cite{mitchell2019modelcards}. Gebru et al.'s Datasheets for Datasets propose the complementary discipline for the data side: documenting a dataset's motivation, composition, collection process, and recommended uses so that downstream users can reason about its limitations \cite{gebru2018datasheets}. FR-006's requirement that every generated report be structurally informed by both conventions means BiasAperture's dataset-provenance and model-performance sections follow documentation patterns the field already recognises, rather than an ad hoc format each reader must learn from scratch.
+\begin{longtable}{|p{2.4cm}|p{2.9cm}|p{4.1cm}|p{4.1cm}|}
+\caption{Summary of the literature reviewed, highlighting key contributions and motivations for this work.}
+\label{tab:litreview} \\
+\hline
+\textbf{Authors} & \textbf{Paper Title (Year)} & \textbf{Key Contribution} & \textbf{Motivation / Adopted Concepts} \\
+\hline
+\endfirsthead
 
-\section{Benchmark Datasets}
+\hline
+\textbf{Authors} & \textbf{Paper Title (Year)} & \textbf{Key Contribution} & \textbf{Motivation / Adopted Concepts} \\
+\hline
+\endhead
 
-BiasAperture is validated principally against FairFace, a face-attribute dataset explicitly constructed for balanced representation across race, gender, and age, using a seven-category race taxonomy designed to reduce the classification skew common in earlier face datasets \cite{karkkainen2021fairface}. UTKFace is used as a secondary benchmark, but its age annotations are model-estimated via a regression approach rather than human-labelled, a known source of label noise that \cref{chap:intro}'s Limitations section already flags and that the platform's risk register treats explicitly: every subgroup metric is reported with its sample size and confidence interval precisely so that a result resting on noisier labels is not presented with unwarranted certainty.
+\hline \multicolumn{4}{r}{\textit{Continued on next page}} \\
+\endfoot
 
-\section{The Regulatory-Technical Bridge}
+\hline
+\endlastfoot
 
-The EU AI Act (Regulation 2024/1689) and the NIST AI RMF, both introduced in \cref{chap:intro}, state \emph{what} must be governed and measured, respectively, but neither specifies how a development team turns that obligation into a concrete technical check. Buscemi et al. close that gap directly, decomposing the AI Act's high-risk-system obligations into a stable taxonomy of high-level requirements and sub-requirements and mapping each to a concrete, technology-agnostic technical verification activity \cite{buscemi2025assessing}, an operational-verification approach that reduces the interpretive uncertainty a development team otherwise faces when translating a legal article into a specific test. \Cref{sec:regmapping} follows the same operational spirit at a scale appropriate to a single Article~10 mapping: each Core~Four metric, each significance test, and each sample-size guard is tied to the specific data-governance clause it evidences, rather than the report gesturing at compliance in general terms.
+Buolamwini \& Gebru \cite{buolamwini2018gendershades} &
+Gender Shades (2018) &
+Audits commercial gender classifiers and reveals intersectional accuracy disparities by skin tone and gender. &
+Established the empirical case and subgroup/intersectional audit methodology; motivated building this into reusable software rather than a one-off audit. \\
+\hline
 
-\section{Synthesis}
+Dehdashtian et al. \cite{dehdashtian2024survey} &
+Fairness and Bias Mitigation in Computer Vision: A Survey (2024) &
+Surveys where bias enters the CV pipeline and catalogues fairness-metric and mitigation families. &
+Showed the auditing-workflow literature is immature relative to the metrics literature; motivated the reusable, diagnostic-only pipeline. \\
+\hline
 
-No single artefact in the literature surveyed above combines all of the following: a reusable software pipeline, rather than a one-off manual audit; the Core~Four metrics computed by cross-validating, independently maintained toolkits rather than a single implementation; every disparity paired with the significance testing Watkins et al.'s critique shows is necessary rather than a bare threshold; \gls{shap}-based diagnosis of the proxy-variable risk Kurian et al. identify; a report structured against the Model Cards and Datasheets conventions; and explicit, clause-level traceability to the EU AI Act and NIST AI RMF in the operational spirit Buscemi et al. establish. \Cref{chap:requirements,chap:methodology} specify exactly this combination as BiasAperture's design, closing the engineering gap identified in \cref{chap:intro}.
+Hardt et al. \cite{hardt2016equality} &
+Equality of Opportunity in Supervised Learning (2016) &
+Formally defines equalized odds and equal opportunity as distinct fairness criteria. &
+Adopted directly as the EOD and EOP Core~Four metrics, computed together rather than one substituting for the other. \\
+\hline
+
+Watkins et al. \cite{watkins2022fourfifths} &
+The Four-Fifths Rule is Not Disparate Impact (2022) &
+Critiques the four-fifths threshold as epistemic trespassing when used as a binary pass/fail test. &
+Motivated pairing every DIR value, and every Core~Four metric, with a chi-squared test and bootstrap confidence interval instead of a bare threshold. \\
+\hline
+
+Kurian et al. \cite{kurian2024bias} &
+Where, Why, and How is Bias Learned in Medical Image Analysis Models? (2024) &
+Shows CNNs can encode demographic information as a proxy through unrelated visual features. &
+Motivated the SHAP-based explainability layer, run on every flagged disparity to separate genuine demographic effects from confounds. \\
+\hline
+
+Mitchell et al. \cite{mitchell2019modelcards} &
+Model Cards for Model Reporting (2019) &
+Proposes a standardised, stakeholder-legible summary format for model performance and evaluation. &
+Adopted as the structural basis for the model-performance section of the generated fairness report. \\
+\hline
+
+Gebru et al. \cite{gebru2018datasheets} &
+Datasheets for Datasets (2018) &
+Proposes a documentation convention for dataset motivation, composition, and limitations. &
+Adopted as the structural basis for the dataset-provenance section of the generated report. \\
+\hline
+
+Karkkainen \& Joo \cite{karkkainen2021fairface} &
+FairFace (2021) &
+Constructs a face-attribute dataset with balanced race, gender, and age representation. &
+Adopted as the platform's principal validation benchmark, used to cross-check UTKFace's noisier, model-estimated age labels. \\
+\hline
+
+Buscemi et al. \cite{buscemi2025assessing} &
+Assessing High-Risk AI Systems Under the EU AI Act (2025) &
+Maps EU AI Act high-risk obligations to concrete, technology-agnostic technical verification activities. &
+Motivated the Article~10-to-metric traceability mapping (\cref{sec:regmapping}) that ties each Core~Four metric to a specific data-governance clause. \\
+\hline
+
+\end{longtable}
+
+With everything above considered, BiasAperture combines what none of these works do alone: a reusable software pipeline rather than a one-off manual audit; the Core~Four metrics computed by cross-validating, independently maintained toolkits rather than a single implementation; every disparity paired with the significance testing Watkins et al.'s critique shows is necessary rather than a bare threshold; \gls{shap}-based diagnosis of the proxy-variable risk Kurian et al. identify; a report structured against the Model Cards and Datasheets conventions; and explicit, clause-level traceability to the EU AI Act and NIST AI RMF in the operational spirit Buscemi et al. establish. \Cref{chap:requirements,chap:methodology} specify exactly this combination as BiasAperture's design, closing the engineering gap identified in \cref{chap:intro}.
