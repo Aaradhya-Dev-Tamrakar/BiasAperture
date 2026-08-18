@@ -5,12 +5,22 @@
 
 \section{Design Principles}
 
-The architecture follows Object-Oriented Software Engineering practice under \gls{solid} guidelines, applied concretely rather than generically. The single-responsibility principle is realised directly by the five-module split in \cref{sec:modules}: each module owns exactly one concern, and no module reaches into another's internal state. The open-closed principle is realised by the Strategy pattern around the fairness-metrics back end (\cref{sec:patterns}): a future fifth disparity metric, or a replacement fairness library, is added by implementing a new strategy without modifying the computation engine's internals. The dependency-inversion principle is realised by having the engine and report generator depend only on the abstract \texttt{FairnessBackend} and \texttt{ModelInterface} interfaces, never on AIF360, Fairlearn, or a specific file format directly, so that a cut or substitution at either boundary (\cref{sec:cutlist}) changes an implementation, not a contract. Finally, the shared schema described in \cref{sec:schedule} is an application of interface-first, design-by-contract practice: the field set two independently developed streams must both honour is fixed before either stream begins substantive work.
+The architecture follows Object-Oriented Software Engineering practice under \gls{solid} guidelines, applied concretely rather than generically, so that each principle maps onto a specific structural decision rather than remaining an abstract design ideal. The single-responsibility principle is realised directly by the five-module split in \cref{sec:modules}: each module owns exactly one concern, ingestion, model access, metric computation, explanation, or reporting, and no module reaches into another's internal state. The open-closed principle is realised by the Strategy pattern around the fairness-metrics back end (\cref{sec:patterns}): the Core Four disparity metrics, and the AIF360 and Fairlearn backends that compute them, are implemented as interchangeable strategies behind a common \texttt{FairnessBackend} interface, so a future fifth disparity metric, or a replacement fairness library, is added by implementing a new strategy without modifying the computation engine's internals. The Liskov substitution and interface segregation principles are satisfied by the narrowness of these same interfaces: because \texttt{ModelInterface} and \texttt{FairnessBackend} each expose only the minimal operations their callers use, any concrete implementation, whether \texttt{DirectInferenceAdapter}, \texttt{PredictionsFileAdapter}, \texttt{AIF360Backend}, or \texttt{FairlearnBackend}, can be substituted for another without altering the correctness of the code that depends on the interface. The dependency-inversion principle is realised by having the engine and report generator depend only on the abstract \texttt{FairnessBackend} and \texttt{ModelInterface} interfaces, never on AIF360, Fairlearn, or a specific file format directly, so that a cut or substitution at either boundary (\cref{sec:cutlist}) changes an implementation, not a contract. Finally, the shared schema described in \cref{sec:schedule} is an application of interface-first, design-by-contract practice: the field set two independently developed streams must both honour is fixed before either stream begins substantive work, allowing the two streams to be built and unit-tested in parallel against a shared specification rather than against each other's evolving implementation.
+\clearpage
 
 \section{Architectural Modules}
 \label{sec:modules}
 
-BiasAperture is organised into five cooperating modules, summarised in \cref{tab:modules} and detailed below. Each module exposes a narrow, well-defined interface, a dataset object, a prediction table, a metrics dictionary, or a report object, so that it can be developed, unit-tested, and extended independently of the others (NFR-005).
+This section presents the system architecture of BiasAperture and the specific modules that realise it. The platform is composed of a set of cooperating modules, each responsible for one stage of the audit pipeline, coordinated by a central orchestration layer. \cref{fig:architecture} depicts this architecture as a whole, showing how external datasets and target models enter the system, how they are processed through the pipeline, and how the resulting compliance report is produced.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{src/images/architecture_highlevel.jpg}
+    \caption{BiasAperture system architecture.}
+    \label{fig:architecture}
+\end{figure}
+
+\cref{tab:modules} formalises the architecture shown in \cref{fig:architecture}, listing each module alongside its primary responsibility, the functional requirements it satisfies, and the key libraries it depends on. The remainder of this section discusses each module in turn, following the order in which data and control flow through the pipeline.
 
 \begin{table}[htbp]
     \centering
@@ -30,6 +40,7 @@ BiasAperture is organised into five cooperating modules, summarised in \cref{tab
         \bottomrule
     \end{tabular}
 \end{table}
+\clearpage
 
 \subsection{Data Ingestion and Preprocessing Module}
 This module loads a selected benchmark dataset, initially FairFace and UTKFace, or a compatible custom dataset, validates image integrity, standardises image resolution and colour space via OpenCV, and aligns demographic annotation fields (race or ethnicity, perceived gender, age group) into the locked internal schema (\cref{sec:schedule}). It rejects corrupted or unreadable files and enforces that every image carries a complete, correctly typed set of demographic labels before any downstream computation proceeds.
@@ -49,9 +60,21 @@ This module assembles the computed metrics, statistical tests, and dataset and m
 \subsection{Orchestration and Configuration Layer}
 A lightweight layer coordinates the pipeline end to end, dataset selection, model connection, metric selection, and report generation, behind a single entry point, and exposes a configuration file and command-line interface through which an auditor specifies the audit parameters (FR-008). The dataset's licensing terms must be displayed and explicitly acknowledged before an audit is executed (FR-009).
 
-\section{End-to-End Workflow}
+\section{End-to-End Workflow of the System}
+\label{sec:workflow}
 
-The five modules cooperate through a fixed five-step workflow: (1)~\emph{Configuration}, the auditor selects a benchmark dataset or supplies a custom one, specifies the target model or a predictions file, and selects the metrics of interest; (2)~\emph{Ingestion}, the data ingestion module loads and validates the dataset; (3)~\emph{Inference}, the model interface module obtains predictions; (4)~\emph{Computation}, the fairness engine and explainability layer compute metrics, run significance tests, and attribute flagged disparities; and (5)~\emph{Reporting}, the report generation module produces the standardised, regulator-traceable fairness report.
+\cref{fig:workflow} presents the end-to-end workflow followed by the system during a single audit run, tracing the sequence of steps and decision points from initial configuration through to the generation of the final compliance report.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{src/images/workflow_flowchart.jpg}
+    \caption{BiasAperture end-to-end audit workflow.}
+    \label{fig:workflow}
+\end{figure}
+
+The workflow begins with the auditor configuring the audit: specifying the benchmark or custom dataset, the target model, or a predictions file, and the metrics to compute. The system then branches on the model access mode. If a model object is supplied, predictions are obtained by direct in-process inference against the PyTorch or TensorFlow model; otherwise, predictions are obtained by batch ingestion of a precomputed CSV or JSON file. Both branches converge on a common path, in which the selected dataset, FairFace or UTKFace, is ingested and validated, and predictions are generated over the resulting test matrix.
+
+With predictions and ground-truth labels in hand, the system computes the Core Four disparity metrics together with SHAP-based feature attribution. Before any metric is reported, each demographic subgroup is checked against the minimum sample-size guardrail: subgroups with fewer than thirty observations are flagged as an insufficient sample and excluded from the statistical checks that follow, while all other subgroups proceed directly. The remaining subgroups are then subjected to chi-squared significance testing and bootstrap confidence-interval estimation, after which the system assembles and generates the final compliance report, concluding the workflow.
 
 \section{Design Patterns}
 \label{sec:patterns}
