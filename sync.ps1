@@ -12,6 +12,32 @@ $repoRoot = git rev-parse --show-toplevel 2>$null
 if (-not $repoRoot) { throw "Not inside a git repository." }
 Set-Location $repoRoot
 
+$fuseaiRemote = 'fuseai'
+$fuseaiUrl = 'https://github.com/fuseai-fellowship/BiasAperture-A-Diagnostic-Framework-for-Demographic-Bias-Auditing-in-Facial-Analysis-Models.git'
+
+function Ensure-FuseaiRemote {
+    $remotes = git remote
+    if ($remotes -notcontains $fuseaiRemote) {
+        git remote add $fuseaiRemote $fuseaiUrl
+    }
+}
+
+function Push-AllRemotes {
+    param([string]$Branch)
+    Ensure-FuseaiRemote
+    $results = @{}
+    foreach ($remote in @('origin', $fuseaiRemote)) {
+        git push $remote $Branch 2>&1 | Tee-Object -Variable pushOut | Out-Null
+        $results[$remote] = if ($LASTEXITCODE -eq 0) { 'OK' } else { 'FAILED' }
+    }
+    foreach ($r in $results.Keys) {
+        Write-Host "push [$r]: $($results[$r])"
+    }
+    if ($results.Values -contains 'FAILED') {
+        Write-Warning "One or more remotes failed to push. No rollback performed — resolve manually (likely diverged history)."
+    }
+}
+
 function Get-ConventionalCommitMessage {
     $staged = git diff --cached --name-only
     if (-not $staged) { return $null }
@@ -27,7 +53,8 @@ function Get-ConventionalCommitMessage {
 
     $summary = if ($files.Count -eq 1) {
         Split-Path $files[0] -Leaf
-    } else {
+    }
+    else {
         "$($files.Count) files"
     }
 
@@ -46,6 +73,7 @@ function Update-Tracker {
 }
 
 if ($PSCmdlet.ParameterSetName -eq 'Pull') {
+    Ensure-FuseaiRemote
     git pull --autostash
     exit $LASTEXITCODE
 }
@@ -68,4 +96,5 @@ if (-not $m) {
 
 git commit -m "$m"
 git pull --autostash --rebase
-git push
+$branch = git rev-parse --abbrev-ref HEAD
+Push-AllRemotes -Branch $branch
