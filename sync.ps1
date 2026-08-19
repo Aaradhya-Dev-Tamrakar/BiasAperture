@@ -38,10 +38,10 @@ function Update-Tracker {
     $trackerPath = Join-Path $repoRoot 'docs/CHANGELOG.md'
     if (-not (Test-Path $trackerPath)) {
         New-Item -ItemType Directory -Force -Path (Split-Path $trackerPath) | Out-Null
-        "# BiasAperture — Changelog`n" | Set-Content $trackerPath
+        "# BiasAperture - Changelog`n" | Set-Content $trackerPath
     }
     $timestamp = Get-Date -Format 'yyyy-MM-dd HH:mm'
-    Add-Content $trackerPath "- $timestamp — sync"
+    Add-Content $trackerPath "- $timestamp - sync"
     git add $trackerPath
 }
 
