@@ -15,7 +15,7 @@ Set-Location $repoRoot
 $fuseaiRemote = 'fuseai'
 $fuseaiUrl = 'https://github.com/fuseai-fellowship/BiasAperture-A-Diagnostic-Framework-for-Demographic-Bias-Auditing-in-Facial-Analysis-Models.git'
 
-function Ensure-FuseaiRemote {
+function Add-FuseaiRemote {
     $remotes = git remote
     if ($remotes -notcontains $fuseaiRemote) {
         git remote add $fuseaiRemote $fuseaiUrl
@@ -24,7 +24,7 @@ function Ensure-FuseaiRemote {
 
 function Push-AllRemotes {
     param([string]$Branch)
-    Ensure-FuseaiRemote
+    Add-FuseaiRemote
     $results = @{}
     foreach ($remote in @('origin', $fuseaiRemote)) {
         git push $remote $Branch 2>&1 | Tee-Object -Variable pushOut | Out-Null
@@ -73,7 +73,7 @@ function Update-Tracker {
 }
 
 if ($PSCmdlet.ParameterSetName -eq 'Pull') {
-    Ensure-FuseaiRemote
+    Add-FuseaiRemote
     git pull --autostash
     exit $LASTEXITCODE
 }
