@@ -251,7 +251,9 @@ __marimo__/
 !/.git/
 
 # Datasets and checkpoints
-data/
+data/*
+!data/README.md
+!data/**/.gitkeep
 datasets/
 *.pt
 *.pth

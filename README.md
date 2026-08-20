@@ -19,28 +19,34 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 ├── .pre-commit-config.yaml     # Pre-commit hooks (Ruff, formatting, file-size guards)
 ├── pyproject.toml              # PEP 517/621 package spec & tool configs (Ruff, pytest)
 ├── uv.lock                     # Deterministic dependency lockfile
-├── report/                     # Report source (build this)
+├── data/                       # Datasets and test matrices (raw/ and processed/ gitignored)
+│   └── README.md               # Dataset sourcing and FairFace setup instructions
+├── report/                     # LaTeX report source and compiled proposal
 │   ├── main.tex                # Entry point
 │   ├── vars.tex                # Title, authors, supervisor metadata
 │   ├── at_fuse_aif.cls         # Document class
 │   ├── references.bib
 │   ├── main.pdf                # Compiled proposal (tracked; build artifacts are not)
-│   └── src/
-│       ├── frontmatter/        # Cover, acknowledgements, abstract, TOC, abbreviations, symbols
-│       ├── chapters/           # Intro, literature review, requirements, methodology, conclusion
-│       ├── backmatter/         # Appendices: budget, timeline, schema, risk register
-│       └── images/
+│   └── src/                    # Frontmatter, chapters, backmatter, images
 ├── docs/                       # TA/reviewer-facing meta-documentation
-│   ├── BiasAperture-AT.md      # Project planning, WBS, and trait-based task assignments (v6)
+│   ├── BiasAperture-AT.md      # Master project planning and task assignments (v6)
 │   ├── schema-lock-m1.md       # Milestone M1 schema specification
 │   ├── literature-review-matrix.md   # Paper matrix (9 papers, Walden format)
-│   └── CHANGELOG.md            # Auto-updated by sync.ps1 on each sync
+│   ├── CHANGELOG.md            # Auto-updated by sync.ps1 on each sync
+│   └── fellowship/             # Official AIF guidelines & reference PDFs
 ├── vendor/                     # Offline TeX dependencies
 ├── src/                        # Implementation package:
-│   ├── bias_aperture/          # Core package (schema, model interface)
-│   └── tests/                  # Automated pytest unit test suite
+│   ├── bias_aperture/          # Core package
+│   │   ├── schema.py           # Locked demographic and metric schema (M1)
+│   │   ├── model_interface.py  # ModelInterface & PredictionsFileInterface
+│   │   ├── fairness/           # WP4 detection engine package
+│   │   └── report/             # WP3 report generation package
+│   └── tests/                  # Automated pytest unit test suite (conftest.py, tests)
 ├── sync.ps1                    # Local git workflow: stage, conventional-commit, pull --rebase, push
 ├── LICENSE                     # MIT
+├── AGENT.md                    # Universal AI agent & developer guidelines
+├── CLAUDE.md                   # Claude assistant instructions
+├── ANTIGRAVITY.md              # Google Antigravity & Gemini instructions
 └── README.md
 ```
 
