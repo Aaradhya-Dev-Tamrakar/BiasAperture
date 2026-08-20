@@ -245,3 +245,15 @@ __marimo__/
 *.sls
 *.sta
 *.xdy
+
+# Git bare repository artifacts
+*.git/
+!/.git/
+
+# Datasets and checkpoints
+data/
+datasets/
+*.pt
+*.pth
+*.bin
+*.onnx
