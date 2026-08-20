@@ -81,20 +81,20 @@ if ($PSCmdlet.ParameterSetName -eq 'Pull') {
 git add -A
 
 $staged = git diff --cached --name-only
-if (-not $staged) {
-    Write-Host "Nothing to commit."
-    exit 0
+if ($staged) {
+    Update-Tracker
+    git add -A
+
+    if (-not $m) {
+        $m = Get-ConventionalCommitMessage
+        if (-not $m) { $m = "chore(repo): sync" }
+    }
+
+    git commit -m "$m"
+} else {
+    Write-Host "No unstaged changes to commit. Syncing remotes..."
 }
 
-Update-Tracker
-git add -A
-
-if (-not $m) {
-    $m = Get-ConventionalCommitMessage
-    if (-not $m) { $m = "chore(repo): sync" }
-}
-
-git commit -m "$m"
 git pull --autostash --rebase
 $branch = git rev-parse --abbrev-ref HEAD
-Push-AllRemotes -Branch $branch
+Push-AllRemotes -Branch $branch
