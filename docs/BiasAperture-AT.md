@@ -1,4 +1,4 @@
-# BiasAperture-AT_v6
+# BiasAperture-AT (v6)
 
 Fuse Capstone Project — BiasAperture (Fairness & Bias Audit)
 
