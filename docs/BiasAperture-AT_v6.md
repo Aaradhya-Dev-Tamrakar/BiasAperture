@@ -7,7 +7,7 @@ Fuse Capstone Project — BiasAperture (Fairness & Bias Audit)
 **Supervisor:** Shreejan Kisee
 **Program:** Fusemachines AI Fellowship (AIF) 2026
 
-**Status:** Feasibility study reviewed (accurate) · Parallel work structure defined · Named ownership still not yet assigned · Novelty check completed (§12) · SHAP explainability layer added (§3) · Proposal report (main.pdf) cross-validated against full source set, zero contradictions (§13) · Repo restructured with docs/ + sync.ps1, literature review matrix built (§15)
+**Status:** Feasibility study reviewed (accurate) · Parallel work structure defined · Named ownership assigned (§16) · Novelty check completed (§12) · SHAP explainability layer added (§3) · Proposal report (main.pdf) cross-validated against full source set, zero contradictions (§13) · Repo restructured with docs/ + sync.ps1, literature review matrix built (§15) · Packaging & Ruff standards configured
 
 ---
 
@@ -125,7 +125,7 @@ Test-matrix's schema-aligned output and report-scaffolding's mock dict must both
 
 **Close-out:** once the detection engine produces real numbers, report-scaffolding swaps mock→real dict against the same schema — the "short, mechanical" step §4 already describes, now genuinely short since the template was built in week one.
 
-Named ownership of which person takes which stream — still not assigned, per §4's original decision to hold this open; this restructuring changed the shape of the work, not who does which piece. Unchanged as of v5.
+Named ownership of which person takes which stream — settled in §16 (A owns Stream Data/ingestion and Stream Report drafting; T owns Stream Report accuracy review and WP4 Statistical Detection Engine).
 
 ## Naming History Note
 
@@ -176,7 +176,7 @@ Zero unsupported or contradicted claims. Proposal is factually submission-ready;
 
 Verification pass (Claude session) confirmed report/src/chapters/literatureReview.tex and requirements.tex both already fulfill the AIF program's Literature Review Guidelines and Project Requirement templates in full — no gaps, content exceeds template depth. All \cref/\label targets resolve, all \cite keys resolve against references.bib (11 entries).
 
-Literature review matrix built: `docs/literature-review-matrix.md` — 8 papers (Buolamwini & Gebru 2018 "Gender Shades", Dehdashtian et al. 2024 CV fairness survey, Hardt et al. 2016 "Equality of Opportunity", Watkins et al. 2022 "Four-Fifths Rule" critique, Kurian et al. 2024 medical-imaging proxy-bias study, Mitchell et al. 2019 "Model Cards", Gebru et al. 2018 "Datasheets for Datasets", Karkkainen & Joo 2021 "FairFace") in the guideline's Walden-referenced column format (Title/Author/Date, Conceptual Framework, RQ, Datasets, Methodology, Analysis & Results, Conclusions, Implications). Sourced entirely from existing references.bib + literatureReview.tex, no external claims added. Meets the guideline's 5-paper minimum.
+Literature review matrix built: `docs/literature-review-matrix.md` — 9 papers (Buolamwini & Gebru 2018 "Gender Shades", Dehdashtian et al. 2024 CV fairness survey, Hardt et al. 2016 "Equality of Opportunity", Watkins et al. 2022 "Four-Fifths Rule" critique, Kurian et al. 2024 medical-imaging proxy-bias study, Mitchell et al. 2019 "Model Cards", Gebru et al. 2018 "Datasheets for Datasets", Karkkainen & Joo 2021 "FairFace", Buscemi et al. 2025 "Assessing High-Risk AI Systems under the EU AI Act") in the guideline's Walden-referenced column format (Title/Author/Date, Conceptual Framework, RQ, Datasets, Methodology, Analysis & Results, Conclusions, Implications). Sourced entirely from existing references.bib + literatureReview.tex, no external claims added. Meets the guideline's 5-paper minimum.
 
 **Gap surfaced:** UTKFace is used as a secondary benchmark in the report (and named in §8's cut-list above) but has no corresponding bib entry in references.bib — no source paper currently tracked for it. Relevant directly to Cut #2 in §8: if UTKFace is kept rather than cut, this needs resolving before submission.
 

@@ -14,10 +14,15 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 ## Repository Structure
 
 ```BiasAperture/
+├── .github/                    # GitHub configuration & PR templates
+│   └── pull_request_template.md
+├── .pre-commit-config.yaml     # Pre-commit hooks (Ruff, formatting, file-size guards)
+├── pyproject.toml              # PEP 517/621 package spec & tool configs (Ruff, pytest)
+├── uv.lock                     # Deterministic dependency lockfile
 ├── report/                     # Report source (build this)
 │   ├── main.tex                # Entry point
 │   ├── vars.tex                # Title, authors, supervisor metadata
-│   ├── at_fuse_aif.cls         # Document class (renamed from AaradhyaTisha_fuse_aif.cls)
+│   ├── at_fuse_aif.cls         # Document class
 │   ├── references.bib
 │   ├── main.pdf                # Compiled proposal (tracked; build artifacts are not)
 │   └── src/
@@ -25,23 +30,47 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 │       ├── chapters/           # Intro, literature review, requirements, methodology, conclusion
 │       ├── backmatter/         # Appendices: budget, timeline, schema, risk register
 │       └── images/
-├── docs/                       # TA/reviewer-facing meta-documentation (not compiled into main.pdf)
-│   ├── literature-review-matrix.md   # Paper matrix: framework, RQ, dataset, method, findings
+├── docs/                       # TA/reviewer-facing meta-documentation
+│   ├── BiasAperture-AT_v6.md   # Project planning, WBS, and trait-based task assignments
+│   ├── schema-lock-m1.md       # Milestone M1 schema specification
+│   ├── literature-review-matrix.md   # Paper matrix (9 papers, Walden format)
 │   └── CHANGELOG.md            # Auto-updated by sync.ps1 on each sync
-├── vendor/                     # Offline copies of newtx, IEEEtran, kastrup (renamed from
-│                                # "Agent dependencies") for environments without live CTAN/network
-│                                # access. Not read by any .tex file — extract and install into
-│                                # your local TeX tree only if pdflatex reports these missing.
-├── src/                        # Implementation (WP1+): bias_aperture/ package (schema, model
-│                                # interface), tests/, requirements.txt (NFR-006 pinned deps)
+├── vendor/                     # Offline TeX dependencies
+├── src/                        # Implementation package:
+│   ├── bias_aperture/          # Core package (schema, model interface)
+│   └── tests/                  # Automated pytest unit test suite
 ├── sync.ps1                    # Local git workflow: stage, conventional-commit, pull --rebase, push
 ├── LICENSE                     # MIT
 └── README.md
 ```
 
-**Changes from previous layout:** `LaTex/` → `report/`; `Agent dependencies/` → `vendor/` (no spaces); `AaradhyaTisha_fuse_aif.cls` → `at_fuse_aif.cls`; the stale `BiasAperture.zip` snapshot and tracked build artifacts (`.aux`, `.bbl`, `.toc`, etc.) have been removed from version control — they were already covered by `.gitignore` but had been committed prior to it being added. `docs/` and `sync.ps1` added for TA-facing reference material and local sync convenience, respectively.
+## Branching & Workstreams
+
+| Branch | Stream / Work Package | Primary Owner | Description |
+|---|---|---|---|
+| `main` | Production / Base | Joint | Stable base holding M1 schema, docs, and report |
+| `feat/stream-data` | Stream A (WP2) | Aaradhya (`@AaradhyaDT`) | FairFace dataset ingestion & test-matrix construction |
+| `feat/stream-report` | Stream B (WP3) | Aaradhya (`@AaradhyaDT`), Tisha review | Jinja2 HTML compliance report scaffolding |
+| `feat/wp4-engine` | WP4 | Tisha (`@tiixsha`) | Fairness computation backends, statistics, and SHAP |
+
+## Python Development, Testing & Code Style
+
+The project follows the [Khwopa / TA Engineering Standards](https://github.com/Khwopa-College-of-Engineering-KHCE/Image-Super-Resolution/tree/standards) for Python code style and testing:
+
+```bash
+# Run unit test suite
+uv run --extra dev pytest
+
+# Run linter and auto-formatter
+uv run --extra dev ruff check --fix
+uv run --extra dev ruff format
+
+# Install pre-commit hooks (optional for local commits)
+pre-commit install
+```
 
 ## Local Git Workflow & Auto-Sync (`sync.ps1`)
+
 
 ```powershell
 .\sync.ps1                                  # stage all, conventional-commit, pull --rebase, push
