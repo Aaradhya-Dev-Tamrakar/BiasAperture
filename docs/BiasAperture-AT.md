@@ -167,6 +167,50 @@ Answer: "Integration, yes — but solving a real one. Right now, auditing a depl
 
 **Regulatory-mapping differentiator (stronger than vision-pipeline angle):** Most student fairness projects build an image pipeline; fewer tie output to named statute clauses. BiasAperture's mapping of metric rows to EU AI Act Art. 10(2)–10(5) and NIST RMF categories is harder to replicate than "run images through a classifier" and is the core differentiator.
 
+### Engineering Decisions That Differ from Industry Optimization (August 20, 2026 Reflation)
+
+The real strength of BiasAperture is not that "no one does this yet" — it's understanding *why* industry doesn't do this and explaining what a student team chose differently:
+
+**1. Dual-backend validation (AIF360 + Fairlearn in parallel)**
+
+Why industry avoids this:
+- Running two independent implementations looks redundant; adds maintenance cost.
+- A company ships a single toolkit that works and move on.
+- Redundancy is seen as bloat, not rigor.
+
+Why a student team should do this:
+- Face classifier bias is not a solved problem. Running two independent metric engines and cross-validating results is a defensible way to build confidence in the output.
+- If AIF360 and Fairlearn diverge on a metric, that's actionable intelligence about which method is more conservative for your use case — valuable for regulatory reporting.
+- This is exactly the kind of rigor engineers are trained to apply (test against multiple independent sources, don't trust a single computation without verification).
+
+**Statement:** "We compute all four disparity metrics using both AIF360 and Fairlearn independently, flag when they diverge, and report both. This cross-validation is not in the industry baseline — it costs maintenance effort — but adds defensibility to the audit claim."
+
+**2. Per-subgroup-cell statistical completeness (n ≥ 30 minimum reporting threshold)**
+
+Why industry doesn't enforce this:
+- Strict minimum-cell-size rules reduce report coverage and can make a product look "incomplete" to a non-technical buyer.
+- Shipping with n=5 cells flagged as "too small" looks like a limitation.
+
+Why a student team implements it:
+- Statistical validity is non-negotiable for a bias audit. Reporting on n<30 violates standard statistical practice (insufficient power for reliable CI estimation).
+- This is a principle of engineering discipline — you don't report confidence intervals you can't actually support, even if it means some subgroups appear "data unavailable."
+
+**Statement:** "We enforce a strict n ≥ 30 minimum per cell before reporting any metric. Below that, we flag 'insufficient sample' rather than compute. This is statistically conservative and is exactly what an auditor should do."
+
+**3. Regulatory compliance as structural, not decorative**
+
+Why industry doesn't lead with this:
+- EU AI Act Article 10 is recent (June 2024); most compliance approaches treat it as a post-hoc checkbox: "yes, we ran fairness metrics" → "yes, we're compliant."
+- Baking regulation into the schema (each metric row tagged with Art. 10 sub-clause) adds design overhead upfront.
+
+Why a student team centers it:
+- As engineers trained in standards and regulations (IOE curriculum includes regulatory frameworks), compliance is a design constraint, not a feature request.
+- BiasAperture's schema assumes regulatory mapping from the start — the output is inherently compliant, not compliant-after-export.
+
+**Statement:** "Every metric row is tagged with the corresponding EU AI Act article sub-clause (10(2)–10(5)) and NIST RMF category by design. Compliance is not a layer we add later; it's part of the interface."
+
+**Why this matters for the examiner/supervisor:** These aren't "flaws" we're defending. They're design choices that reflect how a responsible engineering team, without pressure to ship a commercial product, would approach the problem. That's actually the strongest defense — not "no one else does this" but "here's why a disciplined team should."
+
 ## Outstanding Action Items
 
 Consolidated here so neither drops through the cracks — both are edits pending on the same file, `feasibility_study.pdf`:
