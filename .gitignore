@@ -259,3 +259,6 @@ datasets/
 *.pth
 *.bin
 *.onnx
+
+# Parallel research outputs (Claude Desktop instances)
+research/results/
