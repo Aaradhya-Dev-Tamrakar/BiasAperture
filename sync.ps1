@@ -39,10 +39,14 @@ function Push-AllRemotes {
     }
 
     # Optional personal/org fork — push if permitted; silently skip without error if unauthorized
-    $null = git push $orgRemote $Branch 2>&1
-    if ($LASTEXITCODE -eq 0) {
-        $results[$orgRemote] = 'OK'
-    } else {
+    try {
+        & git.exe push $orgRemote $Branch *>$null
+        if ($LASTEXITCODE -eq 0) {
+            $results[$orgRemote] = 'OK'
+        } else {
+            $results[$orgRemote] = 'SKIPPED (no access)'
+        }
+    } catch {
         $results[$orgRemote] = 'SKIPPED (no access)'
     }
 
