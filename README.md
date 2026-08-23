@@ -69,7 +69,7 @@ Overall Progress: [███████████░░░░░░░░░]
 
 | Work Package / Milestone | Stream / Focus | Primary Owner | Status | Progress Bar | Deliverables & Implementation State |
 |---|---|---|---|---|---|
-| **WP1 / M1: Schema Lock & Baseline** | Foundations | Joint | Completed | `[████████████████████] 100%` | Locked schema (`schema.py`), FairFace ResNet-34 baseline fixed, test suite passing (14/14) |
+| **WP1 / M1: Schema Lock & Baseline** | Foundations | Joint | Completed | `[████████████████████] 100%` | Locked schema (`schema.py`), FairFace ResNet-34 baseline fixed, test suite passing (22/22) |
 | **WP2 / M2: Data Ingestion & Test Matrix** | Stream A | Tisha (`@tiixsha`) | In Progress | `[███████████░░░░░░░░░]  55%` | 20-track research complete, `ModelInterface` & `PredictionsFileInterface` implemented, alignment & test matrix specs ready |
 | **WP3 / M2: Compliance Report Scaffolding** | Stream B | Tisha (`@tiixsha`) | In Progress | `[█████████░░░░░░░░░░░]  45%` | EU AI Act & NIST mapping complete, offline standalone Jinja2 single-file HTML architecture & templates designed |
 | **WP4 / M3: Statistical Detection Engine & SHAP** | Stream C & D | Aaradhya (`@AaradhyaDT`) | In Progress | `[████████░░░░░░░░░░░░]  40%` | Dual-backend harmonization (AIF360/Fairlearn), BCa bootstrap CI & χ² engine, SHAP attribution design locked |

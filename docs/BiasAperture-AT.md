@@ -1,4 +1,4 @@
-# BiasAperture-AT (v7)
+# BiasAperture-AT (v8)
 
 Fuse Capstone Project — BiasAperture (Fairness & Bias Audit)
 
@@ -7,7 +7,7 @@ Fuse Capstone Project — BiasAperture (Fairness & Bias Audit)
 **Supervisor:** Shreejan Kisee
 **Program:** Fusemachines AI Fellowship (AIF) 2026
 
-**Status:** Feasibility study reviewed (accurate) · Parallel work structure defined · Named ownership assigned (§16) · Novelty check completed (§12) · SHAP explainability layer added (§3) · Proposal report (main.pdf) cross-validated against full source set, zero contradictions (§13) · Repo restructured with docs/ + sync.ps1, literature review matrix built (§15) · Packaging & Ruff standards configured
+**Status:** Feasibility study reviewed (accurate) · Parallel work structure defined · Named ownership assigned (§16, §17) · Novelty check completed (§12) · SHAP explainability layer added (§3) · Proposal report (main.pdf) cross-validated against full source set, zero contradictions (§13) · Repo restructured with docs/ + sync.ps1, literature review matrix built (§15) · Packaging & Ruff standards configured · Master Task Division & 4-Week Sprint Roadmap formalised (§18)
 
 ---
 
@@ -324,5 +324,52 @@ Formal lock of the empirical verification, stream ownership, git feature branche
 
 **Revision 6 (August 20, 2026):** New §16 added — coming-week (Aug 20) trait-based task assignment for 5 named items (Data Exploration, Model Specification Finalise, Proposal Report Finalise, Presentation Draft, Task Division), plus the prior module-level split from the same session, both carried over verbatim from a separate Claude chat exercise. Scope is independent of §1–§15's project-tracking content — no registration, feasibility-study, acceptance-criteria, cut-list, novelty-check, or repo-structure content was touched. No change to §1–§15. Title renamed from BiasAperture-AT_v5 to BiasAperture-AT_v6.
 
+## §18. Master Task Division & 4-Week Sprint Roadmap (Implementation Phase, August 2026)
+
+Following the completion of Milestone M1 and the 20-track research sprint, tasks are formally partitioned into 4 concurrent production streams, with definitions of done, input/output data contracts, and sprint schedules:
+
+### 1. Work Package & Stream Allocation
+
+| Stream / Work Package | Primary Owner | Target Feature Branch | Core Deliverables | Output Contract & Data Handoff |
+|---|:---:|---|---|---|
+| **Stream A: Data Pipeline & Test Matrix** *(WP2)* | **T** | `feat/stream-data` | • Two-mode ingestion (`data_ingestion.py`: Strict/Profiling).<br>• In-process `dlib` 5-point alignment adapter (`model_interface.py`).<br>• Unitary & 126 intersectional subgroup slice indexers.<br>• Stratified synthetic dev matrices ($n=5,000$, edge-case $n<30$). | Yields `Iterator[SubjectRecord]` strictly validated against `schema.py` |
+| **Stream B: Regulatory & Reporting Engine** *(WP3)* | **T** | `feat/stream-report` | • Jinja2 standalone single-file HTML report (`report/generator.py`).<br>• Zero-network embedded styling, responsive grids & SVG badges.<br>• Mitchell et al. Model Card & Gebru et al. Datasheet integration.<br>• Statutory crosswalks (EU AI Act Art. 10/13/15 & NIST AI RMF Measure 2.11). | Ingests `list[MetricResult]` and renders zero-network `audit_report.html` |
+| **Stream C: Fairness Engine & Statistical Math** *(WP4)* | **A** | `feat/wp4-engine` | • `FairnessBackend` strategy base + $n \ge 30$ sample guard.<br>• `FairlearnBackend` & harmonized `AIF360Backend` (max-of-gaps EOD, `abs()` EOP).<br>• Dual-backend `CrossValidationOrchestrator` ($|\Delta| > \epsilon$ warnings).<br>• Vectorized stratified BCa bootstrap CI ($B \ge 1,000$) & $\chi^2$ / Holm FWER testing. | Ingests `Iterator[SubjectRecord]` and produces `list[MetricResult]` |
+| **Stream D: Explainability & Orchestration** *(WP4/WP5)* | **A** | `feat/wp5-integration` | • Conditional SHAP engine ($p < 0.05 \land n \ge 30$, $k \le 20$ exemplars).<br>• BiSeNet face parsing & CIELAB ITA skin-tone proxy analysis.<br>• Master CLI (`bias-aperture audit`) & orchestration pipeline.<br>• Full FairFace 97,698-image ResNet-34 benchmark audit. | Chains Ingestion $\to$ Model $\to$ Fairness $\to$ Stats $\to$ SHAP $\to$ Report |
+| **Stream E: Capstone Paper & Viva Defense** *(Joint)* | **A + T** | `main` | • LaTeX report final synchronization (`report/main.pdf`).<br>• 20-minute defense presentation deck.<br>• Supervisor dry-run & empirical claim grilling via `CLAIM_LEDGER.md`. | Capstone submission & defense |
+
+### 2. Four-Week Sprint Timeline
+
+- **Sprint 1 (Week 1 / Aug 24–30) — M2 Foundation:**
+  - Tisha: Dataset Ingestion (A1) + Jinja2 HTML Scaffold (B1, B2).
+  - Aaradhya: Fairness Backend Strategy (C1, C2, C3) + Mock Test Harness.
+- **Sprint 2 (Week 2 / Aug 31–Sep 06) — M3 Core Engines:**
+  - Tisha: Regulatory Mappings (B3) + Demographic Test Matrices (A3, A4).
+  - Aaradhya: Vectorized BCa Bootstrap & $\chi^2$ / Holm FWER (C4, C5) + SHAP Engine (D1, D2).
+- **Sprint 3 (Week 3 / Sep 07–Sep 13) — M4 System Integration:**
+  - Tisha: Offline HTML Report Finalization (B4, B5) + Dataset Validation Audit.
+  - Aaradhya: CLI & Pipeline Orchestrator (D3, D4) + End-to-End Pipeline Wiring.
+- **Sprint 4 (Week 4 / Sep 14–Sep 20) — Benchmark & Viva Defense:**
+  - Joint: Full FairFace 97.7k Benchmark Audit (D5) + LaTeX Report Finalization (E1).
+  - Joint: Presentation Slides (E2) + Examiner Scrutiny Mock Defense (E3).
+
+---
+
+*Exported from Fuse capstone planning session — reflects state as of this export, not a final locked plan.*
+
+**Revision:** A/T naming applied throughout, replacing full names/initials, per confirmed decision from prior session.
+
+**Revision 2 (July 17, 2026):** §7–§10 added — feasibility study reviewed and citation-checked (accurate), cut-list, acceptance criteria, and work restructured for concurrency per A's explicit preference. Named ownership of solo streams remains open, per §4's original scope.
+
+**Revision 3 (July 30, 2026):** Project renamed BiasAperture throughout. §12 added — novelty assessment and prior-art check (Aequitas, FairSight, FairTest, Themis-ml, FAT Forensics, What-If Tool, JFAM), none closing the claimed research gap. §2.2 addition to feasibility_study.pdf flagged as outstanding action item, not yet applied. §1 updated — Ward Office Assistant → BiasAperture swap confirmed final, no longer open. §3 updated — SHAP explainability layer added per July 21 NotebookLM engineering session (not yet in feasibility_study.pdf module list — action item). §11 (naming history) added — "BioFair: Compliance Engine" from the same July 21 session noted as superseded by BiasAperture.
+
+**Revision 4 (August 1, 2026):** §3's dangling "action item below" reference (pointed nowhere in v3) resolved — new §13 consolidates both outstanding feasibility_study.pdf edits (Aequitas citation, SHAP module-list addition) in one place; §12's duplicate inline copy of the Aequitas item removed in favor of the §13 reference. New §14 added — report/main.pdf cross-validated this session against the full engineering-strategy source set (EU AI Act/EUR-Lex, Article 10, NIST AI RMF, AIF360, Fairlearn, FairFace/UTKFace, Model Cards, Datasheets, feasibility study): zero contradictions, zero unsupported claims. No change to §4/§10 named-ownership status, §9 acceptance criteria, or §13 action items — all remain open exactly as in v3.
+
+**Revision 5 (August 7, 2026):** New §15 added — repo verification pass, literature review matrix (docs/literature-review-matrix.md, 8 papers, meets 5-paper minimum), repo restructure (docs/ folder, sync.ps1, README update), pushed as commit 00b89c7. §3 updated — SHAP explainability layer confirmed present in report/src/chapters/requirements.tex as FR-005, distinct from the still-outstanding feasibility_study.pdf edit. §8 Cut #2 (UTKFace) annotated with the missing-bib-entry gap found in §15. §13 item #2 status clarified: requirements.tex now reflects SHAP, feasibility_study.pdf §3.1.3 still does not — item remains open, not resolved. No change to §4/§9/§10/§12 content. Title renamed from Fuse-capstone-project-AT_v4 to BiasAperture-AT_v5, matching the project's confirmed name (§1, §11) rather than the earlier Fuse-capstone working title.
+
+**Revision 6 (August 20, 2026):** New §16 added — coming-week (Aug 20) trait-based task assignment for 5 named items (Data Exploration, Model Specification Finalise, Proposal Report Finalise, Presentation Draft, Task Division), plus the prior module-level split from the same session, both carried over verbatim from a separate Claude chat exercise. Scope is independent of §1–§15's project-tracking content — no registration, feasibility-study, acceptance-criteria, cut-list, novelty-check, or repo-structure content was touched. No change to §1–§15. Title renamed from BiasAperture-AT_v5 to BiasAperture-AT_v6.
+
 **Revision 7 (August 23, 2026):** New §17 added — formal empirical research verification matrix, stream ownership, dedicated git feature branches (`feat/stream-data`, `feat/stream-report`, `feat/wp4-engine`, `feat/wp5-integration`), and viva defense responsibility division locked between A and T. Title updated to BiasAperture-AT_v7.
+
+**Revision 8 (August 23, 2026):** New §18 added — formal Master Task Division, 4-Week Sprint Schedule, and cross-stream contract handoffs for the implementation phase (M2 $\to$ M3 $\to$ M4 $\to$ Viva Defense). Title updated to BiasAperture-AT_v8.
 
