@@ -8,11 +8,12 @@ field names, dtypes, or label vocabularies below after M1 is a breaking
 change to Stream A (WP2) and Stream B (WP3) and must be re-synced with
 both before merging.
 
-Classifier baseline locked this milestone: dchen236/FairFace inference
-fork of the FairFace paper's official pretrained ResNet-34
-(res34_fair_align_multi_7_20190809.pt), race_7 variant (finer-grained
-than race_4 — matches FairFace's own 7 race groups and the requirements
-chapter's FairFace-primary dataset choice). See requirements.tex FR-001.
+Classifier baseline locked this milestone: dchen236/FairFace (and
+joojs/fairface) inference fork of the FairFace paper's official pretrained
+ResNet-34 (fairface_alldata_20191111.pt, with res34_fair_align_multi_7_20190809.pt
+as alternative), race_7 variant (finer-grained than race_4 — matches FairFace's
+own 7 race groups and the requirements chapter's FairFace-primary dataset
+choice). See requirements.tex FR-001.
 """
 
 from __future__ import annotations

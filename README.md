@@ -9,7 +9,7 @@ A fairness and bias audit system proposal report submitted for the Fusemachines 
 
 ## Abstract
 
-BiasAperture is a proposed diagnostic and evaluative software platform that computes subgroup and intersectional fairness metrics for a third-party facial-analysis model and reports them in a standardised, regulator-legible format. It is organised into five cooperating modules covering data ingestion, model interfacing, fairness-metric computation, explainability, and report generation. Its analytical core computes four disparity metrics — demographic parity difference, equalized odds difference, equal opportunity difference, and disparate impact ratio — using AIF360 and Fairlearn as independent, cross-validating backends, with every reported disparity accompanied by a chi-squared significance test and a bootstrap confidence interval. A SHAP-based explainability layer attributes flagged disparities to input features. Findings are traced to their specific basis under Article 10 of the EU AI Act and the corresponding function of the NIST AI Risk Management Framework. The design is validated against the FairFace and UTKFace benchmark datasets. BiasAperture is scoped strictly as diagnostic: it does not mitigate bias, retrain models, or generate synthetic demographic data.
+BiasAperture is a proposed diagnostic and evaluative software platform that computes subgroup and intersectional fairness metrics for a third-party facial-analysis model and reports them in a standardised, regulator-legible format. It is organised into five cooperating modules covering data ingestion, model interfacing, fairness-metric computation, explainability, and report generation. Its analytical core computes four disparity metrics — demographic parity difference, equalized odds difference, equal opportunity difference, and disparate impact ratio — using AIF360 and Fairlearn as independent, cross-validating backends, with every reported disparity accompanied by a chi-squared significance test and a bootstrap confidence interval. A SHAP-based explainability layer attributes flagged disparities to input features. Findings are traced to their specific basis under Article 10 of the EU AI Act and the corresponding function of the NIST AI Risk Management Framework. The design is validated against the FairFace benchmark dataset (with UTKFace evaluated and formally cut per Cut-List #2). BiasAperture is scoped strictly as diagnostic: it does not mitigate bias, retrain models, or generate synthetic demographic data.
 
 ## Repository Structure
 
@@ -21,6 +21,10 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 ├── uv.lock                     # Deterministic dependency lockfile
 ├── data/                       # Datasets and test matrices (raw/ and processed/ gitignored)
 │   └── README.md               # Dataset sourcing and FairFace setup instructions
+├── research/                   # 20-Track Parallel Research Sprint
+│   ├── research tracks/        # Track prompts and deliverables (Tracks 01–20)
+│   ├── context feed/           # Context documents feeding research tracks
+│   └── results/                # Stream syntheses (A–F) and cross-track conflict log
 ├── report/                     # LaTeX report source and compiled proposal
 │   ├── main.tex                # Entry point
 │   ├── vars.tex                # Title, authors, supervisor metadata
@@ -53,15 +57,15 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 ## Project Progress & Roadmap
 
 ```
-Overall Progress: [██████░░░░░░░░░░░░░░] 32% (Milestone M1 Schema Locked)
+Overall Progress: [████████░░░░░░░░░░░░] 40% (M1 Schema Locked & 20-Track Research Sprint Complete)
 ```
 
 | Work Package / Milestone | Stream / Focus | Status | Progress Bar | Deliverables & Implementation State |
 |---|---|---|---|---|
 | **WP1 / M1: Schema Lock & Baseline** | Foundations / Joint | Completed | `[████████████████████] 100%` | Locked schema (`schema.py`), FairFace ResNet-34 baseline fixed, test suite passing (14/14) |
-| **WP2 / M2: Data Ingestion & Test Matrix** | Stream A (Aaradhya) | In Progress | `[██████░░░░░░░░░░░░░░]  30%` | Directory scaffolding (`data/`), FairFace sourcing guide, data ingestion pipeline in progress |
-| **WP3 / M2: Compliance Report Scaffolding** | Stream B (Aaradhya/Tisha) | In Progress | `[████░░░░░░░░░░░░░░░░]  20%` | Package scaffolding (`report/`), Model Card & Jinja2 HTML generation structure in progress |
-| **WP4 / M3: Statistical Detection Engine & SHAP** | WP4 (Tisha) | In Progress | `[██░░░░░░░░░░░░░░░░░░]  10%` | Fairness package scaffolded (`fairness/`), AIF360/Fairlearn backends, bootstrap CIs & SHAP planned |
+| **WP2 / M2: Data Ingestion & Test Matrix** | Stream A (Aaradhya) | In Progress | `[████████░░░░░░░░░░░░]  40%` | 20-track research complete (Tracks 01–04), directory scaffolding, validation specs ready |
+| **WP3 / M2: Compliance Report Scaffolding** | Stream B (Aaradhya/Tisha) | In Progress | `[██████░░░░░░░░░░░░░░]  30%` | 20-track research complete (Tracks 05–08), Model Card & Jinja2 single-file HTML architecture designed |
+| **WP4 / M3: Statistical Detection Engine & SHAP** | WP4 (Tisha) | In Progress | `[████░░░░░░░░░░░░░░░░]  20%` | 20-track research complete (Tracks 09–18), Strategy pattern base class, bootstrap & χ² designs locked |
 | **WP5 / M4: System Orchestration & Case Study** | Integration / Joint | Planned | `[░░░░░░░░░░░░░░░░░░░░]   0%` | Mock-to-real swap, full FairFace benchmark audit run, and final report bundle export |
 
 ## Branching & Workstreams

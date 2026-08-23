@@ -3,7 +3,7 @@
 ## Project Overview
 **BiasAperture** is a diagnostic and evaluative framework for auditing demographic bias in third-party facial analysis systems submitted for the Fusemachines AI Fellowship (AIF) 2026.
 - **Diagnostic Scope**: BiasAperture detects and reports bias; it does **not** mitigate bias, retrain models, or generate synthetic faces.
-- **Benchmark Datasets**: Primary: FairFace (108,501 images, 7 race groups); Secondary: UTKFace.
+- **Benchmark Datasets**: Primary: FairFace (97,698 released images on disk, 7 race groups); Secondary: UTKFace ([CUT] per Cut-List #2 / Track 02).
 - **Regulatory Mapping**: EU AI Act Article 10 & Annex IV, NIST AI RMF (Govern, Map, Measure).
 
 ---
