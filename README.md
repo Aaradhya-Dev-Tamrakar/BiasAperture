@@ -1,10 +1,11 @@
 # BiasAperture
 
-* A Diagnostic and Evaluative Framework for Auditing Demographic Bias in Facial Analysis Systems *
+- A Diagnostic and Evaluative Framework for Auditing Demographic Bias in Facial Analysis Systems \*
 
 A fairness and bias audit system proposal report submitted for the Fusemachines AI Fellowship Program, Kathmandu, Nepal.
 
 **Authors:** Aaradhya Dev Tamrakar, Tisha Manandhar
+
 **Supervisor:** Shreejan Kisee, Teaching Assistant, Fusemachines AI Fellowship
 
 ## Abstract
@@ -63,34 +64,34 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 
 ## Project Progress & Roadmap
 
-```
-Overall Progress: [███████████░░░░░░░░░] 55% (M1 Schema & 20-Track Research Sprint Complete · M2 Ingestion & Reporting In Progress)
+```Overall Progress: [███████████░░░░░░░░░] 55% (M1 Schema & 20-Track Research Sprint Complete · M2 Ingestion & Reporting In Progress)
+
 ```
 
-| Work Package / Milestone | Stream / Focus | Primary Owner | Status | Progress Bar | Deliverables & Implementation State |
-|---|---|---|---|---|---|
-| **WP1 / M1: Schema Lock & Baseline** | Foundations | Joint | Completed | `[████████████████████] 100%` | Locked schema (`schema.py`), FairFace ResNet-34 baseline fixed, test suite passing (22/22) |
-| **WP2 / M2: Data Ingestion & Test Matrix** | Stream A | Tisha (`@tiixsha`) | In Progress | `[███████████░░░░░░░░░]  55%` | 20-track research complete, `ModelInterface` & `PredictionsFileInterface` implemented, alignment & test matrix specs ready |
-| **WP3 / M2: Compliance Report Scaffolding** | Stream B | Tisha (`@tiixsha`) | In Progress | `[█████████░░░░░░░░░░░]  45%` | EU AI Act & NIST mapping complete, offline standalone Jinja2 single-file HTML architecture & templates designed |
-| **WP4 / M3: Statistical Detection Engine & SHAP** | Stream C & D | Aaradhya (`@AaradhyaDT`) | In Progress | `[████████░░░░░░░░░░░░]  40%` | Dual-backend harmonization (AIF360/Fairlearn), BCa bootstrap CI & χ² engine, SHAP attribution design locked |
-| **WP5 / M4: System Orchestration & Case Study** | Integration | Joint (Aaradhya/Tisha) | In Progress | `[███░░░░░░░░░░░░░░░░░]  15%` | Dual-remote automated sync workflow operational, end-to-end integration pipeline & benchmark audit plan staged |
+| Work Package / Milestone                          | Stream / Focus | Primary Owner            | Status      | Progress Bar                  | Deliverables & Implementation State                                                                                        |
+| ------------------------------------------------- | -------------- | ------------------------ | ----------- | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| **WP1 / M1: Schema Lock & Baseline**              | Foundations    | Joint                    | Completed   | `[████████████████████] 100%` | Locked schema (`schema.py`), FairFace ResNet-34 baseline fixed, test suite passing (22/22)                                 |
+| **WP2 / M2: Data Ingestion & Test Matrix**        | Stream A       | Tisha (`@tiixsha`)       | In Progress | `[███████████░░░░░░░░░]  55%` | 20-track research complete, `ModelInterface` & `PredictionsFileInterface` implemented, alignment & test matrix specs ready |
+| **WP3 / M2: Compliance Report Scaffolding**       | Stream B       | Tisha (`@tiixsha`)       | In Progress | `[█████████░░░░░░░░░░░]  45%` | EU AI Act & NIST mapping complete, offline standalone Jinja2 single-file HTML architecture & templates designed            |
+| **WP4 / M3: Statistical Detection Engine & SHAP** | Stream C & D   | Aaradhya (`@AaradhyaDT`) | In Progress | `[████████░░░░░░░░░░░░]  40%` | Dual-backend harmonization (AIF360/Fairlearn), BCa bootstrap CI & χ² engine, SHAP attribution design locked                |
+| **WP5 / M4: System Orchestration & Case Study**   | Integration    | Joint (Aaradhya/Tisha)   | In Progress | `[███░░░░░░░░░░░░░░░░░]  15%` | Dual-remote automated sync workflow operational, end-to-end integration pipeline & benchmark audit plan staged             |
 
 ## Branching & Workstreams
 
-| Branch | Stream / Work Package | Primary Owner | Target Focus & Verification Mandate |
-|---|---|---|---|
-| `main` | Production / Base | Joint | Stable base holding M1 schema, documentation, and LaTeX report |
-| `feat/stream-data` | Stream A (WP2) | Tisha (`@tiixsha`) | FairFace dataset ingestion, `dlib` 5-point landmark alignment & demographic test-matrix |
-| `feat/stream-report` | Stream B (WP3) | Tisha (`@tiixsha`) | Jinja2 HTML compliance report scaffolding, zero-network offline rendering, EU AI Act mapping |
-| `feat/wp4-engine` | Stream C (WP4) | Aaradhya (`@AaradhyaDT`) | Fairness backends harmonization (AIF360 + Fairlearn), BCa bootstrap CIs, and $\chi^2$ significance |
-| `feat/wp5-integration` | Stream D (WP5) | Aaradhya (`@AaradhyaDT`) | SHAP explainability layer, pipeline orchestration, and end-to-end benchmark case studies |
+| Branch                 | Stream / Work Package | Primary Owner            | Target Focus & Verification Mandate                                                                |
+| ---------------------- | --------------------- | ------------------------ | -------------------------------------------------------------------------------------------------- |
+| `main`                 | Production / Base     | Joint                    | Stable base holding M1 schema, documentation, and LaTeX report                                     |
+| `feat/stream-data`     | Stream A (WP2)        | Tisha (`@tiixsha`)       | FairFace dataset ingestion, `dlib` 5-point landmark alignment & demographic test-matrix            |
+| `feat/stream-report`   | Stream B (WP3)        | Tisha (`@tiixsha`)       | Jinja2 HTML compliance report scaffolding, zero-network offline rendering, EU AI Act mapping       |
+| `feat/wp4-engine`      | Stream C (WP4)        | Aaradhya (`@AaradhyaDT`) | Fairness backends harmonization (AIF360 + Fairlearn), BCa bootstrap CIs, and $\chi^2$ significance |
+| `feat/wp5-integration` | Stream D (WP5)        | Aaradhya (`@AaradhyaDT`) | SHAP explainability layer, pipeline orchestration, and end-to-end benchmark case studies           |
 
 ## Research Verification & Viva Defense Allocation
 
 Empirical claims are verified across independent audit streams as detailed in the [Verification & Scrutiny Guide](docs/research/VERIFICATION_AND_SCRUTINY_GUIDE.md):
 
-* **Tisha Manandhar**: Leads defense on Dataset Integrity (FairFace 97.7k count verification & alignment), Demographic Test Matrix Scaffolding, Regulatory Alignment (EU AI Act Art. 10/13 & NIST AI RMF Measure 2.11), and Standalone Compliance Reporting.
-* **Aaradhya Dev Tamrakar**: Leads defense on Statistical Significance Engine ($\chi^2$ asymptotic tests, BCa Bootstrap Confidence Intervals), Dual-Backend Harmonization (AIF360 vs Fairlearn Equalized Odds max-of-gaps), and SHAP Feature Attribution.
+- **Tisha Manandhar**: Leads defense on Dataset Integrity (FairFace 97.7k count verification & alignment), Demographic Test Matrix Scaffolding, Regulatory Alignment (EU AI Act Art. 10/13 & NIST AI RMF Measure 2.11), and Standalone Compliance Reporting.
+- **Aaradhya Dev Tamrakar**: Leads defense on Statistical Significance Engine ($\chi^2$ asymptotic tests, BCa Bootstrap Confidence Intervals), Dual-Backend Harmonization (AIF360 vs Fairlearn Equalized Odds max-of-gaps), and SHAP Feature Attribution.
 
 ## Python Development, Testing & Code Style
 
@@ -109,7 +110,6 @@ pre-commit install
 ```
 
 ## Local Git Workflow & Auto-Sync (`sync.ps1`)
-
 
 ```powershell
 .\sync.ps1                                  # stage all, conventional-commit, pull --rebase, push
@@ -142,8 +142,8 @@ Build artifacts (`.aux`, `.bbl`, `.toc`, `.synctex.gz`, etc.) are git-ignored; o
 
 Recommended extensions for editing/compiling `report/`:
 
-* **[LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop)** (James Yu) — compile, preview, autocomplete, SyncTeX
-* **[LaTeX Utilities](https://marketplace.visualstudio.com/items?itemName=tecosaur.latex-utilities)** (tecosaur) — glossary/word-count add-ons on top of Workshop
+- **[LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop)** (James Yu) — compile, preview, autocomplete, SyncTeX
+- **[LaTeX Utilities](https://marketplace.visualstudio.com/items?itemName=tecosaur.latex-utilities)** (tecosaur) — glossary/word-count add-ons on top of Workshop
 
 Skip generic "LaTeX" language-support extensions (e.g. Mathematic Inc's) — redundant with Workshop and can conflict on snippets/keybindings.
 
