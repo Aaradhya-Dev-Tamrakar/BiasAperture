@@ -33,13 +33,13 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 │   ├── main.pdf                # Compiled proposal (tracked; build artifacts are not)
 │   └── src/                    # Frontmatter, chapters, backmatter, images
 ├── docs/                       # TA/reviewer-facing meta-documentation
-│   ├── BiasAperture-AT.md      # Master project planning and task assignments (v6)
+│   ├── BiasAperture-AT.md      # Master project planning and task assignments (v7)
 │   ├── schema-lock-m1.md       # Milestone M1 schema specification
 │   ├── literature-review-matrix.md   # Paper matrix (9 papers, Walden format)
 │   ├── research/               # Research Synthesis & Verification Reports
-│   │   ├── HIGH_LEVEL_SYNTHESIS.md
-│   │   ├── MID_LEVEL_ARCHITECTURE.md
-│   │   ├── LOW_LEVEL_SPECIFICATION.md
+│   │   ├── HIGH_LEVEL_SYNTHESIS.md (and .pdf)
+│   │   ├── MID_LEVEL_ARCHITECTURE.md (and .pdf)
+│   │   ├── LOW_LEVEL_SPECIFICATION.md (and .pdf)
 │   │   └── VERIFICATION_AND_SCRUTINY_GUIDE.md
 │   ├── CHANGELOG.md            # Auto-updated by sync.ps1 on each sync
 │   └── fellowship/             # Official AIF guidelines & reference PDFs
@@ -65,22 +65,30 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 Overall Progress: [████████░░░░░░░░░░░░] 40% (M1 Schema Locked & 20-Track Research Sprint Complete)
 ```
 
-| Work Package / Milestone | Stream / Focus | Status | Progress Bar | Deliverables & Implementation State |
-|---|---|---|---|---|
-| **WP1 / M1: Schema Lock & Baseline** | Foundations / Joint | Completed | `[████████████████████] 100%` | Locked schema (`schema.py`), FairFace ResNet-34 baseline fixed, test suite passing (14/14) |
-| **WP2 / M2: Data Ingestion & Test Matrix** | Stream A (Aaradhya) | In Progress | `[████████░░░░░░░░░░░░]  40%` | 20-track research complete (Tracks 01–04), directory scaffolding, validation specs ready |
-| **WP3 / M2: Compliance Report Scaffolding** | Stream B (Aaradhya/Tisha) | In Progress | `[██████░░░░░░░░░░░░░░]  30%` | 20-track research complete (Tracks 05–08), Model Card & Jinja2 single-file HTML architecture designed |
-| **WP4 / M3: Statistical Detection Engine & SHAP** | WP4 (Tisha) | In Progress | `[████░░░░░░░░░░░░░░░░]  20%` | 20-track research complete (Tracks 09–18), Strategy pattern base class, bootstrap & χ² designs locked |
-| **WP5 / M4: System Orchestration & Case Study** | Integration / Joint | Planned | `[░░░░░░░░░░░░░░░░░░░░]   0%` | Mock-to-real swap, full FairFace benchmark audit run, and final report bundle export |
+| Work Package / Milestone | Stream / Focus | Primary Owner | Status | Progress Bar | Deliverables & Implementation State |
+|---|---|---|---|---|---|
+| **WP1 / M1: Schema Lock & Baseline** | Foundations | Joint | Completed | `[████████████████████] 100%` | Locked schema (`schema.py`), FairFace ResNet-34 baseline fixed, test suite passing (14/14) |
+| **WP2 / M2: Data Ingestion & Test Matrix** | Stream A | Tisha (`@tiixsha`) | In Progress | `[████████░░░░░░░░░░░░]  40%` | 20-track research complete, FairFace 5-point alignment & demographic cell validation specs ready |
+| **WP3 / M2: Compliance Report Scaffolding** | Stream B | Tisha (`@tiixsha`) | In Progress | `[██████░░░░░░░░░░░░░░]  30%` | EU AI Act & NIST mapping complete, offline standalone Jinja2 single-file HTML architecture designed |
+| **WP4 / M3: Statistical Detection Engine & SHAP** | Stream C & D | Aaradhya (`@AaradhyaDT`) | In Progress | `[████░░░░░░░░░░░░░░░░]  20%` | Dual-backend harmonization (AIF360/Fairlearn), BCa bootstrap CI & χ² engine, SHAP attribution design |
+| **WP5 / M4: System Orchestration & Case Study** | Integration | Joint (Aaradhya/Tisha) | Planned | `[░░░░░░░░░░░░░░░░░░░░]   0%` | End-to-end orchestration runner, mock-to-real swap, full FairFace audit run, and final report bundle export |
 
 ## Branching & Workstreams
 
-| Branch | Stream / Work Package | Primary Owner | Description |
+| Branch | Stream / Work Package | Primary Owner | Target Focus & Verification Mandate |
 |---|---|---|---|
-| `main` | Production / Base | Joint | Stable base holding M1 schema, docs, and report |
-| `feat/stream-data` | Stream A (WP2) | Aaradhya (`@AaradhyaDT`) | FairFace dataset ingestion & test-matrix construction |
-| `feat/stream-report` | Stream B (WP3) | Aaradhya (`@AaradhyaDT`), Tisha review | Jinja2 HTML compliance report scaffolding |
-| `feat/wp4-engine` | WP4 | Tisha (`@tiixsha`) | Fairness computation backends, statistics, and SHAP |
+| `main` | Production / Base | Joint | Stable base holding M1 schema, documentation, and LaTeX report |
+| `feat/stream-data` | Stream A (WP2) | Tisha (`@tiixsha`) | FairFace dataset ingestion, `dlib` 5-point landmark alignment & demographic test-matrix |
+| `feat/stream-report` | Stream B (WP3) | Tisha (`@tiixsha`) | Jinja2 HTML compliance report scaffolding, zero-network offline rendering, EU AI Act mapping |
+| `feat/wp4-engine` | Stream C (WP4) | Aaradhya (`@AaradhyaDT`) | Fairness backends harmonization (AIF360 + Fairlearn), BCa bootstrap CIs, and $\chi^2$ significance |
+| `feat/wp5-integration` | Stream D (WP5) | Aaradhya (`@AaradhyaDT`) | SHAP explainability layer, pipeline orchestration, and end-to-end benchmark case studies |
+
+## Research Verification & Viva Defense Allocation
+
+Empirical claims are verified across independent audit streams as detailed in the [Verification & Scrutiny Guide](docs/research/VERIFICATION_AND_SCRUTINY_GUIDE.md):
+
+* **Tisha Manandhar**: Leads defense on Dataset Integrity (FairFace 97.7k count verification & alignment), Demographic Test Matrix Scaffolding, Regulatory Alignment (EU AI Act Art. 10/13 & NIST AI RMF Measure 2.11), and Standalone Compliance Reporting.
+* **Aaradhya Dev Tamrakar**: Leads defense on Statistical Significance Engine ($\chi^2$ asymptotic tests, BCa Bootstrap Confidence Intervals), Dual-Backend Harmonization (AIF360 vs Fairlearn Equalized Odds max-of-gaps), and SHAP Feature Attribution.
 
 ## Python Development, Testing & Code Style
 
