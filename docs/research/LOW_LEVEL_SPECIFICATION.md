@@ -45,6 +45,8 @@ For any multi-class prediction target $Y \in \mathcal{C} = \{c_1, c_2, \dots, c_
      $$\text{Macro-DPD} = \frac{1}{M} \sum_{m=1}^M \text{DPD}^{(m)}, \quad \text{Macro-EOD} = \frac{1}{M} \sum_{m=1}^M \text{EOD}^{(m)}, \quad \text{Macro-EOP} = \frac{1}{M} \sum_{m=1}^M \text{EOP}^{(m)}$$
      *Methodological Note: Macro aggregation assigns equal evaluative weight to each One-vs-Rest class irrespective of sample prevalence.*
    - **Macro-DIR Policy**: **DIR is reported per class but is NOT macro-averaged**, because arithmetic averaging of non-linear ratios produces mathematically distorted and uninterpretable aggregate statistics.
+4. **Per-Class Support Reporting Invariant**:
+   - Macro summary metrics must always be accompanied by per-class metric values and class-wise support counts ($n_{Y=c_m, a}$) to prevent masking weak-support sub-cohorts.
 
 ---
 
@@ -84,19 +86,14 @@ $$\text{DPD} = \max_{a \in A} P(\hat{Y}=1 \mid A=a) - \min_{a \in A} P(\hat{Y}=1
 Let $\text{TPR}_a = P(\hat{Y}=1 \mid Y=1, A=a)$ and $\text{FPR}_a = P(\hat{Y}=1 \mid Y=0, A=a)$.
 
 #### The Divergence Found in Research (Tracks 09, 10, 14):
-- **Fairlearn**: Implements the **worst-case gap** (Hardt et al., 2016):
-  $$\text{EOD}_{\text{Fairlearn}} = \max \left( \max_a \text{TPR}_a - \min_a \text{TPR}_a, \; \max_a \text{FPR}_a - \min_a \text{FPR}_a \right)$$
-- **AIF360 Native**: Implements the **average gap**:
-  $$\text{EOD}_{\text{AIF360, native}} = \frac{1}{2} \left( |\text{TPR}_u - \text{TPR}_p| + |\text{FPR}_u - \text{FPR}_p| \right)$$
+- **Fairlearn / Hardt et al. (2016)**: Computes the worst-case disparity: $\max(|\Delta\text{TPR}|, |\Delta\text{FPR}|)$.
+- **AIF360 Native (`average_odds_difference`)**: Computes the average gap: $\frac{1}{2}(|\Delta\text{TPR}| + |\Delta\text{FPR}|)$.
 
 #### The Locked Resolution:
-Reporting AIF360's native mean would cause a false backend divergence. Therefore, `AIF360Backend` **must bypass `average_odds_difference`** and compute the max-of-gaps directly from raw TPR and FPR primitives:
+`AIF360Backend` is explicitly adapted to calculate the worst-case disparity from raw confusion-matrix counts to maintain parity with Fairlearn:
 
 ```python
-# Harmonized EOD in AIF360Backend
-tpr_gap = max(group_tprs.values()) - min(group_tprs.values())
-fpr_gap = max(group_fprs.values()) - min(group_fprs.values())
-eod_value = max(tpr_gap, fpr_gap)
+eod_value = max(abs(tpr_gap), abs(fpr_gap))
 ```
 
 ---
@@ -138,13 +135,15 @@ BiasAperture implements a dedicated vectorized BCa bootstrap engine on `numpy.ra
 
 #### Bootstrap Population Model & Stratified Resampling Rationale
 $$\text{Bootstrap Population Model} = \text{Fixed Observed Subgroup Strata}$$
-Resampling is performed strictly *within* observed demographic strata ($A=a$) rather than unconditional i.i.d. sampling across the mixed dataset. This fixes subgroup sample sizes $n_a$, preventing random fluctuations in demographic representation from confounding the disparity estimator with sample allocation variance.
+Resampling is performed strictly *within* observed demographic strata ($A=a$) rather than unconditional i.i.d. sampling across the mixed dataset.
+- **Estimand Meaning**: The bootstrap CI estimates uncertainty conditional on the observed subgroup composition ($n_a$), rather than uncertainty arising from random variation in subgroup proportions.
+- **Allocation Invariance**: Preserves the observed sample size within each eligible subgroup/cell ($n_a$), preventing random demographic fluctuations from confounding disparity estimation.
 
 #### Why a Custom Engine is Employed:
-1. **Fixed-Strata Index Drawing**: Guarantees balanced per-group resamples across 126 intersectional cells.
+1. **Fixed-Strata Index Drawing**: Preserves the observed sample size within each eligible subgroup/cell across all intersectional slices.
 2. **Simultaneous Multi-Group Evaluation**: Computes the full $K$-group metric vector in a single vectorized pass.
-3. **Deterministic Cross-Platform PRNG**: Uses `numpy.random.Generator(PCG64)` for bit-identical reproducibility across operating systems.
-4. **Explicit Stability Bounds**: Implements the BiasAperture stability threshold ($|a| \le 0.5$) to fall back smoothly to empirical percentiles when jackknife acceleration degenerates.
+3. **Deterministic Seeded PRNG**: Uses `numpy.random.Generator(PCG64)` for deterministic seeded random-stream reproducibility under a fixed NumPy implementation and identical call sequence.
+4. **Explicit Stability Bounds & Replicate Validity**: Implements the BiasAperture stability threshold ($|a| \le 0.5$) with percentile fallback. If a resample produces zero class support ($n_{\text{pos}, a}=0$), the replicate is marked invalid; if valid replicate fraction $< 0.90$, the engine reports `insufficient_sample=True` rather than silently converting undefined rates to zero.
 
 ```
                     ┌──────────────────────────────────────────┐
