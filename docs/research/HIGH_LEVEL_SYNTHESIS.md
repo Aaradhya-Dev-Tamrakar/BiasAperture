@@ -150,19 +150,32 @@ To guarantee deterministic, high-quality completion on the fellowship schedule, 
 
 ## 7. Current Project State & Next Steps
 
+### Project State & Verification Rigor
+
+In academic evaluation and technical auditing, we maintain an explicit distinction between specification, empirical verification, and implementation maturity:
+
+- **Research & Design Specification**: **Largely Complete (100%)** — All mathematical harmonizations, backend strategies, and schema contracts are locked.
+- **Empirical Verification**: **Partly Specified, Partly Performed (60%)** — Formally tracked in [`docs/research/CLAIM_LEDGER.md`](file:///c:/Users/Aaradhya/Downloads/_Organized/Fuse%20AI%20Fellowship/Capstone%20Project/BiasAperture/docs/research/CLAIM_LEDGER.md) with 14 verified claims and 6 reproducible automated tests.
+- **Implementation**: **In Progress (~45% overall codebase progress)** — Core schema and model interfaces are passing tests; concrete fairness backends and HTML generators are under active development.
+- **End-to-End Validation**: **Planned (WP5)** — Execution of the complete 97,698-image FairFace benchmark audit.
+
+> **Academic Positioning Statement:**  
+> *"We utilized parallel AI-assisted reconnaissance and design to accelerate hypothesis generation and source exploration, while introducing an explicit 4-tier verification methodology and auditable claim ledger (`ASSERTED` $\to$ `VERIFIED` $\to$ `REPRODUCIBLE`) to independently validate all technical and mathematical assertions before implementation."*
+
 ```
-Milestone Progress:
-[████████░░░░░░░░░░░░] 40%
-├── WP1: Schema Lock & Baseline (100% - LOCKED)
-├── 20-Track Research Sprint (100% - SYNTHESIZED)
-├── WP2: Data Ingestion & Test Matrix (In Progress - 40%)
-├── WP3: Compliance Reporting (In Progress - 30%)
-├── WP4: Fairness Engine & Explainability (In Progress - 20%)
-└── WP5: Integration & CLI (Scheduled - 0%)
+Milestone Implementation State:
+Overall Progress: [███████████░░░░░░░░░] 55%
+├── WP1: Schema Lock & Baseline (100% - COMPLETED)
+├── Research Synthesis & Claim Ledger (100% - LOCKED & TRACKED)
+├── WP2: Data Ingestion & Test Matrix (55% - In Progress)
+├── WP3: Compliance Reporting (45% - In Progress)
+├── WP4: Fairness Engine & Explainability (40% - In Progress)
+└── WP5: Integration & CLI (15% - In Progress)
 ```
 
-With the research sprint complete, the implementation path is clear:
-1. Build `bias_aperture/data_ingestion.py` and finalize the test matrix.
-2. Implement `bias_aperture/report/generator.py` and the Jinja2 HTML templates.
-3. Implement `bias_aperture/fairness/base.py`, backend adapters, bootstrap statistics, and SHAP explainability.
-4. Wire the end-to-end CLI orchestrator in WP5.
+With the research and design specifications de-risked, the roadmap focuses on turning remaining verified assertions into reproducible code:
+1. Build `bias_aperture/data_ingestion.py` and finalize the test matrix (Stream A).
+2. Implement `bias_aperture/report/generator.py` and the Jinja2 HTML templates (Stream B).
+3. Implement `bias_aperture/fairness/base.py`, backend adapters, bootstrap statistics, and SHAP explainability (WP4).
+4. Wire the end-to-end CLI orchestrator and conduct the final benchmark audit (WP5).
+

@@ -37,6 +37,7 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 │   ├── schema-lock-m1.md       # Milestone M1 schema specification
 │   ├── literature-review-matrix.md   # Paper matrix (9 papers, Walden format)
 │   ├── research/               # Research Synthesis & Verification Reports
+│   │   ├── CLAIM_LEDGER.md         # Auditable Research Claim Ledger (ASSERTED -> VERIFIED -> REPRODUCIBLE)
 │   │   ├── HIGH_LEVEL_SYNTHESIS.md (and .pdf)
 │   │   ├── MID_LEVEL_ARCHITECTURE.md (and .pdf)
 │   │   ├── LOW_LEVEL_SPECIFICATION.md (and .pdf)
