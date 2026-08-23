@@ -5,6 +5,7 @@
 A fairness and bias audit system proposal report submitted for the Fusemachines AI Fellowship Program, Kathmandu, Nepal.
 
 **Authors:** Aaradhya Dev Tamrakar, Tisha Manandhar
+
 **Supervisor:** Shreejan Kisee, Teaching Assistant, Fusemachines AI Fellowship
 
 ## Abstract
