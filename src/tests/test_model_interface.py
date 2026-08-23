@@ -85,9 +85,7 @@ def test_missing_file_raises():
 def test_unsupported_extension_rejected(tmp_path):
     p = tmp_path / "preds.txt"
     p.write_text("nonsense")
-    iface = PredictionsFileInterface(
-        p, true_label_col="x", predicted_label_col="y"
-    )
+    iface = PredictionsFileInterface(p, true_label_col="x", predicted_label_col="y")
     with pytest.raises(ValueError, match="unsupported predictions-file extension"):
         list(iface.get_predictions())
 

@@ -245,3 +245,20 @@ __marimo__/
 *.sls
 *.sta
 *.xdy
+
+# Git bare repository artifacts
+*.git/
+!/.git/
+
+# Datasets and checkpoints
+data/*
+!data/README.md
+!data/**/.gitkeep
+datasets/
+*.pt
+*.pth
+*.bin
+*.onnx
+
+# Parallel research outputs (Claude Desktop instances)
+research/results/
