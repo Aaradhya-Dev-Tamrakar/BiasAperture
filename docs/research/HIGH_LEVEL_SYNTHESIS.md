@@ -155,12 +155,12 @@ To guarantee deterministic, high-quality completion on the fellowship schedule, 
 In academic evaluation and technical auditing, we maintain an explicit distinction between specification, empirical verification, and implementation maturity:
 
 - **Research & Design Specification**: **Largely Complete (100%)** — All mathematical harmonizations, backend strategies, and schema contracts are locked.
-- **Empirical Verification**: **Partly Specified, Partly Performed (60%)** — Formally tracked in [`docs/research/CLAIM_LEDGER.md`](file:///c:/Users/Aaradhya/Downloads/_Organized/Fuse%20AI%20Fellowship/Capstone%20Project/BiasAperture/docs/research/CLAIM_LEDGER.md) with 14 verified claims and 6 reproducible automated tests.
+- **Empirical Verification**: **Partly Specified, Formally Tracked (60%)** — Formally tracked in [`docs/research/CLAIM_LEDGER.md`](file:///c:/Users/Aaradhya/Downloads/_Organized/Fuse%20AI%20Fellowship/Capstone%20Project/BiasAperture/docs/research/CLAIM_LEDGER.md) across 20 claims (8 codified in passing automated tests, 12 verified via primary sources and REPL probes).
 - **Implementation**: **In Progress (~45% overall codebase progress)** — Core schema and model interfaces are passing tests; concrete fairness backends and HTML generators are under active development.
 - **End-to-End Validation**: **Planned (WP5)** — Execution of the complete 97,698-image FairFace benchmark audit.
 
-> **Academic Positioning Statement:**  
-> *"We utilized parallel AI-assisted reconnaissance and design to accelerate hypothesis generation and source exploration, while introducing an explicit 4-tier verification methodology and auditable claim ledger (`ASSERTED` $\to$ `VERIFIED` $\to$ `REPRODUCIBLE`) to independently validate all technical and mathematical assertions before implementation."*
+> **Methodology Chapter Formulation:**  
+> *"BiasAperture employed parallel AI-assisted reconnaissance to accelerate source exploration and hypothesis generation; all consequential technical claims were subsequently organized into an auditable claim ledger and subjected to primary-source inspection, isolated empirical probing, known-answer validation, and reproducibility testing before implementation."*
 
 ```
 Milestone Implementation State:
@@ -178,4 +178,5 @@ With the research and design specifications de-risked, the roadmap focuses on tu
 2. Implement `bias_aperture/report/generator.py` and the Jinja2 HTML templates (Stream B).
 3. Implement `bias_aperture/fairness/base.py`, backend adapters, bootstrap statistics, and SHAP explainability (WP4).
 4. Wire the end-to-end CLI orchestrator and conduct the final benchmark audit (WP5).
+
 
