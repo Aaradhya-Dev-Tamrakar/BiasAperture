@@ -1,4 +1,4 @@
-[CmdletBinding(DefaultParameterSetName = 'Sync')]
+﻿[CmdletBinding(DefaultParameterSetName = 'Sync')]
 param(
     [Parameter(ParameterSetName = 'Sync')]
     [string]$m,
@@ -32,13 +32,11 @@ function Push-AllRemotes {
     Initialize-Remotes
     $results = @{}
 
-    # Core required remotes (shared by the fellowship team)
     foreach ($remote in @('origin', $fuseaiRemote)) {
         git push $remote $Branch 2>&1 | Tee-Object -Variable pushOut | Out-Null
         $results[$remote] = if ($LASTEXITCODE -eq 0) { 'OK' } else { 'FAILED' }
     }
 
-    # Optional personal/org fork — push if permitted; silently skip without error if unauthorized
     $null = git push $orgRemote $Branch 2>&1
     if ($LASTEXITCODE -eq 0) {
         $results[$orgRemote] = 'OK'
@@ -50,7 +48,7 @@ function Push-AllRemotes {
         Write-Host "push [$r]: $($results[$r])"
     }
     if ($results['origin'] -eq 'FAILED' -or $results[$fuseaiRemote] -eq 'FAILED') {
-        Write-Warning "One or more core remotes failed to push. No rollback performed — resolve manually (likely diverged history)."
+        Write-Warning "One or more core remotes failed to push. No rollback performed - resolve manually (likely diverged history)."
     }
 }
 
@@ -81,10 +79,10 @@ function Update-Tracker {
     $trackerPath = Join-Path $repoRoot 'docs/CHANGELOG.md'
     if (-not (Test-Path $trackerPath)) {
         New-Item -ItemType Directory -Force -Path (Split-Path $trackerPath) | Out-Null
-        "# BiasAperture — Changelog`n" | Set-Content $trackerPath
+        "# BiasAperture - Changelog`n" | Set-Content $trackerPath
     }
     $timestamp = Get-Date -Format 'yyyy-MM-dd HH:mm'
-    Add-Content $trackerPath "- $timestamp — sync"
+    Add-Content $trackerPath "- $timestamp - sync"
     git add $trackerPath
 }
 
@@ -114,4 +112,3 @@ if ($staged) {
 git pull --autostash --rebase
 $branch = git rev-parse --abbrev-ref HEAD
 Push-AllRemotes -Branch $branch
-git statusgit status
