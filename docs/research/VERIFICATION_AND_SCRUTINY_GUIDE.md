@@ -32,7 +32,25 @@ When evaluating any AI-assisted research finding or third-party claim, apply the
 
 ---
 
-## 2. Stream-by-Stream Verification Protocols
+## 2. Investigator Ownership & Stream Allocation
+
+To ensure rigorous auditing, code isolation, and balanced research contribution across both Principal Investigators, verification tasks and feature branches are divided as follows:
+
+| Stream / Work Package | Primary Investigator | Verification Responsibilities & Empirical Probes | Target Git Branch |
+| :--- | :--- | :--- | :--- |
+| **Stream A: Data Pipeline & Test Matrix** *(WP2)* | **Tisha Manandhar** | • Disk byte counts (86,744 train + 10,954 val = 97,698 actual images vs 108k paper claim).<br>• 5-point `dlib` landmark alignment vs MTCNN behavior on raw tensors.<br>• Validate demographic cell coverage across 7 race $\times$ 9 age $\times$ 2 gender groups. | `feat/stream-data` |
+| **Stream B: Regulatory & Reporting Architecture** *(WP3)* | **Tisha Manandhar** | • Legal clause-to-metric verification: Trace EU AI Act Article 10(2)(f), 10(3), Article 13 & NIST AI RMF Measure 2.11.<br>• Offline rendering audit: Verify self-contained HTML report with 0 external network calls (embedded CSS/SVG/SHAP base64). | `feat/stream-report` |
+| **Stream C: Fairness Engine & Statistical Math** *(WP4)* | **Aaradhya Dev Tamrakar** | • Hand-calculation verification of the 8-record known-answer baseline (DPD, DIR, EOP, EOD).<br>• Dual-backend harmonization: Prove Fairlearn vs. AIF360 Equalized Odds divergence (max-gap vs mean-gap).<br>• Prove $n < 30$ CLT sample-size guard prevents $3\times$–$45\times$ disparity distortions. | `feat/wp4-engine` |
+| **Stream D: Explainability & Orchestration** *(WP4/WP5)* | **Aaradhya Dev Tamrakar** | • Verify Individual Typology Angle (ITA) CIELAB dermatological equations.<br>• Verify `PartitionExplainer` stability over `DeepExplainer` on ResNet-34 architectures.<br>• Orchestration pipeline and dual-remote sync integrity. | `feat/wp5-integration` |
+
+### Viva / Defense Division of Responsibilities
+
+- **Tisha Manandhar**: Leads defense on Dataset Integrity, Demographic Representation Matrix, EU AI Act / NIST AI RMF Regulatory Alignment, and Standalone Compliance Reporting.
+- **Aaradhya Dev Tamrakar**: Leads defense on Statistical Significance Engine ($\chi^2$, BCa Bootstrap Confidence Intervals), Dual-Backend Harmonization (AIF360 + Fairlearn), and SHAP Proxy-Variable Explainability.
+
+---
+
+## 3. Stream-by-Stream Verification Protocols
 
 ---
 
@@ -190,7 +208,7 @@ Verify this 8-record matrix by hand:
 
 ---
 
-## 3. Top 10 Viva / Defense Interrogation Questions (Self-Test)
+## 4. Top 10 Viva / Defense Interrogation Questions (Self-Test)
 
 Before defending the capstone, test yourself with these 10 questions:
 
@@ -217,7 +235,7 @@ Before defending the capstone, test yourself with these 10 questions:
 
 ---
 
-## 4. Verification Checklist Before Any Milestone Merge
+## 5. Verification Checklist Before Any Milestone Merge
 
 - [ ] **Data Check**: Are all counts verified against disk files using byte/line measures?
 - [ ] **Math Check**: Do all metrics match hand-calculated known-answer values on $n=8$?

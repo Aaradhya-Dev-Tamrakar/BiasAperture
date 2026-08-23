@@ -1,4 +1,4 @@
-# BiasAperture-AT (v6)
+# BiasAperture-AT (v7)
 
 Fuse Capstone Project — BiasAperture (Fairness & Bias Audit)
 
@@ -290,6 +290,24 @@ New, separate exercise conducted in a Claude chat session — unrelated to §1�
 
 No change to §1–§15 content, §4/§10 named-ownership status, §9 acceptance criteria, or §13 action items.
 
+## §17. Research Verification & Feature Branch Allocation (August 23, 2026)
+
+Formal lock of the empirical verification, stream ownership, git feature branches, and viva defense responsibilities between A (Aaradhya Dev Tamrakar) and T (Tisha Manandhar):
+
+### Stream & Branch Matrix
+
+| Work Package / Stream | Owner | Verification Mandate & Empirical Probes | Dedicated Git Branch |
+| :--- | :--- | :--- | :--- |
+| **Stream A: Data Pipeline & Test Matrix** *(WP2)* | **T** | • Disk byte counts (86,744 train + 10,954 val = 97,698 actual images vs 108k paper claim).<br>• 5-point `dlib` landmark alignment vs MTCNN behavior on raw tensors.<br>• Validate demographic cell coverage across 7 race $\times$ 9 age $\times$ 2 gender groups. | `feat/stream-data` |
+| **Stream B: Regulatory & Reporting Engine** *(WP3)* | **T** | • Legal clause-to-metric verification: Trace EU AI Act Article 10(2)(f), 10(3), Article 13 & NIST AI RMF Measure 2.11.<br>• Offline rendering audit: Verify self-contained HTML report with 0 external network calls (embedded CSS/SVG/SHAP base64). | `feat/stream-report` |
+| **Stream C: Fairness Engine & Statistical Math** *(WP4)* | **A** | • Hand-calculation verification of the 8-record known-answer baseline (DPD, DIR, EOP, EOD).<br>• Dual-backend harmonization: Prove Fairlearn vs. AIF360 Equalized Odds divergence (max-gap vs mean-gap).<br>• Prove $n < 30$ CLT sample-size guard prevents $3\times$–$45\times$ disparity distortions. | `feat/wp4-engine` |
+| **Stream D: Explainability & Orchestration** *(WP4/WP5)* | **A** | • Verify Individual Typology Angle (ITA) CIELAB dermatological equations.<br>• Verify `PartitionExplainer` stability over `DeepExplainer` on ResNet-34 architectures.<br>• Orchestration pipeline and dual-remote sync integrity. | `feat/wp5-integration` |
+
+### Viva / Defense Division of Responsibilities
+
+- **Tisha Manandhar (T)**: Leads presentation & defense on Dataset Ingestion, Demographic Test Matrix Scaffolding, Regulatory Alignment (EU AI Act & NIST AI RMF), and Offline Reporting Architecture.
+- **Aaradhya Dev Tamrakar (A)**: Leads presentation & defense on Statistical Testing ($\chi^2$, BCa Bootstrap Confidence Intervals), Dual-Backend Harmonization (AIF360 + Fairlearn), and SHAP Proxy-Variable Attribution.
+
 ---
 
 *Exported from Fuse capstone planning session — reflects state as of this export, not a final locked plan.*
@@ -305,3 +323,6 @@ No change to §1–§15 content, §4/§10 named-ownership status, §9 acceptance
 **Revision 5 (August 7, 2026):** New §15 added — repo verification pass, literature review matrix (docs/literature-review-matrix.md, 8 papers, meets 5-paper minimum), repo restructure (docs/ folder, sync.ps1, README update), pushed as commit 00b89c7. §3 updated — SHAP explainability layer confirmed present in report/src/chapters/requirements.tex as FR-005, distinct from the still-outstanding feasibility_study.pdf edit. §8 Cut #2 (UTKFace) annotated with the missing-bib-entry gap found in §15. §13 item #2 status clarified: requirements.tex now reflects SHAP, feasibility_study.pdf §3.1.3 still does not — item remains open, not resolved. No change to §4/§9/§10/§12 content. Title renamed from Fuse-capstone-project-AT_v4 to BiasAperture-AT_v5, matching the project's confirmed name (§1, §11) rather than the earlier Fuse-capstone working title.
 
 **Revision 6 (August 20, 2026):** New §16 added — coming-week (Aug 20) trait-based task assignment for 5 named items (Data Exploration, Model Specification Finalise, Proposal Report Finalise, Presentation Draft, Task Division), plus the prior module-level split from the same session, both carried over verbatim from a separate Claude chat exercise. Scope is independent of §1–§15's project-tracking content — no registration, feasibility-study, acceptance-criteria, cut-list, novelty-check, or repo-structure content was touched. No change to §1–§15. Title renamed from BiasAperture-AT_v5 to BiasAperture-AT_v6.
+
+**Revision 7 (August 23, 2026):** New §17 added — formal empirical research verification matrix, stream ownership, dedicated git feature branches (`feat/stream-data`, `feat/stream-report`, `feat/wp4-engine`, `feat/wp5-integration`), and viva defense responsibility division locked between A and T. Title updated to BiasAperture-AT_v7.
+
