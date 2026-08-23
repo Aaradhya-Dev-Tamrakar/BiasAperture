@@ -143,7 +143,10 @@ Resampling is performed strictly *within* observed demographic strata ($A=a$) ra
 1. **Fixed-Strata Index Drawing**: Preserves the observed sample size within each eligible subgroup/cell across all intersectional slices.
 2. **Simultaneous Multi-Group Evaluation**: Computes the full $K$-group metric vector in a single vectorized pass.
 3. **Deterministic Seeded PRNG**: Uses `numpy.random.Generator(PCG64)` for deterministic seeded random-stream reproducibility under a fixed NumPy implementation and identical call sequence.
-4. **Explicit Stability Bounds & Replicate Validity**: Implements the BiasAperture stability threshold ($|a| \le 0.5$) with percentile fallback. If a resample produces zero class support ($n_{\text{pos}, a}=0$), the replicate is marked invalid; if valid replicate fraction $< 0.90$, the engine reports `insufficient_sample=True` rather than silently converting undefined rates to zero.
+4. **Explicit Stability Bounds & Metric-Specific Replicate Validity**:
+   - Implements the BiasAperture stability threshold ($|a| \le 0.5$) with empirical percentile fallback.
+   - **Replicate Validity Contract**: Every bootstrap replicate is checked for metric-specific support (DPD/DIR: valid non-empty denominator; EOP: positive support $n_{Y=1, a} > 0$; EOD: positive and negative support $n_{Y=1, a} > 0 \land n_{Y=0, a} > 0$).
+   - Invalid replicates are excluded; if the valid replicate fraction falls below $\tau = 0.90$ (*a project-defined conservative engineering acceptance criterion*), the engine reports `insufficient_sample=True` rather than silently converting undefined rates to zero.
 
 ```
                     ┌──────────────────────────────────────────┐
