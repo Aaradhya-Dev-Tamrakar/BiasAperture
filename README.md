@@ -64,8 +64,8 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 
 ## Project Progress & Roadmap
 
-```
-Overall Progress: [███████████░░░░░░░░░] 55% (M1 Schema & 20-Track Research Sprint Complete · M2 Ingestion & Reporting In Progress)
+```Overall Progress: [███████████░░░░░░░░░] 55% (M1 Schema & 20-Track Research Sprint Complete · M2 Ingestion & Reporting In Progress)
+
 ```
 
 | Work Package / Milestone                          | Stream / Focus | Primary Owner            | Status      | Progress Bar                  | Deliverables & Implementation State                                                                                        |
