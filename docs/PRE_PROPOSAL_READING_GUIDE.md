@@ -2,7 +2,7 @@
 
 **Document Purpose:** Foundational study guide and conceptual roadmap distilled from all primary-source syntheses, mathematical harmonizations, and examiner defense strategies for **BiasAperture**.  
 **Audience:** Aaradhya Dev Tamrakar & Tisha Manandhar (Fusemachines AI Fellowship Capstone Defense).  
-**Status:** Synchronized with Frozen Research Specifications (`ce42f71`).  
+**Status:** Synchronized with research specification freeze through `ba69af4`; guide created at `99bf3aa`.  
 
 ---
 
@@ -15,12 +15,12 @@ $$\boxed{\text{Problem} \longrightarrow \text{Data} \longrightarrow \text{Estima
 | Link | Core Idea | Primary Source Grounding |
 |---|---|---|
 | **1. Problem** | Aggregate accuracy hides severe subgroup failure (*distributional masking*). | Buolamwini & Gebru (2018) *Gender Shades* |
-| **2. Data** | 97,698 balanced images on disk across 7 races, 9 ages, 2 genders (126 cells). | Kärkkäinen & Joo (2021) *FairFace* |
+| **2. Data** | 97,698 labeled images on disk across 7 races, 9 ages, 2 genders; 126 possible intersectional cells with highly unequal cell occupancy. | Kärkkäinen & Joo (2021) *FairFace* |
 | **3. Estimand** | Conditional inference holding observed subgroup sample sizes $n_a$ invariant. | Fixed-strata within-subgroup resampling design |
 | **4. Metric** | Selection disparity (DPD) vs. error-rate parities (EOP, harmonized max-gap EOD). | Hardt et al. (2016) *Equality of Opportunity* |
-| **5. Uncertainty** | $n \ge 30$ screening invariant, support checks, $\chi^2$ / Holm FWER, BCa bootstrap ($B \ge 1000$). | Efron (1987) BCa theory + empirical fallback |
-| **6. Interpretation** | Disparities & ratios are effect sizes, not standalone compliance proofs. | Watkins et al. (2022) *Four-Fifths Critique* |
-| **7. Limits** | Feature attribution $\neq$ causality (*Proxy Evidence Analysis*). Passing $\neq$ global fairness. | Bilodeau et al. (2022) *Impossibility Theorems* |
+| **5. Uncertainty** | $n \ge 30$ screening invariant, support checks ($k=5$), valid-replicate threshold ($\tau=0.90$), BCa bootstrap ($B \ge 1000$). | Efron (1987) BCa theory + project stability fallback |
+| **6. Interpretation** | Disparities & ratios are effect sizes, requiring statistical support context rather than bare threshold evaluation. | Watkins et al. (2022) *Four-Fifths Critique* |
+| **7. Limits** | Feature attribution is not causal evidence of discrimination (*Proxy Evidence Analysis*). Passing $\neq$ global fairness. | Bilodeau et al. (2022) *Impossibility Theorems* |
 | **8. Governance** | Metrics without provenance and limitations are incomplete; offline single-file report. | Mitchell et al. (2019) & Gebru et al. (2018) |
 | **9. Scope** | Strictly diagnostic: ingest, measure, explain, report. No retraining or debiasing. | Dehdashtian et al. (2024) Survey |
 
@@ -57,15 +57,15 @@ You do not need to read dozens of papers. Deeply understand these **9 foundation
 
 #### 1. Buolamwini & Gebru (2018) — *Gender Shades: Intersectional Accuracy Disparities in Commercial Gender Classification*
 * **What to Read:** Section 3 (PPB dataset & Fitzpatrick skin types) and Section 5 (Empirical results).
-* **The Insight:** Commercial classifiers had overall error rates under 12%, but intersectional error rates reached **34.7% for darker females vs. 0.8% for lighter males** (a 43:1 error gap).
-* **Takeaway:** Overall accuracy creates *distributional masking*. Auditing must be evaluated at demographic intersections ($Skin \times Gender \times Age$).
+* **The Insight:** Commercial classifiers achieved overall error rates under 12%, but intersectional error rates reached **34.7% for darker females vs. 0.8% for lighter males** (a 43:1 error gap).
+* **Takeaway:** Overall accuracy creates *distributional masking*. Aggregate metrics should be complemented by subgroup and intersectional analysis where the data support it (with low-support cells explicitly flagged rather than estimated unstably).
 
 #### 2. Kärkkäinen & Joo (2021) — *FairFace: Face Attribute Dataset for Balanced Race, Gender, and Age*
 * **What to Read:** Section 3 (Balanced dataset construction, 7-race taxonomy) and Section 4 (ResNet-34 multi-task baseline).
-* **The Insight:** Prior face datasets (LFW, CelebA) were 70–80% White. FairFace was intentionally sampled for balance across 7 races, 9 age groups, and 2 genders.
+* **The Insight:** Prior face datasets (LFW, CelebA) were heavily skewed (70–80% White). FairFace was intentionally sampled with demographic balancing goals across 7 races, 9 age groups, and 2 genders.
 * **Takeaway:** 
-  - Distinguish the paper from your local artifact: **97,698 labeled images on disk** (86,744 train, 10,954 val) after post-annotation quality filtering.
-  - Generates $7 \times 2 \times 9 = 126$ intersectional cells.
+  - Distinguish the paper from your local artifact: **97,698 labeled images in the released artifact on disk: 86,744 train and 10,954 validation** after post-annotation quality filtering.
+  - The Cartesian taxonomy yields $7 \times 2 \times 9 = 126$ possible intersectional cells with **highly unequal cell occupancy**.
   - Baseline classifier uses `dlib` 5-point alignment chips ($300 \times 300$, $0.25$ padding) and an 18-unit linear layer (`torch.Size([18, 512])` sliced `[0:7]`, `[7:9]`, `[9:18]`).
 
 ---
@@ -87,11 +87,11 @@ You do not need to read dozens of papers. Deeply understand these **9 foundation
 
 #### 4. Watkins, McKenna, & Chen (2022) — *The Four-Fifths Rule is Not Disparate Impact*
 * **What to Read:** Section 2 & 3 (Doctrinal origins in US EEOC employment law vs. algorithmic application).
-* **The Insight:** Treating the 80% (4/5ths) selection ratio as an unadjusted pass/fail metric in ML is "epistemic trespassing." On small sample sizes or rare positive classes, random sampling variance routinely triggers false violations.
+* **The Insight:** Treating the 80% (4/5ths) selection ratio as an unadjusted pass/fail metric in ML is "epistemic trespassing." On small sample sizes or rare positive classes, random sampling variance routinely triggers **unstable or statistically unsupported apparent violations**.
 * **Takeaway for BiasAperture:** 
   - Disparate Impact Ratio ($\text{DIR}$) is an **effect-size description**, not standalone proof of unfairness.
   - BiasAperture computes DIR as a **symmetric bounded ratio** ($\min_a \text{rate}_a / \max_a \text{rate}_a \in [0, 1]$) to avoid arbitrarily picking a "privileged" group among 7 non-ordinal races.
-  - DIR is always paired with sample-size support checks, $\chi^2$ tests of independence, and bootstrap confidence intervals.
+  - DIR is always paired with cell-support checks and appropriate inferential procedures, including contingency-table tests where their assumptions are satisfied, plus bootstrap confidence intervals.
 
 ---
 
@@ -104,13 +104,13 @@ You do not need to read dozens of papers. Deeply understand these **9 foundation
   - **Median Bias Correction ($z_0$):** Adjusts for discrepancy between bootstrap median and point estimate.
   - **Acceleration ($a$):** Jackknife-based adjustment for skewness / variance dependency on the parameter.
   - **Estimand Contract:** BiasAperture resamples *within* demographic strata (fixed $n_a$) to estimate uncertainty conditional on observed subgroup composition.
-  - **Explicit Fallback Policy:** BCa is used when numerically stable; BiasAperture automatically falls back to empirical percentile intervals if $|a| > 0.5$, $z_0$ is degenerate, or quantiles escape $[0, 1]$.
+  - **Explicit Fallback Policy:** BiasAperture falls back to the empirical percentile interval when its explicit numerical stability and degeneracy checks fail, including the project-defined $|a| > 0.5$ criterion or invalid interval bounds.
 
 #### 6. Bilodeau et al. (2022) — *Impossibility Theorems for Feature Attribution*
 * **What to Read:** Introduction and the Core Impossibility Theorem.
 * **The Insight:** Additive linear feature attribution methods (SHAP, Integrated Gradients) cannot mathematically guarantee distinguishing whether a deep neural network is utilizing a true causal feature versus a correlated spurious proxy in general data distributions.
 * **Takeaway for BiasAperture:**
-  - **Attribution Evidence $\neq$ Causal Evidence.**
+  - **Attribution Evidence is not, by itself, causal evidence of discrimination.**
   - SHAP highlighting a facial region does not prove the model is discriminatory because of that demographic trait.
   - This justifies our strict naming convention: **Proxy Evidence Analysis**, providing exploratory visual diagnostic evidence, not causal proof.
 
@@ -136,7 +136,7 @@ You do not need to read dozens of papers. Deeply understand these **9 foundation
 
 ## 3. The 12 Master First-Principles Questions
 
-Master these 12 questions to defend the proposal without reading from notes:
+Master these 12 questions to defend the proposal from first principles:
 
 ### 1. Problem & Intersectional Masking
 * **Q:** *Why can high overall model accuracy conceal severe demographic disparities?*
@@ -158,7 +158,7 @@ Master these 12 questions to defend the proposal without reading from notes:
 
 ### 4. Effect-Size Interpretation
 * **Q:** *Why is a metric like $\text{DIR} = 0.72$ by itself insufficient to claim model bias?*
-* **A:** As Watkins et al. demonstrated, a ratio is an effect size, not a statistical test. It does not communicate sample size, variance, or stability. A small subgroup with few observations can produce an extreme ratio purely by chance. DIR must be paired with cell support checks, $\chi^2$ significance tests, and bootstrap confidence intervals.
+* **A:** As Watkins et al. demonstrated, a ratio is an effect size, not a statistical test. It does not communicate sample size, variance, or stability. A small subgroup with few observations can produce an extreme ratio purely by chance. DIR must be paired with cell-support checks and appropriate inferential procedures, including contingency-table tests where their assumptions are satisfied, plus bootstrap confidence intervals.
 
 ### 5. Sample-Size Screening Invariant
 * **Q:** *What does the $n \ge 30$ threshold represent, and what does it NOT mean?*
@@ -166,11 +166,11 @@ Master these 12 questions to defend the proposal without reading from notes:
 
 ### 6. Bootstrap Estimand & Mechanics
 * **Q:** *What are $z_0$ and $a$, and what is your bootstrap estimand?*
-* **A:** Our estimand is uncertainty conditional on observed demographic composition, achieved via **fixed-strata within-subgroup resampling** ($B \ge 1000$). $z_0$ corrects for median bias, and $a$ adjusts for distribution skewness via jackknife acceleration. If acceleration is extreme ($|a| > 0.5$) or intervals escape $[0, 1]$, the engine falls back to empirical percentile intervals.
+* **A:** Our estimand is uncertainty conditional on observed demographic composition, achieved via **fixed-strata within-subgroup resampling** ($B \ge 1000$). $z_0$ corrects for median bias, and $a$ adjusts for distribution skewness via jackknife acceleration. BiasAperture falls back to empirical percentile intervals when its explicit numerical stability and degeneracy checks fail, including the project-defined $|a| > 0.5$ criterion or invalid interval bounds.
 
 ### 7. Explainability Limits
 * **Q:** *Can SHAP feature attribution prove that a model is racially biased?*
-* **A:** No. Per Bilodeau et al. (2022) impossibility theorems, additive feature attribution cannot guarantee distinguishing true causal task features from correlated proxy features in deep networks. SHAP provides **Proxy Evidence Analysis** (exploratory visual association), not causal proof.
+* **A:** No. Per Bilodeau et al. (2022) impossibility theorems, SHAP attribution is not, by itself, causal evidence of discrimination. Deep networks may utilize features that correlate with demographic traits without establishing causal mechanisms. SHAP provides **Proxy Evidence Analysis** (exploratory visual association), not causal proof.
 
 ### 8. Backend Harmonization
 * **Q:** *Why not just use Fairlearn or AIF360 directly?*
@@ -194,17 +194,19 @@ Master these 12 questions to defend the proposal without reading from notes:
 
 ---
 
-## 4. Numbers and Constants to Know Cold
+## 4. Mental Hierarchy: Meaning $\to$ Justification $\to$ Limitation $\to$ Number
 
-```
-• Benchmark on Disk: 97,698 labeled images (86,744 train + 10,954 val)
-• Intersectional Cells: 126 (7 races × 2 genders × 9 age bins)
-• Significance Level: α = 0.05
-• Minimum Resamples: B ≥ 1,000 iterations
-• Screening Invariant: n ≥ 30 per subgroup
-• Support Invariants: n_{Y=1, a} ≥ 5 (EOP); n_{Y=1, a} ≥ 5 ∧ n_{Y=0, a} ≥ 5 (EOD)
-• Metric Fair Values: DPD = 0.0, EOD = 0.0, EOP = 0.0, DIR = 1.0
-• Known-Answer Proof: DPD = 0.500, EOD = 0.500, EOP = 0.500, DIR = 0.3333 (n=8 block)
-• ResNet-34 Architecture: 18-unit multi-task linear layer ([0:7], [7:9], [9:18]) over 512 features
-• Descoping Cut-List: 1. Web UI → 2. UTKFace → 3. PDF → 4. In-Process → 5. AIF360
-```
+Prioritize understanding why each parameter exists before reciting the numeric constant:
+
+| Concept / Invariant | Exact Specification | Meaning & Justification | Known Boundary / Limitation |
+|---|---|---|---|
+| **Primary Benchmark** | 97,698 labeled images ($86,744 \text{ train} + 10,954 \text{ val}$) | Released artifact count on disk with human labels | Does not equal uncurated 108.5k pre-discard count |
+| **Intersectional Grid** | 126 cells ($7 \text{ races} \times 2 \text{ genders} \times 9 \text{ ages}$) | Cartesian demographic combinations | Cell occupancy is highly non-uniform; many sparse cells |
+| **Screening Invariant** | $n \ge 30$ per subgroup | Prevents unstable small samples from entering analysis | Engineering threshold; not a universal statistical law |
+| **Cell Support Guard** | $k \ge 5$ observations | Requires $n_{Y=1, a} \ge 5$ (EOP) and $n_{Y=0, a} \ge 5$ (EOD) | Unmet support forces `insufficient_sample=True` |
+| **Bootstrap Iterations** | $B \ge 1,000$ resamples | Monte Carlo precision for tail quantiles | Stratified within observed strata (fixed $n_a$) |
+| **Replicate Validity** | $\tau = 0.90$ (90% valid) | Minimum valid bootstrap replicates required | Prevents estimation on near-empty demographic slices |
+| **Significance Level** | $\alpha = 0.05$ | Baseline error threshold with Holm FWER adjustment | Controls family-wise false discoveries across 126 cells |
+| **Harmonized Fair Values** | $\text{DPD}=0.0, \text{EOD}=0.0, \text{EOP}=0.0, \text{DIR}=1.0$ | Ideal parity values across harmonized metrics | Symmetric $\min/\max$ DIR avoids arbitrary privileged group |
+| **ResNet-34 Architecture** | 18 units (`torch.Size([18, 512])`) | Multi-task slices: race [0:7], gender [7:9], age [9:18] | Evaluated via `dlib` 5-point alignment ($300\times300$ chips) |
+| **Descoping Cut-List** | 1. UI $\to$ 2. UTKFace $\to$ 3. PDF $\to$ 4. In-Process $\to$ 5. AIF360 | Pre-planned graceful degradation under time pressure | Diagnostic core (ingestion, engine, report) is never cut |
