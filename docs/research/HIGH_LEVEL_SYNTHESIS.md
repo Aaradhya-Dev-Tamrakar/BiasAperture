@@ -155,7 +155,7 @@ To guarantee deterministic, high-quality completion on the fellowship schedule, 
 In academic evaluation and technical auditing, we maintain an explicit distinction between specification, empirical verification, and implementation maturity:
 
 - **Research & Design Specification**: **Largely Complete (100%)** — All mathematical harmonizations, backend strategies, and schema contracts are locked.
-- **Empirical Verification**: **Partly Specified, Formally Tracked (60%)** — Formally tracked in [`docs/research/CLAIM_LEDGER.md`](file:///c:/Users/Aaradhya/Downloads/_Organized/Fuse%20AI%20Fellowship/Capstone%20Project/BiasAperture/docs/research/CLAIM_LEDGER.md) across 20 claims (8 codified in passing automated tests, 12 verified via primary sources and REPL probes).
+- **Empirical Verification**: **Partly Specified, Formally Tracked (65%)** — Formally tracked in [`docs/research/CLAIM_LEDGER.md`](file:///c:/Users/Aaradhya/Downloads/_Organized/Fuse%20AI%20Fellowship/Capstone%20Project/BiasAperture/docs/research/CLAIM_LEDGER.md) across 20 claims (7 codified in passing automated tests, 13 verified via primary sources, external datasets, and REPL probes).
 - **Implementation**: **In Progress (~45% overall codebase progress)** — Core schema and model interfaces are passing tests; concrete fairness backends and HTML generators are under active development.
 - **End-to-End Validation**: **Planned (WP5)** — Execution of the complete 97,698-image FairFace benchmark audit.
 
