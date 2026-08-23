@@ -23,10 +23,10 @@ BiasAperture utilizes benchmark computer vision datasets strictly for scientific
 
 ## 2. Special-Category Demographic Data & Regulatory Safeguards
 
-Demographic attributes (race, ethnic origin, gender, and age) represent sensitive, special-category personal data under global data protection frameworks (including GDPR Article 9 and EU AI Act Article 10(5) / Article 4a).
+Demographic attributes (race, ethnic origin, gender, and age) represent sensitive, special-category personal data under global data protection frameworks (including GDPR Article 9 and EU AI Act Article 10(5) / Article 4a). This project identifies and documents applicable special-category data considerations and safeguards for diagnostic bias auditing.
 
 ### 2.1. Statutory Justification for Bias Auditing
-Under **EU AI Act Regulation (EU) 2024/1689 Article 10(5)**:
+Under **EU AI Act Regulation (EU) 2024/1689 Article 10(5) & Article 4a**:
 > *Providers of high-risk AI systems may process special categories of personal data solely to the extent strictly necessary for the purpose of ensuring bias detection and correction in relation to the high-risk AI systems... subject to appropriate safeguards.*
 
 BiasAperture operates strictly within these diagnostic safeguards:

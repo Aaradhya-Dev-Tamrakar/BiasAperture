@@ -29,10 +29,10 @@ To prevent category confusion during auditing and evaluation, BiasAperture estab
    - Auditing a model's prediction on a non-demographic task (or a distinct demographic attribute) across protected groups.
    - *Example*: Auditing binary gender classification ($Y \in \{\text{Male}, \text{Female}\}$) stratified across 7 race groups ($A = \text{Race}$).
    - *Interpretation*: Traditional fairness evaluation testing whether performance parity holds across sensitive groups.
-2. **Demographic Classifier Audit ($A = Y$)**:
+2. **Demographic-Class Performance Audit ($A = Y$)**:
    - Auditing the demographic classifier itself across its own classes.
    - *Example*: Auditing FairFace's 7-race prediction ($Y = \text{Race}, \hat{Y} = \text{Pred\_Race}, A = \text{Race}$).
-   - *Interpretation*: Class-conditional per-group performance analysis evaluating whether true positive rates (recall) and false positive rates diverge across the ground-truth classes themselves.
+   - *Interpretation*: Class-conditional per-group performance analysis evaluating whether true positive rates (recall) and false positive rates diverge across the ground-truth classes themselves (rather than conventional group fairness on an external task).
 
 ### 1.0.1. Multi-Class One-vs-Rest (OvR) Evaluation Policy
 
@@ -40,10 +40,11 @@ For any multi-class prediction target $Y \in \mathcal{C} = \{c_1, c_2, \dots, c_
 1. **Binarization**: Decompose the $M$-class problem into $M$ independent One-vs-Rest binary tasks:
    $$Y^{(m)} = \mathbb{I}(Y = c_m), \quad \hat{Y}^{(m)} = \mathbb{I}(\hat{Y} = c_m) \quad \text{for } m \in \{1, \dots, M\}$$
 2. **Metric Computation**: Compute the Core Four metrics ($\text{DPD}^{(m)}, \text{EOD}^{(m)}, \text{EOP}^{(m)}, \text{DIR}^{(m)}$) for each binary class task $m$ across the protected attribute subgroups $a \in A$.
-3. **Dual Reporting**:
-   - **Per-Class Breakdown**: Detailed report rows for each class slice (e.g., $\text{EOP}_{\text{East Asian}}$, $\text{EOP}_{\text{Black}}$).
-   - **Macro-Averaged Summary**: Aggregate arithmetic mean across all $M$ classes:
-     $$\text{Macro-DPD} = \frac{1}{M} \sum_{m=1}^M \text{DPD}^{(m)}, \quad \text{Macro-EOD} = \frac{1}{M} \sum_{m=1}^M \text{EOD}^{(m)}$$
+3. **Macro-Aggregation Policy**:
+   - **Macro-DPD, Macro-EOD, Macro-EOP**: Arithmetic unweighted mean across all $M$ classes:
+     $$\text{Macro-DPD} = \frac{1}{M} \sum_{m=1}^M \text{DPD}^{(m)}, \quad \text{Macro-EOD} = \frac{1}{M} \sum_{m=1}^M \text{EOD}^{(m)}, \quad \text{Macro-EOP} = \frac{1}{M} \sum_{m=1}^M \text{EOP}^{(m)}$$
+     *Methodological Note: Macro aggregation assigns equal evaluative weight to each One-vs-Rest class irrespective of sample prevalence.*
+   - **Macro-DIR Policy**: **DIR is reported per class but is NOT macro-averaged**, because arithmetic averaging of non-linear ratios produces mathematically distorted and uninterpretable aggregate statistics.
 
 ---
 
@@ -121,19 +122,29 @@ eop_value = abs(float(metric.equal_opportunity_difference()))
 
 $$\text{DIR} = \frac{\min_{a \in A} P(\hat{Y}=1 \mid A=a)}{\max_{a \in A} P(\hat{Y}=1 \mid A=a)}$$
 
-- **Symmetric Bounded Form**: Scaled to $[0, 1]$, where $1.0$ represents demographic parity.
+- **Symmetric Bounded Form (`symmetric_disparate_impact_ratio`)**: Scaled to $[0, 1]$, where $1.0$ represents demographic parity across multi-group sets without reference-group bias.
 - **Zero-Denominator Edge Handling**:
-  - If $\max_a P(\hat{Y}=1 \mid A=a) = 0.0$ (no positive predictions in any group), $\text{DIR} = 1.0$ (no disparate selection).
+  - If $\max_a P(\hat{Y}=1 \mid A=a) = 0.0$ (no positive predictions in any group), $\text{DIR} = 1.0$ (no relative disparity), and `absolute_selection_warning = True` is raised.
   - If $\min_a P(\hat{Y}=1 \mid A=a) = 0.0$ and $\max > 0$, $\text{DIR} = 0.0$ (complete disparate exclusion).
-- **Four-Fifths Rule Context**: Evaluated relative to the legal $0.80$ threshold via bootstrap confidence intervals (whether the 95% CI interval sits entirely below, straddles, or exceeds $0.80$).
+- **Four-Fifths Adverse-Impact Screening Heuristic**: Evaluated relative to the $0.80$ screening heuristic (EEOC guidance) via bootstrap confidence intervals.
 
 ---
 
-## 2. Statistical Engine Implementation Details
+## 3. Statistical Engine Implementation Details
 
-### 2.1. Vectorized BCa Bootstrap Confidence Intervals
+### 3.1. Vectorized Stratified BCa Bootstrap Confidence Intervals
 
-`scipy.stats.bootstrap` cannot compute BCa intervals on multi-group statistics. BiasAperture implements a standalone vectorized BCa/percentile engine on `numpy.random.Generator`.
+BiasAperture implements a dedicated vectorized BCa bootstrap engine on `numpy.random.Generator`.
+
+#### Bootstrap Population Model & Stratified Resampling Rationale
+$$\text{Bootstrap Population Model} = \text{Fixed Observed Subgroup Strata}$$
+Resampling is performed strictly *within* observed demographic strata ($A=a$) rather than unconditional i.i.d. sampling across the mixed dataset. This fixes subgroup sample sizes $n_a$, preventing random fluctuations in demographic representation from confounding the disparity estimator with sample allocation variance.
+
+#### Why a Custom Engine is Employed:
+1. **Fixed-Strata Index Drawing**: Guarantees balanced per-group resamples across 126 intersectional cells.
+2. **Simultaneous Multi-Group Evaluation**: Computes the full $K$-group metric vector in a single vectorized pass.
+3. **Deterministic Cross-Platform PRNG**: Uses `numpy.random.Generator(PCG64)` for bit-identical reproducibility across operating systems.
+4. **Explicit Stability Bounds**: Implements the BiasAperture stability threshold ($|a| \le 0.5$) to fall back smoothly to empirical percentiles when jackknife acceleration degenerates.
 
 ```
                     ┌──────────────────────────────────────────┐
@@ -174,12 +185,12 @@ $$\text{DIR} = \frac{\min_{a \in A} P(\hat{Y}=1 \mid A=a)}{\max_{a \in A} P(\hat
    $$\bar{\theta}_{(\cdot)} = \frac{1}{n} \sum_{i=1}^n \hat{\theta}_{(i)}, \quad a = \frac{\sum_{i=1}^n (\bar{\theta}_{(\cdot)} - \hat{\theta}_{(i)})^3}{6 \left[ \sum_{i=1}^n (\bar{\theta}_{(\cdot)} - \hat{\theta}_{(i)})^2 \right]^{3/2}}$$
 4. **BCa Adjusted Percentiles ($\alpha_1, \alpha_2$)**:
    $$\alpha_1 = \Phi \left( z_0 + \frac{z_0 + z_{\alpha/2}}{1 - a(z_0 + z_{\alpha/2})} \right), \quad \alpha_2 = \Phi \left( z_0 + \frac{z_0 + z_{1-\alpha/2}}{1 - a(z_0 + z_{1-\alpha/2})} \right)$$
-5. **Fallback Condition**: If $|a| > 0.5$, $z_0$ is undefined, or the adjusted quantiles fall outside $[0, 1]$, fall back immediately to standard empirical percentiles:
+5. **Fallback Condition**: If $|a| > 0.5$ (stability threshold), $z_0$ is undefined, or the adjusted quantiles fall outside $[0, 1]$, fall back immediately to standard empirical percentiles:
    $$\text{CI}_{\text{fallback}} = \left[ \text{Percentile}\left(\hat{\theta}^*, 2.5\right), \; \text{Percentile}\left(\hat{\theta}^*, 97.5\right) \right]$$
 
 ---
 
-### 2.2. Chi-Squared Contingency & Holm-Bonferroni Adjustment
+### 3.2. Chi-Squared Contingency & Holm-Bonferroni Adjustment
 
 1. **Table Layout**: For attribute $A$ with $K$ subgroups, construct $2 \times K$ matrix:
    $$O = \begin{bmatrix} 
@@ -194,26 +205,28 @@ $$\text{DIR} = \frac{\min_{a \in A} P(\hat{Y}=1 \mid A=a)}{\max_{a \in A} P(\hat
 
 ---
 
-### 2.3. Statistical Adequacy & Estimand Mapping
+### 3.3. Statistical Adequacy & Estimand Mapping
 
-#### 2.3.1. Screening Invariant ($n \ge 30$) vs. Metric-Specific Adequacy
-The $n \ge 30$ threshold is an **engineering minimum screening invariant (NFR-003)** to reject severely undersampled cells; it is not a claim of universal statistical sufficiency. Full inferential validity requires metric-specific support conditions:
+#### 3.3.1. Screening Invariant ($n \ge 30$) vs. Conservative Support Rules
+The $n \ge 30$ threshold is an **engineering minimum screening invariant (NFR-003)** to reject severely undersampled cells; it is not a claim of universal statistical sufficiency. Full inferential validity requires metric-specific conservative screening conditions:
 
 ```
 ┌─────────────────┬─────────────────────────────────────────────────┬───────────────────────────────────────────────────────┐
-│ Metric / Test   │ Target Estimand Structure                       │ Minimum Adequacy Conditions                           │
+│ Metric / Test   │ Target Estimand Structure                       │ Conservative Engineering Screening Conditions        │
 ├─────────────────┼─────────────────────────────────────────────────┼───────────────────────────────────────────────────────┤
 │ DPD             │ Selection rates across sensitive groups         │ Total n_a >= 30 for all groups                        │
 │ EOP             │ True positive rates (Recall) across groups      │ n_a >= 30 AND positive support n_{Y=1, a} >= 5        │
 │ EOD             │ Joint True Positive & False Positive parity     │ n_a >= 30 AND n_{Y=1, a} >= 5 AND n_{Y=0, a} >= 5     │
-│ DIR             │ Bounded selection ratio min(rate)/max(rate)     │ Total n_a >= 30; if rate=0, flag zero-selection       │
-│ Chi-Squared     │ Homogeneity of demographic contingency table    │ Expected cell counts E_ij >= 5 (Cochran rule)         │
+│ DIR             │ Bounded selection ratio min(rate)/max(rate)     │ Total n_a >= 30; if max=0, flag zero-selection        │
+│ Chi-Squared     │ Homogeneity of demographic contingency table    │ Expected cell counts E_ij >= 5 (Cochran heuristic)    │
 └─────────────────┴─────────────────────────────────────────────────┴───────────────────────────────────────────────────────┘
 ```
+*Note: The minimum support threshold of 5 observations is applied as a conservative engineering rule to prevent extreme rate volatility; it is not claimed as an asymptotic sufficiency criterion.*
 
-#### 2.3.2. DIR Zero-Denominator Reporting Nuance
-When $\max_a P(\hat{Y}=1 \mid A=a) = 0.0$, BiasAperture defines $\text{DIR} = 1.0$ (no relative disparity between groups), but explicitly flags:
+#### 3.3.2. DIR Zero-Denominator Reporting Invariant
+When $\max_a P(\hat{Y}=1 \mid A=a) = 0.0$, BiasAperture records:
 - `relative_disparity = 0.0` ($\text{DIR} = 1.0$)
+- `absolute_selection_rate_max = 0.0`
 - `absolute_selection_warning = True` (model produced zero positive selections across all audited cohorts).
 
 ---

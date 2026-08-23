@@ -128,7 +128,8 @@ BiasAperture provides technical audit capabilities supporting examination under 
 - **Article 10(5)**: Processing of special-category demographic data for bias auditing. *Addressed through the explicit Data Governance protocol ([`docs/DATA_GOVERNANCE.md`](file:///c:/Users/Aaradhya/Downloads/_Organized/Fuse%20AI%20Fellowship/Capstone%20Project/BiasAperture/docs/DATA_GOVERNANCE.md)).*
 - **Annex IV §2(g)**: Technical documentation requirements for validation and test procedures.
 
-### NIST AI Risk Management Framework (NIST AI 100-1)
+### NIST AI Risk Management Framework (NIST AI RMF 1.0, 2023)
+*Note: Evaluated against NIST AI RMF 1.0 (January 2023), the locked baseline version for this study.*
 BiasAperture instruments the **Measure** core function:
 - **Measure 2.11**: Fairness and bias are evaluated, quantified, and documented.
 - **Measure 1.1**: Risks that cannot be reliably quantified are documented rather than ignored (*the exact structural role of `insufficient_sample=True, metric_value=None`*).
