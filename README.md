@@ -62,16 +62,16 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 ## Project Progress & Roadmap
 
 ```
-Overall Progress: [████████░░░░░░░░░░░░] 40% (M1 Schema Locked & 20-Track Research Sprint Complete)
+Overall Progress: [███████████░░░░░░░░░] 55% (M1 Schema & 20-Track Research Sprint Complete · M2 Ingestion & Reporting In Progress)
 ```
 
 | Work Package / Milestone | Stream / Focus | Primary Owner | Status | Progress Bar | Deliverables & Implementation State |
 |---|---|---|---|---|---|
 | **WP1 / M1: Schema Lock & Baseline** | Foundations | Joint | Completed | `[████████████████████] 100%` | Locked schema (`schema.py`), FairFace ResNet-34 baseline fixed, test suite passing (14/14) |
-| **WP2 / M2: Data Ingestion & Test Matrix** | Stream A | Tisha (`@tiixsha`) | In Progress | `[████████░░░░░░░░░░░░]  40%` | 20-track research complete, FairFace 5-point alignment & demographic cell validation specs ready |
-| **WP3 / M2: Compliance Report Scaffolding** | Stream B | Tisha (`@tiixsha`) | In Progress | `[██████░░░░░░░░░░░░░░]  30%` | EU AI Act & NIST mapping complete, offline standalone Jinja2 single-file HTML architecture designed |
-| **WP4 / M3: Statistical Detection Engine & SHAP** | Stream C & D | Aaradhya (`@AaradhyaDT`) | In Progress | `[████░░░░░░░░░░░░░░░░]  20%` | Dual-backend harmonization (AIF360/Fairlearn), BCa bootstrap CI & χ² engine, SHAP attribution design |
-| **WP5 / M4: System Orchestration & Case Study** | Integration | Joint (Aaradhya/Tisha) | Planned | `[░░░░░░░░░░░░░░░░░░░░]   0%` | End-to-end orchestration runner, mock-to-real swap, full FairFace audit run, and final report bundle export |
+| **WP2 / M2: Data Ingestion & Test Matrix** | Stream A | Tisha (`@tiixsha`) | In Progress | `[███████████░░░░░░░░░]  55%` | 20-track research complete, `ModelInterface` & `PredictionsFileInterface` implemented, alignment & test matrix specs ready |
+| **WP3 / M2: Compliance Report Scaffolding** | Stream B | Tisha (`@tiixsha`) | In Progress | `[█████████░░░░░░░░░░░]  45%` | EU AI Act & NIST mapping complete, offline standalone Jinja2 single-file HTML architecture & templates designed |
+| **WP4 / M3: Statistical Detection Engine & SHAP** | Stream C & D | Aaradhya (`@AaradhyaDT`) | In Progress | `[████████░░░░░░░░░░░░]  40%` | Dual-backend harmonization (AIF360/Fairlearn), BCa bootstrap CI & χ² engine, SHAP attribution design locked |
+| **WP5 / M4: System Orchestration & Case Study** | Integration | Joint (Aaradhya/Tisha) | In Progress | `[███░░░░░░░░░░░░░░░░░]  15%` | Dual-remote automated sync workflow operational, end-to-end integration pipeline & benchmark audit plan staged |
 
 ## Branching & Workstreams
 
