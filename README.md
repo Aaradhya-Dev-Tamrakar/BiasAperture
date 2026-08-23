@@ -36,6 +36,10 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 │   ├── BiasAperture-AT.md      # Master project planning and task assignments (v6)
 │   ├── schema-lock-m1.md       # Milestone M1 schema specification
 │   ├── literature-review-matrix.md   # Paper matrix (9 papers, Walden format)
+│   ├── research/               # High-, Mid-, and Low-Level Research Synthesis Reports
+│   │   ├── HIGH_LEVEL_SYNTHESIS.md
+│   │   ├── MID_LEVEL_ARCHITECTURE.md
+│   │   └── LOW_LEVEL_SPECIFICATION.md
 │   ├── CHANGELOG.md            # Auto-updated by sync.ps1 on each sync
 │   └── fellowship/             # Official AIF guidelines & reference PDFs
 ├── vendor/                     # Offline TeX dependencies
