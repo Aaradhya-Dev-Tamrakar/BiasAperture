@@ -36,6 +36,7 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 │   ├── BiasAperture-AT.md      # Master project planning and task assignments (v7)
 │   ├── schema-lock-m1.md       # Milestone M1 schema specification
 │   ├── literature-review-matrix.md   # Paper matrix (9 papers, Walden format)
+│   ├── DATA_GOVERNANCE.md      # Data governance, privacy & special-category protocol
 │   ├── research/               # Research Synthesis & Verification Reports
 │   │   ├── CLAIM_LEDGER.md         # Auditable Research Claim Ledger (ASSERTED -> VERIFIED -> REPRODUCIBLE)
 │   │   ├── HIGH_LEVEL_SYNTHESIS.md (and .pdf)

@@ -82,14 +82,21 @@ To completely de-risk implementation, a comprehensive 20-track parallel research
 
 A common question during technical defenses is: *"Why build a new tool when Fairlearn, AIF360, and Aequitas already exist?"*
 
-The novelty of BiasAperture lies not in reinventing individual mathematical equations, but in **solving workflow friction through end-to-end architectural integration**. Existing tools suffer from severe domain fragmentation:
+The novelty of BiasAperture lies not in reinventing individual mathematical equations, but in **solving computer vision workflow friction through end-to-end architectural integration**. 
+
+### 4.1. Reproducible Competitive Search Protocol
+- **Search Window**: August 2026
+- **Sources & Indexes**: GitHub Topics (`fairness-metrics`, `bias-audit`, `ai-fairness`), PyPI, Papers With Code, Google Scholar.
+- **Inclusion Criteria**: Open-source, maintained software packages offering demographic fairness metric evaluation or model card reporting.
+- **Exclusion Criteria**: Domain-specific proprietary tools (healthcare-only EHR auditors), unmaintained research scripts (< 5 commits).
+- **Reviewed Tool Set**: Aequitas, Fairlearn, AIF360, Google What-If Tool (WIT), JFAM, FAT Forensics, FairTest.
 
 ```
 ┌───────────────────────────────────────────────────────────────────────────────────────────────────────┐
 │                                COMPETITOR CAPABILITY LANDSCAPE (2026)                                 │
 ├───────────────────┬──────────────┬──────────────┬──────────────┬──────────────┬───────────────────────┤
 │ Tool / Framework  │ CV & 7-Race  │ Dual-Backend │ Stat Guards  │ Regulatory   │ Targeted Local SHAP   │
-│                   │ Ingestion    │ Cross-Val    │ (n≥30 + CI)  │ Mapping      │ on Flagged Disparity  │
+│                   │ Ingestion    │ Cross-Check  │ (n≥30 + CI)  │ Mapping      │ on Flagged Disparity  │
 ├───────────────────┼──────────────┼──────────────┼──────────────┼──────────────┼───────────────────────┤
 │ Aequitas          │ ✗            │ ✗            │ ✗            │ ✗            │ ✗ (Global plots only) │
 │ Fairlearn         │ ✗ (Tabular)  │ ✗            │ ✗            │ ✗            │ ✗                     │
@@ -104,29 +111,29 @@ The novelty of BiasAperture lies not in reinventing individual mathematical equa
 
 ### The 5 Unique Architectural Differentiators:
 1. **CV-Native Demographic Pipeline**: Ingests raw multi-output predictions and aligns them directly into a 7-race, 2-gender, 9-age schema without manual tabular wrangling.
-2. **Dual-Backend Cross-Validation**: Executes computations across two independent engines (Fairlearn & AIF360) to catch implementation artifacts, API bugs, and numerical edge cases.
-3. **Hard Statistical Invariants**: Enforces $n \ge 30$ sample size guards at the dataclass level (`MetricResult.__post_init__`) and calculates 95% BCa Bootstrap CIs with $\chi^2$ significance for every row.
-4. **Targeted Explainability**: Automatically triggers SHAP and proxy variable detection *only* on rows that exhibit statistically verified bias ($p < 0.05, n \ge 30$), saving massive computational overhead.
-5. **Direct Regulatory Provenance**: Directly maps each technical finding to EU AI Act Article 10 sub-clauses and NIST AI RMF Measure subcategories.
+2. **Heterogeneous Implementation Cross-Validation**: Executes computations across two independent library backends (Fairlearn & AIF360) to catch library-specific bugs, numerical edge cases, and API discrepancies.
+3. **Hard Statistical Invariants & Adequacy Guards**: Enforces $n \ge 30$ minimum screening guards alongside positive/negative class support checks and 95% BCa Bootstrap CIs.
+4. **Targeted Explainability (Proxy Evidence Analysis)**: Automatically triggers SHAP and ITA skin-tone analysis *only* on rows that exhibit statistically verified bias ($p < 0.05, n \ge 30$).
+5. **Direct Regulatory Provenance**: Maps each technical finding to EU AI Act Article 10 sub-clauses and NIST AI RMF Measure subcategories.
 
 ---
 
 ## 5. Regulatory Alignment: EU AI Act & NIST AI RMF
 
 ### EU Artificial Intelligence Act (Regulation EU 2024/1689)
-BiasAperture serves as a technical verification mechanism for high-risk AI systems:
-- **Article 10(2)(f)**: Mandates examination of potential biases in training/validation data. *Satisfied by the Core Four metric evaluations.*
-- **Article 10(2)(g)**: Requires measures to detect, prevent, and mitigate bias. *Satisfies the detection requirement (mitigation is explicitly out of scope).*
-- **Article 10(3)**: Mandates that datasets have appropriate statistical properties. *Directly satisfied by the $n \ge 30$ sample size guard and 95% bootstrap confidence bounds.*
-- **Article 10(5)**: Exceptional processing of special-category demographic data for bias detection. *Documented within the report's governance metadata.*
+BiasAperture provides technical audit capabilities supporting examination under high-risk AI data governance rules:
+- **Article 10(2)(f)**: Mandates examination of potential biases in datasets. *Supported via Core Four disparity evaluation across 126 intersectional demographic cells.*
+- **Article 10(2)(g)**: Requires measures to detect, prevent, and mitigate bias. *Explicit Scope Boundary: BiasAperture provides diagnostic **Detection, Measurement, and Documentation**; automated prevention and model mitigation are strictly out of scope.*
+- **Article 10(3)**: Mandates that datasets have appropriate statistical properties. *Directly supported by the $n \ge 30$ screening guard, class support conditions, and 95% bootstrap confidence intervals.*
+- **Article 10(5)**: Processing of special-category demographic data for bias auditing. *Addressed through the explicit Data Governance protocol ([`docs/DATA_GOVERNANCE.md`](file:///c:/Users/Aaradhya/Downloads/_Organized/Fuse%20AI%20Fellowship/Capstone%20Project/BiasAperture/docs/DATA_GOVERNANCE.md)).*
 - **Annex IV §2(g)**: Technical documentation requirements for validation and test procedures.
 
 ### NIST AI Risk Management Framework (NIST AI 100-1)
 BiasAperture instruments the **Measure** core function:
 - **Measure 2.11**: Fairness and bias are evaluated, quantified, and documented.
 - **Measure 1.1**: Risks that cannot be reliably quantified are documented rather than ignored (*the exact structural role of `insufficient_sample=True, metric_value=None`*).
-- **Measure 1.3**: Rigorous assessment through independent verification mechanisms (*realized via dual-backend cross-validation*).
-- **Measure 2.9**: Explainability and interpretability metrics (*realized via targeted SHAP pixel attributions*).
+- **Measure 1.3**: Rigorous assessment participation (*noting Measure 1.3 concerns independent personnel involvement, while BiasAperture provides heterogeneous dual-library implementation cross-checking*).
+- **Measure 2.9**: Explainability and interpretability metrics (*realized via targeted SHAP pixel attributions and ITA skin colorimetry*).
 
 ---
 

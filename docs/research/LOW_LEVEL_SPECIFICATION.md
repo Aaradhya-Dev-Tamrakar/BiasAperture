@@ -7,9 +7,49 @@
 
 ---
 
-## 1. Mathematical Fairness Formulations & Backend Harmonization
+## 1. Formal Semantics of Audited Targets & Demographic Attributes
 
-Let $Y \in \{0, 1\}$ denote the binary ground-truth label, $\hat{Y} \in \{0, 1\}$ denote the model prediction, and $A \in \{a_1, a_2, \dots, a_K\}$ denote the protected demographic attribute across $K$ mutually exclusive subgroups.
+To prevent category confusion during auditing and evaluation, BiasAperture establishes formal definitions for the prediction target, model prediction, and sensitive demographic axes:
+
+```
+                  ┌─────────────────────────────────────────────────────────────┐
+                  │                 FORMAL AUDIT TAXONOMY                       │
+                  ├───────────────────┬─────────────────────────────────────────┤
+                  │ Variable Symbol   │ Operational Definition                  │
+                  ├───────────────────┼─────────────────────────────────────────┤
+                  │ Y                 │ Ground-truth task label                 │
+                  │ Ŷ                 │ Audited model prediction                │
+                  │ A                 │ Sensitive / protected demographic axis  │
+                  └───────────────────┴─────────────────────────────────────────┘
+```
+
+### 1.0. Audited Target Configurations
+
+1. **Downstream Task Audit ($A \neq Y$)**:
+   - Auditing a model's prediction on a non-demographic task (or a distinct demographic attribute) across protected groups.
+   - *Example*: Auditing binary gender classification ($Y \in \{\text{Male}, \text{Female}\}$) stratified across 7 race groups ($A = \text{Race}$).
+   - *Interpretation*: Traditional fairness evaluation testing whether performance parity holds across sensitive groups.
+2. **Demographic Classifier Audit ($A = Y$)**:
+   - Auditing the demographic classifier itself across its own classes.
+   - *Example*: Auditing FairFace's 7-race prediction ($Y = \text{Race}, \hat{Y} = \text{Pred\_Race}, A = \text{Race}$).
+   - *Interpretation*: Class-conditional per-group performance analysis evaluating whether true positive rates (recall) and false positive rates diverge across the ground-truth classes themselves.
+
+### 1.0.1. Multi-Class One-vs-Rest (OvR) Evaluation Policy
+
+For any multi-class prediction target $Y \in \mathcal{C} = \{c_1, c_2, \dots, c_M\}$ with $M > 2$ classes (e.g. 7 races, 9 age groups):
+1. **Binarization**: Decompose the $M$-class problem into $M$ independent One-vs-Rest binary tasks:
+   $$Y^{(m)} = \mathbb{I}(Y = c_m), \quad \hat{Y}^{(m)} = \mathbb{I}(\hat{Y} = c_m) \quad \text{for } m \in \{1, \dots, M\}$$
+2. **Metric Computation**: Compute the Core Four metrics ($\text{DPD}^{(m)}, \text{EOD}^{(m)}, \text{EOP}^{(m)}, \text{DIR}^{(m)}$) for each binary class task $m$ across the protected attribute subgroups $a \in A$.
+3. **Dual Reporting**:
+   - **Per-Class Breakdown**: Detailed report rows for each class slice (e.g., $\text{EOP}_{\text{East Asian}}$, $\text{EOP}_{\text{Black}}$).
+   - **Macro-Averaged Summary**: Aggregate arithmetic mean across all $M$ classes:
+     $$\text{Macro-DPD} = \frac{1}{M} \sum_{m=1}^M \text{DPD}^{(m)}, \quad \text{Macro-EOD} = \frac{1}{M} \sum_{m=1}^M \text{EOD}^{(m)}$$
+
+---
+
+## 2. Mathematical Fairness Formulations & Backend Harmonization
+
+Let $Y \in \{0, 1\}$ denote the binary (or OvR-binarized) ground-truth label, $\hat{Y} \in \{0, 1\}$ denote the model prediction, and $A \in \{a_1, a_2, \dots, a_K\}$ denote the protected demographic attribute across $K$ mutually exclusive subgroups.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -151,6 +191,30 @@ $$\text{DIR} = \frac{\min_{a \in A} P(\hat{Y}=1 \mid A=a)}{\max_{a \in A} P(\hat
    Given $M$ sorted $p$-values $p_{(1)} \le p_{(2)} \le \dots \le p_{(M)}$:
    $$p_{(k)}^{\text{adj}} = \min \left( 1, \; \max_{j \le k} \left[ (M - j + 1) \cdot p_{(j)} \right] \right)$$
    Reject the null hypothesis if $p_{(k)}^{\text{adj}} < \alpha = 0.05$.
+
+---
+
+### 2.3. Statistical Adequacy & Estimand Mapping
+
+#### 2.3.1. Screening Invariant ($n \ge 30$) vs. Metric-Specific Adequacy
+The $n \ge 30$ threshold is an **engineering minimum screening invariant (NFR-003)** to reject severely undersampled cells; it is not a claim of universal statistical sufficiency. Full inferential validity requires metric-specific support conditions:
+
+```
+┌─────────────────┬─────────────────────────────────────────────────┬───────────────────────────────────────────────────────┐
+│ Metric / Test   │ Target Estimand Structure                       │ Minimum Adequacy Conditions                           │
+├─────────────────┼─────────────────────────────────────────────────┼───────────────────────────────────────────────────────┤
+│ DPD             │ Selection rates across sensitive groups         │ Total n_a >= 30 for all groups                        │
+│ EOP             │ True positive rates (Recall) across groups      │ n_a >= 30 AND positive support n_{Y=1, a} >= 5        │
+│ EOD             │ Joint True Positive & False Positive parity     │ n_a >= 30 AND n_{Y=1, a} >= 5 AND n_{Y=0, a} >= 5     │
+│ DIR             │ Bounded selection ratio min(rate)/max(rate)     │ Total n_a >= 30; if rate=0, flag zero-selection       │
+│ Chi-Squared     │ Homogeneity of demographic contingency table    │ Expected cell counts E_ij >= 5 (Cochran rule)         │
+└─────────────────┴─────────────────────────────────────────────────┴───────────────────────────────────────────────────────┘
+```
+
+#### 2.3.2. DIR Zero-Denominator Reporting Nuance
+When $\max_a P(\hat{Y}=1 \mid A=a) = 0.0$, BiasAperture defines $\text{DIR} = 1.0$ (no relative disparity between groups), but explicitly flags:
+- `relative_disparity = 0.0` ($\text{DIR} = 1.0$)
+- `absolute_selection_warning = True` (model produced zero positive selections across all audited cohorts).
 
 ---
 
