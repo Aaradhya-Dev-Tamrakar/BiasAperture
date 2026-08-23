@@ -17,7 +17,7 @@ $fuseaiUrl = 'https://github.com/fuseai-fellowship/BiasAperture-A-Diagnostic-Fra
 $orgRemote = 'org'
 $orgUrl = 'https://github.com/Aaradhya-Dev-Tamrakar/BiasAperture.git'
 
-function Ensure-Remotes {
+function Initialize-Remotes {
     $remotes = git remote
     if ($remotes -notcontains $fuseaiRemote) {
         git remote add $fuseaiRemote $fuseaiUrl
@@ -29,7 +29,7 @@ function Ensure-Remotes {
 
 function Push-AllRemotes {
     param([string]$Branch)
-    Ensure-Remotes
+    Initialize-Remotes
     $results = @{}
 
     # Core required remotes (shared by the fellowship team)
@@ -89,7 +89,7 @@ function Update-Tracker {
 }
 
 if ($PSCmdlet.ParameterSetName -eq 'Pull') {
-    Ensure-Remotes
+    Initialize-Remotes
     git pull --autostash
     exit $LASTEXITCODE
 }
