@@ -38,7 +38,7 @@ This file provides specialized context and execution instructions for **Google D
      uv run --extra dev ruff check src/
      uv run --extra dev ruff format src/
      ```
-   - Sync dual remotes via `pwsh`:
+   - Sync remotes across configured endpoints (`origin` and `duo` compulsory, `org` optional mirror) via `pwsh`:
      ```powershell
      pwsh -File .\sync.ps1 -m "feat(module): description"
      ```

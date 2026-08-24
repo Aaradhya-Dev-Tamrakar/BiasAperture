@@ -32,7 +32,7 @@ uv run --extra dev ruff format src/
 Never push directly without running the sync script or adhering to conventional commits.
 
 ```powershell
-# Auto-sync to both remotes (origin and fuseai)
+# Auto-sync to configured remotes (origin & duo compulsory, org mirror)
 .\sync.ps1 -m "feat(scope): your descriptive message"
 
 # Pull only with autostash
@@ -65,6 +65,7 @@ Never push directly without running the sync script or adhering to conventional 
 - `feat/stream-data` — **Stream A (Data Pipeline)**: FairFace ingestion, validation, test matrix generation (Aaradhya).
 - `feat/stream-report` — **Stream B (Report Scaffolding)**: Jinja2 HTML report templates, Model Cards / Datasheets structure (Aaradhya drafts, Tisha reviews).
 - `feat/wp4-engine` — **WP4 (Detection Engine)**: Fairlearn & AIF360 backends, statistical validation, SHAP explainability (Tisha).
+- `feat/wp5-integration` — **WP5 (Integration & CLI)**: Mock-to-real swap, `AuditOrchestrator` CLI facade (Aaradhya / Joint).
 
 ---
 

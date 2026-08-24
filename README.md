@@ -74,7 +74,7 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 | **WP2 / M2: Data Ingestion & Test Matrix**        | Stream A       | Tisha (`@tiixsha`)       | In Progress | `[███████████░░░░░░░░░]  55%` | 20-track research complete, `ModelInterface` & `PredictionsFileInterface` implemented, alignment & test matrix specs ready |
 | **WP3 / M2: Compliance Report Scaffolding**       | Stream B       | Tisha (`@tiixsha`)       | In Progress | `[█████████░░░░░░░░░░░]  45%` | EU AI Act & NIST mapping complete, offline standalone Jinja2 single-file HTML architecture & templates designed            |
 | **WP4 / M3: Statistical Detection Engine & SHAP** | Stream C & D   | Aaradhya (`@AaradhyaDT`) | In Progress | `[████████░░░░░░░░░░░░]  40%` | Dual-backend harmonization (AIF360/Fairlearn), BCa bootstrap CI & χ² engine, SHAP attribution design locked                |
-| **WP5 / M4: System Orchestration & Case Study**   | Integration    | Joint (Aaradhya/Tisha)   | In Progress | `[███░░░░░░░░░░░░░░░░░]  15%` | Dual-remote automated sync workflow operational, end-to-end integration pipeline & benchmark audit plan staged             |
+| **WP5 / M4: System Orchestration & Case Study**   | Integration    | Joint (Aaradhya/Tisha)   | In Progress | `[███░░░░░░░░░░░░░░░░░]  15%` | Multi-remote automated sync workflow operational (`origin` & `duo` compulsory, `org` mirror), end-to-end integration pipeline & benchmark audit plan staged |
 
 ## Branching & Workstreams
 
@@ -109,15 +109,19 @@ uv run --extra dev ruff format
 pre-commit install
 ```
 
-## Local Git Workflow & Auto-Sync (`sync.ps1`)
+## Local Git Workflow & Multi-Remote Auto-Sync (`sync.ps1`)
 
 ```powershell
-.\sync.ps1                                  # stage all, conventional-commit, pull --rebase, push
+.\sync.ps1                                  # stage all, conventional-commit, pull --rebase, push to all remotes
 .\sync.ps1 -m "feat(scope): detailed summary"  # same, with an explicit commit message
+.\sync.ps1 -Branch "feat/stream-data"       # switch & sync to target feature branch
 .\sync.ps1 -PullOnly                        # git pull --autostash only, no commit/push
 ```
 
-Every run (except `-PullOnly`) appends a timestamp entry to `docs/CHANGELOG.md` before committing.
+- **Compulsory Remotes**: `origin` (`fuseai-fellowship/...`) and `duo` (`AaradhyaDT/...`).
+- **Optional Mirror**: `org` (`Aaradhya-Dev-Tamrakar/...`) (gracefully skipped if inaccessible).
+- **Auto-Branch Routing**: Infers and routes commits to `feat/stream-data`, `feat/stream-report`, `feat/wp4-engine`, or `feat/wp5-integration`.
+- **Changelog Tracker**: Appends a timestamp entry to `docs/CHANGELOG.md` on each sync.
 
 ## Building the Report
 
