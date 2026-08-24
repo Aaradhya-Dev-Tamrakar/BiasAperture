@@ -36,34 +36,20 @@ function Initialize-Remotes {
         }
     }
 
-    # Configure multi-push URLs on origin for seamless dual/triple mirror push
-    $pushUrls = git remote get-url --all --push $originRemote 2>$null
-    $targetPushUrls = @($originUrl, $orgUrl, $duoUrl)
-    
-    $needsPushReset = $false
-    if ($pushUrls.Count -ne $targetPushUrls.Count) {
-        $needsPushReset = $true
-    } else {
-        foreach ($tUrl in $targetPushUrls) {
-            if ($pushUrls -notcontains $tUrl) {
-                $needsPushReset = $true
-                break
-            }
-        }
-    }
+    # Ensure origin push URL is clean (single upstream target)
+    git remote set-url --push $originRemote $originUrl 2>$null
 
-    if ($needsPushReset) {
-        git remote set-url --push $originRemote $originUrl
-        git remote set-url --add --push $originRemote $orgUrl
-        git remote set-url --add --push $originRemote $duoUrl
-    }
-
-    # Named auxiliary remotes
+    # Auxiliary mirrors
     if ($remotes -notcontains $orgRemote) {
         git remote add $orgRemote $orgUrl
+    } else {
+        git remote set-url $orgRemote $orgUrl 2>$null
     }
+
     if ($remotes -notcontains $duoRemote) {
         git remote add $duoRemote $duoUrl
+    } else {
+        git remote set-url $duoRemote $duoUrl 2>$null
     }
 
     # Clean up redundant fuseai alias if present
@@ -76,23 +62,30 @@ function Push-AllRemotes {
     param([string]$Branch)
     Initialize-Remotes
 
-    $pushUrls = git remote get-url --all --push $originRemote 2>$null
-    Write-Host "Pushing branch [$Branch] to all configured mirror remotes..."
+    $targetRemotes = @($originRemote, $orgRemote, $duoRemote)
+    $results = @{}
 
-    git push $originRemote $Branch 2>&1 | Tee-Object -Variable pushOut | Out-Null
-    if ($LASTEXITCODE -eq 0) {
-        Write-Host "push [$originRemote]: OK (mirrored across $($pushUrls.Count) endpoints)"
-    } else {
-        Write-Warning "Primary push [$originRemote] returned exit code $LASTEXITCODE. Retrying individual mirrors..."
-        foreach ($url in $pushUrls) {
-            try {
-                & git.exe push $url "$($Branch):$($Branch)" *>$null
-                $status = if ($LASTEXITCODE -eq 0) { 'OK' } else { 'FAILED' }
-                Write-Host "push [$url]: $status"
-            } catch {
-                Write-Host "push [$url]: SKIPPED"
+    foreach ($remote in $targetRemotes) {
+        try {
+            & git.exe push $remote $Branch *>$null
+            if ($LASTEXITCODE -eq 0) {
+                $results[$remote] = 'OK'
+            } else {
+                $results[$remote] = 'SKIPPED (no access / rejected)'
             }
+        } catch {
+            $results[$remote] = 'SKIPPED (no access)'
         }
+    }
+
+    foreach ($r in $results.Keys) {
+        Write-Host "push [$r]: $($results[$r])"
+    }
+
+    # Check if at least one remote succeeded
+    $anySuccess = ($results.Values -contains 'OK')
+    if (-not $anySuccess) {
+        Write-Warning "Could not push to any configured remote. Please verify internet connection or Git credentials."
     }
 }
 
