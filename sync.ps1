@@ -22,6 +22,8 @@ $fuseaiRemote = 'fuseai'
 $fuseaiUrl = 'https://github.com/fuseai-fellowship/BiasAperture-A-Diagnostic-Framework-for-Demographic-Bias-Auditing-in-Facial-Analysis-Models.git'
 $orgRemote = 'org'
 $orgUrl = 'https://github.com/Aaradhya-Dev-Tamrakar/BiasAperture.git'
+$duoRemote = 'duo'
+$duoUrl = 'https://github.com/AaradhyaDT/BiasAperture.git'
 
 function Initialize-Remotes {
     $remotes = git remote
@@ -31,6 +33,9 @@ function Initialize-Remotes {
     if ($remotes -notcontains $orgRemote) {
         git remote add $orgRemote $orgUrl
     }
+    if ($remotes -notcontains $duoRemote) {
+        git remote add $duoRemote $duoUrl
+    }
 }
 
 function Push-AllRemotes {
@@ -38,22 +43,24 @@ function Push-AllRemotes {
     Initialize-Remotes
     $results = @{}
 
-    # Core remotes: fuseai (main upstream repo) and origin (personal fork)
+    # Core upstream and fork remotes
     foreach ($remote in @($fuseaiRemote, 'origin')) {
         git push $remote $Branch 2>&1 | Tee-Object -Variable pushOut | Out-Null
         $results[$remote] = if ($LASTEXITCODE -eq 0) { 'OK' } else { 'FAILED' }
     }
 
-    # Optional org remote - push if permitted; handle gracefully if not accessible
-    try {
-        & git.exe push $orgRemote $Branch *>$null
-        if ($LASTEXITCODE -eq 0) {
-            $results[$orgRemote] = 'OK'
-        } else {
-            $results[$orgRemote] = 'SKIPPED (no access)'
+    # Org and Duo remotes
+    foreach ($remote in @($orgRemote, $duoRemote)) {
+        try {
+            & git.exe push $remote $Branch *>$null
+            if ($LASTEXITCODE -eq 0) {
+                $results[$remote] = 'OK'
+            } else {
+                $results[$remote] = 'SKIPPED (no access)'
+            }
+        } catch {
+            $results[$remote] = 'SKIPPED (no access)'
         }
-    } catch {
-        $results[$orgRemote] = 'SKIPPED (no access)'
     }
 
     foreach ($r in $results.Keys) {
