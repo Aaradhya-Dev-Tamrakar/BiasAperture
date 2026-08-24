@@ -1,4 +1,4 @@
-﻿[CmdletBinding(DefaultParameterSetName = 'Sync')]
+[CmdletBinding(DefaultParameterSetName = 'Sync')]
 param(
     [Parameter(ParameterSetName = 'Sync')]
     [string]$m,
@@ -14,11 +14,16 @@ Set-Location $repoRoot
 
 $fuseaiRemote = 'fuseai'
 $fuseaiUrl = 'https://github.com/fuseai-fellowship/BiasAperture-A-Diagnostic-Framework-for-Demographic-Bias-Auditing-in-Facial-Analysis-Models.git'
+$orgRemote = 'org'
+$orgUrl = 'https://github.com/Aaradhya-Dev-Tamrakar/BiasAperture.git'
 
 function Initialize-Remotes {
     $remotes = git remote
     if ($remotes -notcontains $fuseaiRemote) {
         git remote add $fuseaiRemote $fuseaiUrl
+    }
+    if ($remotes -notcontains $orgRemote) {
+        git remote add $orgRemote $orgUrl
     }
 }
 
@@ -27,15 +32,28 @@ function Push-AllRemotes {
     Initialize-Remotes
     $results = @{}
 
-    foreach ($remote in @('origin', $fuseaiRemote)) {
+    # Core remotes: fuseai (main upstream repo) and origin (personal fork)
+    foreach ($remote in @($fuseaiRemote, 'origin')) {
         git push $remote $Branch 2>&1 | Tee-Object -Variable pushOut | Out-Null
         $results[$remote] = if ($LASTEXITCODE -eq 0) { 'OK' } else { 'FAILED' }
+    }
+
+    # Optional org remote - push if permitted; handle gracefully if not accessible
+    try {
+        & git.exe push $orgRemote $Branch *>$null
+        if ($LASTEXITCODE -eq 0) {
+            $results[$orgRemote] = 'OK'
+        } else {
+            $results[$orgRemote] = 'SKIPPED (no access)'
+        }
+    } catch {
+        $results[$orgRemote] = 'SKIPPED (no access)'
     }
 
     foreach ($r in $results.Keys) {
         Write-Host "push [$r]: $($results[$r])"
     }
-    if ($results['origin'] -eq 'FAILED' -or $results[$fuseaiRemote] -eq 'FAILED') {
+    if ($results[$fuseaiRemote] -eq 'FAILED' -or $results['origin'] -eq 'FAILED') {
         Write-Warning "One or more core remotes failed to push. No rollback performed - resolve manually (likely diverged history)."
     }
 }
@@ -76,7 +94,8 @@ function Update-Tracker {
 
 if ($PSCmdlet.ParameterSetName -eq 'Pull') {
     Initialize-Remotes
-    git pull --autostash
+    $branch = git rev-parse --abbrev-ref HEAD
+    git pull --autostash $fuseaiRemote $branch
     exit $LASTEXITCODE
 }
 
@@ -97,6 +116,6 @@ if ($staged) {
     Write-Host "No unstaged changes to commit. Syncing remotes..."
 }
 
-git pull --autostash --rebase
 $branch = git rev-parse --abbrev-ref HEAD
+git pull --autostash --rebase $fuseaiRemote $branch
 Push-AllRemotes -Branch $branch
