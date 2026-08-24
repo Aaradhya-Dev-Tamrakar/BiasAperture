@@ -18,8 +18,8 @@ $repoRoot = git rev-parse --show-toplevel 2>$null
 if (-not $repoRoot) { throw "Not inside a git repository." }
 Set-Location $repoRoot
 
-$fuseaiRemote = 'fuseai'
-$fuseaiUrl = 'https://github.com/fuseai-fellowship/BiasAperture-A-Diagnostic-Framework-for-Demographic-Bias-Auditing-in-Facial-Analysis-Models.git'
+$originRemote = 'origin'
+$originUrl = 'https://github.com/fuseai-fellowship/BiasAperture-A-Diagnostic-Framework-for-Demographic-Bias-Auditing-in-Facial-Analysis-Models.git'
 $orgRemote = 'org'
 $orgUrl = 'https://github.com/Aaradhya-Dev-Tamrakar/BiasAperture.git'
 $duoRemote = 'duo'
@@ -27,14 +27,23 @@ $duoUrl = 'https://github.com/AaradhyaDT/BiasAperture.git'
 
 function Initialize-Remotes {
     $remotes = git remote
-    if ($remotes -notcontains $fuseaiRemote) {
-        git remote add $fuseaiRemote $fuseaiUrl
+    if ($remotes -notcontains $originRemote) {
+        git remote add $originRemote $originUrl
+    } else {
+        $currentOrigin = git remote get-url $originRemote 2>$null
+        if ($currentOrigin -ne $originUrl) {
+            git remote set-url $originRemote $originUrl
+        }
     }
     if ($remotes -notcontains $orgRemote) {
         git remote add $orgRemote $orgUrl
     }
     if ($remotes -notcontains $duoRemote) {
         git remote add $duoRemote $duoUrl
+    }
+    # Clean up redundant fuseai alias if present
+    if ($remotes -contains 'fuseai') {
+        git remote remove fuseai 2>$null
     }
 }
 
@@ -43,11 +52,9 @@ function Push-AllRemotes {
     Initialize-Remotes
     $results = @{}
 
-    # Core upstream and fork remotes
-    foreach ($remote in @($fuseaiRemote, 'origin')) {
-        git push $remote $Branch 2>&1 | Tee-Object -Variable pushOut | Out-Null
-        $results[$remote] = if ($LASTEXITCODE -eq 0) { 'OK' } else { 'FAILED' }
-    }
+    # Core upstream (Fuse AI Fellowship)
+    git push $originRemote $Branch 2>&1 | Tee-Object -Variable pushOut | Out-Null
+    $results[$originRemote] = if ($LASTEXITCODE -eq 0) { 'OK' } else { 'FAILED' }
 
     # Org and Duo remotes
     foreach ($remote in @($orgRemote, $duoRemote)) {
@@ -66,8 +73,8 @@ function Push-AllRemotes {
     foreach ($r in $results.Keys) {
         Write-Host "push [$r]: $($results[$r])"
     }
-    if ($results[$fuseaiRemote] -eq 'FAILED' -or $results['origin'] -eq 'FAILED') {
-        Write-Warning "One or more core remotes failed to push. No rollback performed - resolve manually (likely diverged history)."
+    if ($results[$originRemote] -eq 'FAILED') {
+        Write-Warning "Primary remote ($originRemote) failed to push. No rollback performed - resolve manually."
     }
 }
 
@@ -172,7 +179,7 @@ Initialize-Remotes
 
 if ($PSCmdlet.ParameterSetName -eq 'Pull') {
     $branch = git rev-parse --abbrev-ref HEAD
-    git pull --autostash $fuseaiRemote $branch
+    git pull --autostash $originRemote $branch
     exit $LASTEXITCODE
 }
 
@@ -202,5 +209,5 @@ if ($staged) {
 }
 
 $branch = git rev-parse --abbrev-ref HEAD
-git pull --autostash --rebase $fuseaiRemote $branch
+git pull --autostash --rebase $originRemote $branch
 Push-AllRemotes -Branch $branch
