@@ -3,6 +3,12 @@ param(
     [Parameter(ParameterSetName = 'Sync')]
     [string]$m,
 
+    [Parameter(ParameterSetName = 'Sync')]
+    [string]$Branch,
+
+    [Parameter(ParameterSetName = 'Sync')]
+    [switch]$NoAutoBranch,
+
     [Parameter(ParameterSetName = 'Pull')]
     [switch]$PullOnly
 )
@@ -58,6 +64,66 @@ function Push-AllRemotes {
     }
 }
 
+function Get-InferredBranch {
+    $statusOutput = git status --porcelain
+    if (-not $statusOutput) { return $null }
+
+    $files = $statusOutput -split "`n" | Where-Object { $_ } | ForEach-Object {
+        $_.Substring(3).Trim()
+    }
+
+    $hasStreamData = $false
+    $hasStreamReport = $false
+    $hasStreamEngine = $false
+    $hasStreamIntegration = $false
+
+    foreach ($f in $files) {
+        if ($f -match 'data_ingestion|test_data_ingestion') { $hasStreamData = $true }
+        elseif ($f -match 'report/|test_offline_report') { $hasStreamReport = $true }
+        elseif ($f -match 'fairness/|explainability|test_backend_harmonization|test_known_answer') { $hasStreamEngine = $true }
+        elseif ($f -match 'pipeline|orchestrator') { $hasStreamIntegration = $true }
+    }
+
+    $matchedStreams = @($hasStreamData, $hasStreamReport, $hasStreamEngine, $hasStreamIntegration) | Where-Object { $_ }
+    if ($matchedStreams.Count -eq 1) {
+        if ($hasStreamData) { return 'feat/stream-data' }
+        if ($hasStreamReport) { return 'feat/stream-report' }
+        if ($hasStreamEngine) { return 'feat/wp4-engine' }
+        if ($hasStreamIntegration) { return 'feat/wp5-integration' }
+    }
+
+    return $null
+}
+
+function Switch-ToBranch {
+    param([string]$Target)
+    $current = git rev-parse --abbrev-ref HEAD
+    if ($current -eq $Target) { return }
+
+    Write-Host "Routing changes from [$current] to target work branch: [$Target]..."
+
+    git switch $Target 2>$null
+    if ($LASTEXITCODE -ne 0) {
+        git checkout -b $Target --track "origin/$Target" 2>$null
+        if ($LASTEXITCODE -ne 0) {
+            $stashed = $false
+            $stashOutput = git stash push -u -m "sync-autobranch" 2>&1
+            if ($stashOutput -match 'Saved working directory') { $stashed = $true }
+
+            git switch $Target 2>$null
+            if ($LASTEXITCODE -ne 0) {
+                git checkout -b $Target --track "origin/$Target" 2>$null
+                if ($LASTEXITCODE -ne 0) {
+                    git checkout -b $Target 2>$null
+                }
+            }
+            if ($stashed) {
+                git stash pop 2>$null
+            }
+        }
+    }
+}
+
 function Get-ConventionalCommitMessage {
     $staged = git diff --cached --name-only
     if (-not $staged) { return $null }
@@ -70,6 +136,9 @@ function Get-ConventionalCommitMessage {
     if ($files -match '\.tex$|references\.bib$|\.cls$') { $type = 'docs' }
     if ($files | Where-Object { $_ -match '^docs/' }) { $type = 'docs' }
     if ($files -match '\.ps1$') { $type = 'chore' }
+    if ($files | Where-Object { $_ -match '^src/bias_aperture/data_ingestion' }) { $type = 'feat'; $scopeStr = 'data' }
+    if ($files | Where-Object { $_ -match '^src/bias_aperture/report' }) { $type = 'feat'; $scopeStr = 'report' }
+    if ($files | Where-Object { $_ -match '^src/bias_aperture/fairness|^src/bias_aperture/explainability' }) { $type = 'feat'; $scopeStr = 'engine' }
 
     $summary = if ($files.Count -eq 1) {
         Split-Path $files[0] -Leaf
@@ -97,6 +166,14 @@ if ($PSCmdlet.ParameterSetName -eq 'Pull') {
     $branch = git rev-parse --abbrev-ref HEAD
     git pull --autostash $fuseaiRemote $branch
     exit $LASTEXITCODE
+}
+
+# Auto-detect or switch to specified branch before staging & committing
+$currentBranch = git rev-parse --abbrev-ref HEAD
+$targetBranch = if ($Branch) { $Branch } elseif (-not $NoAutoBranch -and ($currentBranch -eq 'main')) { Get-InferredBranch } else { $null }
+
+if ($targetBranch -and ($targetBranch -ne $currentBranch)) {
+    Switch-ToBranch -Target $targetBranch
 }
 
 git add -A
