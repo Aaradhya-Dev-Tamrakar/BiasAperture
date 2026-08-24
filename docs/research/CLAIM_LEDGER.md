@@ -2,7 +2,7 @@
 
 **Project:** BiasAperture (Demographic Bias Auditing Platform for Computer Vision)  
 **Document Purpose:** Auditable, reproducible tracking ledger for all scientific, mathematical, architectural, and regulatory claims generated during research and design.  
-**Version:** 1.3.0 (Audit-Grade with Inference Scope & Stratified Bootstrap Rationale)  
+**Version:** 1.4.0 (Audit-Grade with Conflict Log Cross-Referencing & Inference Scope)  
 **Last Updated:** August 2026
 
 ---
@@ -69,17 +69,21 @@ Preserving refuted hypotheses is an essential research integrity discipline. The
 | **INV-003** | *AIF360 and Fairlearn natively implement identical mathematical definitions for Equalized Odds Difference.* | Empirical evaluation revealed Fairlearn computes $\max(\Delta\text{TPR}, \Delta\text{FPR})$ while AIF360 native computes $\frac{1}{2}(\Delta\text{TPR} + \Delta\text{FPR})$. | Harmonized `AIF360Backend` to calculate worst-case max-gap from raw TPR/FPR primitives. |
 | **INV-004** | *UTKFace can serve as a drop-in secondary validation benchmark alongside FairFace.* | Taxonomy analysis showed UTKFace collapses East/Southeast Asian categories (3/7 race match) and uses DEX model-predicted noisy ages. | Formally cut UTKFace per Cut-List #2 to avoid invalidating the locked 7-race schema. |
 | **INV-005** | *Dual-backend execution (Fairlearn + AIF360) constitutes independent statistical validation.* | Methodological analysis proved both libraries compute over identical confusion-matrix primitives; agreement reflects heterogeneous software cross-checking, not statistical independence. | Reframed novelty claim around implementation cross-checking rather than independent statistical estimation. |
+| **INV-006** | *FairFace default multi-task evaluation checkpoint is `res34_fair_align_multi_7_20190809.pt`.* | Primary source inspection of official `dchen236/FairFace` `predict.py` confirmed active default is `fairface_alldata_20191111.pt`; the former appears only commented-out in `predict_bbox.py`. | Updated all reference docs, docstrings, and model loaders to target `fairface_alldata_20191111.pt`. |
+| **INV-007** | *The officially released FairFace evaluation dataset comprises 108,501 images.* | Line count and checksum audit of official release CSVs (`fairface_label_train.csv` + `fairface_label_val.csv`) proved exact released dataset count is 97,698 images ($86,744 + 10,954$). The 108,501 figure reflects pre-annotation discard counts. | Re-calibrated dataset scale targets, runtime benchmarks, and data governance verification to 97,698. |
+| **INV-008** | *Regulatory compliance tags (EU AI Act Art. 10, NIST AI RMF) should be attached as mutable fields on `MetricResult`.* | Violates Schema Invariance Rule (Milestone M1 lock) and creates cross-stream schema coupling. | Decoupled regulatory metadata into static `metric_name -> regulatory_tags` mapping tables within `report/presentation.py`. |
+| **INV-009** | *Subgroup sample size guard ($n \ge 30$) can be applied solely at presentation/reporting time.* | Empirically refuted: filtering sub-30 groups post-hoc versus pre-filtering alters multi-group disparity statistics by up to $3\times$ ($0.0422 \to 0.0143$) due to denominator shift in multi-group $\max/\min$ calculation. | Enforced sample size thresholding upstream before passing arrays to fairness estimation backends. |
 
 ---
 
 ## 4. Claim Verification Status Summary
 
 ```
-Total Tracked Research Claims: 20 active + 5 invalidated
+Total Tracked Research Claims: 20 active + 9 invalidated
 ├── REPRODUCIBLE (Codified in Passing Automated Test Suite): 7 claims (35%)
 ├── VERIFIED (Primary Source / Tensor / Gazette / Script Inspected): 13 claims (65%)
 ├── ASSERTED (Pending Initial Verification): 0 claims (0%)
-└── INVALIDATED (Formally Refuted & Documented): 5 claims
+└── INVALIDATED (Formally Refuted & Documented): 9 claims
 ```
 
 ### Academic Audit Statement
