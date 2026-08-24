@@ -161,8 +161,9 @@ function Update-Tracker {
     git add $trackerPath
 }
 
+Initialize-Remotes
+
 if ($PSCmdlet.ParameterSetName -eq 'Pull') {
-    Initialize-Remotes
     $branch = git rev-parse --abbrev-ref HEAD
     git pull --autostash $fuseaiRemote $branch
     exit $LASTEXITCODE
