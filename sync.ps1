@@ -62,30 +62,35 @@ function Push-AllRemotes {
     param([string]$Branch)
     Initialize-Remotes
 
-    $targetRemotes = @($originRemote, $orgRemote, $duoRemote)
+    $compulsoryRemotes = @($originRemote, $duoRemote)
+    $optionalRemotes = @($orgRemote)
+    $allRemotes = @($originRemote, $duoRemote, $orgRemote)
     $results = @{}
 
-    foreach ($remote in $targetRemotes) {
+    foreach ($remote in $allRemotes) {
         try {
             & git.exe push $remote $Branch *>$null
             if ($LASTEXITCODE -eq 0) {
                 $results[$remote] = 'OK'
             } else {
-                $results[$remote] = 'SKIPPED (no access / rejected)'
+                $tag = if ($compulsoryRemotes -contains $remote) { 'FAILED (compulsory)' } else { 'SKIPPED (no access / rejected)' }
+                $results[$remote] = $tag
             }
         } catch {
-            $results[$remote] = 'SKIPPED (no access)'
+            $tag = if ($compulsoryRemotes -contains $remote) { 'FAILED (compulsory)' } else { 'SKIPPED (no access)' }
+            $results[$remote] = $tag
         }
     }
 
     foreach ($r in $results.Keys) {
-        Write-Host "push [$r]: $($results[$r])"
+        $typeTag = if ($compulsoryRemotes -contains $r) { '[compulsory]' } else { '[optional]  ' }
+        Write-Host "push $typeTag [$r]: $($results[$r])"
     }
 
-    # Check if at least one remote succeeded
-    $anySuccess = ($results.Values -contains 'OK')
-    if (-not $anySuccess) {
-        Write-Warning "Could not push to any configured remote. Please verify internet connection or Git credentials."
+    # Verify all compulsory remotes succeeded
+    $failedCompulsory = $compulsoryRemotes | Where-Object { $results[$_] -ne 'OK' }
+    if ($failedCompulsory) {
+        Write-Warning "Compulsory remote(s) failed to push: $($failedCompulsory -join ', '). Please check credentials and remote permissions."
     }
 }
 
