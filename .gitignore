@@ -261,4 +261,5 @@ datasets/
 *.onnx
 
 # Parallel research outputs (Claude Desktop instances)
-research/results/
+research/results/exploration_report.txt
+research/exploration_reports/
