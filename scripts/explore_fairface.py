@@ -35,6 +35,9 @@ from bias_aperture.schema import AGE_LABELS, GENDER_LABELS, RACE_LABELS
 
 EXPECTED_COLUMNS = {"file", "age", "gender", "race", "service_test"}
 
+# Raw FairFace CSVs use 'more than 70'; schema.py's locked AGE_LABELS uses '70+'.
+AGE_LABEL_ALIASES = {"more than 70": "70+"}
+
 
 @dataclass
 class SplitReport:
@@ -84,6 +87,7 @@ def explore_split(csv_path: Path, images_root: Path, split: str) -> SplitReport:
             try:
                 image_id = row["file"].strip()
                 age = row["age"].strip()
+                age = AGE_LABEL_ALIASES.get(age, age)
                 gender = row["gender"].strip()
                 race = row["race"].strip()
                 _parse_bool(row["service_test"])  # validated, value unused here
