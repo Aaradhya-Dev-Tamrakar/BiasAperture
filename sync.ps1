@@ -9,6 +9,9 @@ param(
     [Parameter(ParameterSetName = 'Sync')]
     [switch]$NoAutoBranch,
 
+    [Parameter(ParameterSetName = 'Sync')]
+    [switch]$MirrorOnly,
+
     [Parameter(ParameterSetName = 'Pull')]
     [switch]$PullOnly
 )
@@ -63,7 +66,6 @@ function Push-AllRemotes {
     Initialize-Remotes
 
     $compulsoryRemotes = @($originRemote, $duoRemote)
-    $optionalRemotes = @($orgRemote)
     $allRemotes = @($originRemote, $duoRemote, $orgRemote)
     $results = @{}
 
@@ -91,6 +93,28 @@ function Push-AllRemotes {
     $failedCompulsory = $compulsoryRemotes | Where-Object { $results[$_] -ne 'OK' }
     if ($failedCompulsory) {
         Write-Warning "Compulsory remote(s) failed to push: $($failedCompulsory -join ', '). Please check credentials and remote permissions."
+    }
+}
+
+function Sync-AllOriginBranches {
+    Initialize-Remotes
+    git fetch $originRemote --prune
+    if ($LASTEXITCODE -ne 0) {
+        throw "Failed to fetch branches from $originRemote."
+    }
+
+    $branches = @(git for-each-ref --format='%(refname:strip=3)' "refs/remotes/$originRemote/" | Where-Object { $_ -and $_ -ne 'HEAD' })
+    $mirrorRemotes = @($duoRemote, $orgRemote)
+
+    foreach ($branchName in $branches) {
+        foreach ($remote in $mirrorRemotes) {
+            & git.exe push $remote "refs/remotes/$originRemote/$branchName`:refs/heads/$branchName" *>$null
+            if ($LASTEXITCODE -eq 0) {
+                Write-Host "mirror [$branchName] -> [$remote]: OK"
+            } else {
+                Write-Warning "mirror [$branchName] -> [$remote]: FAILED"
+            }
+        }
     }
 }
 
@@ -199,6 +223,11 @@ if ($PSCmdlet.ParameterSetName -eq 'Pull') {
     exit $LASTEXITCODE
 }
 
+if ($MirrorOnly) {
+    Sync-AllOriginBranches
+    exit $LASTEXITCODE
+}
+
 # Auto-detect or switch to specified branch before staging & committing
 $currentBranch = git rev-parse --abbrev-ref HEAD
 $targetBranch = if ($Branch) { $Branch } elseif (-not $NoAutoBranch -and ($currentBranch -eq 'main')) { Get-InferredBranch } else { $null }
@@ -227,3 +256,4 @@ if ($staged) {
 $branch = git rev-parse --abbrev-ref HEAD
 git pull --autostash --rebase $originRemote $branch
 Push-AllRemotes -Branch $branch
+Sync-AllOriginBranches
