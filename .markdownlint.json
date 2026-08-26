@@ -1,0 +1,16 @@
+{
+  "default": true,
+  "MD013": {
+    "line_length": 120,
+    "heading_line_length": 120,
+    "table_line_length": false
+  },
+  "MD024": {
+    "siblings_only": true
+  },
+  "MD033": false,
+  "MD034": false,
+  "MD040": false,
+  "MD041": false,
+  "no-hard-tabs": false
+}
