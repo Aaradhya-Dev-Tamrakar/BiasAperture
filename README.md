@@ -64,16 +64,16 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 
 ## Project Progress & Roadmap
 
-```Overall Progress: [███████████░░░░░░░░░] 55% (M1 Schema & 20-Track Research Sprint Complete · M2 Ingestion & Reporting In Progress)
+```Overall Progress: [████████████████░░░░] 65% (M1 Schema & Research Complete · M2 Ingestion & Fairness Engine In Progress · M3 Report & Stats Engine Underway)
 
 ```
 
 | Work Package / Milestone                          | Stream / Focus | Primary Owner            | Status      | Progress Bar                  | Deliverables & Implementation State                                                                                                                                                     |
 | ------------------------------------------------- | -------------- | ------------------------ | ----------- | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **WP1 / M1: Schema Lock & Baseline**              | Foundations    | Joint                    | Completed   | `[████████████████████] 100%` | Locked schema (`schema.py`), FairFace ResNet-34 baseline fixed, test suite passing (22/22)                                                                                              |
-| **WP2 / M2: Data Ingestion & Test Matrix**        | Stream A       | Tisha (`@tiixsha`)       | In Progress | `[███████████░░░░░░░░░]  55%` | 20-track research complete, `ModelInterface` & `PredictionsFileInterface` implemented, alignment & test matrix specs ready                                                              |
+| **WP1 / M1: Schema Lock & Baseline**              | Foundations    | Joint                    | Completed   | `[████████████████████] 100%` | Locked schema (`schema.py`), FairFace ResNet-34 baseline fixed, test suite passing (39/39)                                                                                              |
+| **WP2 / M2: Data Ingestion & Test Matrix**        | Stream A       | Tisha (`@tiixsha`)       | In Progress | `[██████████████░░░░░░]  70%` | 20-track research complete, `DataIngestionPipeline` fully implemented, 17/17 ingestion tests passing, validation modes & OvR transformer complete                                        |
 | **WP3 / M2: Compliance Report Scaffolding**       | Stream B       | Tisha (`@tiixsha`)       | In Progress | `[█████████░░░░░░░░░░░]  45%` | EU AI Act & NIST mapping complete, offline standalone Jinja2 single-file HTML architecture & templates designed                                                                         |
-| **WP4 / M3: Statistical Detection Engine & SHAP** | Stream C & D   | Aaradhya (`@AaradhyaDT`) | In Progress | `[████████░░░░░░░░░░░░]  40%` | Dual-backend harmonization (AIF360/Fairlearn), BCa bootstrap CI & χ² engine, SHAP attribution design locked                                                                             |
+| **WP4 / M3: Statistical Detection Engine & SHAP** | Stream C & D   | Aaradhya (`@AaradhyaDT`) | In Progress | `[██████████████░░░░░░]  60%` | Dual-backend harmonization verified (4/4 math tests passing), known-answer test matrix ready, SHAP attribution design locked                                                            |
 | **WP5 / M4: System Orchestration & Case Study**   | Integration    | Joint (Aaradhya/Tisha)   | In Progress | `[███░░░░░░░░░░░░░░░░░]  15%` | Multi-remote automated sync workflow operational (`origin` & `duo` compulsory, `org` mirror), end-to-end integration pipeline & benchmark audit plan staged                             |
 
 ## Branching & Workstreams
