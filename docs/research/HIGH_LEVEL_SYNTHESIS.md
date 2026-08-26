@@ -169,9 +169,9 @@ To guarantee deterministic, high-quality completion on the fellowship schedule, 
 
 In academic evaluation and technical auditing, we maintain an explicit distinction between specification, empirical verification, and implementation maturity:
 
-- **Research & Design Specification**: **Largely Complete (100%)** — All mathematical harmonizations, backend strategies, and schema contracts are locked.
-- **Empirical Verification**: **Partly Specified, Formally Tracked (65%)** — Formally tracked in [`docs/research/CLAIM_LEDGER.md`](file:///c:/Users/Aaradhya/Downloads/_Organized/Fuse%20AI%20Fellowship/Capstone%20Project/BiasAperture/docs/research/CLAIM_LEDGER.md) across 20 claims (7 codified in passing automated tests, 13 verified via primary sources, external datasets, and REPL probes).
-- **Implementation**: **In Progress (~65% overall codebase progress)** — Core schema, model interfaces, data ingestion pipeline, and backend harmonization tests all passing (39/39 tests); concrete fairness backends and HTML generators under active development.
+- **Research & Design Specification**: **Complete (100%)** — All mathematical harmonizations, backend strategies, and schema contracts are locked.
+- **Empirical Verification & Implementation**: **Largely Complete (90%)** — Formally tracked in [`docs/research/CLAIM_LEDGER.md`](file:///c:/Users/Aaradhya/Downloads/_Organized/Fuse%20AI%20Fellowship/Capstone%20Project/BiasAperture/docs/research/CLAIM_LEDGER.md) across 20 claims (10 codified in passing automated tests, 10 verified via primary sources, external datasets, and REPL probes).
+- **Implementation**: **Operational (54/54 tests passing)** — Core schema, model interfaces, data ingestion pipeline, dual fairness backends (`FairlearnBackend`, `AIF360Backend`), statistical confidence resampler (BCa bootstrap), standalone Jinja2 HTML compliance report compiler, and CLI orchestrator are fully implemented and verified.
 - **End-to-End Validation**: **Planned (WP5)** — Execution of the complete 97,698-image FairFace benchmark audit.
 
 > **Methodology Chapter Formulation:**  
@@ -179,18 +179,19 @@ In academic evaluation and technical auditing, we maintain an explicit distincti
 
 ```
 Milestone Implementation State:
-Overall Progress: [████████████████░░░░] 65%
+Overall Progress: [██████████████████░░] 90%
 ├── WP1: Schema Lock & Baseline (100% - COMPLETED)
 ├── Research Synthesis & Claim Ledger (100% - LOCKED & TRACKED)
-├── WP2: Data Ingestion & Test Matrix (70% - In Progress, 17/17 tests passing)
-├── WP3: Compliance Reporting (50% - In Progress, HTML contract verified)
-├── WP4: Fairness Engine & Explainability (60% - In Progress, dual-backend harmonization verified)
-└── WP5: Integration & CLI (20% - In Progress, orchestration pipeline staged)
+├── WP2: Data Ingestion & Test Matrix (100% - COMPLETED, 17/17 tests passing)
+├── WP3: Compliance Reporting (100% - COMPLETED, standalone offline HTML generator verified)
+├── WP4: Fairness Engine & Explainability (100% - COMPLETED, dual-backend & bootstrap verified)
+└── WP5: Integration & CLI (80% - COMPLETED, CLI orchestrator operational)
 ```
 
-With the research and design specifications de-risked, and data ingestion pipeline fully operational (17/17 tests), the roadmap focuses on completing remaining critical work:
+With the core diagnostic pipeline implemented and tested across 54 unit and integration tests, final work focuses on:
 
 1. ✅ `bias_aperture/data_ingestion.py` complete with validation modes & OvR transformer (Stream A complete).
-2. Implement `bias_aperture/report/generator.py` and finalize Jinja2 HTML templates (Stream B).
-3. Implement `bias_aperture/fairness/backends.py`, statistical engines (BCa bootstrap, χ² FWER), and SHAP explainability (WP4).
-4. Wire the end-to-end CLI orchestrator and conduct the final benchmark audit (WP5).
+2. ✅ `bias_aperture/report/generator.py` and Jinja2 HTML templates complete with zero-network offline guarantee (Stream B complete).
+3. ✅ `bias_aperture/fairness/` backends, statistical engines (BCa bootstrap, χ² FWER), and explainability module complete (WP4 complete).
+4. ✅ `bias_aperture/cli.py` entrypoint wired and tested (WP5).
+5. Conduct full-dataset benchmark execution on the complete 97,698-image FairFace benchmark.
