@@ -10,6 +10,9 @@ param(
     [switch]$NoAutoBranch,
 
     [Parameter(ParameterSetName = 'Sync')]
+    [switch]$sync,
+
+    [Parameter(ParameterSetName = 'Sync')]
     [switch]$MirrorOnly,
 
     [Parameter(ParameterSetName = 'Pull')]
@@ -223,7 +226,7 @@ if ($PSCmdlet.ParameterSetName -eq 'Pull') {
     exit $LASTEXITCODE
 }
 
-if ($MirrorOnly) {
+if ($sync -or $MirrorOnly) {
     Sync-AllOriginBranches
     exit $LASTEXITCODE
 }
