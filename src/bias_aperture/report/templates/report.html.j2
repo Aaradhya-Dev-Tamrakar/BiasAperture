@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiasAperture — Demographic Bias Audit & Compliance Dossier</title>
+    <style>
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --brand-blue: #2563eb;
+            --accent-green: #16a34a;
+            --accent-red: #dc2626;
+            --accent-amber: #d97706;
+            --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-stack);
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            margin: 0;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            background-color: var(--bg-card);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.8rem;
+            color: #1e293b;
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .meta-item {
+            background: #f1f5f9;
+            padding: 0.75rem;
+            border-radius: 6px;
+        }
+
+        .meta-label {
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            display: block;
+        }
+
+        .section-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+            font-size: 1.3rem;
+            color: #1e293b;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: #f8fafc;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-pass {
+            background-color: #dcfce7;
+            color: #15803d;
+        }
+
+        .badge-warn {
+            background-color: #fef3c7;
+            color: #b45309;
+        }
+
+        .badge-fail {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .badge-guard {
+            background-color: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .regulatory-box {
+            background-color: #eff6ff;
+            border-left: 4px solid var(--brand-blue);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.85rem;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>BiasAperture — Demographic Fairness Audit Dossier</h1>
+            <p style="color: var(--text-muted); margin: 0;">Diagnostic Demographic Bias Evaluation & Regulatory Traceability Report</p>
+            <div class="meta-grid">
+                <div class="meta-item">
+                    <span class="meta-label">Audited Model</span>
+                    <strong>{{ context.model_name }}</strong>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Evaluation Dataset</span>
+                    <strong>{{ context.dataset_name }} (N={{ context.total_subjects }})</strong>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Protected Axis</span>
+                    <strong>{{ context.protected_axis | capitalize }}</strong>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Audit Date</span>
+                    <strong>{{ context.timestamp }}</strong>
+                </div>
+            </div>
+        </header>
+
+        <!-- 1. Executive Summary & Core Four Headline Metrics -->
+        <div class="section-card">
+            <h2>1. Headline Fairness Metrics (Core Four — Cross-Group Overview)</h2>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">
+                Summary metrics evaluated across all eligible demographic strata (n ≥ 30 per NFR-003). Accompanied by 95% stratified BCa bootstrap confidence intervals and Pearson's χ² test of independence.
+            </p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric Name</th>
+                        <th>Point Estimate</th>
+                        <th>95% Bootstrap CI</th>
+                        <th>Significance (p-value)</th>
+                        <th>Regulatory Clause</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for m in summary_metrics %}
+                    <tr>
+                        <td><strong>{{ m.metric_name | replace('_', ' ') | title }}</strong></td>
+                        <td>
+                            {% if m.metric_value is not none %}
+                                {{ "%.3f"|format(m.metric_value) }}
+                            {% else %}
+                                <span class="badge badge-guard">N/A (n &lt; 30)</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if m.ci_lower is not none and m.ci_upper is not none %}
+                                [{{ "%.3f"|format(m.ci_lower) }}, {{ "%.3f"|format(m.ci_upper) }}]
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if m.p_value is not none %}
+                                p={{ "%.4f"|format(m.p_value) }}
+                                {% if m.p_value < 0.05 %}
+                                    <span class="badge badge-fail">p &lt; 0.05</span>
+                                {% else %}
+                                    <span class="badge badge-pass">p ≥ 0.05</span>
+                                {% endif %}
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+                        <td><small>{{ context.regulatory_map.get(m.metric_name, "NIST AI RMF 2.11 / EU AI Act Art. 10") }}</small></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 2. Per-Subgroup Disparity Analysis -->
+        <div class="section-card">
+            <h2>2. Per-Subgroup Disparity Matrix</h2>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">
+                Detailed stratification across individual demographic groups. Subgroups below the NFR-003 sample threshold (n &lt; 30) are strictly flagged and uncomputed to prevent small-sample estimation artifacts.
+            </p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subgroup</th>
+                        <th>Sample Size (n)</th>
+                        <th>DPD</th>
+                        <th>EOD (Max-Gap)</th>
+                        <th>EOP</th>
+                        <th>DIR (Symmetric)</th>
+                        <th>Data Integrity Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for group in subgroup_matrix %}
+                    <tr>
+                        <td><strong>{{ group.label }}</strong></td>
+                        <td>{{ group.sample_size }}</td>
+                        <td>{{ group.dpd }}</td>
+                        <td>{{ group.eod }}</td>
+                        <td>{{ group.eop }}</td>
+                        <td>{{ group.dir }}</td>
+                        <td>
+                            {% if group.insufficient_sample %}
+                                <span class="badge badge-guard">Flagged: n &lt; 30 (NFR-003)</span>
+                            {% else %}
+                                <span class="badge badge-pass">Audited (Valid)</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 3. Model Card & Dataset Datasheet (Mitchell / Gebru) -->
+        <div class="section-card">
+            <h2>3. Governance Documentation & Intended Use</h2>
+            <div class="regulatory-box">
+                <strong>EU AI Act (Regulation EU 2024/1689) Article 10 / Annex IV Alignment:</strong>
+                This audit dossier provides verifiable diagnostic documentation of demographic performance disparities. It does not perform model retraining or in-situ weight modifications.
+            </div>
+            <p><strong>Model Description:</strong> {{ context.model_description }}</p>
+            <p><strong>Evaluation Protocol:</strong> Standalone offline evaluation using dual-backend cross-validation (Fairlearn + AIF360) and 1,000-resample stratified BCa bootstrap estimation.</p>
+        </div>
+
+        <footer>
+            <p>Generated deterministically by <strong>BiasAperture v0.1.0</strong> • Pure Standalone HTML • Zero External CDNs</p>
+        </footer>
+    </div>
+</body>
+</html>
