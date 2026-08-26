@@ -361,6 +361,58 @@ Following the completion of Milestone M1 and the 20-track research sprint, tasks
   - Joint: Full FairFace 97.7k Benchmark Audit (D5) + LaTeX Report Finalization (E1).
   - Joint: Presentation Slides (E2) + Examiner Scrutiny Mock Defense (E3).
 
+## §19. Proposal Defense & Final Deadline Check (August 26, 2026)
+
+The proposal defense has not yet been conducted. The existing Sprint 4 plan includes
+presentation slides and a mock defense, but the actual proposal-defense date and
+requirements remain to be confirmed with the TA.
+
+The team currently believes that the project deadline may be in November 2026, but
+this is unconfirmed and must not be treated as final until checked against the official
+Fellowship schedule or confirmed by the TA.
+
+### Items to Confirm with the TA
+
+- Proposal-defense date, presentation duration, and required format.
+- Whether both team members must present and how individual contributions are assessed.
+- Whether slides, a live demonstration, or both are required.
+- Whether FairFace alone is sufficient as the final case study, with UTKFace removed
+  from scope if necessary.
+- Whether a CLI and offline HTML report satisfy the deliverable requirements.
+- Whether both Fairlearn and AIF360, and the SHAP layer, are mandatory or may be
+  demonstrated as focused validation/prototype components.
+- The confirmed final project deadline and any interim milestones before November.
+- The evidence expected for evaluation: tests, dataset profiling, metric results,
+  generated report, runtime measurements, and an end-to-end audit.
+
+### Defense Preparation
+
+- Prepare a 10–15 minute proposal presentation covering the problem, motivation,
+  architecture, methodology, evaluation plan, risks, and expected contribution.
+- Prepare one complete demonstration: prediction input → schema validation → fairness
+  metrics → significance/uncertainty analysis → compliance report.
+- Rehearse questions on the $n \ge 30$ sample guard, $\chi^2$ testing, bootstrap
+  confidence intervals, Fairlearn/AIF360 differences, FairFace limitations, and the
+  diagnostic-only scope boundary.
+- Keep the non-negotiable fallback scope explicit: ingestion, one model, fairness
+  engine, one report format, and a defensible FairFace case study.
+
+### Course Marking Context
+
+The Google Classroom marking scheme shown on August 26, 2026 is:
+
+| Category | Weight |
+| --- | ---: |
+| Project | 40% |
+| Assignments | 20% |
+| Quizzes | 20% |
+| Exam | 20% |
+
+The project is therefore the largest single assessment category, but the screenshot
+does not specify how the project component itself is divided between proposal defense,
+implementation, report, presentation, and final demonstration. This internal project
+breakdown should be confirmed with the TA.
+
 ---
 
 *Exported from Fuse capstone planning session — reflects state as of this export, not a final locked plan.*
@@ -380,3 +432,11 @@ Following the completion of Milestone M1 and the 20-track research sprint, tasks
 **Revision 7 (August 23, 2026):** New §17 added — formal empirical research verification matrix, stream ownership, dedicated git feature branches (`feat/stream-data`, `feat/stream-report`, `feat/wp4-engine`, `feat/wp5-integration`), and viva defense responsibility division locked between A and T. Title updated to BiasAperture-AT_v7.
 
 **Revision 8 (August 23, 2026):** New §18 added — formal Master Task Division, 4-Week Sprint Schedule, and cross-stream contract handoffs for the implementation phase (M2 $\to$ M3 $\to$ M4 $\to$ Viva Defense). Title updated to BiasAperture-AT_v8.
+
+**Revision 9 (August 26, 2026):** New §19 added — recorded that the proposal defense
+has not yet occurred, marked the possible November 2026 deadline as unconfirmed, and
+listed TA questions and defense-preparation actions.
+
+**Revision 10 (August 26, 2026):** Added the Google Classroom marking context:
+Project 40%, Assignments 20%, Quizzes 20%, and Exam 20%. Added a question to confirm
+the internal project assessment breakdown with the TA.
