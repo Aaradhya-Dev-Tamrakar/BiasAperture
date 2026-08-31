@@ -63,3 +63,53 @@ def test_shap_explainer_selective_triggering() -> None:
         insufficient_sample=True,
     )
     assert engine.should_explain(res_small) is False
+<<<<<<< HEAD
+=======
+
+
+def test_shap_surrogate_attribution_on_records() -> None:
+    from bias_aperture.schema import SubjectRecord
+
+    # Create records with correlation between race=Black and predicted_label="0"
+    records = []
+    for i in range(50):
+        records.append(
+            SubjectRecord(
+                image_id=f"img_w_{i}",
+                race="White",
+                gender="Female",
+                age="20-29",
+                true_label="1",
+                predicted_label="1",
+            )
+        )
+        records.append(
+            SubjectRecord(
+                image_id=f"img_b_{i}",
+                race="Black",
+                gender="Female",
+                age="20-29",
+                true_label="1",
+                predicted_label="0",
+            )
+        )
+
+    engine = ShapExplainerEngine()
+    res_sig = MetricResult(
+        metric_name="demographic_parity_difference",
+        subgroup="race=Black",
+        subgroup_sample_size=50,
+        metric_value=1.0,
+        ci_lower=0.9,
+        ci_upper=1.0,
+        p_value=0.001,
+        insufficient_sample=False,
+    )
+
+    exp = engine.explain_disparity(res_sig, records=records)
+    assert "Surrogate Shapley attribution computed" in exp.details
+    assert len(exp.feature_attributions) > 0
+    # Race features should have strong attribution
+    race_attrs = [k for k in exp.feature_attributions if "race" in k]
+    assert len(race_attrs) > 0
+>>>>>>> feat/wp4-engine

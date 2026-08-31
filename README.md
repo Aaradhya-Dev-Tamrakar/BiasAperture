@@ -23,11 +23,23 @@ BiasAperture/
 ├── uv.lock                     # Deterministic dependency lockfile
 ├── data/                       # Datasets and test matrices (raw/ and processed/ gitignored)
 │   └── README.md               # Dataset sourcing and FairFace setup instructions
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+=======
+>>>>>>> feat/wp4-engine
 ├── dev-logs/                   # Dated developer logs & master audit walkthroughs
 ├── research/                   # 20-Track Parallel Research Sprint
 │   ├── research tracks/        # Track prompts and deliverables (Tracks 01–20)
 │   ├── context feed/           # Context documents feeding research tracks
 │   └── results/                # Stream syntheses (A–F) and cross-track conflict log
+<<<<<<< HEAD
+=======
+├── scripts/                    # Dataset exploration and verification scripts
+│   ├── explore_fairface.py     # FairFace disk verification & attribute profiling
+│   └── explore_utkface.py      # UTKFace comparison & DEX noise analysis
+>>>>>>> Stashed changes
+>>>>>>> feat/wp4-engine
 ├── report/                     # LaTeX report source and compiled proposal
 │   ├── main.tex                # Entry point
 │   ├── vars.tex                # Title, authors, supervisor metadata
@@ -36,7 +48,18 @@ BiasAperture/
 │   ├── main.pdf                # Compiled proposal (tracked; build artifacts are not)
 │   └── src/                    # Frontmatter, chapters, backmatter, images
 ├── docs/                       # TA/reviewer-facing meta-documentation
+<<<<<<< HEAD
 │   ├── BiasAperture-AT.md      # Master project planning and task assignments (v7)
+=======
+<<<<<<< Updated upstream
+│   ├── BiasAperture-AT.md      # Master project planning and task assignments (v6)
+=======
+│   ├── BiasAperture-AT.md      # Master project planning and task assignments (v10)
+│   ├── PROPOSAL_DEFENSE_GUIDE.md # Comprehensive Viva defense Q&A guide
+│   ├── PRE_PROPOSAL_READING_GUIDE.md # Reading guide & executive brief
+│   ├── BiasAperture_NOVELTY_INTEGRATION_DEFENSE.md # Novelty & prior-art defense
+>>>>>>> Stashed changes
+>>>>>>> feat/wp4-engine
 │   ├── schema-lock-m1.md       # Milestone M1 schema specification
 │   ├── literature-review-matrix.md   # Paper matrix (9 papers, Walden format)
 │   ├── DATA_GOVERNANCE.md      # Data governance, privacy & special-category protocol
@@ -53,6 +76,9 @@ BiasAperture/
 │   ├── bias_aperture/          # Core package
 │   │   ├── schema.py           # Locked demographic and metric schema (M1)
 │   │   ├── model_interface.py  # ModelInterface & PredictionsFileInterface
+│   │   ├── data_ingestion.py   # FairFace ingestion & validation pipeline
+│   │   ├── explainability.py   # SHAP & ITA explainability layer
+│   │   ├── cli.py              # CLI entry point orchestrator (`bias-aperture`)
 │   │   ├── fairness/           # WP4 detection engine package
 │   │   └── report/             # WP3 report generation package
 │   └── tests/                  # Automated pytest unit test suite (conftest.py, tests)

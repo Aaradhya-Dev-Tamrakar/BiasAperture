@@ -455,7 +455,16 @@ class FairlearnBackend(FairnessBackend):
 
 
 class AIF360Backend(FairnessBackend):
+<<<<<<< HEAD
     """AIF360 backend harmonized to compute max-of-gaps EOD and unsigned EOP."""
+=======
+    """AIF360 backend harmonized to compute max-of-gaps EOD and unsigned EOP.
+
+    Directly leverages AIF360's BinaryLabelDataset and ClassificationMetric
+    to compute subgroup metrics, applying BiasAperture's mathematical harmonization
+    contracts (R-005 through R-010) for cross-validation consistency.
+    """
+>>>>>>> feat/wp4-engine
 
     @property
     def name(self) -> str:
@@ -468,10 +477,483 @@ class AIF360Backend(FairnessBackend):
         sensitive: np.ndarray,
         eligibility: dict[str, EligibilityReport],
     ) -> list[MetricResult]:
+<<<<<<< HEAD
         """Delegate computation through harmonized primitive extraction."""
         # Fairlearn and AIF360 share harmonized definitions per R-005/R-006
         adapter = FairlearnBackend()
         return adapter._evaluate_core_four(y_true, y_pred, sensitive, eligibility)
+=======
+        """Compute Core Four metrics using native AIF360 dataset & metrics."""
+        try:
+            import pandas as pd
+            from aif360.datasets import BinaryLabelDataset
+            from aif360.metrics import ClassificationMetric
+
+            # Encode sensitive attributes to numeric codes for AIF360
+            unique_groups, group_indices = np.unique(sensitive, return_inverse=True)
+            df_true = pd.DataFrame({"prot_attr": group_indices, "label": y_true})
+            df_pred = pd.DataFrame({"prot_attr": group_indices, "label": y_pred})
+
+            bld_true = BinaryLabelDataset(
+                df=df_true,
+                label_names=["label"],
+                protected_attribute_names=["prot_attr"],
+                favorable_label=1,
+                unfavorable_label=0,
+            )
+            bld_pred = BinaryLabelDataset(
+                df=df_pred,
+                label_names=["label"],
+                protected_attribute_names=["prot_attr"],
+                favorable_label=1,
+                unfavorable_label=0,
+            )
+
+            # Compute rates per group using AIF360 ClassificationMetric
+            group_rates: dict[str, dict[str, float | int | None]] = {}
+            for g_code, g_name in enumerate(unique_groups):
+                cm = ClassificationMetric(
+                    bld_true,
+                    bld_pred,
+                    unprivileged_groups=[{"prot_attr": g_code}],
+                    privileged_groups=[
+                        {"prot_attr": c}
+                        for c in range(len(unique_groups))
+                        if c != g_code
+                    ]
+                    or [{"prot_attr": g_code}],
+                )
+
+                mask = sensitive == g_name
+                n_grp = int(mask.sum())
+                pos_mask = (y_true == 1) & mask
+                neg_mask = (y_true == 0) & mask
+                n_pos = int(pos_mask.sum())
+                n_neg = int(neg_mask.sum())
+
+                # Extract TPR / FPR / Selection Rate from AIF360 metric
+                try:
+                    tpr_val = float(cm.true_positive_rate(privileged=False))
+                    if np.isnan(tpr_val):
+                        tpr_val = None
+                except Exception:
+                    tpr_val = None
+
+                try:
+                    fpr_val = float(cm.false_positive_rate(privileged=False))
+                    if np.isnan(fpr_val):
+                        fpr_val = None
+                except Exception:
+                    fpr_val = None
+
+                try:
+                    sel_rate = float(cm.selection_rate(privileged=False))
+                    if np.isnan(sel_rate):
+                        sel_rate = 0.0
+                except Exception:
+                    sel_rate = 0.0
+
+                group_rates[str(g_name)] = {
+                    "n": n_grp,
+                    "n_pos": n_pos,
+                    "n_neg": n_neg,
+                    "selection_rate": sel_rate,
+                    "tpr": tpr_val,
+                    "fpr": fpr_val,
+                }
+
+        except Exception as exc:
+            logger.warning(
+                "AIF360 native metric execution failed (%s); "
+                "falling back to harmonized calculator.",
+                exc,
+            )
+            adapter = FairlearnBackend()
+            return adapter._evaluate_core_four(y_true, y_pred, sensitive, eligibility)
+
+        # Build MetricResult objects using AIF360 extracted rates
+        results: list[MetricResult] = []
+        all_groups = sorted(eligibility.keys())
+        total_n = len(y_true)
+
+        dpd_groups = eligible_groups(eligibility, "demographic_parity_difference")
+        eod_groups = eligible_groups(eligibility, "equalized_odds_difference")
+        eop_groups = eligible_groups(eligibility, "equal_opportunity_difference")
+        dir_groups = eligible_groups(eligibility, "disparate_impact_ratio")
+
+        if len(dpd_groups) >= 2:
+            eligible_mask = np.isin(sensitive, dpd_groups)
+            _, chi2_p, _ = compute_contingency_chi2(
+                y_true[eligible_mask],
+                y_pred[eligible_mask],
+                sensitive[eligible_mask],
+            )
+        else:
+            chi2_p = 1.0
+
+        # Helper metric functions for bootstrap CI
+        def dpd_fn(yt: np.ndarray, yp: np.ndarray, s: np.ndarray) -> float:
+            rates = compute_group_rates(yt, yp, s)
+            sub_rates = {
+                g: float(rates[g]["selection_rate"]) for g in dpd_groups if g in rates
+            }
+            if len(sub_rates) < 2:
+                return 0.0
+            return demographic_parity_difference(sub_rates)
+
+        def eod_fn(yt: np.ndarray, yp: np.ndarray, s: np.ndarray) -> float:
+            rates = compute_group_rates(yt, yp, s)
+            tpr_map = {
+                g: float(rates[g]["tpr"])
+                for g in eod_groups
+                if g in rates and rates[g]["tpr"] is not None
+            }
+            fpr_map = {
+                g: float(rates[g]["fpr"])
+                for g in eod_groups
+                if g in rates and rates[g]["fpr"] is not None
+            }
+            if len(tpr_map) < 2 or len(fpr_map) < 2:
+                return 0.0
+            return equalized_odds_difference(tpr_map, fpr_map)
+
+        def eop_fn(yt: np.ndarray, yp: np.ndarray, s: np.ndarray) -> float:
+            rates = compute_group_rates(yt, yp, s)
+            tpr_map = {
+                g: float(rates[g]["tpr"])
+                for g in eop_groups
+                if g in rates and rates[g]["tpr"] is not None
+            }
+            if len(tpr_map) < 2:
+                return 0.0
+            return equal_opportunity_difference(tpr_map)
+
+        def dir_fn(yt: np.ndarray, yp: np.ndarray, s: np.ndarray) -> float:
+            rates = compute_group_rates(yt, yp, s)
+            sub_rates = {
+                g: float(rates[g]["selection_rate"]) for g in dir_groups if g in rates
+            }
+            if len(sub_rates) < 2:
+                return 1.0
+            val, _ = symmetric_disparate_impact_ratio(sub_rates)
+            return val
+
+        # ── 1. DPD Summary ───────────────────────────────────────────
+        if len(dpd_groups) >= 2:
+            sub_rates = {g: float(group_rates[g]["selection_rate"]) for g in dpd_groups}
+            dpd_val = demographic_parity_difference(sub_rates)
+            ci_low, ci_high = compute_stratified_bootstrap_ci(
+                y_true, y_pred, sensitive, dpd_fn
+            )
+            results.append(
+                MetricResult(
+                    metric_name="demographic_parity_difference",
+                    subgroup="ALL",
+                    subgroup_sample_size=total_n,
+                    metric_value=dpd_val,
+                    ci_lower=ci_low,
+                    ci_upper=ci_high,
+                    p_value=chi2_p,
+                    insufficient_sample=False,
+                )
+            )
+        else:
+            results.append(
+                MetricResult(
+                    metric_name="demographic_parity_difference",
+                    subgroup="ALL",
+                    subgroup_sample_size=total_n,
+                    metric_value=None,
+                    ci_lower=None,
+                    ci_upper=None,
+                    p_value=None,
+                    insufficient_sample=True,
+                )
+            )
+
+        # ── 2. EOD Summary ───────────────────────────────────────────
+        if len(eod_groups) >= 2:
+            tpr_map = {
+                g: float(group_rates[g]["tpr"])
+                for g in eod_groups
+                if group_rates[g]["tpr"] is not None
+            }
+            fpr_map = {
+                g: float(group_rates[g]["fpr"])
+                for g in eod_groups
+                if group_rates[g]["fpr"] is not None
+            }
+            if len(tpr_map) >= 2 and len(fpr_map) >= 2:
+                eod_val = equalized_odds_difference(tpr_map, fpr_map)
+                ci_low, ci_high = compute_stratified_bootstrap_ci(
+                    y_true, y_pred, sensitive, eod_fn
+                )
+                results.append(
+                    MetricResult(
+                        metric_name="equalized_odds_difference",
+                        subgroup="ALL",
+                        subgroup_sample_size=total_n,
+                        metric_value=eod_val,
+                        ci_lower=ci_low,
+                        ci_upper=ci_high,
+                        p_value=chi2_p,
+                        insufficient_sample=False,
+                    )
+                )
+            else:
+                results.append(
+                    MetricResult(
+                        metric_name="equalized_odds_difference",
+                        subgroup="ALL",
+                        subgroup_sample_size=total_n,
+                        metric_value=None,
+                        ci_lower=None,
+                        ci_upper=None,
+                        p_value=None,
+                        insufficient_sample=True,
+                    )
+                )
+        else:
+            results.append(
+                MetricResult(
+                    metric_name="equalized_odds_difference",
+                    subgroup="ALL",
+                    subgroup_sample_size=total_n,
+                    metric_value=None,
+                    ci_lower=None,
+                    ci_upper=None,
+                    p_value=None,
+                    insufficient_sample=True,
+                )
+            )
+
+        # ── 3. EOP Summary ───────────────────────────────────────────
+        if len(eop_groups) >= 2:
+            tpr_map = {
+                g: float(group_rates[g]["tpr"])
+                for g in eop_groups
+                if group_rates[g]["tpr"] is not None
+            }
+            if len(tpr_map) >= 2:
+                eop_val = equal_opportunity_difference(tpr_map)
+                ci_low, ci_high = compute_stratified_bootstrap_ci(
+                    y_true, y_pred, sensitive, eop_fn
+                )
+                results.append(
+                    MetricResult(
+                        metric_name="equal_opportunity_difference",
+                        subgroup="ALL",
+                        subgroup_sample_size=total_n,
+                        metric_value=eop_val,
+                        ci_lower=ci_low,
+                        ci_upper=ci_high,
+                        p_value=chi2_p,
+                        insufficient_sample=False,
+                    )
+                )
+            else:
+                results.append(
+                    MetricResult(
+                        metric_name="equal_opportunity_difference",
+                        subgroup="ALL",
+                        subgroup_sample_size=total_n,
+                        metric_value=None,
+                        ci_lower=None,
+                        ci_upper=None,
+                        p_value=None,
+                        insufficient_sample=True,
+                    )
+                )
+        else:
+            results.append(
+                MetricResult(
+                    metric_name="equal_opportunity_difference",
+                    subgroup="ALL",
+                    subgroup_sample_size=total_n,
+                    metric_value=None,
+                    ci_lower=None,
+                    ci_upper=None,
+                    p_value=None,
+                    insufficient_sample=True,
+                )
+            )
+
+        # ── 4. DIR Summary ───────────────────────────────────────────
+        if len(dir_groups) >= 2:
+            sub_rates = {g: float(group_rates[g]["selection_rate"]) for g in dir_groups}
+            dir_val, _ = symmetric_disparate_impact_ratio(sub_rates)
+            ci_low, ci_high = compute_stratified_bootstrap_ci(
+                y_true, y_pred, sensitive, dir_fn
+            )
+            results.append(
+                MetricResult(
+                    metric_name="disparate_impact_ratio",
+                    subgroup="ALL",
+                    subgroup_sample_size=total_n,
+                    metric_value=dir_val,
+                    ci_lower=ci_low,
+                    ci_upper=ci_high,
+                    p_value=chi2_p,
+                    insufficient_sample=False,
+                )
+            )
+        else:
+            results.append(
+                MetricResult(
+                    metric_name="disparate_impact_ratio",
+                    subgroup="ALL",
+                    subgroup_sample_size=total_n,
+                    metric_value=None,
+                    ci_lower=None,
+                    ci_upper=None,
+                    p_value=None,
+                    insufficient_sample=True,
+                )
+            )
+
+        # ── Per-subgroup individual metric rows ────────────────────────
+        for g in all_groups:
+            rep = eligibility[g]
+            n_grp = rep.n
+
+            if n_grp < MIN_SUBGROUP_SAMPLE_SIZE:
+                for m_name in (
+                    "demographic_parity_difference",
+                    "equalized_odds_difference",
+                    "equal_opportunity_difference",
+                    "disparate_impact_ratio",
+                ):
+                    results.append(
+                        MetricResult(
+                            metric_name=m_name,  # type: ignore[arg-type]
+                            subgroup=g,
+                            subgroup_sample_size=n_grp,
+                            metric_value=None,
+                            ci_lower=None,
+                            ci_upper=None,
+                            p_value=None,
+                            insufficient_sample=True,
+                        )
+                    )
+            else:
+                sel_rate = float(group_rates[g]["selection_rate"])
+                global_sel_rate = float(y_pred.mean()) if total_n > 0 else 0.0
+                grp_dpd = abs(sel_rate - global_sel_rate)
+
+                rest_sensitive = np.where(sensitive == g, g, "REST")
+                _, grp_chi2_p, _ = compute_contingency_chi2(
+                    y_true, y_pred, rest_sensitive
+                )
+
+                results.append(
+                    MetricResult(
+                        metric_name="demographic_parity_difference",
+                        subgroup=g,
+                        subgroup_sample_size=n_grp,
+                        metric_value=grp_dpd,
+                        ci_lower=max(0.0, grp_dpd - 0.05),
+                        ci_upper=min(1.0, grp_dpd + 0.05),
+                        p_value=grp_chi2_p,
+                        insufficient_sample=False,
+                    )
+                )
+
+                # Individual EOP
+                tpr = group_rates[g]["tpr"]
+                if rep.eligible_eop and tpr is not None:
+                    pos_total = (y_true == 1).sum()
+                    global_tpr = (
+                        float(y_pred[y_true == 1].mean()) if pos_total > 0 else 0.0
+                    )
+                    grp_eop = abs(float(tpr) - global_tpr)
+                    results.append(
+                        MetricResult(
+                            metric_name="equal_opportunity_difference",
+                            subgroup=g,
+                            subgroup_sample_size=n_grp,
+                            metric_value=grp_eop,
+                            ci_lower=max(0.0, grp_eop - 0.05),
+                            ci_upper=min(1.0, grp_eop + 0.05),
+                            p_value=grp_chi2_p,
+                            insufficient_sample=False,
+                        )
+                    )
+                else:
+                    results.append(
+                        MetricResult(
+                            metric_name="equal_opportunity_difference",
+                            subgroup=g,
+                            subgroup_sample_size=n_grp,
+                            metric_value=None,
+                            ci_lower=None,
+                            ci_upper=None,
+                            p_value=None,
+                            insufficient_sample=True,
+                        )
+                    )
+
+                # Individual EOD
+                fpr = group_rates[g]["fpr"]
+                if rep.eligible_eod and tpr is not None and fpr is not None:
+                    pos_total = (y_true == 1).sum()
+                    neg_total = (y_true == 0).sum()
+                    global_tpr = (
+                        float(y_pred[y_true == 1].mean()) if pos_total > 0 else 0.0
+                    )
+                    global_fpr = (
+                        float(y_pred[y_true == 0].mean()) if neg_total > 0 else 0.0
+                    )
+                    grp_eod = max(
+                        abs(float(tpr) - global_tpr), abs(float(fpr) - global_fpr)
+                    )
+                    results.append(
+                        MetricResult(
+                            metric_name="equalized_odds_difference",
+                            subgroup=g,
+                            subgroup_sample_size=n_grp,
+                            metric_value=grp_eod,
+                            ci_lower=max(0.0, grp_eod - 0.05),
+                            ci_upper=min(1.0, grp_eod + 0.05),
+                            p_value=grp_chi2_p,
+                            insufficient_sample=False,
+                        )
+                    )
+                else:
+                    results.append(
+                        MetricResult(
+                            metric_name="equalized_odds_difference",
+                            subgroup=g,
+                            subgroup_sample_size=n_grp,
+                            metric_value=None,
+                            ci_lower=None,
+                            ci_upper=None,
+                            p_value=None,
+                            insufficient_sample=True,
+                        )
+                    )
+
+                # Individual DIR
+                if global_sel_rate > 0:
+                    grp_dir = min(sel_rate, global_sel_rate) / max(
+                        sel_rate, global_sel_rate
+                    )
+                else:
+                    grp_dir = 1.0
+                results.append(
+                    MetricResult(
+                        metric_name="disparate_impact_ratio",
+                        subgroup=g,
+                        subgroup_sample_size=n_grp,
+                        metric_value=grp_dir,
+                        ci_lower=max(0.0, grp_dir - 0.05),
+                        ci_upper=min(1.0, grp_dir + 0.05),
+                        p_value=grp_chi2_p,
+                        insufficient_sample=False,
+                    )
+                )
+
+        return results
+>>>>>>> feat/wp4-engine
 
 
 # ── Cross-Validation Orchestrator ─────────────────────────────────────

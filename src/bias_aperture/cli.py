@@ -15,6 +15,10 @@ import sys
 from pathlib import Path
 
 from bias_aperture.data_ingestion import DataIngestionPipeline, IngestionConfig
+<<<<<<< HEAD
+=======
+from bias_aperture.explainability import ShapExplainerEngine
+>>>>>>> feat/wp4-engine
 from bias_aperture.fairness import CrossValidationOrchestrator
 from bias_aperture.report import HTMLReportGenerator, ReportContext
 
@@ -74,6 +78,18 @@ def build_parser() -> argparse.ArgumentParser:
         default="FairFace Benchmark Dataset",
         help="Dataset name for presentation.",
     )
+<<<<<<< HEAD
+=======
+    parser.add_argument(
+        "--explain",
+        action="store_true",
+        default=True,
+        help=(
+            "Enable conditional SHAP / surrogate explainability on flagged "
+            "disparities (default: True)."
+        ),
+    )
+>>>>>>> feat/wp4-engine
     return parser
 
 
@@ -121,7 +137,34 @@ def main(argv: list[str] | None = None) -> int:
     if divergences:
         print(f"[!] Warning: {len(divergences)} cross-backend divergences detected.")
 
+<<<<<<< HEAD
     # 3. Report Generation
+=======
+    # 3. Conditional Explainability Engine (SHAP / Proxy Attribution)
+    if args.explain:
+        print(
+            "[*] Running conditional SHAP explainability engine on "
+            "flagged disparities..."
+        )
+        explainer = ShapExplainerEngine()
+        explained_count = 0
+        for m in metrics:
+            if explainer.should_explain(m):
+                exp_res = explainer.explain_disparity(m, records=records)
+                explained_count += 1
+                if exp_res.feature_attributions:
+                    top_feat = list(exp_res.feature_attributions.items())[0]
+                    print(
+                        f"    -> Flagged [{m.metric_name} | {m.subgroup}]: "
+                        f"top proxy driver = {top_feat[0]} ({top_feat[1]:.3f})"
+                    )
+        print(
+            f"[*] Generated targeted attributions for {explained_count} "
+            "statistically flagged disparities."
+        )
+
+    # 4. Report Generation
+>>>>>>> feat/wp4-engine
     print(f"[*] Compiling offline compliance report to: {args.output_report}...")
     context = ReportContext(
         metrics=metrics,
