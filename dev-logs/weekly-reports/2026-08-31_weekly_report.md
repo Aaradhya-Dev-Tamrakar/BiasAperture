@@ -1,121 +1,81 @@
-# BiasAperture Weekly Project Report
+# BiasAperture — Monthly Progress & Weekly Reports Index
 
-Generated from the repository commit history for the period 2026-08-01 through 2026-08-31.
-
-## Overview
-
-This week’s development activity shows the project moving from foundational research and documentation toward a more structured technical implementation: repository cleanup, schema and workflow documentation, data/package scaffolding, and final engine-level work around fairness backends and explainability.
-
----
-
-## Week of 2026-08-01 to 2026-08-07
-
-### Highlights
-
-- Added the initial project proposal and LaTeX report scaffolding.
-- Standardized the report class and documentation naming for the Fusion AI Fellowship format.
-- Expanded the README with repository structure and VS Code setup guidance.
-- Updated .gitignore and documentation to support the LaTeX and reporting workflow.
-
-### Commits
-
-- `db04424` — `docs: add BiasAperture capstone project proposal and LaTeX documentation files`
-- `8df15a4` — `feat(report): rename document class to at_fuse_aif and update README for consistency`
-- `1a21126` — `feat(report): rename LaTeX class for Fusemachines AI Fellowship report`
-- `d6f95e9` — `fix(gitignore): un-comment .vscode ignore, allowlist settings.json for shared LaTeX recipe`
-- `ff6c269` — `docs(readme): add VS Code setup section with LaTeX Workshop + Utilities recipe`
-- `f088098` — `feat(docs): update README with detailed project description and repository structure`
-- `00b89c7` — `docs(readme): document docs/ and sync.ps1 in repository structure`
-- `fd40080` — `No code changes detected; skipping commit.`
-
-### Summary
-
-The project was establishing its documentation and reporting foundation during this week. The repository began to look like a formal capstone effort with clear proposal, report, and tooling guidance.
+**Period:** August 2026 (2026-08-01 through 2026-08-31)  
+**Project:** BiasAperture — A Diagnostic and Evaluative Framework for Auditing Demographic Bias in Facial Analysis Systems  
+**Program:** Fusemachines AI Fellowship (AIF) 2026 (Kathmandu, Nepal)  
+**Authors:** Aaradhya Dev Tamrakar (`@AaradhyaDT`) & Tisha Manandhar (`@tiixsha`)  
+**Supervisor:** Shreejan Kisee (Teaching Assistant, Fusemachines AI Fellowship)  
+**Current Milestone State:** M1–M4 Core Engine Verified · 55/55 Tests Passing · M5 Integration in Progress
 
 ---
 
-## Week of 2026-08-08 to 2026-08-14
+## 1. Executive Summary
 
-### Highlights
+During August 2026, BiasAperture advanced from an initial fellowship proposal to an audit-grade diagnostic software platform. Development was structured across four weekly sprints, covering proposal scaffolding, schema locking (M1), requirements and architecture formalization, a 20-track parallel research sprint, dataset exploration, fairness engine implementation (Fairlearn and native AIF360 backends), bootstrap confidence intervals, Chi-squared significance testing, additive Shapley surrogate feature attribution, offline HTML reporting, and a full CLI orchestrator with 55 passing unit tests.
 
-- Added core data and project templates from the fellowship baseline.
-- Added the schema-lock M1 artifact and WP1 specification reference.
-- Continued refining doc structure and repository organization.
-
-### Commits
-
-- `e866feb` — `added the templates from AIF`
-- `ccf3c1a` — `docs(wp1): add schema-lock-m1 reference doc`
-- `86a6ee3` — `docs(d): update 2 files`
-- `460270f` — `docs(d): update 2 files`
-
-### Summary
-
-This week focused on technical groundwork and locked requirements. The team formalized the project’s schema constraints and clarified the underlying workstreams for the capstone architecture.
+```
+August 2026 Sprint Progression:
+┌─────────────────────────┐     ┌─────────────────────────┐     ┌─────────────────────────┐     ┌─────────────────────────┐
+│ Week 1 (Aug 01-07)      │ ──> │ Week 2 (Aug 08-14)      │ ──> │ Week 3 (Aug 15-21)      │ ──> │ Week 4 (Aug 22-31)      │
+│ Inception & LaTeX Cls   │     │ M1 Schema Lock & Papers │     │ FR-001-005 & TA Stds    │     │ 20-Tracks, Math & CLI   │
+└─────────────────────────┘     └─────────────────────────┘     └─────────────────────────┘     └─────────────────────────┘
+```
 
 ---
 
-## Week of 2026-08-15 to 2026-08-21
+## 2. Weekly Reports Breakdown
 
-### Highlights
+The complete weekly development logs are divided into dedicated reports:
 
-- Consolidated documentation and research output around the project narrative and architecture.
-- Added user requirements and literature review materials.
-- Added architecture and system flow artifacts.
-- Standardized script naming and cleaned up the repository structure.
-- Began repo-level reorganization with data and package scaffolding.
-
-### Commits
-
-- `c7ad12c` — `Merge pull request #1 from AaradhyaDT/update-literature-review`
-- `d99564e` — `added user-requirements and literature-review doc`
-- `57b91af` — `System Architecture and System Flow Diagram added`
-- `4a4fa99` — `fix(scripts): rename Ensure-FuseaiRemote to Add-FuseaiRemote for PSUseApprovedVerbs`
-- `76cf39f` — `fix(scripts): rename Ensure-FuseaiRemote to Add-FuseaiRemote for PSUseApprovedVerbs`
-- `aa5c166` — `feat(repo): add pyproject.toml, track v6 doc, and cleanup tracked bare clone`
-- `e4e3752` — `chore(repo): update 2 files`
-- `c6754cd` — `chore(standards): adopt TA standards for ruff, pre-commit, and PR template`
-- `9561ca1` — `docs: update README and v6 planning doc with stream ownership and TA standards`
-- `f8ece02` — `docs: rename BiasAperture-AT_v6.md to BiasAperture-AT.md with inline versioning`
-- `b71008c` — `docs(agents): add CLAUDE.md, AGENT.md, and ANTIGRAVITY.md assistant guidelines`
-- `3a1fc45` — `refactor(repo): reorganize docs, scaffold data and package modules with conftest fixtures`
-- `5b10fa6` — `docs(readme): add project progress bar and roadmap breakdown`
-- `8fd79e9` — `chore(repo): update 2 files`
-
-### Summary
-
-This was the most active phase of the project so far. The repository matured into a structured implementation environment with standard practices, stream ownership, research artifacts, and scaffolding for the actual model and data pipeline work.
+| Sprint Report | Date Range | Primary Focus | Key Deliverables & Milestones |
+|---|:---:|---|---|
+| **[WK1 Report](2026-08-07_WK1_report.md)** | `2026-08-01` $\to$ `2026-08-07` | **Inception, LaTeX & Environment** | Custom `at_fuse_aif.cls` document class, Overleaf optimization, VS Code recipes, `README.md` baseline, initial `sync.ps1`. |
+| **[WK2 Report](2026-08-14_WK2_report.md)** | `2026-08-08` $\to$ `2026-08-14` | **M1 Schema Lock & Literature Matrix** | Milestone M1 schema contract (`schema.py`, `schema-lock-m1.md`), $n < 30$ sample guards, 9-paper literature matrix in Walden format. |
+| **[WK3 Report](2026-08-21_WK3_report.md)** | `2026-08-15` $\to$ `2026-08-21` | **Requirements, Architecture & Standards** | Functional requirements (`FR-001`–`FR-005`), statutory mappings (EU AI Act / NIST AI RMF), 5-module system architecture, TA/Khwopa standards (Ruff, pyproject.toml), agent guidelines. |
+| **[WK4 Report](2026-08-31_WK4_report.md)** | `2026-08-22` $\to$ `2026-08-31` | **Research Sprint, Core Engine & CLI** | 20-track research sprint, 3-level synthesis, `CLAIM_LEDGER.md`, FairFace disk verification (97,698 images), Fairlearn + native AIF360 backends, BCa bootstrap ($B \ge 1,000$), $\chi^2$ significance tests, SHAP explainer, `bias-aperture` CLI, 55/55 Pytest tests, multi-remote sync. |
 
 ---
 
-## Week of 2026-08-22 to 2026-08-31
+## 3. High-Level Monthly Achievements
 
-### Highlights
-
-- Engine-level fairness work was finalized and aligned across multiple backend integrations.
-- SHAP proxy explanation support was integrated.
-- Documentation and backend synchronization were updated to match the implementation.
-
-### Commits
-
-- `767486a` — `fix(engine): harmonize AIF360 backend, integrate SHAP proxy explainer, and sync docs`
-
-### Summary
-
-The latest work reflects a transition from project setup toward implementation quality and backend consistency. The codebase is now focused on aligning the fairness engine, audit explainability, and supporting documentation.
+1. **Academic & Statutory Scaffolding**:
+   - Proposal compiled and formatted using `at_fuse_aif.cls` (`report/main.pdf`).
+   - Mapped all 5 functional requirements to EU AI Act (Articles 10, 13, 15) and NIST AI Risk Management Framework (Map, Measure, Manage).
+2. **Empirical Groundwork & Claim Ledger**:
+   - Resolved dataset disk counts: **97,698 released FairFace images** verified on disk.
+   - Identified UTKFace synthetic DEX noise to support diagnostic boundaries.
+   - Established auditable [`CLAIM_LEDGER.md`](../../docs/research/CLAIM_LEDGER.md) tracking 60+ verified claims with formal reproduction procedures.
+3. **Core Algorithmic Engine**:
+   - Implemented Core Four metrics (DPD, DIR, EOP, EOD) with dual backends (Fairlearn and native AIF360 `BinaryLabelDataset` / `ClassificationMetric`).
+   - Implemented 95% BCa Bootstrap Confidence Intervals ($B \ge 1,000$) and Chi-squared significance tests ($p < 0.05$).
+   - Implemented exact linear Shapley surrogate feature attribution layer ($\phi_i = w_i(x_i - \mathbb{E}[x_i])$) in `explainability.py`.
+4. **Tooling & Orchestration**:
+   - Offline, single-file Jinja2 HTML report generator with embedded Base64 charts and zero CDN network calls.
+   - Command-line interface (`bias-aperture audit`) with multi-backend and explainability toggles.
+   - 100% pass rate across 55 automated unit tests (`uv run --extra dev pytest`).
+   - Clean Git synchronization across all three configured remotes (`origin`, `duo`, `org`).
 
 ---
 
-## Key Takeaways
+## 4. Master TO DOs & Remaining Roadmap
 
-1. The project started with a strong documentation and proposal foundation.
-2. The middle of the month moved into repository standardization and research architecture formalization.
-3. The most recent activity is implementation-focused, especially around fairness backend consistency and explainability.
-4. Current momentum suggests the project is converging on the core BiasAperture engine and evaluation workflow.
+| Priority | Category / Phase | Target Deliverable | Owner | Target Branch / File |
+|:---:|---|---|:---:|---|
+| 🔴 **P1** | **Empirical Benchmark** | Validation split inference (`predict.py`) over 10,954 images | Aaradhya | `data/processed/fairface_predictions_val.csv` |
+| 🔴 **P1** | **Empirical Benchmark** | Execute `bias-aperture audit` to render flagship HTML report | Aaradhya | `report/audit_report.html` |
+| 🔴 **P1** | **Supervisor Logistics** | Confirm Viva defense date, duration, and score breakdown with TA Shreejan Kisee | Tisha | `docs/BiasAperture-AT.md` |
+| 🟡 **P2** | **Compliance Verification** | Audit Model Card & Datasheet text for statutory compliance | Tisha | `report/audit_report.html` |
+| 🟡 **P2** | **Data Validation** | Verify representation across 126 intersectional bins ($7 \times 9 \times 2$) | Tisha | `data/` |
+| 🟡 **P2** | **LaTeX Report** | Ingest final benchmark tables and SHAP plots into `report/main.pdf` | Aaradhya | `report/main.pdf` |
+| 🟢 **P3** | **Claim Ledger** | Transition ledger claims to `REPRODUCIBLE (LIVE BENCHMARK)` | Aaradhya | `docs/research/CLAIM_LEDGER.md` |
+| 🟢 **P3** | **Defense Preparation** | Compile unified 10–15 min presentation deck & rehearse live demo | Joint | `docs/presentation/slides.pdf` |
 
-## Recommended Next Focus
+---
 
-- Confirm the fairness engine backend parity across Fairlearn and AIF360.
-- Validate the SHAP proxy explainer output against expected disparity diagnostics.
-- Continue aligning documentation with implementation reality.
-- Prepare the next weekly report after the next major technical milestone.
+## 5. Related Master Documentation
+
+- [Master Task Division & Trait Allocation](../../docs/BiasAperture-AT.md)
+- [Session Walkthrough: Full Codebase Audit & Sync](../2026-08-31_session_walkthrough_audit_and_sync.md)
+- [Task Division & Roadmap Audit](../2026-08-31_task_division_and_roadmap_audit.md)
+- [Auditable Research Claim Ledger](../../docs/research/CLAIM_LEDGER.md)
+- [Proposal Defense Preparation Guide](../../docs/PROPOSAL_DEFENSE_GUIDE.md)
