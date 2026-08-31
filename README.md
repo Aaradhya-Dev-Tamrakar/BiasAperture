@@ -22,6 +22,7 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 ├── uv.lock                     # Deterministic dependency lockfile
 ├── data/                       # Datasets and test matrices (raw/ and processed/ gitignored)
 │   └── README.md               # Dataset sourcing and FairFace setup instructions
+├── dev-logs/                   # Dated developer logs & master audit walkthroughs
 ├── research/                   # 20-Track Parallel Research Sprint
 │   ├── research tracks/        # Track prompts and deliverables (Tracks 01–20)
 │   ├── context feed/           # Context documents feeding research tracks
@@ -64,17 +65,18 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 
 ## Project Progress & Roadmap
 
-```Overall Progress: [██████████████████░░] 90% (M1 Schema & Baseline Complete · M2 Ingestion & Report Scaffolding Complete · M3 Fairness & Statistical Engine Complete · M4 CLI Orchestration Operational)
+```Overall Progress: [██████████████████░░] 92% (M1 Schema & Baseline Complete · M2 Ingestion & Report Scaffolding Complete · M3 Fairness & Statistical Engine Complete · M4 CLI Orchestration Complete · M5 Benchmark & Defense In Progress)
 
 ```
 
 | Work Package / Milestone                          | Stream / Focus | Primary Owner            | Status      | Progress Bar                  | Deliverables & Implementation State                                                                                                                                                     |
 | ------------------------------------------------- | -------------- | ------------------------ | ----------- | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **WP1 / M1: Schema Lock & Baseline**              | Foundations    | Joint                    | Completed   | `[████████████████████] 100%` | Locked schema (`schema.py`), FairFace ResNet-34 baseline fixed, full test suite passing (54/54)                                                                                         |
-| **WP2 / M2: Data Ingestion & Test Matrix**        | Stream A       | Tisha (`@tiixsha`)       | Completed   | `[████████████████████] 100%` | 20-track research complete, `DataIngestionPipeline` fully implemented, 17/17 ingestion tests passing, validation modes & OvR transformer complete                                        |
-| **WP3 / M2: Compliance Report Scaffolding**       | Stream B       | Tisha (`@tiixsha`)       | Completed   | `[████████████████████] 100%` | EU AI Act & NIST mapping complete, offline standalone Jinja2 single-file HTML generator (`HTMLReportGenerator`) & templates fully implemented & tested                                 |
+| **WP2 / M2: Data Ingestion & Test Matrix**        | Stream A       | Tisha (`@tiixsha`)       | Completed   | `[████████████████████] 100%` | 20-track research complete, FairFace disk count verified (97.7k), `explore_fairface.py` & `explore_utkface.py`, validation report & test matrix complete                               |
+| **WP3 / M2: Compliance Report Scaffolding**       | Stream B       | Tisha (`@tiixsha`)       | Completed   | `[████████████████████] 100%` | EU AI Act (Art. 10/13/15) & NIST mapping complete, offline standalone Jinja2 single-file HTML generator (`HTMLReportGenerator`) & templates fully implemented & tested                |
 | **WP4 / M3: Statistical Detection Engine & SHAP** | Stream C & D   | Aaradhya (`@AaradhyaDT`) | Completed   | `[████████████████████] 100%` | Dual-backend harmonization (Fairlearn + AIF360), pure-math Core Four metrics, BCa bootstrap CIs, and $\chi^2$ significance tests fully implemented and tested                            |
-| **WP5 / M4: System Orchestration & Case Study**   | Integration    | Joint (Aaradhya/Tisha)   | In Progress | `[████████████████░░░░]  80%` | End-to-end CLI orchestrator (`bias-aperture`) operational, multi-remote auto-sync verified, test pipeline integrated                                                                    |
+| **WP5 / M4: System Orchestration & CLI**         | Integration    | Aaradhya (`@AaradhyaDT`) | Completed   | `[████████████████████] 100%` | End-to-end CLI orchestrator (`bias-aperture`) operational, SHAP `PartitionExplainer` wired, multi-remote auto-sync verified, test pipeline integrated (54/54 passing)                  |
+| **WP6 / M5: Benchmark Case Study & Defense**      | Benchmark/Viva | Joint (Aaradhya/Tisha)   | In Progress | `[████████░░░░░░░░░░░░]  40%` | Master task walkthrough & dev-log logged, 10–15 min presentation deck outlined; live benchmark inference run and final LaTeX paper synchronization in progress                          |
 
 ## Branching & Workstreams
 
