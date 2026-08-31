@@ -20,12 +20,12 @@ This file provides specialized context and execution instructions for **Google D
 
 ## Role & Task Ownership Allocation
 
-| Workstream | Branch | Primary Owner | Secondary | Focus Areas |
-|---|---|---|---|---|
-| **Stream Data (WP2)** | `feat/stream-data` | **Aaradhya (A)** | — | FairFace ingestion, `predict.py` inference, data profiling, stratified dev set |
-| **Stream Report (WP3)** | `feat/stream-report` | **Aaradhya (A)** | **Tisha (T)** reviews | Jinja2 HTML report template, Model Cards & Datasheets structure |
-| **WP4 Detection Engine** | `feat/wp4-engine` | **Tisha (T)** | — | Fairlearn + AIF360 backends, chi-squared tests, bootstrap CIs, SHAP |
-| **WP5 Integration** | `feat/wp5-integration` | **Aaradhya (A)** | Joint | Mock-to-real swap, `AuditOrchestrator` CLI facade |
+| Workstream | Branch | Primary Owner | Target Focus & Implementation State |
+|---|---|---|---|
+| **Stream Data (WP2)** | `feat/stream-data` | **Tisha (`@tiixsha`)** | FairFace ingestion & validation, disk count audit (97.7k), `dlib` 5-point alignment, demographic test matrix (100% complete) |
+| **Stream Report (WP3)** | `feat/stream-report` | **Tisha (`@tiixsha`)** | Jinja2 offline HTML report template, Model Cards & Datasheets structure, EU AI Act & NIST mapping (100% complete) |
+| **WP4 Detection Engine** | `feat/wp4-engine` | **Aaradhya (`@AaradhyaDT`)** | Pure-math metrics, Fairlearn + AIF360 backends, chi-squared tests, BCa bootstrap CIs (100% complete) |
+| **WP5 Integration & CLI** | `feat/wp5-integration` | **Aaradhya (`@AaradhyaDT`)** / Joint | Conditional SHAP attribution, `bias-aperture` CLI facade, benchmark case studies (54/54 tests passing) |
 
 ---
 

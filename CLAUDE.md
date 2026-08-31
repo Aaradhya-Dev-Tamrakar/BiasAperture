@@ -69,10 +69,10 @@ Never push directly without running the sync script or adhering to conventional 
 ## Active Workstreams & Branch Mapping
 
 - `main` — Stable baseline holding locked schema, docs, and proposal LaTeX.
-- `feat/stream-data` — **Stream A (Data Pipeline)**: FairFace ingestion, validation, test matrix generation (Aaradhya).
-- `feat/stream-report` — **Stream B (Report Scaffolding)**: Jinja2 HTML report templates, Model Cards / Datasheets structure (Aaradhya drafts, Tisha reviews).
-- `feat/wp4-engine` — **WP4 (Detection Engine)**: Fairlearn & AIF360 backends, statistical validation, SHAP explainability (Tisha).
-- `feat/wp5-integration` — **WP5 (Integration & CLI)**: Mock-to-real swap, `AuditOrchestrator` CLI facade (Aaradhya / Joint).
+- `feat/stream-data` — **Stream A (Data Pipeline)**: FairFace ingestion, dataset profiling, test matrix scaffolding (Tisha).
+- `feat/stream-report` — **Stream B (Report Scaffolding)**: Jinja2 HTML report templates, Model Cards / Datasheets structure, EU AI Act mapping (Tisha).
+- `feat/wp4-engine` — **WP4 (Detection Engine)**: Fairlearn & AIF360 backends, pure-math metrics, chi-squared tests, BCa bootstrap CIs (Aaradhya).
+- `feat/wp5-integration` — **WP5 (Integration & CLI)**: SHAP explainability layer, `bias-aperture` CLI orchestrator facade (Aaradhya / Joint).
 
 ---
 
