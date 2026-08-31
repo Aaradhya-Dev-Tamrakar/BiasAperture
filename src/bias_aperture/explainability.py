@@ -1,43 +1,27 @@
 """
 Explainability and visual proxy attribution module (WP4/WP5 / Stream D).
 
-<<<<<<< HEAD
-Implements conditional SHAP feature attribution and Individual Typology
-Angle (ITA) skin-tone colorimetry.
-=======
 Implements conditional SHAP feature attribution, additive Shapley surrogate
 attribution, and Individual Typology Angle (ITA) skin-tone colorimetry.
->>>>>>> feat/wp4-engine
 
 Architectural Guarantees (R-012, R-013, R-014):
 1. Conditional Triggering: Only executed when disparity is statistically verified
    (p < 0.05 and n >= 30).
 2. Clean Schema Isolation: ExplanationResult is internal to this module,
    leaving M1 schema.py completely invariant.
-<<<<<<< HEAD
-3. Fallback Support: If optional deep learning / SHAP dependencies are absent,
-   gracefully returns placeholder results or skips computation without crashing.
-=======
 3. Fallback Support: If optional deep learning / C-extension dependencies
    are absent or fail, gracefully falls back to exact linear Shapley surrogate
    attribution without crashing.
->>>>>>> feat/wp4-engine
 """
 
 from __future__ import annotations
 
-<<<<<<< HEAD
-=======
 import logging
 import math
->>>>>>> feat/wp4-engine
 from collections.abc import Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
 
-<<<<<<< HEAD
-from bias_aperture.schema import ALPHA, MIN_SUBGROUP_SAMPLE_SIZE, MetricResult
-=======
 import numpy as np
 
 from bias_aperture.schema import (
@@ -48,7 +32,6 @@ from bias_aperture.schema import (
 )
 
 logger = logging.getLogger(__name__)
->>>>>>> feat/wp4-engine
 
 
 @dataclass(frozen=True, slots=True)
@@ -57,10 +40,7 @@ class ExplanationResult:
 
     subgroup: str
     metric_name: str
-<<<<<<< HEAD
-=======
     feature_attributions: dict[str, float] = field(default_factory=dict)
->>>>>>> feat/wp4-engine
     base64_visualizations: list[str] = field(default_factory=list)
     ita_value: float | None = None
     proxy_warning: bool = False
@@ -87,14 +67,9 @@ class ShapExplainerEngine:
         self,
         result: MetricResult,
         image_paths: Sequence[Path | str] | None = None,
-<<<<<<< HEAD
-    ) -> ExplanationResult:
-        """Generate targeted visual attribution for a flagged disparity."""
-=======
         records: Sequence[SubjectRecord] | None = None,
     ) -> ExplanationResult:
         """Generate targeted visual or proxy attribution for a flagged disparity."""
->>>>>>> feat/wp4-engine
         if not self.should_explain(result):
             return ExplanationResult(
                 subgroup=result.subgroup,
@@ -105,17 +80,6 @@ class ShapExplainerEngine:
                 ),
             )
 
-<<<<<<< HEAD
-        # In standard lightweight mode, returns structured placeholder container
-        return ExplanationResult(
-            subgroup=result.subgroup,
-            metric_name=result.metric_name,
-            details=(
-                f"Targeted attribution generated for {result.subgroup} "
-                f"({result.metric_name})."
-            ),
-        )
-=======
         # 1. If records are supplied, compute surrogate demographic Shapley attributions
         if records:
             return self.explain_surrogate(result, records)
@@ -211,7 +175,6 @@ class ShapExplainerEngine:
                 metric_name=result.metric_name,
                 details=f"Targeted attribution generated for {result.subgroup}.",
             )
->>>>>>> feat/wp4-engine
 
 
 def compute_ita(l_star: float, b_star: float) -> float:
@@ -231,11 +194,6 @@ def compute_ita(l_star: float, b_star: float) -> float:
     float
         ITA in degrees.
     """
-<<<<<<< HEAD
-    import math
-
-=======
->>>>>>> feat/wp4-engine
     if b_star == 0:
         return 90.0 if l_star >= 50 else -90.0
     rad = math.atan((l_star - 50.0) / b_star)

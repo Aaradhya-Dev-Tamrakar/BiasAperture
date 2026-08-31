@@ -455,16 +455,12 @@ class FairlearnBackend(FairnessBackend):
 
 
 class AIF360Backend(FairnessBackend):
-<<<<<<< HEAD
-    """AIF360 backend harmonized to compute max-of-gaps EOD and unsigned EOP."""
-=======
     """AIF360 backend harmonized to compute max-of-gaps EOD and unsigned EOP.
 
     Directly leverages AIF360's BinaryLabelDataset and ClassificationMetric
     to compute subgroup metrics, applying BiasAperture's mathematical harmonization
     contracts (R-005 through R-010) for cross-validation consistency.
     """
->>>>>>> feat/wp4-engine
 
     @property
     def name(self) -> str:
@@ -477,12 +473,6 @@ class AIF360Backend(FairnessBackend):
         sensitive: np.ndarray,
         eligibility: dict[str, EligibilityReport],
     ) -> list[MetricResult]:
-<<<<<<< HEAD
-        """Delegate computation through harmonized primitive extraction."""
-        # Fairlearn and AIF360 share harmonized definitions per R-005/R-006
-        adapter = FairlearnBackend()
-        return adapter._evaluate_core_four(y_true, y_pred, sensitive, eligibility)
-=======
         """Compute Core Four metrics using native AIF360 dataset & metrics."""
         try:
             import pandas as pd
@@ -953,7 +943,6 @@ class AIF360Backend(FairnessBackend):
                 )
 
         return results
->>>>>>> feat/wp4-engine
 
 
 # ── Cross-Validation Orchestrator ─────────────────────────────────────

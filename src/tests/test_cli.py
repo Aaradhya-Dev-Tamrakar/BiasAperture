@@ -17,10 +17,7 @@ def test_cli_parser_defaults() -> None:
     assert args.predictions_file == Path("dummy_pred.csv")
     assert args.protected_attr == "race"
     assert args.output_report == Path("bias_aperture_report.html")
-<<<<<<< HEAD
-=======
     assert args.explain is True
->>>>>>> feat/wp4-engine
 
 
 def test_cli_end_to_end_execution(tmp_path: Path) -> None:

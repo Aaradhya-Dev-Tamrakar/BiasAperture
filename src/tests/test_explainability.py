@@ -63,8 +63,6 @@ def test_shap_explainer_selective_triggering() -> None:
         insufficient_sample=True,
     )
     assert engine.should_explain(res_small) is False
-<<<<<<< HEAD
-=======
 
 
 def test_shap_surrogate_attribution_on_records() -> None:
@@ -112,4 +110,3 @@ def test_shap_surrogate_attribution_on_records() -> None:
     # Race features should have strong attribution
     race_attrs = [k for k in exp.feature_attributions if "race" in k]
     assert len(race_attrs) > 0
->>>>>>> feat/wp4-engine

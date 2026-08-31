@@ -15,10 +15,7 @@ import sys
 from pathlib import Path
 
 from bias_aperture.data_ingestion import DataIngestionPipeline, IngestionConfig
-<<<<<<< HEAD
-=======
 from bias_aperture.explainability import ShapExplainerEngine
->>>>>>> feat/wp4-engine
 from bias_aperture.fairness import CrossValidationOrchestrator
 from bias_aperture.report import HTMLReportGenerator, ReportContext
 
@@ -78,8 +75,6 @@ def build_parser() -> argparse.ArgumentParser:
         default="FairFace Benchmark Dataset",
         help="Dataset name for presentation.",
     )
-<<<<<<< HEAD
-=======
     parser.add_argument(
         "--explain",
         action="store_true",
@@ -89,7 +84,6 @@ def build_parser() -> argparse.ArgumentParser:
             "disparities (default: True)."
         ),
     )
->>>>>>> feat/wp4-engine
     return parser
 
 
@@ -137,9 +131,6 @@ def main(argv: list[str] | None = None) -> int:
     if divergences:
         print(f"[!] Warning: {len(divergences)} cross-backend divergences detected.")
 
-<<<<<<< HEAD
-    # 3. Report Generation
-=======
     # 3. Conditional Explainability Engine (SHAP / Proxy Attribution)
     if args.explain:
         print(
@@ -164,7 +155,6 @@ def main(argv: list[str] | None = None) -> int:
         )
 
     # 4. Report Generation
->>>>>>> feat/wp4-engine
     print(f"[*] Compiling offline compliance report to: {args.output_report}...")
     context = ReportContext(
         metrics=metrics,
