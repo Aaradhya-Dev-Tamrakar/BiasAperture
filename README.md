@@ -67,25 +67,26 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 ## Project Progress & Roadmap
 
 ```
-Overall Progress: [██████░░░░░░░░░░░░░░] 32% (Milestone M1 Schema Locked)
+Overall Progress: [█████████████████░░░] 85% (Milestones M1–M4 Completed · M5 Integration in Progress)
 ```
 
 | Work Package / Milestone | Stream / Focus | Status | Progress Bar | Deliverables & Implementation State |
 |---|---|---|---|---|
-| **WP1 / M1: Schema Lock & Baseline** | Foundations / Joint | Completed | `[████████████████████] 100%` | Locked schema (`schema.py`), FairFace ResNet-34 baseline fixed, test suite passing (14/14) |
-| **WP2 / M2: Data Ingestion & Test Matrix** | Stream A (Aaradhya) | In Progress | `[██████░░░░░░░░░░░░░░]  30%` | Directory scaffolding (`data/`), FairFace sourcing guide, data ingestion pipeline in progress |
-| **WP3 / M2: Compliance Report Scaffolding** | Stream B (Aaradhya/Tisha) | In Progress | `[████░░░░░░░░░░░░░░░░]  20%` | Package scaffolding (`report/`), Model Card & Jinja2 HTML generation structure in progress |
-| **WP4 / M3: Statistical Detection Engine & SHAP** | WP4 (Tisha) | In Progress | `[██░░░░░░░░░░░░░░░░░░]  10%` | Fairness package scaffolded (`fairness/`), AIF360/Fairlearn backends, bootstrap CIs & SHAP planned |
-| **WP5 / M4: System Orchestration & Case Study** | Integration / Joint | Planned | `[░░░░░░░░░░░░░░░░░░░░]   0%` | Mock-to-real swap, full FairFace benchmark audit run, and final report bundle export |
+| **WP1 / M1: Schema Lock & Baseline** | Foundations / Joint | Completed | `[████████████████████] 100%` | Locked schema (`schema.py`), FairFace ResNet-34 baseline fixed, test fixtures |
+| **WP2 / M2: Data Ingestion & Test Matrix** | Stream A (Tisha) | Completed | `[████████████████████] 100%` | FairFace ingestion pipeline (`data_ingestion.py`), disk verification (97,698 images), UTKFace profiling |
+| **WP3 / M3: Compliance Report Generation** | Stream B (Tisha/Aaradhya) | Completed | `[████████████████████] 100%` | Offline standalone Jinja2 HTML report (`generator.py`), embedded Base64 charts, EU AI Act & NIST mapping |
+| **WP4 / M4: Statistical Detection Engine & SHAP** | WP4 (Aaradhya) | Completed | `[████████████████████] 100%` | Pure-math metrics, Fairlearn + native AIF360 backends, BCa bootstrap ($B \ge 1,000$), $\chi^2$ significance tests, SHAP surrogate attribution |
+| **WP5 / M5: System Orchestration & Case Study** | Integration / Joint | In Progress | `[██████████████░░░░░░]  70%` | `bias-aperture` CLI orchestrator with `--explain`, 55/55 unit tests passing, awaiting full benchmark validation inference |
 
 ## Branching & Workstreams
 
 | Branch | Stream / Work Package | Primary Owner | Description |
 |---|---|---|---|
-| `main` | Production / Base | Joint | Stable base holding M1 schema, docs, and report |
-| `feat/stream-data` | Stream A (WP2) | Aaradhya (`@AaradhyaDT`) | FairFace dataset ingestion & test-matrix construction |
-| `feat/stream-report` | Stream B (WP3) | Aaradhya (`@AaradhyaDT`), Tisha review | Jinja2 HTML compliance report scaffolding |
-| `feat/wp4-engine` | WP4 | Tisha (`@tiixsha`) | Fairness computation backends, statistics, and SHAP |
+| `main` | Production / Base | Joint | Stable base holding locked schema, verified engine, docs, and report |
+| `feat/stream-data` | Stream A (WP2) | Tisha (`@tiixsha`) | FairFace dataset ingestion & test-matrix construction |
+| `feat/stream-report` | Stream B (WP3) | Tisha (`@tiixsha`) | Jinja2 HTML compliance report scaffolding |
+| `feat/wp4-engine` | WP4 | Aaradhya (`@AaradhyaDT`) | Fairness computation backends, statistics, and SHAP |
+| `feat/wp5-integration` | WP5 | Aaradhya (`@AaradhyaDT`) / Joint | CLI orchestrator, benchmark execution & case study |
 
 ## Python Development, Testing & Code Style
 
