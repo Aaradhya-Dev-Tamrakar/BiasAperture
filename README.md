@@ -14,7 +14,8 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 
 ## Repository Structure
 
-```BiasAperture/
+```text
+BiasAperture/
 ├── .github/                    # GitHub configuration & PR templates
 │   └── pull_request_template.md
 ├── .pre-commit-config.yaml     # Pre-commit hooks (Ruff, formatting, file-size guards)
@@ -65,8 +66,8 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 
 ## Project Progress & Roadmap
 
-```Overall Progress: [██████████████████░░] 92% (M1 Schema & Baseline Complete · M2 Ingestion & Report Scaffolding Complete · M3 Fairness & Statistical Engine Complete · M4 CLI Orchestration Complete · M5 Benchmark & Defense In Progress)
-
+```text
+Overall Progress: [██████████████████░░] 92% (M1 Schema & Baseline Complete · M2 Ingestion & Report Scaffolding Complete · M3 Fairness & Statistical Engine Complete · M4 CLI Orchestration Complete · M5 Benchmark & Defense In Progress)
 ```
 
 | Work Package / Milestone                          | Stream / Focus | Primary Owner            | Status      | Progress Bar                  | Deliverables & Implementation State                                                                                                                                                     |
