@@ -87,5 +87,6 @@ Total Tracked Research Claims: 20 active + 9 invalidated
 ```
 
 ### Academic Audit Statement
+>
 > **Methodological Provenance:**  
 > *BiasAperture employed parallel AI-assisted reconnaissance to accelerate source exploration and hypothesis generation; all consequential technical claims were subsequently organized into this auditable claim ledger and subjected to primary-source inspection, isolated empirical probing, known-answer validation, reproducibility testing, and explicit hypothesis refutation before implementation.*

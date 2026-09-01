@@ -56,24 +56,29 @@ You have completed an extensive research verification and specification phase:
 ## 2. Slide Deck Outline (15–20 slides)
 
 ### Slide 1: Title Slide
+
 - Project title, authors, supervisor, institutional affiliation, date
 - BiasAperture logo / header
 
 ### Slide 2: The Problem — A Documented Disparity
+
 - **"34.7% vs 0.8%"** — Buolamwini & Gebru (2018) *Gender Shades* intersectional error rate disparity
 - Core observation: commercial facial analysis systems exhibit severe demographic accuracy disparities
 - Core challenge: our review did not identify an existing reusable open-source platform that combines this complete diagnostic workflow for facial analysis auditing
 
 ### Slide 3: Regulatory Alignment & Technical Context
+
 - The EU AI Act (Regulation EU 2024/1689) applies in stages, with Article 10 (Data and data governance) and high-risk requirements in Chapter III scheduled for phased applicability under Article 113 (e.g., December 2027 for Annex III, August 2028 for Annex I)
 - Certain biometric categorization systems based on sensitive or protected attributes are classified as high-risk under Annex III, subject to the Act's broader provisions and prohibitions (Article 5)
 - NIST AI Risk Management Framework (AI RMF 1.0) provides a complementary voluntary measurement taxonomy
 - **Implication:** Technical audit infrastructure aligned with relevant data governance and bias-assessment requirements is increasingly critical
 
 ### Slide 4: Problem Statement (Formal)
+>
 > "There is an engineering gap between a mature body of fairness metrics and the availability of a reusable, standards-aligned software platform that operationalises this research into a repeatable auditing workflow for facial analysis systems."
 
 ### Slide 5: Literature Review Summary Table
+
 - Synthesis table covering foundational literature:
   - Buolamwini & Gebru (2018) → motivates intersectional demographic auditing
   - Hardt et al. (2016) → formalizes Equalized Odds and Equal Opportunity criteria
@@ -82,11 +87,13 @@ You have completed an extensive research verification and specification phase:
   - Dehdashtian et al. (2024) → catalogues diagnostic vs. mitigation divide
 
 ### Slide 6: The Engineering Gap (Comparative Landscape Audit)
+
 - 7-tool feature matrix: Aequitas, Fairlearn, AIF360, Google WIT, JFAM, FAT Forensics, FairTest
 - Feature columns: Vision-native taxonomy | Heterogeneous cross-checking | Statistical support guards | Targeted explainability | Regulatory traceability | Self-contained offline report
 - **Key finding:** Among the seven tools included in our comparative review, we did not identify a system integrating all of these capabilities into a single facial-analysis audit workflow
 
 ### Slide 7: General & Specific Objectives
+
 - **General Objective:** Design a modular diagnostic and evaluative software platform, BiasAperture, that systematically identifies demographic accuracy disparities in facial analysis models and reports them in a standardized, regulator-legible format
 - **5 Specific Objectives:**
   1. Modular ingestion architecture for models and precomputed prediction files
@@ -96,15 +103,18 @@ You have completed an extensive research verification and specification phase:
   5. Technical traceability mapping to EU AI Act Art. 10 and NIST AI RMF Measure functions
 
 ### Slide 8: Scope & Limitations — The Diagnostic Boundary
+
 - **In Scope:** Ingest $\to$ Profile $\to$ Measure Disparities $\to$ Statistical Testing $\to$ Targeted Explainability $\to$ Compliance Report
 - **Explicitly Out of Scope:** Model retraining, fine-tuning, loss debiasing, synthetic image generation
 - **Principle:** Diagnostic integrity requires separation of concerns from model remediation
 
 ### Slide 9: System Architecture Diagram
+
 - High-level architecture: Ingestion $\to$ Model Interface $\to$ Fairness Engine $\to$ Explainability $\to$ Report Generation $\to$ CLI Orchestration
 - Contract data structures: `SubjectRecord` $\to$ `MetricResult` $\to$ Standalone HTML Report
 
 ### Slide 10: The Core Four Disparity Metrics
+
 - Table of primary disparity metrics:
   - **Demographic Parity Difference (DPD):** $\max_a P(\hat{Y}=1 \mid A=a) - \min_a P(\hat{Y}=1 \mid A=a)$ (Fair value: $0.0$)
   - **Equalized Odds Difference (EOD):** $\max(\Delta\text{TPR}, \Delta\text{FPR})$ (Fair value: $0.0$)
@@ -113,37 +123,44 @@ You have completed an extensive research verification and specification phase:
 - Class policy: Macro-OvR binarization for multi-class targets; DIR evaluated per class without macro-averaging
 
 ### Slide 11: Heterogeneous Backend Harmonization
+
 - **EOD Mathematical Divergence:** Fairlearn calculates worst-case gap $\max(\Delta\text{TPR}, \Delta\text{FPR})$, whereas native AIF360 calculates average gap $\frac{1}{2}(\Delta\text{TPR} + \Delta\text{FPR})$ $\to$ harmonized to worst-case gap per Hardt et al.
 - **EOP Sign Mismatch:** AIF360 returns signed difference $\in [-1, 1]$, whereas Fairlearn defines unsigned difference $\ge 0$ $\to$ harmonized via absolute value adapter
 - **DIR Bounded Formulation:** Evaluated as symmetric ratio $\min/\max \in [0, 1]$ to avoid arbitrary "privileged" group selection across 7 non-ordinal race categories
 
 ### Slide 12: Statistical Safeguards — Three-Tier Inferential Defense
+
 1. **Sample-Size Screening & Support Guards:** Minimum screening invariant of $n \ge 30$, alongside metric-specific positive/negative support requirements ($n_{Y=1, a} \ge 5$ for EOP; $n_{Y=1, a} \ge 5 \land n_{Y=0, a} \ge 5$ for EOD)
 2. **Hypothesis Testing & FWER Control:** $\chi^2$ test of independence (Fisher's exact test fallback for low expected cell counts) with Holm-Bonferroni step-down correction across intersectional hypothesis families
 3. **Stratified Vectorized BCa Bootstrap:** Stratified within-subgroup resampling ($B \ge 1,000$) with empirical percentile fallback for extreme acceleration ($|a| > 0.5$), degenerate bias correction, or interval boundary violations, enforcing a $\ge 90\%$ valid-replicate engineering criterion
 
 ### Slide 13: Explainability — Targeted Proxy Evidence Analysis
+
 - Triggered selectively on statistically significant disparities ($p < 0.05, n \ge 30$) to preserve computational efficiency
 - `PartitionExplainer` default for black-box prediction files; `GradientExplainer` fast-path for direct PyTorch models
 - Skin-tone colorimetry via Individual Typology Angle ($\text{ITA} = \arctan((L^* - 50)/b^*) \times 180/\pi$)
 - **Theoretical Bounds:** Grounded in Bilodeau et al. (2022) impossibility theorems — feature attribution provides exploratory proxy evidence, not causal proof
 
 ### Slide 14: Regulatory Traceability Mapping
+
 - Direct mapping of technical outputs to Article 10 components (10(2) Governance, 10(3) Data Quality & Support, 10(4) Context, 10(5) Bias Examination)
 - Alignment with NIST AI RMF 1.0 **Measure** functions (Measure 2.11 bias quantification, Measure 1.1 unquantifiable risk documentation via insufficient-sample flags, Measure 1.3 software implementation cross-checking)
 
 ### Slide 15: Report Output — Self-Contained Offline HTML
+
 - Mitchell et al. (2019) Model Cards + Gebru et al. (2018) Datasheets structure
 - Flat single-file HTML with embedded inline CSS and base64-encoded visualizations
 - Zero external CDN or network requests to enable offline auditor sharing and privacy compliance
 
 ### Slide 16: Work Breakdown & Schedule
+
 - 8 work packages structured for concurrent development:
   - Stream A (Data Ingestion & Matrix Construction) ‖ Stream B (Report Scaffolding)
   - Stream C (Fairness Engine & Statistics) ‖ Stream D (Explainability & Orchestration)
 - Milestone progression: M1 (Schema Lock) $\to$ M2 (Scaffolds) $\to$ M3 (Core Engines) $\to$ M4 (Integration & Benchmark Validation)
 
 ### Slide 17: Pre-Defined Descoping Strategy (Cut-List)
+
 - Formal 5-tier descoping sequence:
   1. Web UI $\to$ retain CLI only
   2. UTKFace secondary dataset $\to$ retain FairFace primary benchmark only (*formally executed per Cut #2*)
@@ -153,16 +170,19 @@ You have completed an extensive research verification and specification phase:
 - **Non-negotiable core:** Data ingestion, one model interface, fairness engine, one report format, and scope-boundary statement
 
 ### Slide 18: Verification & Contract Testing
+
 - Milestone M1 schema locked in code (`SubjectRecord`, `MetricResult`)
 - 22 automated research-contract and known-answer tests already implemented
 - Deterministic 8-record ground-truth baseline ($\text{DPD}=0.500, \text{EOD}=0.500, \text{EOP}=0.500, \text{DIR}=0.3333$)
 - Documented Claim Ledger tracking 20 active claims and 5 invalidated hypotheses
 
 ### Slide 19: Conclusion
+
 - Summary: BiasAperture operationalizes fairness auditing into a standardized, repeatable engineering pipeline
 - "We have verified the foundational assumptions and locked the contracts; implementation and empirical benchmark validation are the next phase."
 
 ### Slide 20: Questions & Discussion
+
 - Project title, author contacts, repository link
 
 ---
@@ -199,11 +219,12 @@ You have completed an extensive research verification and specification phase:
 
 When examiners ask: *"Aren't you just combining existing toolkits like Fairlearn, AIF360, and SHAP?"*
 
-### What NOT to Say:
+### What NOT to Say
+
 - ❌ *"We invented brand new fairness metrics."* (False — metrics are established in literature).
 - ❌ *"No other tool can compute these numbers."* (False — Fairlearn/AIF360 compute tabular metrics).
 
-### The 5-Step Defense Framework:
+### The 5-Step Defense Framework
 
 1. **Acknowledge the Foundational Tools:**
    > "Fairlearn, AIF360, and SHAP are established, high-quality libraries. We do not claim to have invented new fairness metrics or new statistical tests."
@@ -351,26 +372,32 @@ When examiners ask: *"Aren't you just combining existing toolkits like Fairlearn
 ## 6. Traps to Avoid
 
 ### ❌ Trap 1: Overclaiming Novelty
+
 - **Don't say:** *"No one has ever built a fairness auditing system before."*
 - **Do say:** *"Among the seven tools evaluated in our comparative review, we did not identify a platform that integrates this complete facial analysis audit workflow."*
 
 ### ❌ Trap 2: Oversimplifying the Engineering Effort
+
 - **Don't say:** *"We are simply piping Fairlearn into AIF360."*
 - **Do say:** *"We harmonized underlying mathematical divergences between toolkits and implemented statistical screening and bootstrap safeguards."*
 
 ### ❌ Trap 3: Claiming Causal Explanations
+
 - **Don't say:** *"SHAP explains why the model is biased."*
 - **Do say:** *"SHAP provides feature attributions that highlight visual proxy correlations associated with detected disparities, subject to known non-causal theoretical bounds."*
 
 ### ❌ Trap 4: Overstating Regulatory Certification
+
 - **Don't say:** *"BiasAperture guarantees EU AI Act compliance."*
 - **Do say:** *"BiasAperture provides technical diagnostic evidence supporting the examination of Article 10 requirements."*
 
 ### ❌ Trap 5: Misrepresenting Project Phase
+
 - **Don't say:** *"We have already completed the full benchmark audit."*
 - **Do say:** *"We have completed research verification, locked our contracts, and implemented acceptance tests; core pipeline execution and full benchmark validation constitute the upcoming phase."*
 
 ### ❌ Trap 6: Misattributing Sample-Size Invariants
+
 - **Don't say:** *"The Central Limit Theorem proves that $n \ge 30$ ensures statistical validity."*
 - **Do say:** *"The $n \ge 30$ threshold is a conservative screening invariant to filter out unstable, undersized subgroups before applying support checks and hypothesis tests."*
 
@@ -403,11 +430,13 @@ When examiners ask: *"Aren't you just combining existing toolkits like Fairlearn
 ## 8. Mock Grilling Checklist
 
 ### Round 1: Foundations & Scope (5 min)
+
 - [ ] Clearly define BiasAperture and the specific gap it addresses.
 - [ ] State what is explicitly out of scope (mitigation, retraining).
 - [ ] Explain why diagnostic separation of concerns is necessary.
 
 ### Round 2: Technical & Statistical Depth (10 min)
+
 - [ ] Define the Core Four disparity metrics without reading notes.
 - [ ] Explain the mathematical difference between Fairlearn and AIF360 for EOD.
 - [ ] Explain the role of the $n \ge 30$ screening invariant without citing the CLT as proof.
@@ -416,16 +445,19 @@ When examiners ask: *"Aren't you just combining existing toolkits like Fairlearn
 - [ ] Explain why Holm-Bonferroni correction is used for intersectional cells.
 
 ### Round 3: Novelty & Integration Defense (5 min)
+
 - [ ] Deliver the 5-step response to "Isn't this just combining existing tools?".
 - [ ] Give three concrete examples of library divergences or integration friction.
 - [ ] Defend why custom integration represents valid engineering novelty.
 
 ### Round 4: Feasibility, Risks & Roadmap (5 min)
+
 - [ ] Walk through the 5-tier descoping sequence in order.
 - [ ] Identify the non-negotiable architectural core.
 - [ ] Explain how task ownership is divided across workstreams.
 
 ### Round 5: Rapid-Fire Metrics & Constants (3 min)
+
 - [ ] State FairFace dataset count on disk (97,698).
 - [ ] State total intersectional cells (126).
 - [ ] State alpha value ($\alpha = 0.05$) and minimum bootstrap resamples ($B \ge 1,000$).

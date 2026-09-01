@@ -13,7 +13,8 @@
 
 In this session, we performed an end-to-end audit, reconciliation, and synchronization of the BiasAperture codebase against the project requirements, planning documentation ([`docs/BiasAperture-AT.md`](file:///c:/Users/Aaradhya/Downloads/_Organized/Fuse%20AI%20Fellowship/Capstone%20Project/fuseai-fellowship/BiasAperture-A-Diagnostic-Framework-for-Demographic-Bias-Auditing-in-Facial-Analysis-Models/docs/BiasAperture-AT.md)), and [`README.md`](file:///c:/Users/Aaradhya/Downloads/_Organized/Fuse%20AI%20Fellowship/Capstone%20Project/fuseai-fellowship/BiasAperture-A-Diagnostic-Framework-for-Demographic-Bias-Auditing-in-Facial-Analysis-Models/README.md).
 
-### Core Goals Accomplished:
+### Core Goals Accomplished
+
 1. **Repository & Documentation Audit**: Evaluated claims, file trees, sprint matrices, and implementation statuses across all 5 work packages (WP1–WP5).
 2. **Discrepancy Identification & Remediation**:
    - Fixed `AIF360Backend` pass-through delegation by implementing native `aif360.datasets.BinaryLabelDataset` and `aif360.metrics.ClassificationMetric`.
@@ -61,21 +62,25 @@ In this session, we performed an end-to-end audit, reconciliation, and synchroni
 ## 3. Code Modifications Breakdown
 
 ### 3.1 Native AIF360 Backend (`src/bias_aperture/fairness/backends.py`)
+
 - Replaced the pass-through delegator with full protected-attribute encoding into `aif360.datasets.BinaryLabelDataset`.
 - Configured `ClassificationMetric` with privileged group indices vs unprivileged group indices for multi-group demographic disparity extraction.
 - Preserved harmonization across both Fairlearn and AIF360 backends conforming to R-005/R-006.
 
 ### 3.2 Additive Shapley Surrogate Explainability (`src/bias_aperture/explainability.py`)
+
 - Implemented `explain_surrogate(records, target_subgroup)` calculating exact linear Shapley values:
   $$\phi_i = w_i(x_i - \mathbb{E}[x_i])$$
 - Built robust defensive imports against Windows MAX_PATH/numba DLL load issues, ensuring explainability runs seamlessly in all CI/CD and local development environments without binary crashes.
 - Added structured output dataclass `SurrogateExplanation` capturing top demographic proxy drivers.
 
 ### 3.3 CLI Integration (`src/bias_aperture/cli.py`)
+
 - Added `--explain` CLI argument (boolean flag, defaults to True).
 - Evaluated significant disparities ($p < 0.05$, $n \ge 30$) and triggered automatic proxy feature attribution outputting formatted explanation summaries to stdout and reports.
 
 ### 3.4 Package & Dependency Alignment (`pyproject.toml`, `uv.lock`)
+
 - Registered `shap>=0.49.1` and `scikit-learn>=1.3.0` in package dependencies and optional `dev`/`fairness` groups.
 - Regenerated `uv.lock` with zero syntax or version conflicts.
 
@@ -83,7 +88,8 @@ In this session, we performed an end-to-end audit, reconciliation, and synchroni
 
 ## 4. Test Suite & Validation Evidence
 
-### Pytest Execution Summary:
+### Pytest Execution Summary
+
 ```
 uv run --extra dev pytest
 ============================= test session starts =============================
@@ -109,7 +115,8 @@ src/tests/test_schema.py ..                                             [100%]
 ============================== 55 passed in 3.76s ==============================
 ```
 
-### Ruff Quality Checks:
+### Ruff Quality Checks
+
 ```bash
 uv run --extra dev ruff check src/
 # Output: All checks passed!
@@ -126,6 +133,7 @@ Commit `eb43fa5` titled:
 > `fix(engine): harmonize AIF360 backend, integrate SHAP proxy explainer, and sync docs`
 
 Successfully pushed to all 3 remotes:
+
 ```
 To https://github.com/fuseai-fellowship/BiasAperture-A-Diagnostic-Framework-for-Demographic-Bias-Auditing-in-Facial-Analysis-Models.git
    2a850fa..eb43fa5  main -> main

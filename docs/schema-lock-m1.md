@@ -5,12 +5,12 @@ Locked per WBS 1.1/1.2 (`report/src/chapters/systemArchitectureAndMethodology.te
 version lives in `src/bias_aperture/schema.py`.
 
 ## Classifier baseline
- 
+
 **dchen236/FairFace** (and `joojs/fairface`) — inference fork of the FairFace
 paper's official pretrained ResNet-34 (`fairface_alldata_20191111.pt`, with
 `res34_fair_align_multi_7_20190809.pt` as alternative checkpoint), **race_7**
 variant (not race_4).
- 
+
 Rationale: matches FairFace's own 7 race groups (White, Black, Indian,
 East Asian, Southeast Asian, Middle Eastern, Latino), the dataset
 `requirements.tex` FR-001 names as primary (97,698 released images on disk:

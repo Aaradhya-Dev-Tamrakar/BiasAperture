@@ -56,9 +56,11 @@ To ensure rigorous auditing, code isolation, and balanced research contribution 
 
 ### Stream A: Data Pipeline & Model Ingestion (Tracks 01–04)
 
-#### Claim 1: FairFace ResNet-34 uses an 18-unit linear head (not 3 separate heads).
+#### Claim 1: FairFace ResNet-34 uses an 18-unit linear head (not 3 separate heads)
+
 - **How to Scrutinize**:
   Open a Python REPL in your environment and inspect the PyTorch checkpoint keys:
+
   ```python
   import torch
   state = torch.load("data/raw/fairface_alldata_20191111.pt", map_location="cpu")
@@ -68,9 +70,11 @@ To ensure rigorous auditing, code isolation, and balanced research contribution 
   # Expected Output: torch.Size([18, 512]) -> Confirms 18 linear units!
   ```
 
-#### Claim 2: Dataset released on disk has 97,698 images (not 108,501).
+#### Claim 2: Dataset released on disk has 97,698 images (not 108,501)
+
 - **How to Scrutinize**:
   Count the actual rows in the released label CSV files using PowerShell or bash:
+
   ```powershell
   # Exclude header line (-1)
   $trainCount = (Get-Content data/raw/fairface_label_train.csv | Measure-Object -Line).Lines - 1
@@ -79,9 +83,11 @@ To ensure rigorous auditing, code isolation, and balanced research contribution 
   # Expected: Train: 86744, Val: 10954, Total: 97698
   ```
 
-#### Claim 3: Preprocessing uses `dlib` 5-point alignment, not MTCNN.
+#### Claim 3: Preprocessing uses `dlib` 5-point alignment, not MTCNN
+
 - **How to Scrutinize**:
   Search for `dlib` vs `mtcnn` in the official `predict.py` source code:
+
   ```python
   with open("predict.py") as f:
       content = f.read()
@@ -94,13 +100,15 @@ To ensure rigorous auditing, code isolation, and balanced research contribution 
 
 ### Stream B: Regulatory & Reporting (Tracks 05–08)
 
-#### Claim 1: EU AI Act Article 10 mandates statistical adequacy and bias detection.
+#### Claim 1: EU AI Act Article 10 mandates statistical adequacy and bias detection
+
 - **How to Scrutinize**:
   Check the official EUR-Lex text for Regulation (EU) 2024/1689:
   - Open EUR-Lex: [https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689)
   - Verify **Article 10(2)(f)** (examination of possible biases), **Article 10(2)(g)** (detection, prevention, mitigation), and **Article 10(3)** (appropriate statistical properties).
 
-#### Claim 2: The HTML report is 100% self-contained with zero external requests.
+#### Claim 2: The HTML report is 100% self-contained with zero external requests
+
 - **How to Scrutinize**:
   1. Generate `compliance_report.html`.
   2. Disconnect your machine from Wi-Fi/Internet completely.
@@ -111,9 +119,11 @@ To ensure rigorous auditing, code isolation, and balanced research contribution 
 
 ### Stream C: Fairness Engine & Statistical Math (Tracks 09–14)
 
-#### Claim 1: Fairlearn and AIF360 calculate Equalized Odds differently (max vs. mean).
+#### Claim 1: Fairlearn and AIF360 calculate Equalized Odds differently (max vs. mean)
+
 - **How to Scrutinize**:
   Run this exact 15-line test script in Python:
+
   ```python
   import numpy as np
   from fairlearn.metrics import equalized_odds_difference
@@ -137,13 +147,16 @@ To ensure rigorous auditing, code isolation, and balanced research contribution 
   # Demonstrates why AIF360 must be harmonized to max-of-gaps!
   ```
 
-#### Claim 2: AIF360 Equal Opportunity Difference is signed, Fairlearn is unsigned.
+#### Claim 2: AIF360 Equal Opportunity Difference is signed, Fairlearn is unsigned
+
 - **How to Scrutinize**:
   Swap Group A and Group B in AIF360’s `unprivileged_groups` definition. Notice that AIF360 returns $-0.10$ instead of $+0.10$. This proves why calling `abs()` on AIF360 output is mandatory before comparing.
 
-#### Claim 3: $n < 30$ pre-filtering vs. post-filtering produces a $3\times$ disparity skew.
+#### Claim 3: $n < 30$ pre-filtering vs. post-filtering produces a $3\times$ disparity skew
+
 - **How to Scrutinize**:
   Construct a dataset where a small group with $n=5$ has $100\%$ error rate by chance:
+
   ```python
   # Group 1 (n=100, TPR=0.90), Group 2 (n=100, TPR=0.88), Group 3 (n=4, TPR=0.00)
   # If Group 3 is included in Fairlearn metric: gap = 0.90 - 0.00 = 0.90 (Huge disparity!)
@@ -151,7 +164,8 @@ To ensure rigorous auditing, code isolation, and balanced research contribution 
   # 0.90 vs 0.02 is a massive 45x distortion caused by a 4-sample outlier!
   ```
 
-#### Claim 4: `scipy.stats.bootstrap` fails on multi-group fairness metrics.
+#### Claim 4: `scipy.stats.bootstrap` fails on multi-group fairness metrics
+
 - **How to Scrutinize**:
   Pass a 2D multi-group array or multi-argument function to `scipy.stats.bootstrap(..., method='BCa')`.
   Observe that scipy raises `ValueError: multi-sample statistics are not supported with method='BCa'`. This proves why BiasAperture’s custom BCa engine is required.
@@ -160,7 +174,8 @@ To ensure rigorous auditing, code isolation, and balanced research contribution 
 
 ### Stream D: Explainability & Proxy Detection (Tracks 15–16)
 
-#### Claim 1: Individual Typology Angle (ITA) objectively measures skin tone.
+#### Claim 1: Individual Typology Angle (ITA) objectively measures skin tone
+
 - **How to Scrutinize**:
   Verify the standard CIELAB colorimetry formula:
   $$\text{ITA} = \frac{\arctan\left(\frac{L^* - 50}{b^*}\right) \times 180}{\pi}$$
@@ -172,7 +187,8 @@ To ensure rigorous auditing, code isolation, and balanced research contribution 
 
 ### Stream E: Architecture & Known-Answer Testing (Tracks 17–18)
 
-#### Hand-Calculation of the 8-Record Known-Answer Baseline:
+#### Hand-Calculation of the 8-Record Known-Answer Baseline
+
 Verify this 8-record matrix by hand:
 
 | ID | Race | Gender | True Label ($Y$) | Predicted ($\hat{Y}$) | Outcome |
@@ -187,6 +203,7 @@ Verify this 8-record matrix by hand:
 | 8 | Black | Female | Negative (0) | Negative (0) | TN |
 
 **Step-by-step hand calculation:**
+
 1. **Selection Rates $P(\hat{Y}=1)$**:
    - White: 3 positive predictions out of 4 = $0.750$
    - Black: 1 positive prediction out of 4 = $0.250$

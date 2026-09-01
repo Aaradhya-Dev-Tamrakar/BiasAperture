@@ -66,12 +66,14 @@ BiasAperture implements a decoupled, pipeline-oriented architecture designed aro
 
 The ingestion module transforms heterogeneous prediction outputs into standardized `SubjectRecord` streams.
 
-#### Ingestion Contracts & Patterns:
+#### Ingestion Contracts & Patterns
+
 - **`ModelInterface` (ABC)**: Defines `get_predictions() -> Iterator[SubjectRecord]`.
 - **`PredictionsFileInterface`**: Ingests CSV or JSON predictions files. Maps FairFace output columns (`face_name_align`, `race`, `gender`, `age`) and caller-specified task columns (`true_label`, `predicted_label`).
 - **`InProcessInterface`**: Direct PyTorch evaluation hook executing tensor preprocessing (`dlib` CNN 5-point crop $\to$ $300\times300$ $\to$ resize $224\times224$ $\to$ ImageNet normalize).
 
-#### Two-Mode Validation Engine:
+#### Two-Mode Validation Engine
+
 1. **Strict / Fail-Fast Mode**: Used in production audit runs. Immediately raises `SchemaError` or `ValueError` upon encountering missing mandatory columns, unmapped demographic labels, corrupt `image_id`s, or contradictory duplicates.
 2. **Permissive / Profiling Mode**: Used during exploratory data ingestion. Collects all row-level anomalies, NaN distributions, and syntax drifts into a structured `ValidationSummary` diagnostic report without halting execution.
 
@@ -97,7 +99,8 @@ To guarantee methodological independence, metric evaluation is structured via th
 └────────────────────────────┘                    └────────────────────────────┘
 ```
 
-#### Shared Base Architecture (`fairness/base.py`):
+#### Shared Base Architecture (`fairness/base.py`)
+
 - **Single Source of Sample Sizes**: `subgroup_sample_sizes()` and `is_insufficient()` are defined once in `base.py`. Both backends share this calculation to prevent false divergences caused by divergent internal pandas/numpy grouping logic.
 - **`CrossValidationOrchestrator`**: Accepts a sequence of backends (`Sequence[FairnessBackend]`). Evaluates metrics across all backends and flags divergence when $|v_1 - v_2| > \epsilon_{\text{metric}}$.
 - **Configurable Tolerances ($\epsilon$)**:

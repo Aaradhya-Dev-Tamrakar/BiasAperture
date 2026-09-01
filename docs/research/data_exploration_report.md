@@ -103,6 +103,7 @@ our download or parsing.
 guessed or imputed.
 
 **Rationale:**
+
 - 3 / 23,708 = 0.013% of the dataset — statistically negligible;
   excluding them does not materially shift any distribution or
   downstream fairness metric.
@@ -127,6 +128,7 @@ Middle Eastern`.
 UTKFace only has 5 categories: `White, Black, Asian, Indian, Others`.
 
 This is **not** a mechanical mapping:
+
 - UTKFace's `Asian` (14.5% of the data) does not indicate whether a
   subject is East Asian or Southeast Asian — FairFace splits these
   into two distinct categories.

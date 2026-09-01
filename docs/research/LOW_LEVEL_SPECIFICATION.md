@@ -37,6 +37,7 @@ To prevent category confusion during auditing and evaluation, BiasAperture estab
 ### 1.0.1. Multi-Class One-vs-Rest (OvR) Evaluation Policy
 
 For any multi-class prediction target $Y \in \mathcal{C} = \{c_1, c_2, \dots, c_M\}$ with $M > 2$ classes (e.g. 7 races, 9 age groups):
+
 1. **Binarization**: Decompose the $M$-class problem into $M$ independent One-vs-Rest binary tasks:
    $$Y^{(m)} = \mathbb{I}(Y = c_m), \quad \hat{Y}^{(m)} = \mathbb{I}(\hat{Y} = c_m) \quad \text{for } m \in \{1, \dots, M\}$$
 2. **Metric Computation**: Compute the Core Four metrics ($\text{DPD}^{(m)}, \text{EOD}^{(m)}, \text{EOP}^{(m)}, \text{DIR}^{(m)}$) for each binary class task $m$ across the protected attribute subgroups $a \in A$.
@@ -85,11 +86,13 @@ $$\text{DPD} = \max_{a \in A} P(\hat{Y}=1 \mid A=a) - \min_{a \in A} P(\hat{Y}=1
 
 Let $\text{TPR}_a = P(\hat{Y}=1 \mid Y=1, A=a)$ and $\text{FPR}_a = P(\hat{Y}=1 \mid Y=0, A=a)$.
 
-#### The Divergence Found in Research (Tracks 09, 10, 14):
+#### The Divergence Found in Research (Tracks 09, 10, 14)
+
 - **Fairlearn / Hardt et al. (2016)**: Computes the worst-case disparity: $\max(|\Delta\text{TPR}|, |\Delta\text{FPR}|)$.
 - **AIF360 Native (`average_odds_difference`)**: Computes the average gap: $\frac{1}{2}(|\Delta\text{TPR}| + |\Delta\text{FPR}|)$.
 
-#### The Locked Resolution:
+#### The Locked Resolution
+
 `AIF360Backend` is explicitly adapted to calculate the worst-case disparity from raw confusion-matrix counts to maintain parity with Fairlearn:
 
 ```python
@@ -102,11 +105,13 @@ eod_value = max(abs(tpr_gap), abs(fpr_gap))
 
 $$\text{EOP} = \max_{a \in A} \text{TPR}_a - \min_{a \in A} \text{TPR}_a$$
 
-#### The Divergence Found in Research (Track 14):
+#### The Divergence Found in Research (Track 14)
+
 - **Fairlearn**: Returns unsigned difference $\ge 0$.
 - **AIF360 Native**: Returns signed difference $\text{TPR}_u - \text{TPR}_p \in [-1, 1]$.
 
-#### The Locked Resolution:
+#### The Locked Resolution
+
 `AIF360Backend` applies `abs()` before storing to `MetricResult.metric_value` to prevent signed outputs (e.g. $-0.293$ vs $+0.293$) from tripping divergence alerts:
 
 ```python
@@ -134,12 +139,15 @@ $$\text{DIR} = \frac{\min_{a \in A} P(\hat{Y}=1 \mid A=a)}{\max_{a \in A} P(\hat
 BiasAperture implements a dedicated vectorized BCa bootstrap engine on `numpy.random.Generator`.
 
 #### Bootstrap Population Model & Stratified Resampling Rationale
+
 $$\text{Bootstrap Population Model} = \text{Fixed Observed Subgroup Strata}$$
 Resampling is performed strictly *within* observed demographic strata ($A=a$) rather than unconditional i.i.d. sampling across the mixed dataset.
+
 - **Estimand Meaning**: The bootstrap CI estimates uncertainty conditional on the observed subgroup composition ($n_a$), rather than uncertainty arising from random variation in subgroup proportions.
 - **Allocation Invariance**: Preserves the observed sample size within each eligible subgroup/cell ($n_a$), preventing random demographic fluctuations from confounding disparity estimation.
 
-#### Why a Custom Engine is Employed:
+#### Why a Custom Engine is Employed
+
 1. **Fixed-Strata Index Drawing**: Preserves the observed sample size within each eligible subgroup/cell across all intersectional slices.
 2. **Simultaneous Multi-Group Evaluation**: Computes the full $K$-group metric vector in a single vectorized pass.
 3. **Deterministic Seeded PRNG**: Uses `numpy.random.Generator(PCG64)` for deterministic seeded random-stream reproducibility under a fixed NumPy implementation and identical call sequence.
@@ -178,7 +186,8 @@ Resampling is performed strictly *within* observed demographic strata ($A=a$) ra
               └── NO  ──► Percentile Fallback    └──► Percentile Fallback
 ```
 
-#### Mathematical Steps for BCa:
+#### Mathematical Steps for BCa
+
 1. **Bootstrap Replication**: Compute $\hat{\theta}^*_1, \dots, \hat{\theta}^*_B$ over stratified resamples.
 2. **Bias-Correction Parameter ($z_0$)**:
    $$z_0 = \Phi^{-1} \left( \frac{1}{B} \sum_{b=1}^B \mathbb{I}(\hat{\theta}^*_b < \hat{\theta}) \right)$$
@@ -195,7 +204,7 @@ Resampling is performed strictly *within* observed demographic strata ($A=a$) ra
 ### 3.2. Chi-Squared Contingency & Holm-Bonferroni Adjustment
 
 1. **Table Layout**: For attribute $A$ with $K$ subgroups, construct $2 \times K$ matrix:
-   $$O = \begin{bmatrix} 
+   $$O = \begin{bmatrix}
    n_{1, \text{pos}} & n_{2, \text{pos}} & \dots & n_{K, \text{pos}} \\
    n_{1, \text{neg}} & n_{2, \text{neg}} & \dots & n_{K, \text{neg}}
    \end{bmatrix}$$
@@ -210,6 +219,7 @@ Resampling is performed strictly *within* observed demographic strata ($A=a$) ra
 ### 3.3. Statistical Adequacy & Estimand Mapping
 
 #### 3.3.1. Screening Invariant ($n \ge 30$) vs. Conservative Support Rules
+
 The $n \ge 30$ threshold is an **engineering minimum screening invariant (NFR-003)** to reject severely undersampled cells; it is not a claim of universal statistical sufficiency. Full inferential validity requires metric-specific conservative screening conditions:
 
 ```
@@ -223,10 +233,13 @@ The $n \ge 30$ threshold is an **engineering minimum screening invariant (NFR-00
 │ Chi-Squared     │ Homogeneity of demographic contingency table    │ Expected cell counts E_ij >= 5 (Cochran heuristic)    │
 └─────────────────┴─────────────────────────────────────────────────┴───────────────────────────────────────────────────────┘
 ```
+
 *Note: The minimum support threshold of 5 observations is applied as a conservative engineering rule to prevent extreme rate volatility; it is not claimed as an asymptotic sufficiency criterion.*
 
 #### 3.3.2. DIR Zero-Denominator Reporting Invariant
+
 When $\max_a P(\hat{Y}=1 \mid A=a) = 0.0$, BiasAperture records:
+
 - `relative_disparity = 0.0` ($\text{DIR} = 1.0$)
 - `absolute_selection_rate_max = 0.0`
 - `absolute_selection_warning = True` (model produced zero positive selections across all audited cohorts).

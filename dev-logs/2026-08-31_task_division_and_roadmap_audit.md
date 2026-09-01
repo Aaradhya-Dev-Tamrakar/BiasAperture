@@ -114,16 +114,21 @@ The remaining deliverables for BiasAperture are organized below by priority, tar
 ## 5. Verification & Sync Execution
 
 1. **Code Standards & Linting Verification**:
+
    ```bash
    uv run --extra dev ruff check src/
    # Output: All checks passed!
    ```
+
 2. **Automated Unit Test Suite Execution**:
+
    ```bash
    uv run --extra dev pytest
    # Output: 54 passed in 10.95s
    ```
+
 3. **Multi-Remote Synchronization**:
+
    ```powershell
    pwsh -File .\sync.ps1 -m "docs: synchronize agent guidelines, workstream ownership, and test metrics"
    # Output:

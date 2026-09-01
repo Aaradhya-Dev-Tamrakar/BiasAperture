@@ -1,4 +1,5 @@
 # BiasAperture: Integration as Innovation
+
 ## Defense Memo — Why Integrating Existing Tools is Novel Here
 
 **Date:** August 20, 2026  
@@ -11,6 +12,7 @@
 **Naive integration:** Take AIF360 (tabular bias metrics) → export image predictions as CSV → pipe into Fairlearn (statistical testing) → done.
 
 **Reality for a face-auditor working in 2026:**
+
 1. **Schema mismatch:** FairFace has 7 race categories + 9 age bins. AIF360's fairness metrics expect exactly one protected attribute, one outcome. No built-in FairFace→AIF360 schema bridge exists (Fairlearn docs confirm this gap at the time of writing).
 2. **Workflow friction:** a researcher doing this today manually implements the demographic mapping, handles subgroup-size filtering, writes CSV→dict parsing, rewrites report templates. Typical setup: 2–4 weeks for a skilled practitioner to build correctly.
 3. **Regulatory uncertainty:** EU AI Act Article 10 (bias assessment for high-risk vision systems) maps to specific metrics and documentation formats — but which fairness metric row maps to which sub-clause? No toolkit document this; must be done manually per-jurisdiction.
@@ -26,24 +28,28 @@ A working practitioner (not a student, a practitioner) wanting to audit a deploy
 Not "make a new fairness metric" or "fix bias" — instead, **design the interface layer so the pieces fit correctly together and stay reusable**.
 
 ### 1. **Schema Bridge**
+
 - Ingest FairFace labels (7 race, 9 age) without reshaping.
 - Output metrics table with (subgroup, metric, point_est, ci, p_val, n) — a standardized shape.
 - Reusable across any image classifier that produces predictions + demographics.
 - **Time saved:** 1–2 weeks (manual schema definition + testing on typical practitioner workflow).
 
 ### 2. **Regulatory Mapping**
+
 - Each metric row auto-tagged with EU AI Act article (Art. 10(2)–10(5)) and NIST RMF category (Measure/Monitor/Plan).
 - Report template filled from the same standardized metrics dict.
 - **Gain:** compliance checkboxes, not auditor guesswork.
 - **Time saved:** 3–5 days (write-ups per jurisdiction requirement).
 
 ### 3. **Explainability Envelope**
+
 - SHAP local feature attribution integrated into the statistical pipeline (not bolted on after).
 - For every flagged disparity, automatically compute which facial features (eyes, skin tone proxy, etc.) drive it.
 - **Gain:** moving from "model is biased for women" → "model is biased for women, and that's because it over-weights skin-darkness features."
 - **Time saved:** 1 week (would otherwise need manual SHAP runs on top of the base pipeline).
 
 ### 4. **Repeated Auditability**
+
 - Same pipeline runs on ResNet, FaceNet, or ViT without code changes (model-agnostic by design).
 - Audit #1: baseline ResNet on FairFace. → Audit #2: same code, different model, different dataset. No reimplementation.
 - **Gain:** auditing scales from "one-off analysis" to "operational compliance regime."
@@ -54,6 +60,7 @@ Not "make a new fairness metric" or "fix bias" — instead, **design the interfa
 ## Why This Isn't "Research Novelty" and Shouldn't Pretend to Be
 
 **This is engineering novelty:**
+
 - No new fairness metric.
 - No new statistical test.
 - No new dataset (FairFace and UTKFace already exist).
@@ -96,11 +103,13 @@ The "day instead of three weeks" is concrete. It's the kind of win that matters.
 ## Scope Boundaries (Stay Honest)
 
 Don't claim:
+
 - "Detects bias in ways other tools can't" ← We don't. We report standard metrics (DP, EOD, EOP, DI).
 - "New fairness metric" ← Nope. All metrics pre-date this project.
 - "Fixes bias automatically" ← We don't. We diagnose.
 
 Do claim:
+
 - "Makes existing metrics reusable for face classifiers without 2 weeks of custom engineering."
 - "Brings face-audit workflows in line with compliance requirements (EU AI Act Article 10)."
 - "Repeated audits now take 1/4 the time of the first audit."
