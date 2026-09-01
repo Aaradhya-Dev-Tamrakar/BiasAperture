@@ -98,31 +98,30 @@ OUTPUT:
 
     # Resolve paths
     fairface_root = args.fairface_root.resolve()
-    predict_script = fairface_root / "predict.py"
     label_csv = fairface_root / "data" / "fairface_label_val.csv"
-    val_images_dir = fairface_root / "faces" / "val"
+    val_images_dir = fairface_root / "val"
     output_dir = args.output_dir.resolve()
 
     print("[1/5] Validating setup...")
     print()
 
-    # Check FairFace repo
+    # Check FairFace root
     if not fairface_root.exists():
         print(f"  ✗ FairFace root not found: {fairface_root}")
-        print(f"    Clone via: git clone https://github.com/dchen236/FairFace {fairface_root}")
+        print(f"    Expected directory structure:")
+        print(f"      {fairface_root}/")
+        print(f"        ├── data/")
+        print(f"        │   └── fairface_label_val.csv")
+        print(f"        └── val/")
+        print(f"              └── *.jpg")
         sys.exit(1)
     print(f"  ✓ FairFace root: {fairface_root}")
-
-    # Check predict.py
-    if not predict_script.exists():
-        print(f"  ✗ predict.py not found: {predict_script}")
-        sys.exit(1)
-    print(f"  ✓ predict.py: {predict_script}")
 
     # Check label CSV
     if not label_csv.exists():
         print(f"  ✗ Label CSV not found: {label_csv}")
-        print(f"    Download via: pwsh -File scripts/download_fairface_data.ps1")
+        print(f"    Expected: {label_csv}")
+        print(f"    Download from FairFace repository: data/fairface_label_val.csv")
         sys.exit(1)
     with open(label_csv) as f:
         label_count = sum(1 for _ in f) - 1  # Exclude header
@@ -131,14 +130,29 @@ OUTPUT:
     # Check validation images
     if not val_images_dir.exists():
         print(f"  ✗ Validation images directory not found: {val_images_dir}")
-        print(f"    See: https://github.com/dchen236/FairFace#data")
+        print(f"    Expected: {val_images_dir}/")
+        print(f"    Download from FairFace: fairface_val_padding0.25.zip")
         sys.exit(1)
-    val_image_count = len(list(val_images_dir.glob("**/*.jpg")))
+    val_image_count = len(list(val_images_dir.glob("*.jpg")))
     if val_image_count == 0:
         print(f"  ⚠ No JPEG images found in: {val_images_dir}")
         print(f"    Checking other formats...")
-        val_image_count = len(list(val_images_dir.glob("**/*.*")))
+        val_image_count = len(list(val_images_dir.glob("*.*")))
     print(f"  ✓ Validation images: {val_images_dir} ({val_image_count} images)")
+
+    # Check checkpoint candidates in priority order.
+    # The repository's locked baseline is the official 7-race FairFace checkpoint,
+    # with the 4-race file treated as an optional compatibility fallback.
+    checkpoint_candidates = [
+        Path(__file__).parent.parent / "data" / "fairface_alldata_20191111.pt",
+        Path(__file__).parent.parent / "data" / "res34_fair_align_multi_7_20190809.pt",
+        Path(__file__).parent.parent / "data" / "fairface_alldata_4race_20191111.pt",
+    ]
+    checkpoint_path = next((p for p in checkpoint_candidates if p.exists()), checkpoint_candidates[0])
+    if not checkpoint_path.exists():
+        print(f"  ⚠ Checkpoint not found (will verify later): {checkpoint_path}")
+    else:
+        print(f"  ✓ Checkpoint: {checkpoint_path} ({checkpoint_path.stat().st_size / 1e6:.1f} MB)")
 
     # Create output directory
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -160,16 +174,17 @@ OUTPUT:
 
     try:
         import torch
-        import torchvision
+        import torch.nn as nn
+        import torchvision.transforms as transforms
         from PIL import Image
         import numpy as np
         print(f"  ✓ PyTorch {torch.__version__}")
-        print(f"  ✓ torchvision {torchvision.__version__}")
+        print(f"  ✓ torchvision")
         print(f"  ✓ PIL")
         print(f"  ✓ NumPy")
     except ImportError as e:
         print(f"  ✗ Missing dependency: {e}")
-        print(f"    Run: uv pip install torch torchvision pillow numpy")
+        print(f"    Run: uv sync --extra dev")
         sys.exit(1)
 
     # Detect device
@@ -183,28 +198,103 @@ OUTPUT:
     print()
 
     # ========================================================================
-    # LOAD FAIRFACE PREDICT FUNCTION
+    # DEFINE FAIRFACE-ALIGNED LABELS FOR THE DETECTED CHECKPOINT TYPE
     # ========================================================================
-    print("[3/5] Loading FairFace predict function...")
+    print("[3/5] Loading label taxonomies (auto-detecting checkpoint head)...")
     print()
 
-    # Add FairFace to path
-    sys.path.insert(0, str(fairface_root))
+    RACE_LABELS_7 = (
+        "White",
+        "Black",
+        "Latino_Hispanic",
+        "East Asian",
+        "Southeast Asian",
+        "Indian",
+        "Middle Eastern",
+    )
+    RACE_LABELS_4 = ("White", "Black", "Asian", "Indian")
+    GENDER_LABELS = ("Male", "Female")
+    AGE_LABELS = (
+        "0-2",
+        "3-9",
+        "10-19",
+        "20-29",
+        "30-39",
+        "40-49",
+        "50-59",
+        "60-69",
+        "70+",
+    )
+
+    # ========================================================================
+    # LOAD MODEL & CHECKPOINT
+    # ========================================================================
+    print("[4/5] Loading ResNet-34 checkpoint...")
+    print()
+
+    if not checkpoint_path.exists():
+        print(f"  ✗ Checkpoint not found: {checkpoint_path}")
+        print(f"    Expected one of: {', '.join(str(p.name) for p in checkpoint_candidates)}")
+        sys.exit(1)
+
     try:
-        # Import the predict function from FairFace repo
-        # Note: This assumes FairFace's predict.py has callable functions
-        # If not, we'll need to adapt this section
-        print("  ℹ FairFace predict module loaded")
-        print("    (Manual adaptation required if predict.py structure differs)")
-    except Exception as e:
-        print(f"  ⚠ Could not auto-load FairFace predict: {e}")
-        print(f"    Will use manual PyTorch inference instead")
-    print()
+        checkpoint = torch.load(checkpoint_path, map_location=device)
+        print(f"  ✓ Checkpoint loaded: {checkpoint_path}")
+        print(f"    File size: {checkpoint_path.stat().st_size / 1e6:.1f} MB")
 
-    # ========================================================================
-    # LOAD MODEL & LABELS
-    # ========================================================================
-    print("[4/5] Loading ResNet-34 model & label definitions...")
+        fc_output_size = None
+        for key, tensor in checkpoint.items():
+            if 'fc' in key and 'weight' in key:
+                fc_output_size = tensor.shape[0]
+                print(f"  ✓ FC layer: {key} → {tensor.shape}")
+                break
+
+        if fc_output_size == 13:
+            race_labels = RACE_LABELS_4
+            print(f"  ✓ Confirmed: 4-race variant (13 outputs)")
+        elif fc_output_size == 18:
+            race_labels = RACE_LABELS_7
+            print(f"  ✓ Confirmed: 7-race variant (18 outputs)")
+        else:
+            print(f"  ✗ Unexpected FC output size: {fc_output_size} (expected 13 or 18)")
+            sys.exit(1)
+
+        print(f"  ✓ Race taxonomy: {race_labels}")
+        print(f"  ✓ Gender taxonomy: {GENDER_LABELS}")
+        print(f"  ✓ Age taxonomy ({len(AGE_LABELS)} groups): {AGE_LABELS}")
+
+    except Exception as e:
+        print(f"  ✗ Failed to load checkpoint: {e}")
+        sys.exit(1)
+
+    # Build ResNet-34 model (matching FairFace architecture)
+    try:
+        model = torch.hub.load('pytorch/vision:v0.10.0', 'resnet34', pretrained=False)
+
+        num_outputs = fc_output_size if fc_output_size else 13
+        model.fc = nn.Linear(model.fc.in_features, num_outputs)
+        
+        # Load checkpoint weights
+        model.load_state_dict(checkpoint, strict=False)
+        model.to(device)
+        model.eval()
+        
+        print(f"  ✓ ResNet-34 model initialized ({num_outputs} outputs)")
+    except Exception as e:
+        print(f"  ✗ Failed to build model: {e}")
+        sys.exit(1)
+    
+    # Image preprocessing (FairFace standard)
+    image_transform = transforms.Compose([
+        transforms.Resize((224, 224)),
+        transforms.ToTensor(),
+        transforms.Normalize(
+            mean=[0.485, 0.456, 0.406],
+            std=[0.229, 0.224, 0.225]
+        )
+    ])
+    
+    print(f"  ✓ Image preprocessing pipeline ready")
     print()
 
     # Read label CSV to get ground truth
@@ -238,12 +328,100 @@ OUTPUT:
     print("[5/5] Running inference & generating predictions CSV...")
     print()
 
-    # For now, create a stub CSV with proper schema
-    # In production, you would load the model and run actual inference
-    print(f"  ℹ Creating predictions CSV with BiasAperture schema...")
-    print(f"    Output: {output_csv}")
-
-    # Write CSV header
+    predictions = []
+    failed_images = []
+    
+    with torch.no_grad():
+        for idx, (image_id, labels) in enumerate(label_map.items(), 1):
+            # Build image path
+            # Note: image_id already includes "val/" prefix, so use fairface_root directly
+            image_path = fairface_root / image_id
+            
+            if not image_path.exists():
+                # Try alternative extensions
+                found = False
+                for ext in ['.jpg', '.jpeg', '.png', '.JPG', '.JPEG', '.PNG']:
+                    alt_path = val_images_dir / (image_id.replace('.jpg', '') + ext)
+                    if alt_path.exists():
+                        image_path = alt_path
+                        found = True
+                        break
+                
+                if not found:
+                    failed_images.append(image_id)
+                    if idx % 1000 == 0:
+                        print(f"    [{idx}/{len(label_map)}] ⚠ Image not found: {image_id}")
+                    continue
+            
+            # Load and preprocess image
+            try:
+                image = Image.open(image_path).convert('RGB')
+                image_tensor = image_transform(image).unsqueeze(0).to(device)
+            except Exception as e:
+                failed_images.append(image_id)
+                if idx % 1000 == 0:
+                    print(f"    [{idx}/{len(label_map)}] ⚠ Failed to load: {image_id} ({e})")
+                continue
+            
+            # Model inference
+            try:
+                outputs = model(image_tensor)
+                outputs = outputs.cpu().numpy()[0]
+                
+                # Parse outputs based on checkpoint type
+                if len(outputs) == 13:  # 4-race variant
+                    race_logits = outputs[:4]
+                    gender_logits = outputs[4:6]
+                    age_logits = outputs[6:13]
+                elif len(outputs) == 18:  # 7-race variant
+                    race_logits = outputs[:7]
+                    gender_logits = outputs[7:9]
+                    age_logits = outputs[9:18]
+                else:
+                    failed_images.append(image_id)
+                    if idx % 1000 == 0:
+                        print(f"    [{idx}/{len(label_map)}] ⚠ Unexpected output size: {len(outputs)}")
+                    continue
+                
+                # Convert logits to predicted labels via argmax
+                pred_race_idx = np.argmax(race_logits)
+                pred_gender_idx = np.argmax(gender_logits)
+                pred_age_idx = np.argmax(age_logits)
+                
+                pred_race = race_labels[pred_race_idx]
+                pred_gender = GENDER_LABELS[pred_gender_idx]
+                pred_age = AGE_LABELS[pred_age_idx]
+                
+                predictions.append({
+                    "image_id": image_id,
+                    "predicted_race": pred_race,
+                    "predicted_gender": pred_gender,
+                    "predicted_age": pred_age,
+                    "true_race": labels["race"],
+                    "true_gender": labels["gender"],
+                    "true_age": labels["age"],
+                    "subgroup_race": labels["race"],  # For now, use true race as subgroup
+                    "subgroup_gender": labels["gender"],
+                    "subgroup_age": labels["age"]
+                })
+                
+                # Progress report
+                if idx % 1000 == 0:
+                    print(f"    [{idx}/{len(label_map)}] ✓ Inferred {idx} images...")
+                    
+            except Exception as e:
+                failed_images.append(image_id)
+                if idx % 1000 == 0:
+                    print(f"    [{idx}/{len(label_map)}] ✗ Inference error: {image_id} ({e})")
+                continue
+    
+    print(f"  ✓ Inference complete: {len(predictions)}/{len(label_map)} images processed")
+    if failed_images:
+        print(f"  ⚠ Failed to process: {len(failed_images)} images")
+    print()
+    
+    # Write predictions to CSV
+    print(f"  ℹ Writing predictions CSV...")
     with open(output_csv, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=[
             "image_id",
@@ -252,22 +430,7 @@ OUTPUT:
             "subgroup_race", "subgroup_gender", "subgroup_age"
         ])
         writer.writeheader()
-
-        # TODO: Add actual model inference loop here
-        # For now, stub with ground truth (for testing)
-        for image_id, labels in label_map.items():
-            writer.writerow({
-                "image_id": image_id,
-                "predicted_race": labels["race"],  # TODO: Replace with model output
-                "predicted_gender": labels["gender"],  # TODO: Replace with model output
-                "predicted_age": labels["age"],  # TODO: Replace with model output
-                "true_race": labels["race"],
-                "true_gender": labels["gender"],
-                "true_age": labels["age"],
-                "subgroup_race": labels["race"],
-                "subgroup_gender": labels["gender"],
-                "subgroup_age": labels["age"]
-            })
+        writer.writerows(predictions)
 
     print(f"  ✓ CSV written: {output_csv}")
     print(f"    Records: {len(label_map)}")
