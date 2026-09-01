@@ -9,7 +9,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `2ef7a7a0`
+- Built from commit: `410eee0a`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -438,7 +438,7 @@ Cohesion: 0.67
 Nodes (3): Stream F Synthesis (Defense & Regulatory), NIST AI RMF Detailed Mapping, Competitor Deep Analysis
 
 ### Community 68 - "Community 68"
-Cohesion: 0.25
+Cohesion: 0.22
 Nodes (3): Master Task Division (BiasAperture-AT.md), Fairness Backends, Fairness computation engine package (WP4 / Stream C).  Exports: - Core Four c
 
 ### Community 73 - "Community 73"
@@ -506,7 +506,7 @@ Cohesion: 0.18
 Nodes (10): 1. Executive Summary & Objectives, 2. Work Packages & Milestone Mapping, 3.1 Custom LaTeX Document Class & Optimization (`report/at_fuse_aif.cls`), 3.2 VS Code LaTeX Development Recipe, 3.3 Multi-Remote Git Synchronization Baseline (`sync.ps1`), 3. Detailed Accomplishments & Technical Highlights, 4. Git Commit Provenance (Week 1), 5. Next Steps & Lookahead (Week 2) (+2 more)
 
 ### Community 117 - "Community 117"
-Cohesion: 0.18
+Cohesion: 0.20
 Nodes (10): 1. Executive Summary & Objectives, 2. Work Packages & Milestone Mapping, 3.1 Functional Requirements & Regulatory Mapping (`FR-001`–`FR-005`), 3.2 System Architecture & Flow Design, 3.3 Engineering Standards & Package Scaffolding, 3. Detailed Accomplishments & Technical Highlights, 4. Git Commit Provenance (Week 3), 5. Next Steps & Lookahead (Week 4) (+2 more)
 
 ### Community 118 - "Community 118"

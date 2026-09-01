@@ -5138,10 +5138,10 @@
       "source_file": "dev-logs/weekly-reports/2026-08-21_WK3_report.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 117,
+      "community": 68,
       "norm_label": "2026-08-21_wk3_report.md",
       "id": "weekly_reports_2026_08_21_wk3_report",
-      "community_name": "Community 117"
+      "community_name": "Community 68"
     },
     {
       "label": "BiasAperture \u2014 Weekly Project Report (WK3)",
@@ -12056,8 +12056,8 @@
       "contributor": null,
       "community": 76,
       "norm_label": "biasaperture",
-      "id": "claude_biasaperture",
-      "community_name": "Community 76"
+      "community_name": "Community 76",
+      "id": "claude_biasaperture"
     },
     {
       "label": "NFR-003 (Sample Size Guard)",
@@ -12070,8 +12070,8 @@
       "contributor": null,
       "community": 76,
       "norm_label": "nfr-003 (sample size guard)",
-      "id": "nfr_003_sample_size_guard",
-      "community_name": "Community 76"
+      "community_name": "Community 76",
+      "id": "nfr_003_sample_size_guard"
     },
     {
       "label": "NFR-001 (Significance)",
@@ -12084,8 +12084,8 @@
       "contributor": null,
       "community": 76,
       "norm_label": "nfr-001 (significance)",
-      "id": "nfr_001_significance",
-      "community_name": "Community 76"
+      "community_name": "Community 76",
+      "id": "nfr_001_significance"
     },
     {
       "label": "NFR-002 (Uncertainty)",
@@ -12098,8 +12098,8 @@
       "contributor": null,
       "community": 76,
       "norm_label": "nfr-002 (uncertainty)",
-      "id": "nfr_002_uncertainty",
-      "community_name": "Community 76"
+      "community_name": "Community 76",
+      "id": "nfr_002_uncertainty"
     },
     {
       "label": "HTML Report Generator",
@@ -12112,8 +12112,8 @@
       "contributor": "Tisha Manandhar",
       "community": 76,
       "norm_label": "html report generator",
-      "id": "bias_aperture_report_generator",
-      "community_name": "Community 76"
+      "community_name": "Community 76",
+      "id": "bias_aperture_report_generator"
     },
     {
       "label": "AIF360",
@@ -12126,8 +12126,8 @@
       "contributor": null,
       "community": 78,
       "norm_label": "aif360",
-      "id": "aif360_library",
-      "community_name": "Community 78"
+      "community_name": "Community 78",
+      "id": "aif360_library"
     },
     {
       "label": "Fairlearn",
@@ -12140,8 +12140,8 @@
       "contributor": null,
       "community": 86,
       "norm_label": "fairlearn",
-      "id": "fairlearn_library",
-      "community_name": "Community 86"
+      "community_name": "Community 86",
+      "id": "fairlearn_library"
     },
     {
       "label": "Fairness Backends",
@@ -12154,8 +12154,8 @@
       "contributor": null,
       "community": 68,
       "norm_label": "fairness backends",
-      "id": "bias_aperture_fairness_backends",
-      "community_name": "Community 68"
+      "community_name": "Community 68",
+      "id": "bias_aperture_fairness_backends"
     },
     {
       "label": "Report Generator",
@@ -12168,8 +12168,8 @@
       "contributor": null,
       "community": 14,
       "norm_label": "report generator",
-      "id": "bias_aperture_report",
-      "community_name": "Git Sync Scripts"
+      "community_name": "Git Sync Scripts",
+      "id": "bias_aperture_report"
     },
     {
       "label": "Master Task Division (BiasAperture-AT.md)",
@@ -12182,8 +12182,8 @@
       "contributor": null,
       "community": 68,
       "norm_label": "master task division (biasaperture-at.md)",
-      "id": "bias_aperture_at_md",
-      "community_name": "Community 68"
+      "community_name": "Community 68",
+      "id": "bias_aperture_at_md"
     },
     {
       "label": "Research Claim Ledger",
@@ -12196,8 +12196,8 @@
       "contributor": null,
       "community": 62,
       "norm_label": "research claim ledger",
-      "id": "claim_ledger_md",
-      "community_name": "Community 62"
+      "community_name": "Community 62",
+      "id": "claim_ledger_md"
     },
     {
       "label": "Weekly Report WK1 (2026-08-07)",
@@ -12210,8 +12210,8 @@
       "contributor": "Tisha Manandhar",
       "community": 36,
       "norm_label": "weekly report wk1 (2026-08-07)",
-      "id": "dev_logs_weekly_reports_2026_08_07_wk1_report",
-      "community_name": "EU AI Act Legal Analysis"
+      "community_name": "EU AI Act Legal Analysis",
+      "id": "dev_logs_weekly_reports_2026_08_07_wk1_report"
     },
     {
       "label": "Weekly Report WK2 (2026-08-14)",
@@ -12224,8 +12224,8 @@
       "contributor": "Tisha Manandhar",
       "community": 36,
       "norm_label": "weekly report wk2 (2026-08-14)",
-      "id": "dev_logs_weekly_reports_2026_08_14_wk2_report",
-      "community_name": "EU AI Act Legal Analysis"
+      "community_name": "EU AI Act Legal Analysis",
+      "id": "dev_logs_weekly_reports_2026_08_14_wk2_report"
     },
     {
       "label": "Weekly Report WK3 (2026-08-21)",
@@ -12238,8 +12238,8 @@
       "contributor": "Tisha Manandhar",
       "community": 36,
       "norm_label": "weekly report wk3 (2026-08-21)",
-      "id": "dev_logs_weekly_reports_2026_08_21_wk3_report",
-      "community_name": "EU AI Act Legal Analysis"
+      "community_name": "EU AI Act Legal Analysis",
+      "id": "dev_logs_weekly_reports_2026_08_21_wk3_report"
     },
     {
       "label": "Weekly Report WK4 (2026-08-31)",
@@ -12252,8 +12252,8 @@
       "contributor": "Tisha Manandhar",
       "community": 36,
       "norm_label": "weekly report wk4 (2026-08-31)",
-      "id": "dev_logs_weekly_reports_2026_08_31_wk4_report",
-      "community_name": "EU AI Act Legal Analysis"
+      "community_name": "EU AI Act Legal Analysis",
+      "id": "dev_logs_weekly_reports_2026_08_31_wk4_report"
     },
     {
       "label": "Monthly Progress & Weekly Reports Index (2026-08-31)",
@@ -12266,8 +12266,8 @@
       "contributor": "Tisha Manandhar",
       "community": 36,
       "norm_label": "monthly progress & weekly reports index (2026-08-31)",
-      "id": "dev_logs_weekly_reports_2026_08_31_weekly_report",
-      "community_name": "EU AI Act Legal Analysis"
+      "community_name": "EU AI Act Legal Analysis",
+      "id": "dev_logs_weekly_reports_2026_08_31_weekly_report"
     }
   ],
   "links": [
@@ -13769,23 +13769,23 @@
     },
     {
       "relation": "imports_from",
+      "context": "import",
       "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
       "source_file": "src/bias_aperture/cli.py",
       "source_location": "L18",
       "weight": 1.0,
-      "context": "import",
+      "confidence_score": 1.0,
       "source": "bias_aperture_cli",
       "target": "bias_aperture_explainability"
     },
     {
       "relation": "imports_from",
+      "context": "import",
       "confidence": "EXTRACTED",
-      "confidence_score": 0.9,
       "source_file": "src/bias_aperture/cli.py",
       "source_location": "L20",
       "weight": 1.0,
-      "context": "import",
+      "confidence_score": 0.9,
       "source": "bias_aperture_cli",
       "target": "bias_aperture_report"
     },
@@ -25558,5 +25558,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "2ef7a7a0a243ce7a17fb86348eb1f56bc4d020e1"
+  "built_at_commit": "410eee0af2db4dd525d3ffb99dff2de8da8ac743"
 }
