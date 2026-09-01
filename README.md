@@ -67,7 +67,7 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 ## Project Progress & Roadmap
 
 ```
-Overall Progress: [█████████████████░░░] 85% (Milestones M1–M4 Completed · M5 Integration in Progress)
+Overall Progress: [████████████████████] 90% (Milestones M1–M4 Completed · Inference Baseline Verified · Audit Stage Active)
 ```
 
 | Work Package / Milestone | Stream / Focus | Status | Progress Bar | Deliverables & Implementation State |
@@ -76,7 +76,7 @@ Overall Progress: [█████████████████░░░]
 | **WP2 / M2: Data Ingestion & Test Matrix** | Stream A (Tisha) | Completed | `[████████████████████] 100%` | FairFace ingestion pipeline (`data_ingestion.py`), disk verification (97,698 images), UTKFace profiling |
 | **WP3 / M3: Compliance Report Generation** | Stream B (Tisha/Aaradhya) | Completed | `[████████████████████] 100%` | Offline standalone Jinja2 HTML report (`generator.py`), embedded Base64 charts, EU AI Act & NIST mapping |
 | **WP4 / M4: Statistical Detection Engine & SHAP** | WP4 (Aaradhya) | Completed | `[████████████████████] 100%` | Pure-math metrics, Fairlearn + native AIF360 backends, BCa bootstrap ($B \ge 1,000$), $\chi^2$ significance tests, SHAP surrogate attribution |
-| **WP5 / M5: System Orchestration & Case Study** | Integration / Joint | In Progress | `[██████████████░░░░░░]  70%` | `bias-aperture` CLI orchestrator with `--explain`, 55/55 unit tests passing, awaiting full benchmark validation inference |
+| **WP5 / M5: System Orchestration & Case Study** | Integration / Joint | Active | `[██████████████████░░]  90%` | Benchmark inference verified (`10,954/10,954` processed), CSV schema validated, now running audit/report generation over `data/processed/fairface_predictions_val.csv` |
 
 ## Branching & Workstreams
 
@@ -112,7 +112,7 @@ pre-commit install
 .\sync.ps1 -PullOnly                        # git pull --autostash only, no commit/push
 ```
 
-Every run (except `-PullOnly`) appends a timestamp entry to `docs/CHANGELOG.md` before committing.
+Every run (except `-PullOnly`) appends a timestamp entry to `docs/CHANGELOG.md` before committing. The project is now synced from the verified inference-completion state, with session notes stored under `dev-logs/` using the dated naming convention.
 
 ## Building the Report
 

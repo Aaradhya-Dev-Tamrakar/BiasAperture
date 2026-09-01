@@ -1,8 +1,15 @@
 # FairFace Validation Images Setup Guide
 
-## Status: ⏳ REQUIRED FOR P1.1 INFERENCE
+## Status: ✅ INFERENCE COMPLETE
 
-The **validation label CSV has been downloaded** ✅, but the **10,954 validation images** (2 GB) must be downloaded separately from Google Drive.
+The validation inference was executed successfully and produced the verified predictions file at `data/processed/fairface_predictions_val.csv`.
+
+**Verified evidence**:
+
+- `10954/10954 images processed`
+- `✓ CSV written: .../fairface_predictions_val.csv`
+- `✓ SCHEMA VALID`
+- `✓ INFERENCE COMPLETE`
 
 ## Option 1: Manual Download (Recommended - Simplest)
 
@@ -152,13 +159,13 @@ If it's the second, update the inference script path accordingly.
 | Step | Status | File/Output |
 |------|--------|------------|
 | 1. Download label CSV | ✅ Done | `FairFace/data/fairface_label_val.csv` (10,954 records) |
-| 2. Download images ZIP | ⏳ Required | Google Drive 2 GB download |
-| 3. Extract images | ⏳ Required | `FairFace/faces/val/` (10,954 JPEGs) |
-| 4. Run inference | 🔄 Next | `data/processed/fairface_predictions_val.csv` |
-| 5. Generate report | 🔄 P1.2 | `report/audit_report_val.html` |
+| 2. Prepare local FairFace data | ✅ Done | local validation split available in `data/fairface-img-margin025-trainval` |
+| 3. Run inference | ✅ Done | `data/processed/fairface_predictions_val.csv` (10,954 rows) |
+| 4. Validate schema | ✅ Done | `✓ SCHEMA VALID` |
+| 5. Generate audit/report | 🔄 Next | fairness audit over the predictions CSV |
 
 ---
 
-**Estimated time**: Manual download (5-15 min) + extraction (2-5 min) + inference (10-30 min depending on GPU)
+**Current state**: The inference baseline is complete and ready for the audit stage.
 
-**Next action**: Download the ZIP from Google Drive using Option 1 above.
+**Next action**: Run the fairness/audit workflow against `data/processed/fairface_predictions_val.csv`.
