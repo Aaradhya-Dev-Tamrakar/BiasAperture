@@ -39,6 +39,7 @@ schema and diagnostic-only scope.
 
 1. **Powershell & UV Tool Execution**:
    - Always run Python commands and tests via `uv`:
+
      ```powershell
      uv run --extra dev pytest
      uv run --extra dev ruff check src/
