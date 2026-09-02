@@ -49,6 +49,24 @@ def build_parser() -> argparse.ArgumentParser:
         help="Column name containing predictions (default: predicted_label).",
     )
     parser.add_argument(
+        "--race-col",
+        type=str,
+        default="race",
+        help="Column name containing race labels (default: race).",
+    )
+    parser.add_argument(
+        "--gender-col",
+        type=str,
+        default="gender",
+        help="Column name containing gender labels (default: gender).",
+    )
+    parser.add_argument(
+        "--age-col",
+        type=str,
+        default="age",
+        help="Column name containing age labels (default: age).",
+    )
+    parser.add_argument(
         "--protected-attr",
         "-a",
         type=str,
@@ -108,6 +126,9 @@ def main(argv: list[str] | None = None) -> int:
         config=IngestionConfig(
             true_label_col=args.true_label_col,
             predicted_label_col=args.predicted_label_col,
+            race_col=args.race_col,
+            gender_col=args.gender_col,
+            age_col=args.age_col,
         )
     )
     result = ingestion.ingest_file(pred_file)
