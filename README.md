@@ -102,12 +102,11 @@ schema, diagnostic-only scope, and NFR-001/002/003 statistical safeguards.
 
 ## Project Progress & Roadmap
 
-```
-Overall Progress: [██████████████████░░] 90% (Milestones M1–M4 Completed · Inference Complete · M5 Audit/Report Active; 56 tests passing)
+```Overall Progress: [██████████████████░░] 90% (Milestones M1–M4 Completed · Inference Complete · M5 Audit/Report Active; 56 tests passing)
 ```
 
 | Work Package / Milestone | Stream / Focus | Status | Progress Bar | Deliverables & Implementation State |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | **WP1 / M1: Schema Lock & Baseline** | Foundations / Joint | Completed | `[████████████████████] 100%` | Locked schema (`schema.py`), FairFace ResNet-34 baseline fixed, test fixtures |
 | **WP2 / M2: Data Ingestion & Test Matrix** | Stream A (Tisha) | Completed | `[████████████████████] 100%` | FairFace ingestion pipeline (`data_ingestion.py`), disk verification (97,698 images), UTKFace profiling |
 | **WP3 / M3: Compliance Report Generation** | Stream B (Tisha/Aaradhya) | Completed | `[████████████████████] 100%` | Offline standalone Jinja2 HTML report (`generator.py`), embedded Base64 charts, EU AI Act & NIST mapping |
@@ -155,7 +154,7 @@ Overall Progress: [██████████████████░░]
 ## Branching & Workstreams
 
 | Branch | Stream / Work Package | Primary Owner | Description |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `main` | Production / Base | Joint | Stable base holding locked schema, verified engine, docs, and report |
 | `feat/stream-data` | Stream A (WP2) | Tisha (`@tiixsha`) | FairFace dataset ingestion & test-matrix construction |
 | `feat/stream-report` | Stream B (WP3) | Tisha (`@tiixsha`) | Jinja2 HTML compliance report scaffolding |
