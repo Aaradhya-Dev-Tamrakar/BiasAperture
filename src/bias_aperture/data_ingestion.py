@@ -49,6 +49,11 @@ IMAGE_COL_ALIASES: tuple[str, ...] = (
     "filename",
 )
 
+# Raw labels emitted by upstream dataset/model implementations.
+RAW_AGE_LABEL_ALIASES: dict[str, str] = {
+    "more than 70": "70+",
+}
+
 
 class SchemaValidationError(ValueError):
     """
@@ -331,7 +336,8 @@ class DataIngestionPipeline:
             # Check label vocabularies
             race_str = str(raw_race).strip()
             gender_str = str(raw_gender).strip()
-            age_str = str(raw_age).strip()
+            raw_age_str = str(raw_age).strip()
+            age_str = RAW_AGE_LABEL_ALIASES.get(raw_age_str, raw_age_str)
 
             taxonomy_invalid = False
             if race_str not in RACE_LABELS:

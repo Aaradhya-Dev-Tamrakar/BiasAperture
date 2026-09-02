@@ -163,6 +163,33 @@ def test_invalid_age_label_strict_mode(tmp_path):
         pipeline.ingest_file(csv_path)
 
 
+def test_raw_fairface_age_alias_normalizes_to_locked_label():
+    config = IngestionConfig(
+        true_label_col="true_label",
+        predicted_label_col="pred_label",
+        validation_mode=ValidationMode.STRICT,
+    )
+    pipeline = DataIngestionPipeline(config)
+
+    result = pipeline.ingest_records(
+        [
+            {
+                "face_name_align": "img1.jpg",
+                "race": "White",
+                "gender": "Female",
+                "age": "more than 70",
+                "true_label": "0",
+                "pred_label": "0",
+            }
+        ]
+    )
+
+    assert result.validation_summary.is_valid is True
+    assert result.records[0].age == "70+"
+    assert result.cohort_profile is not None
+    assert result.cohort_profile.age_counts["age=70+"].total_n == 1
+
+
 def test_invalid_demographic_taxonomy_permissive_mode(tmp_path):
     csv_path = tmp_path / "invalid_labels.csv"
     csv_path.write_text(
