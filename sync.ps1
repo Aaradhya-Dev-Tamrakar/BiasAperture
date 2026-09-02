@@ -35,7 +35,8 @@ function Initialize-Remotes {
     $remotes = git remote
     if ($remotes -notcontains $originRemote) {
         git remote add $originRemote $originUrl
-    } else {
+    }
+    else {
         $currentOrigin = git remote get-url $originRemote 2>$null
         if ($currentOrigin -ne $originUrl) {
             git remote set-url $originRemote $originUrl
@@ -48,13 +49,15 @@ function Initialize-Remotes {
     # Auxiliary mirrors
     if ($remotes -notcontains $orgRemote) {
         git remote add $orgRemote $orgUrl
-    } else {
+    }
+    else {
         git remote set-url $orgRemote $orgUrl 2>$null
     }
 
     if ($remotes -notcontains $duoRemote) {
         git remote add $duoRemote $duoUrl
-    } else {
+    }
+    else {
         git remote set-url $duoRemote $duoUrl 2>$null
     }
 
@@ -77,11 +80,13 @@ function Push-AllRemotes {
             & git.exe push $remote $Branch *>$null
             if ($LASTEXITCODE -eq 0) {
                 $results[$remote] = 'OK'
-            } else {
+            }
+            else {
                 $tag = if ($compulsoryRemotes -contains $remote) { 'FAILED (compulsory)' } else { 'SKIPPED (no access / rejected)' }
                 $results[$remote] = $tag
             }
-        } catch {
+        }
+        catch {
             $tag = if ($compulsoryRemotes -contains $remote) { 'FAILED (compulsory)' } else { 'SKIPPED (no access)' }
             $results[$remote] = $tag
         }
@@ -114,7 +119,8 @@ function Sync-AllOriginBranches {
             & git.exe push $remote "refs/remotes/$originRemote/$branchName`:refs/heads/$branchName" *>$null
             if ($LASTEXITCODE -eq 0) {
                 Write-Host "mirror [$branchName] -> [$remote]: OK"
-            } else {
+            }
+            else {
                 Write-Warning "mirror [$branchName] -> [$remote]: FAILED"
             }
         }
@@ -133,12 +139,23 @@ function Get-InferredBranch {
     $hasStreamReport = $false
     $hasStreamEngine = $false
     $hasStreamIntegration = $false
+    $hasUiUx = $false
 
     foreach ($f in $files) {
         if ($f -match 'data_ingestion|test_data_ingestion') { $hasStreamData = $true }
+        elseif ($f -match 'report/templates/|report.html\.j2|report/generator\.py') { $hasUiUx = $true }
         elseif ($f -match 'report/|test_offline_report') { $hasStreamReport = $true }
         elseif ($f -match 'fairness/|explainability|test_backend_harmonization|test_known_answer') { $hasStreamEngine = $true }
         elseif ($f -match 'pipeline|orchestrator') { $hasStreamIntegration = $true }
+    }
+
+    # UI/UX changes (templates + generator's rendering/context-prep logic)
+    # are a strict subset of Stream-Report scope but route to their own
+    # branch — checked first, independent of the single-stream-match rule
+    # below, since a UI/UX-only edit set should never fall through to
+    # feat/stream-report just because no other stream also matched.
+    if ($hasUiUx -and -not ($hasStreamData -or $hasStreamEngine -or $hasStreamIntegration)) {
+        return 'feat/ui-ux-report'
     }
 
     $matchedStreams = @($hasStreamData, $hasStreamReport, $hasStreamEngine, $hasStreamIntegration) | Where-Object { $_ }
@@ -252,7 +269,8 @@ if ($staged) {
     }
 
     git commit -m "$m"
-} else {
+}
+else {
     Write-Host "No unstaged changes to commit. Syncing remotes..."
 }
 
