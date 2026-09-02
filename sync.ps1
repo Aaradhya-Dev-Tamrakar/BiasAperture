@@ -77,18 +77,20 @@ function Push-AllRemotes {
 
     foreach ($remote in $allRemotes) {
         try {
-            & git.exe push $remote $Branch *>$null
+            $pushOutput = & git.exe push $remote "refs/heads/$Branch`:refs/heads/$Branch" 2>&1
             if ($LASTEXITCODE -eq 0) {
                 $results[$remote] = 'OK'
             }
             else {
                 $tag = if ($compulsoryRemotes -contains $remote) { 'FAILED (compulsory)' } else { 'SKIPPED (no access / rejected)' }
                 $results[$remote] = $tag
+                Write-Warning "push [$remote] failed: $($pushOutput -join ' ')"
             }
         }
         catch {
             $tag = if ($compulsoryRemotes -contains $remote) { 'FAILED (compulsory)' } else { 'SKIPPED (no access)' }
             $results[$remote] = $tag
+            Write-Warning "push [$remote] failed: $($_.Exception.Message)"
         }
     }
 
@@ -100,7 +102,7 @@ function Push-AllRemotes {
     # Verify all compulsory remotes succeeded
     $failedCompulsory = $compulsoryRemotes | Where-Object { $results[$_] -ne 'OK' }
     if ($failedCompulsory) {
-        Write-Warning "Compulsory remote(s) failed to push: $($failedCompulsory -join ', '). Please check credentials and remote permissions."
+        throw "Compulsory remote(s) failed to push: $($failedCompulsory -join ', '). Check the Git output above."
     }
 }
 
@@ -115,13 +117,20 @@ function Sync-AllOriginBranches {
     $mirrorRemotes = @($duoRemote, $orgRemote)
 
     foreach ($branchName in $branches) {
+        $sourceSha = (git rev-parse "refs/remotes/$originRemote/$branchName").Trim()
         foreach ($remote in $mirrorRemotes) {
-            & git.exe push $remote "refs/remotes/$originRemote/$branchName`:refs/heads/$branchName" *>$null
+            $pushOutput = & git.exe push $remote "refs/remotes/$originRemote/$branchName`:refs/heads/$branchName" 2>&1
             if ($LASTEXITCODE -eq 0) {
-                Write-Host "mirror [$branchName] -> [$remote]: OK"
+                $destinationSha = (git ls-remote $remote "refs/heads/$branchName" | ForEach-Object { ($_ -split "\s+")[0] }).Trim()
+                if ($destinationSha -eq $sourceSha) {
+                    Write-Host "mirror [$branchName] -> [$remote]: OK ($sourceSha)"
+                }
+                else {
+                    throw "mirror [$branchName] -> [$remote] was not verified. Expected $sourceSha, got $destinationSha."
+                }
             }
             else {
-                Write-Warning "mirror [$branchName] -> [$remote]: FAILED"
+                throw "mirror [$branchName] -> [$remote] failed: $($pushOutput -join ' ')"
             }
         }
     }
@@ -275,6 +284,9 @@ else {
 }
 
 $branch = git rev-parse --abbrev-ref HEAD
-git pull --autostash --rebase $originRemote $branch
+& git.exe pull --autostash --rebase $originRemote $branch
+if ($LASTEXITCODE -ne 0) {
+    throw "Failed to pull and rebase [$branch] from [$originRemote]. Resolve the pull conflict or remote error before pushing."
+}
 Push-AllRemotes -Branch $branch
 Sync-AllOriginBranches
