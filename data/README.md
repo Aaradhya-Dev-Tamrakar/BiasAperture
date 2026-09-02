@@ -14,7 +14,7 @@ data/
 │   ├── fairface/        # FairFace margin025 images and official label CSVs (97,698 released images)
 │   └── utkface/         # [CUT] Secondary benchmark (cut per Cut-List #2 / Track 02)
 └── processed/           # Schema-aligned test matrices and stratified subsets
-    ├── fairface_predictions_val.csv    # Predictions from predict.py on validation set
+    ├── fairface_predictions_val.csv    # ✅ Verified validation inference output (10,954 records)
     └── fairface_dev_5000.csv           # Stratified development subset (n=5,000)
 ```
 

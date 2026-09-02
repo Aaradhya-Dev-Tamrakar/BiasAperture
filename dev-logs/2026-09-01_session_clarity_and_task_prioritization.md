@@ -41,10 +41,11 @@ This session focused on **regaining project clarity** after the rapid completion
 - ✅ CLI orchestrator with `--explain` flag (`src/bias_aperture/cli.py`)
 - ✅ Complete pytest suite (55/55 passing)
 
-**Not Yet Done:**
+- ✅ Empirical inference run (ResNet-34 on 10,954 validation images -> data/processed/fairface_predictions_val.csv completed 2026-09-02)
 
-- 🔴 Empirical inference run (ResNet-34 on 10,954 validation images)
-- 🔴 Flagship HTML audit report generation
+**Active / In Progress in M5:**
+
+- 🔴 Flagship HTML audit report generation (`report/audit_report_val.html`)
 - 🔴 Final LaTeX report with empirical results
 - 🔴 Defense preparation & logistics
 
@@ -52,16 +53,16 @@ This session focused on **regaining project clarity** after the rapid completion
 
 ## 3. Master TO DOs — Complete Task Breakdown
 
-### 🔴 **PRIORITY 1 — Empirical Benchmark Execution** (Start Now)
+### 🔴 **PRIORITY 1 — Empirical Benchmark Execution**
 
-| # | Task | Owner | Target Artifact | Acceptance Criteria |
-|:---:|---|:---:|---|---|
-| 1.1 | **Validation Inference Run** — Execute ResNet-34 classifier inference on 10,954 FairFace validation images | **Aaradhya** | `data/processed/fairface_predictions_val.csv` | CSV contains: `image_id`, `predicted_label`, `true_label`, `subgroup_race`, `subgroup_gender`, `subgroup_age`; schema-aligned with [`schema.py`](../../src/bias_aperture/schema.py) |
-| 1.2 | **Flagship Audit HTML Generation** — Execute `bias-aperture audit` on predictions CSV to generate compliance report | **Aaradhya** | `report/audit_report.html` | Zero-network standalone HTML; Model Card + Datasheet sections; all 4 disparity metrics (DPD, DIR, EOP, EOD) with 95% BCa CI and χ² p-values; subgroups with n < 30 flagged as "insufficient_sample" |
-| 1.3 | **Lock Defense Logistics** — Confirm defense date, presentation duration, marking breakdown (40% project weighting) | **Tisha** | Meeting notes in [`docs/BiasAperture-AT.md`](../../docs/BiasAperture-AT.md) (§19) | Written confirmation from TA Shreejan Kisee with explicit grading rubric |
+| # | Task | Owner | Target Artifact | Acceptance Criteria | Status |
+|:---:|---|:---:|---|---|:---:|
+| 1.1 | **Validation Inference Run** — Execute ResNet-34 classifier inference on 10,954 FairFace validation images | **Aaradhya** | `data/processed/fairface_predictions_val.csv` | CSV contains: `image_id`, `predicted_label`, `true_label`, `subgroup_race`, `subgroup_gender`, `subgroup_age`; schema-aligned with [`schema.py`](../../src/bias_aperture/schema.py) | ✅ **Completed** (10,954 / 10,954 records) |
+| 1.2 | **Flagship Audit HTML Generation** — Execute `bias-aperture audit` on predictions CSV to generate compliance report | **Aaradhya** | `report/audit_report.html` | Zero-network standalone HTML; Model Card + Datasheet sections; all 4 disparity metrics (DPD, DIR, EOP, EOD) with 95% BCa CI and χ² p-values; subgroups with n < 30 flagged as "insufficient_sample" | 🔄 **Next Up** |
+| 1.3 | **Lock Defense Logistics** — Confirm defense date, presentation duration, marking breakdown (40% project weighting) | **Tisha** | Meeting notes in [`docs/BiasAperture-AT.md`](../../docs/BiasAperture-AT.md) (§19) | Written confirmation from TA Shreejan Kisee with explicit grading rubric | ⏳ **In Progress** |
 
-**Dependencies:** None — all three can start immediately.  
-**Estimated Duration:** 2–3 days parallel execution.
+**Dependencies:** Task 1.1 is complete. Task 1.2 and Task 1.3 are actively unblocked.  
+**Estimated Duration:** 1–2 days.
 
 ---
 
