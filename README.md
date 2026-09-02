@@ -22,10 +22,10 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 ├── data/                       # Datasets and test matrices (raw/ and processed/ gitignored)
 │   └── README.md               # Dataset sourcing and FairFace setup instructions
 ├── dev-logs/                   # Dated developer logs & master audit walkthroughs
-├── research/                   # 20-Track Parallel Research Sprint
-│   ├── research tracks/        # Track prompts and deliverables (Tracks 01–20)
-│   ├── context feed/           # Context documents feeding research tracks
-│   └── results/                # Stream syntheses (A–F) and cross-track conflict log
+├── research/                   # Phase 1 and Phase 2 research work
+│   ├── research tracks/        # Track prompts and runner/context guides (Tracks 01–38)
+│   ├── context feed/           # Context documents feeding the original sprint
+│   └── results/                # Phase syntheses and cross-track conflict logs
 ├── scripts/                    # Dataset exploration and verification scripts
 │   ├── explore_fairface.py     # FairFace disk verification & attribute profiling
 │   └── explore_utkface.py      # UTKFace comparison & DEX noise analysis
@@ -64,10 +64,27 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 └── README.md
 ```
 
+## Research Sprints
+
+The original capstone research sprint covered Tracks 01–20 and produced the
+three-level design documents under [`docs/research/`](docs/research/). The
+follow-on **Phase-2 Product Upgrade Sprint** covers Tracks 21–38 and studies
+the evolution from a capstone CLI to a product-ready audit platform. Its
+research-only synthesis is [`research/results/synth_phase2.md`](research/results/synth_phase2.md),
+with execution guidance in
+[`research/research tracks/PHASE2_RUNNER_GUIDE.md`](research/research%20tracks/PHASE2_RUNNER_GUIDE.md)
+and the track map in
+[`research/research tracks/PHASE2_TASK_MAP.md`](research/research%20tracks/PHASE2_TASK_MAP.md).
+
+Phase 2 has 16 tracks available to claim or complete. Track 22 is parked until
+Tracks 25 and 36 land, and Track 23 is dropped pending resolution of its scope
+conflict. Phase-2 proposals remain additive and must preserve the locked M1
+schema, diagnostic-only scope, and NFR-001/002/003 statistical safeguards.
+
 ## Project Progress & Roadmap
 
 ```
-Overall Progress: [██████████████████░░] 90% (Milestones M1–M4 Completed · Inference Complete · M5 Audit/Report Active)
+Overall Progress: [██████████████████░░] 90% (Milestones M1–M4 Completed · Inference Complete · M5 Audit/Report Active; 55 tests passing)
 ```
 
 | Work Package / Milestone | Stream / Focus | Status | Progress Bar | Deliverables & Implementation State |
@@ -82,7 +99,7 @@ Overall Progress: [██████████████████░░]
 
 **Aaradhya**
 
-* [ ] Run `bias-aperture audit` on `data/processed/fairface_predictions_val.csv`.
+* [ ] Run `bias-aperture --predictions-file data/processed/fairface_predictions_val.csv --output-report report/audit_report_val.html --explain`.
 * [ ] Verify the standalone HTML report includes DPD, DIR, EOP, EOD, 95% bootstrap CIs, chi-squared p-values, sample sizes, and `n < 30` guards.
 * [ ] Finalize `report/main.pdf` with empirical tables, confidence intervals, p-values, and disparity visualizations.
 * [ ] Seal reproducible empirical claims in `docs/research/CLAIM_LEDGER.md`.

@@ -138,6 +138,7 @@ Claimed novelty per §2.4 of the feasibility study: not a new fairness metric or
 ### The Friction Problem BiasAperture Solves
 
 Existing fairness toolkits (AIF360, Fairlearn) assume tabular data and single protected attributes; vision classifiers live in a different workflow (multiple demographic axes, image-native labels, regulatory compliance). Today, a practitioner auditing a deployed face classifier must manually:
+
 1. Map FairFace's 7-race/9-age taxonomy to fairness groups without information loss (1–2 weeks).
 2. Implement subgroup-size filtering, schema alignment, and CSV→dict parsing (1 week).
 3. Map each metric row to specific EU AI Act articles and NIST RMF categories (3–5 days per jurisdiction).
@@ -174,11 +175,13 @@ The real strength of BiasAperture is not that "no one does this yet" — it's un
 **1. Dual-backend validation (AIF360 + Fairlearn in parallel)**
 
 Why industry avoids this:
+
 - Running two independent implementations looks redundant; adds maintenance cost.
 - A company ships a single toolkit that works and move on.
 - Redundancy is seen as bloat, not rigor.
 
 Why a student team should do this:
+
 - Face classifier bias is not a solved problem. Running two independent metric engines and cross-validating results is a defensible way to build confidence in the output.
 - If AIF360 and Fairlearn diverge on a metric, that's actionable intelligence about which method is more conservative for your use case — valuable for regulatory reporting.
 - This is exactly the kind of rigor engineers are trained to apply (test against multiple independent sources, don't trust a single computation without verification).
@@ -188,10 +191,12 @@ Why a student team should do this:
 **2. Per-subgroup-cell statistical completeness (n ≥ 30 minimum reporting threshold)**
 
 Why industry doesn't enforce this:
+
 - Strict minimum-cell-size rules reduce report coverage and can make a product look "incomplete" to a non-technical buyer.
 - Shipping with n=5 cells flagged as "too small" looks like a limitation.
 
 Why a student team implements it:
+
 - Statistical validity is non-negotiable for a bias audit. Reporting on n<30 violates standard statistical practice (insufficient power for reliable CI estimation).
 - This is a principle of engineering discipline — you don't report confidence intervals you can't actually support, even if it means some subgroups appear "data unavailable."
 
@@ -200,10 +205,12 @@ Why a student team implements it:
 **3. Regulatory compliance as structural, not decorative**
 
 Why industry doesn't lead with this:
+
 - EU AI Act Article 10 is recent (June 2024); most compliance approaches treat it as a post-hoc checkbox: "yes, we ran fairness metrics" → "yes, we're compliant."
 - Baking regulation into the schema (each metric row tagged with Art. 10 sub-clause) adds design overhead upfront.
 
 Why a student team centers it:
+
 - As engineers trained in standards and regulations (IOE curriculum includes regulatory frameworks), compliance is a design constraint, not a feature request.
 - BiasAperture's schema assumes regulatory mapping from the start — the output is inherently compliant, not compliant-after-export.
 
@@ -258,6 +265,7 @@ New, separate exercise conducted in a Claude chat session — unrelated to §1�
 **Source wand detail (T):** Black Walnut Wood, Dragon heartstring core, 11½" length, unyielding. Unicorn patronus ("Rare and Mysterious").
 
 **Underlying trait logic** (de-lored, personality/working-style only):
+
 - **A**: consistent/low-fluctuation output under varying conditions; high adaptability; steady under change.
 - **T**: high-power precision execution; intolerant of unverified/overstated claims; strong at detail-dense rigorous work.
 

@@ -81,9 +81,9 @@ The repository is now positioned at the post-inference stage, with the next acti
 
 ```powershell
 # Run BiasAperture audit on predictions CSV
-uv run python -m bias_aperture.cli audit \
-  --predictions data/processed/fairface_predictions_val.csv \
-  --output report/audit_report_val.html \
+uv run python -m bias_aperture.cli \
+  --predictions-file data/processed/fairface_predictions_val.csv \
+  --output-report report/audit_report_val.html \
   --explain
 ```
 

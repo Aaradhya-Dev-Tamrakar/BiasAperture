@@ -1,4 +1,4 @@
-# Cross-Track Conflict & Discrepancy Log — BiasAperture 20-Track Research Sprint
+# Phase-1 Cross-Track Conflict & Discrepancy Log — BiasAperture Tracks 01–20
 
 Every conflict, discrepancy, and unresolved cross-track dependency found across Tracks 01–20. Nothing here is resolved — each item names the tracks that raised it and who needs to make the call. Ordered roughly by blocking severity.
 

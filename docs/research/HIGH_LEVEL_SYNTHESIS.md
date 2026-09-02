@@ -3,7 +3,7 @@
 **Target Audience:** Project Leads, Fellowship Supervisors, Technical Assessors, Viva Defense Panel  
 **Document Level:** High-Level (Executive, Novelty Defense, Regulatory Mapping & Strategic Overview)  
 **Date:** August 2026  
-**Context:** Milestone M1 Completion & 20-Track Parallel Research Sprint
+**Context:** Phase 1 capstone synthesis; Phase 2 product-upgrade research is tracked separately
 
 ---
 
@@ -62,7 +62,7 @@ BiasAperture is structured into five cohesive work packages (WPs) operating unde
 
 ---
 
-## 3. The 20-Track Research Sprint: Key Findings
+## 3. Phase 1: The 20-Track Research Sprint: Key Findings
 
 To completely de-risk implementation, a comprehensive 20-track parallel research sprint was executed across 6 thematic streams:
 
@@ -74,6 +74,26 @@ To completely de-risk implementation, a comprehensive 20-track parallel research
 | **Stream D** | Explainability | 15–16 | • Selected `PartitionExplainer` as black-box default and `GradientExplainer` for live PyTorch models.<br>• Designed dual-signal proxy detection combining spatial SHAP shift with Individual Typology Angle (ITA) skin-tone colorimetry.<br>• Grounded limitations in Bilodeau et al. (2022) impossibility results. |
 | **Stream E** | Architecture | 17–18 | • Formulated `FairnessBackend` Strategy pattern and `CrossValidationOrchestrator`.<br>• Built shared sample-size logic in `base.py` to prevent false backend divergence.<br>• Engineered known-answer 8-record test suite and Hypothesis property tests. |
 | **Stream F** | Defense | 19–20 | • Mapped platform directly to NIST AI RMF **Measure** function (2.11, 2.3, 1.1).<br>• Executed competitive audit against 7 industry tools confirming unique positioning. |
+
+## 3.1. Phase 2: Product Upgrade Sprint (Tracks 21–38)
+
+Phase 2 is a separate, research-only product-evolution sprint. Its synthesis is
+maintained in [`research/results/synth_phase2.md`](../../research/results/synth_phase2.md)
+and covers five streams: novelty and differentiation (G), UI/UX (H), modular
+architecture (I), deployment and operations (J), and business/regulatory
+expansion (K).
+
+Sixteen tracks are open or complete in the merged synthesis. Track 22 is parked
+pending Tracks 25 and 36; Track 23 is dropped because of an unresolved scope
+conflict with the cross-modal schema proposal. The highest-confidence near-term
+direction is additive: prototype the metric registry and model adapters, build a
+lean engine container, and keep dashboard/API, governance, licensing, and
+regulatory decisions behind explicit owner sign-off.
+
+Phase-2 proposals must preserve the locked M1 schema, diagnostic-only scope,
+the $n \ge 30$ sample guard, $B \ge 1{,}000$ bootstrap resamples, and
+$\alpha=0.05$ significance testing. No Phase-2 track authorizes retraining,
+debiasing, synthetic data generation, or weakening those statistical safeguards.
 
 ---
 
@@ -114,7 +134,7 @@ The novelty of BiasAperture lies not in reinventing individual mathematical equa
 1. **CV-Native Demographic Pipeline**: Ingests raw multi-output predictions and aligns them directly into a 7-race, 2-gender, 9-age schema without manual tabular wrangling.
 2. **Heterogeneous Implementation Cross-Validation**: Executes computations across two independent library backends (Fairlearn & AIF360) to catch library-specific bugs, numerical edge cases, and API discrepancies.
 3. **Hard Statistical Invariants & Adequacy Guards**: Enforces $n \ge 30$ minimum screening guards alongside positive/negative class support checks and 95% BCa Bootstrap CIs.
-4. **Targeted Explainability (Proxy Evidence Analysis)**: Automatically triggers SHAP and ITA skin-tone analysis *only* on rows that exhibit statistically verified bias ($p < 0.05, n \ge 30$).
+4. **Targeted Explainability (Proxy Evidence Analysis)**: The current implementation uses demographic-dummy surrogate attribution; spatial SHAP and ITA skin-tone analysis remain a deferred design question.
 5. **Direct Regulatory Provenance**: Maps each technical finding to EU AI Act Article 10 sub-clauses and NIST AI RMF Measure subcategories.
 
 ---
@@ -139,7 +159,7 @@ BiasAperture instruments the **Measure** core function:
 - **Measure 2.11**: Fairness and bias are evaluated, quantified, and documented.
 - **Measure 1.1**: Risks that cannot be reliably quantified are documented rather than ignored (*the exact structural role of `insufficient_sample=True, metric_value=None`*).
 - **Measure 1.3**: Rigorous assessment participation (*noting Measure 1.3 concerns independent personnel involvement, while BiasAperture provides heterogeneous dual-library implementation cross-checking*).
-- **Measure 2.9**: Explainability and interpretability metrics (*realized via targeted SHAP pixel attributions and ITA skin colorimetry*).
+- **Measure 2.9**: Explainability and interpretability evidence (*currently realized through surrogate attribution; spatial SHAP and ITA are not yet implemented*).
 
 ---
 
@@ -171,8 +191,8 @@ In academic evaluation and technical auditing, we maintain an explicit distincti
 
 - **Research & Design Specification**: **Complete (100%)** — All mathematical harmonizations, backend strategies, and schema contracts are locked.
 - **Empirical Verification & Implementation**: **Largely Complete (90%)** — Formally tracked in [`docs/research/CLAIM_LEDGER.md`](file:///c:/Users/Aaradhya/Downloads/_Organized/Fuse%20AI%20Fellowship/Capstone%20Project/BiasAperture/docs/research/CLAIM_LEDGER.md) across 20 claims (10 codified in passing automated tests, 10 verified via primary sources, external datasets, and REPL probes).
-- **Implementation**: **Operational (54/54 tests passing)** — Core schema, model interfaces, data ingestion pipeline, dual fairness backends (`FairlearnBackend`, `AIF360Backend`), statistical confidence resampler (BCa bootstrap), standalone Jinja2 HTML compliance report compiler, and CLI orchestrator are fully implemented and verified.
-- **End-to-End Validation**: **Planned (WP5)** — Execution of the complete 97,698-image FairFace benchmark audit.
+- **Implementation**: **Operational (55/55 tests passing)** — Core schema, model interfaces, data ingestion pipeline, dual fairness backends (`FairlearnBackend`, `AIF360Backend`), statistical confidence resampler (BCa bootstrap), standalone Jinja2 HTML compliance report compiler, and CLI orchestrator are fully implemented and verified.
+- **End-to-End Validation**: **In progress (WP5)** — validation inference is complete for 10,954/10,954 FairFace validation images; audit report generation and review remain.
 
 > **Methodology Chapter Formulation:**  
 > *"BiasAperture employed parallel AI-assisted reconnaissance to accelerate source exploration and hypothesis generation; all consequential technical claims were subsequently organized into an auditable claim ledger and subjected to primary-source inspection, isolated empirical probing, known-answer validation, and reproducibility testing before implementation."*
@@ -185,13 +205,13 @@ Overall Progress: [██████████████████░░]
 ├── WP2: Data Ingestion & Test Matrix (100% - COMPLETED, 17/17 tests passing)
 ├── WP3: Compliance Reporting (100% - COMPLETED, standalone offline HTML generator verified)
 ├── WP4: Fairness Engine & Explainability (100% - COMPLETED, dual-backend & bootstrap verified)
-└── WP5: Integration & CLI (80% - COMPLETED, CLI orchestrator operational)
+└── WP5: Integration & CLI (90% - IN PROGRESS, validation inference complete)
 ```
 
-With the core diagnostic pipeline implemented and tested across 54 unit and integration tests, final work focuses on:
+With the core diagnostic pipeline implemented and tested across 55 unit and integration tests, final work focuses on:
 
 1. ✅ `bias_aperture/data_ingestion.py` complete with validation modes & OvR transformer (Stream A complete).
 2. ✅ `bias_aperture/report/generator.py` and Jinja2 HTML templates complete with zero-network offline guarantee (Stream B complete).
 3. ✅ `bias_aperture/fairness/` backends, statistical engines (BCa bootstrap, χ² FWER), and explainability module complete (WP4 complete).
 4. ✅ `bias_aperture/cli.py` entrypoint wired and tested (WP5).
-5. Conduct full-dataset benchmark execution on the complete 97,698-image FairFace benchmark.
+5. Generate and review the audit report from `data/processed/fairface_predictions_val.csv`, then finalize the empirical tables in `report/main.pdf`.

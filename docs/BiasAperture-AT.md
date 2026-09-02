@@ -7,7 +7,7 @@ Fuse Capstone Project — BiasAperture (Fairness & Bias Audit)
 **Supervisor:** Shreejan Kisee
 **Program:** Fusemachines AI Fellowship (AIF) 2026
 
-**Status:** Feasibility study reviewed (accurate) · Parallel work structure defined · Named ownership assigned (§16, §17) · Novelty check completed (§12) · SHAP explainability layer added (§3) · Proposal report (main.pdf) cross-validated against full source set, zero contradictions (§13) · Repo restructured with docs/ + sync.ps1, literature review matrix built (§15) · Packaging & Ruff standards configured · Master Task Division & 4-Week Sprint Roadmap formalised (§18)
+**Status:** Feasibility study reviewed (accurate) · Parallel work structure defined · Named ownership assigned (§16, §17) · Novelty check completed (§12) · Explainability layer documented (§3) · Proposal report (main.pdf) cross-validated against full source set, zero contradictions (§13) · Repo restructured with docs/ + sync.ps1, literature review matrix built (§15) · Packaging & Ruff standards configured · Master Task Division & 4-Week Sprint Roadmap formalised (§18) · Phase-2 Product Upgrade Sprint synthesized (§20)
 
 ---
 
@@ -412,6 +412,21 @@ The project is therefore the largest single assessment category, but the screens
 does not specify how the project component itself is divided between proposal defense,
 implementation, report, presentation, and final demonstration. This internal project
 breakdown should be confirmed with the TA.
+
+## §20. Phase-2 Product Upgrade Sprint (September 2, 2026)
+
+Phase 2 is a new, research-only sprint covering Tracks 21–38. The merged
+conclusions are recorded in
+[`research/results/synth_phase2.md`](../research/results/synth_phase2.md), with
+execution status and dependencies in
+[`research/research tracks/PHASE2_RUNNER_GUIDE.md`](../research/research%20tracks/PHASE2_RUNNER_GUIDE.md).
+
+The sprint is additive to the capstone and does not reopen the diagnostic-only
+boundary or the M1 schema/statistical locks. Sixteen tracks are open or complete
+in the synthesis; Track 22 is parked pending Tracks 25 and 36, while Track 23 is
+dropped pending resolution of its cross-modal scope conflict. Product work must
+wait for the explicit decisions listed in the synthesis, especially the shared
+dashboard semantics, regulatory-map shape, NFR bounds, and licensing mechanism.
 
 ---
 

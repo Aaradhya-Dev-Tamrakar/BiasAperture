@@ -3,7 +3,7 @@
 **Target Audience:** Lead Software Engineers, Machine Learning Engineers, Code Reviewers  
 **Document Level:** Mid-Level (System Architecture, Component Interactions, Strategy Patterns & Contracts)  
 **Date:** August 2026  
-**Context:** Milestone M1 Completion & 20-Track Parallel Research Sprint
+**Context:** Phase 1 capstone architecture; Phase 2 product-upgrade research is tracked separately
 
 ---
 

@@ -3,7 +3,7 @@
 **Target Audience:** Core Developers, Mathematical Implementers, Statistical Auditors  
 **Document Level:** Low-Level (Mathematical Formulations, Exact Algorithms, Tensor Slicing & Code Specs)  
 **Date:** August 2026  
-**Context:** Milestone M1 Completion & 20-Track Parallel Research Sprint
+**Context:** Phase 1 capstone specification; Phase 2 product-upgrade research is tracked separately
 
 ---
 

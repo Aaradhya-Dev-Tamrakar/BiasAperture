@@ -1,98 +1,149 @@
 {
   "communities": {
     "0": [
-      "research_mid_level_architecture_2_1_module_1_ingestion_invariant_validation_data_ingestion_py_model_interface_py",
-      "research_mid_level_architecture_2_2_module_2_fairness_strategy_engine_bias_aperture_fairness",
-      "research_mid_level_architecture_2_3_module_3_statistical_rigor_engine_fairness_statistics_py",
-      "research_mid_level_architecture_2_4_module_4_targeted_explainability_proxy_detection_explainability_py",
-      "research_mid_level_architecture_2_5_module_5_compliance_report_generation_report",
-      "research_mid_level_architecture_2_component_design_interfacing",
-      "research_mid_level_architecture_ingestion_contracts_patterns",
-      "research_mid_level_architecture_shared_base_architecture_fairness_base_py",
-      "research_mid_level_architecture_two_mode_validation_engine"
+      "src_bias_aperture_fairness_backends",
+      "src_bias_aperture_fairness_backends_aif360backend",
+      "src_bias_aperture_fairness_backends_aif360backend_evaluate_core_four",
+      "src_bias_aperture_fairness_backends_aif360backend_name",
+      "src_bias_aperture_fairness_backends_crossvalidationorchestrator",
+      "src_bias_aperture_fairness_backends_crossvalidationorchestrator_init",
+      "src_bias_aperture_fairness_backends_crossvalidationorchestrator_run",
+      "src_bias_aperture_fairness_backends_divergencealert",
+      "src_bias_aperture_fairness_backends_fairlearnbackend",
+      "src_bias_aperture_fairness_backends_fairlearnbackend_evaluate_core_four",
+      "src_bias_aperture_fairness_backends_fairlearnbackend_name",
+      "src_bias_aperture_fairness_backends_py_metricresult",
+      "src_bias_aperture_fairness_backends_py_ndarray",
+      "src_bias_aperture_fairness_backends_rationale_1",
+      "src_bias_aperture_fairness_backends_rationale_458",
+      "src_bias_aperture_fairness_backends_rationale_47",
+      "src_bias_aperture_fairness_backends_rationale_476",
+      "src_bias_aperture_fairness_backends_rationale_60",
+      "src_bias_aperture_fairness_backends_rationale_953",
+      "src_bias_aperture_fairness_backends_rationale_966",
+      "src_bias_aperture_fairness_backends_rationale_989",
+      "src_bias_aperture_fairness_base",
+      "src_bias_aperture_fairness_base_eligibilityreport",
+      "src_bias_aperture_fairness_base_eligible_groups",
+      "src_bias_aperture_fairness_base_fairnessbackend",
+      "src_bias_aperture_fairness_base_fairnessbackend_evaluate",
+      "src_bias_aperture_fairness_base_fairnessbackend_evaluate_core_four",
+      "src_bias_aperture_fairness_base_fairnessbackend_name",
+      "src_bias_aperture_fairness_base_py_metricresult",
+      "src_bias_aperture_fairness_base_py_ndarray",
+      "src_bias_aperture_fairness_base_py_subjectrecord",
+      "src_bias_aperture_fairness_base_rationale_1",
+      "src_bias_aperture_fairness_base_rationale_117",
+      "src_bias_aperture_fairness_base_rationale_168",
+      "src_bias_aperture_fairness_base_rationale_206",
+      "src_bias_aperture_fairness_base_rationale_216",
+      "src_bias_aperture_fairness_base_rationale_226",
+      "src_bias_aperture_fairness_base_rationale_255",
+      "src_bias_aperture_fairness_base_rationale_33",
+      "src_bias_aperture_fairness_base_rationale_71",
+      "src_bias_aperture_fairness_base_screen_numeric_groups",
+      "src_bias_aperture_fairness_base_screen_subgroups",
+      "src_bias_aperture_fairness_init",
+      "src_bias_aperture_fairness_init_rationale_1",
+      "src_bias_aperture_fairness_metrics",
+      "src_bias_aperture_fairness_metrics_compute_group_rates",
+      "src_bias_aperture_fairness_metrics_demographic_parity_difference",
+      "src_bias_aperture_fairness_metrics_equal_opportunity_difference",
+      "src_bias_aperture_fairness_metrics_equalized_odds_difference",
+      "src_bias_aperture_fairness_metrics_py_ndarray",
+      "src_bias_aperture_fairness_metrics_rationale_1",
+      "src_bias_aperture_fairness_metrics_rationale_111",
+      "src_bias_aperture_fairness_metrics_rationale_155",
+      "src_bias_aperture_fairness_metrics_rationale_25",
+      "src_bias_aperture_fairness_metrics_rationale_55",
+      "src_bias_aperture_fairness_metrics_rationale_87",
+      "src_bias_aperture_fairness_metrics_symmetric_disparate_impact_ratio",
+      "src_bias_aperture_fairness_statistics",
+      "src_bias_aperture_fairness_statistics_compute_contingency_chi2",
+      "src_bias_aperture_fairness_statistics_compute_stratified_bootstrap_ci",
+      "src_bias_aperture_fairness_statistics_holm_bonferroni_correction",
+      "src_bias_aperture_fairness_statistics_py_ndarray",
+      "src_bias_aperture_fairness_statistics_rationale_1",
+      "src_bias_aperture_fairness_statistics_rationale_140",
+      "src_bias_aperture_fairness_statistics_rationale_34",
+      "src_bias_aperture_fairness_statistics_rationale_91",
+      "src_tests_test_fairness_backends",
+      "src_tests_test_fairness_backends_rationale_1",
+      "src_tests_test_fairness_backends_test_fairlearn_and_aif360_backends_on_replicated_matrix",
+      "src_tests_test_fairness_backends_test_subgroup_sample_size_guard_in_backend",
+      "src_tests_test_fairness_metrics",
+      "src_tests_test_fairness_metrics_rationale_1",
+      "src_tests_test_fairness_metrics_test_compute_group_rates",
+      "src_tests_test_fairness_metrics_test_dpd_calculation",
+      "src_tests_test_fairness_metrics_test_eod_calculation",
+      "src_tests_test_fairness_metrics_test_eop_calculation",
+      "src_tests_test_fairness_metrics_test_symmetric_dir",
+      "src_tests_test_fairness_statistics",
+      "src_tests_test_fairness_statistics_rationale_1",
+      "src_tests_test_fairness_statistics_test_bootstrap_ci_coverage",
+      "src_tests_test_fairness_statistics_test_contingency_chi2",
+      "src_tests_test_fairness_statistics_test_holm_bonferroni_correction"
     ],
     "1": [
-      "argumentparser",
-      "src_bias_aperture_cli_build_parser",
-      "src_bias_aperture_cli_main",
-      "src_bias_aperture_cli_rationale_24",
-      "src_bias_aperture_report_generator",
-      "src_bias_aperture_report_generator_htmlreportgenerator",
-      "src_bias_aperture_report_generator_htmlreportgenerator_generate",
-      "src_bias_aperture_report_generator_htmlreportgenerator_init",
-      "src_bias_aperture_report_generator_htmlreportgenerator_prepare_template_context",
-      "src_bias_aperture_report_generator_htmlreportgenerator_save",
-      "src_bias_aperture_report_generator_py_any",
-      "src_bias_aperture_report_generator_py_path",
-      "src_bias_aperture_report_generator_rationale_1",
-      "src_bias_aperture_report_generator_rationale_105",
-      "src_bias_aperture_report_generator_rationale_122",
-      "src_bias_aperture_report_generator_rationale_33",
-      "src_bias_aperture_report_generator_rationale_55",
-      "src_bias_aperture_report_generator_rationale_67",
-      "src_bias_aperture_report_generator_reportcontext",
-      "src_bias_aperture_report_init",
-      "src_bias_aperture_report_init_rationale_1",
-      "src_tests_test_cli",
-      "src_tests_test_cli_py_path",
-      "src_tests_test_cli_rationale_1",
-      "src_tests_test_cli_test_cli_end_to_end_execution",
-      "src_tests_test_cli_test_cli_parser_defaults",
-      "src_tests_test_offline_report_contract",
-      "src_tests_test_offline_report_contract_rationale_1",
-      "src_tests_test_offline_report_contract_rationale_15",
-      "src_tests_test_offline_report_contract_rationale_38",
-      "src_tests_test_offline_report_contract_rationale_77",
-      "src_tests_test_offline_report_contract_test_offline_html_contract_catches_violations",
-      "src_tests_test_offline_report_contract_test_offline_html_contract_validation",
-      "src_tests_test_offline_report_contract_verify_offline_html_contract",
-      "src_tests_test_report_generator",
-      "src_tests_test_report_generator_py_metricresult",
-      "src_tests_test_report_generator_py_path",
-      "src_tests_test_report_generator_rationale_1",
-      "src_tests_test_report_generator_test_html_report_generator_offline_compliance"
+      "research_context_feed_schema_metricresult",
+      "research_context_feed_schema_rationale_109",
+      "src_bias_aperture_explainability",
+      "src_bias_aperture_explainability_compute_ita",
+      "src_bias_aperture_explainability_explanationresult",
+      "src_bias_aperture_explainability_py_metricresult",
+      "src_bias_aperture_explainability_py_path",
+      "src_bias_aperture_explainability_py_subjectrecord",
+      "src_bias_aperture_explainability_rationale_1",
+      "src_bias_aperture_explainability_rationale_114",
+      "src_bias_aperture_explainability_rationale_181",
+      "src_bias_aperture_explainability_rationale_39",
+      "src_bias_aperture_explainability_rationale_51",
+      "src_bias_aperture_explainability_rationale_57",
+      "src_bias_aperture_explainability_rationale_72",
+      "src_bias_aperture_explainability_shapexplainerengine",
+      "src_bias_aperture_explainability_shapexplainerengine_explain_disparity",
+      "src_bias_aperture_explainability_shapexplainerengine_explain_surrogate",
+      "src_bias_aperture_explainability_shapexplainerengine_init",
+      "src_bias_aperture_explainability_shapexplainerengine_should_explain",
+      "src_bias_aperture_schema",
+      "src_bias_aperture_schema_metricresult",
+      "src_bias_aperture_schema_rationale_1",
+      "src_bias_aperture_schema_rationale_110",
+      "src_bias_aperture_schema_rationale_84",
+      "src_bias_aperture_schema_subjectrecord",
+      "src_tests_conftest",
+      "src_tests_conftest_mock_core_four_results",
+      "src_tests_conftest_py_fixture",
+      "src_tests_conftest_py_metricresult",
+      "src_tests_conftest_py_subjectrecord",
+      "src_tests_conftest_rationale_1",
+      "src_tests_conftest_rationale_10",
+      "src_tests_conftest_rationale_73",
+      "src_tests_conftest_sample_subject_records",
+      "src_tests_test_explainability",
+      "src_tests_test_explainability_rationale_1",
+      "src_tests_test_explainability_test_compute_ita",
+      "src_tests_test_explainability_test_shap_explainer_selective_triggering",
+      "src_tests_test_explainability_test_shap_surrogate_attribution_on_records",
+      "src_tests_test_known_answer_fairness_metrics",
+      "src_tests_test_known_answer_fairness_metrics_compute_known_answer_rates",
+      "src_tests_test_known_answer_fairness_metrics_py_subjectrecord",
+      "src_tests_test_known_answer_fairness_metrics_rationale_1",
+      "src_tests_test_known_answer_fairness_metrics_rationale_113",
+      "src_tests_test_known_answer_fairness_metrics_rationale_27",
+      "src_tests_test_known_answer_fairness_metrics_rationale_63",
+      "src_tests_test_known_answer_fairness_metrics_test_known_answer_8_record_baseline_math",
+      "src_tests_test_known_answer_fairness_metrics_test_known_answer_replicated_n64_gated_execution",
+      "src_tests_test_schema",
+      "src_tests_test_schema_test_boundary_sample_size_exactly_min_does_not_require_flag",
+      "src_tests_test_schema_test_label_vocabulary_sizes",
+      "src_tests_test_schema_test_metric_result_valid_row",
+      "src_tests_test_schema_test_nfr003_correct_flagged_row",
+      "src_tests_test_schema_test_nfr003_flagged_row_with_metric_value_raises",
+      "src_tests_test_schema_test_nfr003_small_sample_without_flag_raises",
+      "src_tests_test_schema_test_subject_record_construction"
     ],
     "2": [
-      "docs_proposal_defense_guide_1_defense_format_strategy",
-      "docs_proposal_defense_guide_3_slide_by_slide_script_talking_points",
-      "docs_proposal_defense_guide_4_the_novelty_question_your_most_important_defense",
-      "docs_proposal_defense_guide_5_anticipated_hard_questions_scripted_answers_32_questions",
-      "docs_proposal_defense_guide_6_traps_to_avoid",
-      "docs_proposal_defense_guide_7_numbers_you_must_know_cold",
-      "docs_proposal_defense_guide_8_mock_grilling_checklist",
-      "docs_proposal_defense_guide_architecture_slide_9_the_pipeline",
-      "docs_proposal_defense_guide_biasaperture_proposal_defense_preparation_guide",
-      "docs_proposal_defense_guide_category_a_scope_novelty",
-      "docs_proposal_defense_guide_category_b_statistical_rigor_methodology",
-      "docs_proposal_defense_guide_category_c_datasets_preprocessing",
-      "docs_proposal_defense_guide_category_d_architecture_implementation",
-      "docs_proposal_defense_guide_category_e_regulatory_alignment_ethics",
-      "docs_proposal_defense_guide_category_f_feasibility_reliability_risk",
-      "docs_proposal_defense_guide_category_g_research_integrity_project_status",
-      "docs_proposal_defense_guide_descoping_slide_17_feasibility_and_risk_planning",
-      "docs_proposal_defense_guide_harmonization_slide_11_engineering_novelty_in_practice",
-      "docs_proposal_defense_guide_opening_slide_2_the_hook",
-      "docs_proposal_defense_guide_presentation_time_budget",
-      "docs_proposal_defense_guide_problem_statement_regulatory_context_slides_3_4",
-      "docs_proposal_defense_guide_round_1_foundations_scope_5_min",
-      "docs_proposal_defense_guide_round_2_technical_statistical_depth_10_min",
-      "docs_proposal_defense_guide_round_3_novelty_integration_defense_5_min",
-      "docs_proposal_defense_guide_round_4_feasibility_risks_roadmap_5_min",
-      "docs_proposal_defense_guide_round_5_rapid_fire_metrics_constants_3_min",
-      "docs_proposal_defense_guide_statistical_safeguards_slide_12_inferential_credibility",
-      "docs_proposal_defense_guide_table_of_contents",
-      "docs_proposal_defense_guide_the_5_step_defense_framework",
-      "docs_proposal_defense_guide_trap_1_overclaiming_novelty",
-      "docs_proposal_defense_guide_trap_2_oversimplifying_the_engineering_effort",
-      "docs_proposal_defense_guide_trap_3_claiming_causal_explanations",
-      "docs_proposal_defense_guide_trap_4_overstating_regulatory_certification",
-      "docs_proposal_defense_guide_trap_5_misrepresenting_project_phase",
-      "docs_proposal_defense_guide_trap_6_misattributing_sample_size_invariants",
-      "docs_proposal_defense_guide_what_a_proposal_defense_is",
-      "docs_proposal_defense_guide_what_not_to_say",
-      "docs_proposal_defense_guide_your_strategic_advantage"
-    ],
-    "3": [
       "context_feed_runner_guide",
       "context_feed_runner_guide_after_all_20_complete",
       "context_feed_runner_guide_checklist",
@@ -129,7 +180,7 @@
       "stream_d_synthesis",
       "stream_e_synthesis"
     ],
-    "4": [
+    "3": [
       "docs_biasaperture_at_16_coming_week_task_assignment_trait_based_split_august_20_2026",
       "docs_biasaperture_at_17_research_verification_feature_branch_allocation_august_23_2026",
       "docs_biasaperture_at_18_master_task_division_4_week_sprint_roadmap_implementation_phase_august_2026",
@@ -165,87 +216,101 @@
       "docs_biasaperture_at_work_distribution_logic",
       "docs_biasaperture_at_work_structure_restructured_for_concurrency"
     ],
+    "4": [
+      "argumentparser",
+      "src_bias_aperture_cli",
+      "src_bias_aperture_cli_build_parser",
+      "src_bias_aperture_cli_main",
+      "src_bias_aperture_cli_rationale_1",
+      "src_bias_aperture_cli_rationale_24",
+      "src_bias_aperture_report_generator",
+      "src_bias_aperture_report_generator_htmlreportgenerator",
+      "src_bias_aperture_report_generator_htmlreportgenerator_generate",
+      "src_bias_aperture_report_generator_htmlreportgenerator_init",
+      "src_bias_aperture_report_generator_htmlreportgenerator_prepare_template_context",
+      "src_bias_aperture_report_generator_htmlreportgenerator_save",
+      "src_bias_aperture_report_generator_py_any",
+      "src_bias_aperture_report_generator_py_path",
+      "src_bias_aperture_report_generator_rationale_1",
+      "src_bias_aperture_report_generator_rationale_189",
+      "src_bias_aperture_report_generator_rationale_206",
+      "src_bias_aperture_report_generator_rationale_33",
+      "src_bias_aperture_report_generator_rationale_55",
+      "src_bias_aperture_report_generator_rationale_67",
+      "src_bias_aperture_report_generator_reportcontext",
+      "src_bias_aperture_report_init",
+      "src_bias_aperture_report_init_rationale_1",
+      "src_tests_test_cli",
+      "src_tests_test_cli_py_path",
+      "src_tests_test_cli_rationale_1",
+      "src_tests_test_cli_test_cli_end_to_end_execution",
+      "src_tests_test_cli_test_cli_parser_defaults",
+      "src_tests_test_report_generator",
+      "src_tests_test_report_generator_py_metricresult",
+      "src_tests_test_report_generator_py_path",
+      "src_tests_test_report_generator_rationale_1",
+      "src_tests_test_report_generator_test_html_report_generator_offline_compliance"
+    ],
     "5": [
+      "docs_pre_proposal_reading_guide",
       "docs_pre_proposal_reading_guide_10_passing_audit_semantics",
       "docs_pre_proposal_reading_guide_11_regulatory_alignment",
       "docs_pre_proposal_reading_guide_12_scope_boundary",
+      "docs_pre_proposal_reading_guide_1_buolamwini_gebru_2018_gender_shades_intersectional_accuracy_disparities_in_commercial_gender_classification",
       "docs_pre_proposal_reading_guide_1_problem_intersectional_masking",
+      "docs_pre_proposal_reading_guide_1_the_core_reasoning_chain",
       "docs_pre_proposal_reading_guide_2_fairness_metrics_hierarchy",
+      "docs_pre_proposal_reading_guide_2_k\u00e4rkk\u00e4inen_joo_2021_fairface_face_attribute_dataset_for_balanced_race_gender_and_age",
+      "docs_pre_proposal_reading_guide_2_the_4_layer_conceptual_reading_matrix",
+      "docs_pre_proposal_reading_guide_3_hardt_price_srebro_2016_equality_of_opportunity_in_supervised_learning",
       "docs_pre_proposal_reading_guide_3_multi_class_one_vs_rest_ovr_policy",
       "docs_pre_proposal_reading_guide_3_the_12_master_first_principles_questions",
       "docs_pre_proposal_reading_guide_4_effect_size_interpretation",
+      "docs_pre_proposal_reading_guide_4_mental_hierarchy_meaning_to_justification_to_limitation_to_number",
+      "docs_pre_proposal_reading_guide_4_watkins_mckenna_chen_2022_the_four_fifths_rule_is_not_disparate_impact",
+      "docs_pre_proposal_reading_guide_5_efron_1987_better_bootstrap_confidence_intervals_bca",
       "docs_pre_proposal_reading_guide_5_sample_size_screening_invariant",
+      "docs_pre_proposal_reading_guide_6_bilodeau_et_al_2022_impossibility_theorems_for_feature_attribution",
       "docs_pre_proposal_reading_guide_6_bootstrap_estimand_mechanics",
+      "docs_pre_proposal_reading_guide_7_dehdashtian_wang_boddeti_2024_fairness_and_bias_mitigation_in_computer_vision_a_survey",
       "docs_pre_proposal_reading_guide_7_explainability_limits",
+      "docs_pre_proposal_reading_guide_8_9_mitchell_et_al_2019_model_cards_gebru_et_al_2018_datasheets",
       "docs_pre_proposal_reading_guide_8_backend_harmonization",
-      "docs_pre_proposal_reading_guide_9_defensible_novelty"
+      "docs_pre_proposal_reading_guide_9_defensible_novelty",
+      "docs_pre_proposal_reading_guide_biasaperture_pre_proposal_defense_reading_guide",
+      "docs_pre_proposal_reading_guide_layer_1_problem_benchmark_data",
+      "docs_pre_proposal_reading_guide_layer_2_fairness_mathematics_effect_size_metrics",
+      "docs_pre_proposal_reading_guide_layer_3_statistical_inference_explainability_bounds",
+      "docs_pre_proposal_reading_guide_layer_4_ecosystem_context_reporting_philosophy"
     ],
     "6": [
-      "src_bias_aperture_fairness_backends",
-      "src_bias_aperture_fairness_backends_aif360backend",
-      "src_bias_aperture_fairness_backends_aif360backend_name",
-      "src_bias_aperture_fairness_backends_crossvalidationorchestrator",
-      "src_bias_aperture_fairness_backends_crossvalidationorchestrator_init",
-      "src_bias_aperture_fairness_backends_fairlearnbackend",
-      "src_bias_aperture_fairness_backends_fairlearnbackend_name",
-      "src_bias_aperture_fairness_backends_rationale_1",
-      "src_bias_aperture_fairness_backends_rationale_458",
-      "src_bias_aperture_fairness_backends_rationale_47",
-      "src_bias_aperture_fairness_backends_rationale_966",
-      "src_bias_aperture_fairness_base_fairnessbackend",
-      "src_bias_aperture_fairness_base_fairnessbackend_name",
-      "src_bias_aperture_fairness_base_rationale_206",
-      "src_bias_aperture_fairness_base_rationale_216",
-      "src_bias_aperture_schema",
-      "src_bias_aperture_schema_rationale_1",
-      "src_bias_aperture_schema_rationale_84",
-      "src_bias_aperture_schema_subjectrecord",
-      "src_tests_conftest",
-      "src_tests_conftest_rationale_1",
-      "src_tests_test_fairness_backends",
-      "src_tests_test_fairness_backends_rationale_1",
-      "src_tests_test_fairness_backends_test_fairlearn_and_aif360_backends_on_replicated_matrix",
-      "src_tests_test_fairness_backends_test_subgroup_sample_size_guard_in_backend"
+      "src_bias_aperture_data_ingestion_dataingestionpipeline",
+      "src_bias_aperture_data_ingestion_dataingestionpipeline_init",
+      "src_bias_aperture_data_ingestion_ingestionconfig",
+      "src_bias_aperture_data_ingestion_rationale_139",
+      "src_bias_aperture_data_ingestion_rationale_163",
+      "src_bias_aperture_data_ingestion_rationale_54",
+      "src_bias_aperture_data_ingestion_rationale_62",
+      "src_bias_aperture_data_ingestion_schemavalidationerror",
+      "src_bias_aperture_data_ingestion_validationmode",
+      "src_tests_test_data_ingestion",
+      "src_tests_test_data_ingestion_test_deduplicate_strategy_drop_duplicates",
+      "src_tests_test_data_ingestion_test_empty_dataset_handling",
+      "src_tests_test_data_ingestion_test_exact_and_conflicting_duplicates",
+      "src_tests_test_data_ingestion_test_file_not_found",
+      "src_tests_test_data_ingestion_test_image_column_alias_resolution",
+      "src_tests_test_data_ingestion_test_invalid_age_label_strict_mode",
+      "src_tests_test_data_ingestion_test_invalid_demographic_taxonomy_permissive_mode",
+      "src_tests_test_data_ingestion_test_invalid_demographic_taxonomy_strict_mode",
+      "src_tests_test_data_ingestion_test_invalid_gender_label_strict_mode",
+      "src_tests_test_data_ingestion_test_json_ingestion_happy_path",
+      "src_tests_test_data_ingestion_test_missing_column_permissive_mode_records_issues",
+      "src_tests_test_data_ingestion_test_missing_column_strict_mode_raises",
+      "src_tests_test_data_ingestion_test_null_and_nan_handling",
+      "src_tests_test_data_ingestion_test_strict_ingestion_happy_path",
+      "src_tests_test_data_ingestion_test_unsupported_extension"
     ],
     "7": [
-      "src_bias_aperture_fairness_backends_aif360backend_evaluate_core_four",
-      "src_bias_aperture_fairness_backends_fairlearnbackend_evaluate_core_four",
-      "src_bias_aperture_fairness_backends_py_ndarray",
-      "src_bias_aperture_fairness_backends_rationale_476",
-      "src_bias_aperture_fairness_backends_rationale_60",
-      "src_bias_aperture_fairness_metrics",
-      "src_bias_aperture_fairness_metrics_compute_group_rates",
-      "src_bias_aperture_fairness_metrics_demographic_parity_difference",
-      "src_bias_aperture_fairness_metrics_equal_opportunity_difference",
-      "src_bias_aperture_fairness_metrics_equalized_odds_difference",
-      "src_bias_aperture_fairness_metrics_py_ndarray",
-      "src_bias_aperture_fairness_metrics_rationale_1",
-      "src_bias_aperture_fairness_metrics_rationale_111",
-      "src_bias_aperture_fairness_metrics_rationale_155",
-      "src_bias_aperture_fairness_metrics_rationale_25",
-      "src_bias_aperture_fairness_metrics_rationale_55",
-      "src_bias_aperture_fairness_metrics_rationale_87",
-      "src_bias_aperture_fairness_metrics_symmetric_disparate_impact_ratio",
-      "src_tests_test_fairness_metrics",
-      "src_tests_test_fairness_metrics_rationale_1",
-      "src_tests_test_fairness_metrics_test_compute_group_rates",
-      "src_tests_test_fairness_metrics_test_dpd_calculation",
-      "src_tests_test_fairness_metrics_test_eod_calculation",
-      "src_tests_test_fairness_metrics_test_eop_calculation",
-      "src_tests_test_fairness_metrics_test_symmetric_dir"
-    ],
-    "8": [
-      "research_low_level_specification_3_1_vectorized_stratified_bca_bootstrap_confidence_intervals",
-      "research_low_level_specification_3_2_chi_squared_contingency_holm_bonferroni_adjustment",
-      "research_low_level_specification_3_3_1_screening_invariant_n_ge_30_vs_conservative_support_rules",
-      "research_low_level_specification_3_3_2_dir_zero_denominator_reporting_invariant",
-      "research_low_level_specification_3_3_statistical_adequacy_estimand_mapping",
-      "research_low_level_specification_3_statistical_engine_implementation_details",
-      "research_low_level_specification_bootstrap_population_model_stratified_resampling_rationale",
-      "research_low_level_specification_mathematical_steps_for_bca",
-      "research_low_level_specification_why_a_custom_engine_is_employed"
-    ],
-    "9": [
       "research_verification_and_scrutiny_guide",
       "research_verification_and_scrutiny_guide_1_the_4_tier_scrutiny_framework",
       "research_verification_and_scrutiny_guide_2_investigator_ownership_stream_allocation",
@@ -271,28 +336,7 @@
       "research_verification_and_scrutiny_guide_stream_e_architecture_known_answer_testing_tracks_17_18",
       "research_verification_and_scrutiny_guide_viva_defense_division_of_responsibilities"
     ],
-    "10": [
-      "src_bias_aperture_fairness_base",
-      "src_bias_aperture_fairness_base_eligibilityreport",
-      "src_bias_aperture_fairness_base_eligible_groups",
-      "src_bias_aperture_fairness_base_fairnessbackend_evaluate",
-      "src_bias_aperture_fairness_base_fairnessbackend_evaluate_core_four",
-      "src_bias_aperture_fairness_base_py_metricresult",
-      "src_bias_aperture_fairness_base_py_ndarray",
-      "src_bias_aperture_fairness_base_py_subjectrecord",
-      "src_bias_aperture_fairness_base_rationale_1",
-      "src_bias_aperture_fairness_base_rationale_117",
-      "src_bias_aperture_fairness_base_rationale_168",
-      "src_bias_aperture_fairness_base_rationale_226",
-      "src_bias_aperture_fairness_base_rationale_255",
-      "src_bias_aperture_fairness_base_rationale_33",
-      "src_bias_aperture_fairness_base_rationale_71",
-      "src_bias_aperture_fairness_base_screen_numeric_groups",
-      "src_bias_aperture_fairness_base_screen_subgroups",
-      "src_bias_aperture_fairness_init",
-      "src_bias_aperture_fairness_init_rationale_1"
-    ],
-    "11": [
+    "8": [
       "context_feed_biasaperture_at",
       "context_feed_biasaperture_at_16_coming_week_task_assignment_trait_based_split_august_20_2026",
       "context_feed_biasaperture_at_acceptance_criteria",
@@ -316,7 +360,7 @@
       "context_feed_biasaperture_at_work_distribution_logic",
       "context_feed_biasaperture_at_work_structure_restructured_for_concurrency"
     ],
-    "12": [
+    "9": [
       "docs_proposal_defense_guide_2_slide_deck_outline_15_20_slides",
       "docs_proposal_defense_guide_slide_10_the_core_four_disparity_metrics",
       "docs_proposal_defense_guide_slide_11_heterogeneous_backend_harmonization",
@@ -339,219 +383,142 @@
       "docs_proposal_defense_guide_slide_8_scope_limitations_the_diagnostic_boundary",
       "docs_proposal_defense_guide_slide_9_system_architecture_diagram"
     ],
+    "10": [
+      "research_context_feed_model_interface",
+      "research_context_feed_model_interface_inprocessinterface",
+      "research_context_feed_model_interface_inprocessinterface_get_predictions",
+      "research_context_feed_model_interface_modelinterface",
+      "research_context_feed_model_interface_modelinterface_get_predictions",
+      "research_context_feed_model_interface_py_abc",
+      "research_context_feed_model_interface_py_subjectrecord",
+      "research_context_feed_model_interface_rationale_1",
+      "research_context_feed_model_interface_rationale_45",
+      "research_context_feed_model_interface_rationale_49",
+      "research_context_feed_model_interface_rationale_54",
+      "research_context_feed_schema",
+      "research_context_feed_schema_rationale_1",
+      "research_context_feed_schema_rationale_83",
+      "research_context_feed_schema_subjectrecord",
+      "src_bias_aperture_model_interface_inprocessinterface",
+      "src_bias_aperture_model_interface_rationale_54",
+      "src_tests_test_model_interface_test_in_process_interface_not_implemented",
+      "src_tests_test_model_interface_test_in_process_interface_rejects_bad_framework"
+    ],
+    "11": [
+      "research_research_tracks_track_21_continuous_streaming_audit_mode",
+      "research_research_tracks_track_22_multi_model_comparative_benchmarking_and_leaderboard",
+      "research_research_tracks_track_23_cross_modal_schema_generalization_v2_architecture",
+      "research_research_tracks_track_24_automated_bias_root_cause_clustering",
+      "research_research_tracks_track_25_web_dashboard_architecture_evaluation",
+      "research_research_tracks_track_26_interactive_drill_down_report_ux",
+      "research_research_tracks_track_27_executive_compliance_officer_summary_mode",
+      "research_research_tracks_track_28_accessibility_and_internationalization_of_reports",
+      "research_research_tracks_track_29_pluggable_fairness_metric_registry",
+      "research_research_tracks_track_30_model_agnostic_classifier_adapter_layer",
+      "research_research_tracks_track_31_config_driven_audit_as_code_profiles",
+      "research_research_tracks_track_32_api_first_service_layer",
+      "research_research_tracks_track_33_containerized_deployment_and_audit_as_a_service_model",
+      "research_research_tracks_track_34_enterprise_scale_performance_profiling",
+      "research_research_tracks_track_35_data_privacy_and_governance_for_third_party_client_audi",
+      "research_research_tracks_track_36_regulatory_expansion_map_beyond_eu_ai_act",
+      "research_research_tracks_track_37_pricing_and_packaging_research_for_bias_audit_as_a_serv",
+      "research_research_tracks_track_38_licensing_strategy_open_core_vs_commercial",
+      "research_results_synth_phase2"
+    ],
+    "12": [
+      "bias_aperture_report_generator",
+      "bias_aperture_root",
+      "eu_ai_act",
+      "fairface_dataset",
+      "nfr_001_significance",
+      "nfr_002_uncertainty",
+      "nfr_003_sample_size_guard",
+      "nist_ai_rmf",
+      "readme",
+      "readme_abstract",
+      "readme_branching_workstreams",
+      "readme_building_the_report",
+      "readme_license",
+      "readme_local_git_workflow_auto_sync_sync_ps1",
+      "readme_project_progress_roadmap",
+      "readme_python_development_testing_code_style",
+      "readme_repository_structure",
+      "readme_vs_code_setup"
+    ],
     "13": [
-      "research_research_tracks_runner_guide",
-      "research_research_tracks_runner_guide_after_all_20_complete",
-      "research_research_tracks_runner_guide_checklist",
-      "research_research_tracks_runner_guide_implementation_order",
-      "research_research_tracks_runner_guide_parallel_research_runner_guide_20_claude_desktop_instances",
-      "research_research_tracks_runner_guide_phase_1_critical_read_these_first",
-      "research_research_tracks_runner_guide_phase_2_medium_read_these_second",
-      "research_research_tracks_runner_guide_phase_3_low_read_last",
-      "research_research_tracks_runner_guide_priority_order_if_reviewing_as_they_finish",
-      "research_research_tracks_runner_guide_quick_start_5_minutes_setup",
-      "research_research_tracks_runner_guide_step_1_open_20_claude_desktop_windows",
-      "research_research_tracks_runner_guide_step_2_for_every_window_paste_the_system_context_first",
-      "research_research_tracks_runner_guide_step_3_paste_each_track_s_prompt",
-      "research_research_tracks_runner_guide_step_4_save_results"
+      "counter",
+      "dataframe",
+      "src_bias_aperture_data_ingestion_dataingestionpipeline_handle_issue",
+      "src_bias_aperture_data_ingestion_dataingestionpipeline_ingest_dataframe",
+      "src_bias_aperture_data_ingestion_dataingestionpipeline_ingest_file",
+      "src_bias_aperture_data_ingestion_dataingestionpipeline_ingest_records",
+      "src_bias_aperture_data_ingestion_dataingestionpipeline_resolve_image_col",
+      "src_bias_aperture_data_ingestion_ingestionresult",
+      "src_bias_aperture_data_ingestion_py_any",
+      "src_bias_aperture_data_ingestion_py_path",
+      "src_bias_aperture_data_ingestion_rationale_155",
+      "src_bias_aperture_data_ingestion_rationale_176",
+      "src_bias_aperture_data_ingestion_rationale_203",
+      "src_bias_aperture_data_ingestion_rationale_213",
+      "src_bias_aperture_data_ingestion_rationale_467",
+      "src_bias_aperture_data_ingestion_rationale_486",
+      "src_bias_aperture_data_ingestion_rationale_78",
+      "src_bias_aperture_data_ingestion_validationissue"
     ],
     "14": [
-      "bias_aperture_at_md",
-      "bias_aperture_fairness_backends",
-      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync",
-      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_1_executive_summary_objectives",
-      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_2_audit_findings_resolution_matrix",
-      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_3_1_native_aif360_backend_src_bias_aperture_fairness_backends_py",
-      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_3_2_additive_shapley_surrogate_explainability_src_bias_aperture_explainability_py",
-      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_3_3_cli_integration_src_bias_aperture_cli_py",
-      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_3_4_package_dependency_alignment_pyproject_toml_uv_lock",
-      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_3_code_modifications_breakdown",
-      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_4_test_suite_validation_evidence",
-      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_5_git_remote_synchronization_provenance",
-      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_6_next_steps_remaining_roadmap",
-      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_core_goals_accomplished",
-      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_pytest_execution_summary",
-      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_ruff_quality_checks",
-      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_session_walkthrough_full_codebase_audit_discrepancy_resolution_multi_remote_git_synchronization",
-      "dev_logs_2026_08_31_task_division_and_roadmap_audit",
-      "dev_logs_2026_08_31_task_division_and_roadmap_audit_1_executive_summary_context",
-      "dev_logs_2026_08_31_task_division_and_roadmap_audit_2_the_harry_potter_trait_based_profile_method_16_file_c_users_aaradhya_downloads_organized_fuse_20ai_20fellowship_capstone_20project_fuseai_fellowship_biasaperture_a_diagnostic_framework_for_demographic_bias_auditing_in_facial_analysis_models_docs_biasaperture_at_md_l258_l299",
-      "dev_logs_2026_08_31_task_division_and_roadmap_audit_3_real_git_commit_provenance_task_division_matrix",
-      "dev_logs_2026_08_31_task_division_and_roadmap_audit_4_master_to_dos_table_viva_defense_alignment",
-      "dev_logs_2026_08_31_task_division_and_roadmap_audit_5_verification_sync_execution",
-      "dev_logs_2026_08_31_task_division_and_roadmap_audit_fact_checked_delivered_work_table",
-      "dev_logs_2026_08_31_task_division_and_roadmap_audit_master_to_dos_matrix",
-      "dev_logs_2026_08_31_task_division_and_roadmap_audit_master_walkthrough_biasaperture_audit_task_division_git_provenance_remaining_roadmap",
-      "dev_logs_2026_09_01_session_clarity_and_task_prioritization",
-      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_10_next_action_immediate",
-      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_1_executive_summary_session_goals",
-      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_2_project_state_recap_as_of_2026_09_01",
-      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_3_master_to_dos_complete_task_breakdown",
-      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_4_ownership_trait_rationale",
-      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_5_execution_plan_timeline",
-      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_6_key_acceptance_criteria_do_not_compromise",
-      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_7_remaining_risks_mitigations",
-      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_8_success_metrics_definition_of_done",
-      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_9_session_artifacts_references",
-      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_aaradhya_bei_ioe_redwood_unicorn_hair",
-      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_priority_1_empirical_benchmark_execution_start_now",
-      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_priority_2_compliance_data_validation_parallel_with_p1",
-      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_priority_3_defense_finalization_after_p1_p2",
-      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_session_clarity_task_prioritization_biasaperture_m5_integration_phase",
-      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_tisha_bct_ioe_black_walnut_dragon_heartstring",
-      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_week_of_2026_09_01_this_week_p1_execution",
-      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_week_of_2026_09_08_next_week_p2_execution",
-      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_week_of_2026_09_15_following_week_p3_execution"
+      "research_context_feed_model_interface_predictionsfileinterface",
+      "research_context_feed_model_interface_predictionsfileinterface_init",
+      "research_context_feed_model_interface_py_path",
+      "research_context_feed_model_interface_rationale_84",
+      "src_bias_aperture_model_interface_predictionsfileinterface",
+      "src_bias_aperture_model_interface_predictionsfileinterface_init",
+      "src_bias_aperture_model_interface_py_path",
+      "src_bias_aperture_model_interface_rationale_84",
+      "src_tests_test_model_interface",
+      "src_tests_test_model_interface_py_fixture",
+      "src_tests_test_model_interface_test_csv_happy_path",
+      "src_tests_test_model_interface_test_json_happy_path",
+      "src_tests_test_model_interface_test_missing_file_raises",
+      "src_tests_test_model_interface_test_unrecognised_race_label_rejected",
+      "src_tests_test_model_interface_test_unsupported_extension_rejected",
+      "src_tests_test_model_interface_valid_csv",
+      "src_tests_test_model_interface_valid_json"
     ],
     "15": [
-      "docs_pre_proposal_reading_guide_1_buolamwini_gebru_2018_gender_shades_intersectional_accuracy_disparities_in_commercial_gender_classification",
-      "docs_pre_proposal_reading_guide_2_kärkkäinen_joo_2021_fairface_face_attribute_dataset_for_balanced_race_gender_and_age",
-      "docs_pre_proposal_reading_guide_2_the_4_layer_conceptual_reading_matrix",
-      "docs_pre_proposal_reading_guide_3_hardt_price_srebro_2016_equality_of_opportunity_in_supervised_learning",
-      "docs_pre_proposal_reading_guide_4_watkins_mckenna_chen_2022_the_four_fifths_rule_is_not_disparate_impact",
-      "docs_pre_proposal_reading_guide_5_efron_1987_better_bootstrap_confidence_intervals_bca",
-      "docs_pre_proposal_reading_guide_6_bilodeau_et_al_2022_impossibility_theorems_for_feature_attribution",
-      "docs_pre_proposal_reading_guide_7_dehdashtian_wang_boddeti_2024_fairness_and_bias_mitigation_in_computer_vision_a_survey",
-      "docs_pre_proposal_reading_guide_8_9_mitchell_et_al_2019_model_cards_gebru_et_al_2018_datasheets",
-      "docs_pre_proposal_reading_guide_layer_1_problem_benchmark_data",
-      "docs_pre_proposal_reading_guide_layer_2_fairness_mathematics_effect_size_metrics",
-      "docs_pre_proposal_reading_guide_layer_3_statistical_inference_explainability_bounds",
-      "docs_pre_proposal_reading_guide_layer_4_ecosystem_context_reporting_philosophy"
-    ],
-    "16": [
       "docs_research_high_level_synthesis_1_executive_summary_vision",
       "docs_research_high_level_synthesis_2_the_five_operating_modules",
       "docs_research_high_level_synthesis_3_the_20_track_research_sprint_key_findings",
       "docs_research_high_level_synthesis_4_1_reproducible_competitive_search_protocol",
       "docs_research_high_level_synthesis_4_defensible_novelty_competitor_positioning",
       "docs_research_high_level_synthesis_5_regulatory_alignment_eu_ai_act_nist_ai_rmf",
+      "docs_research_high_level_synthesis_6_scope_invariants_descoping_strategy_cut_list",
       "docs_research_high_level_synthesis_7_current_project_state_next_steps",
       "docs_research_high_level_synthesis_biasaperture_research_sprint_high_level_executive_synthesis",
       "docs_research_high_level_synthesis_eu_artificial_intelligence_act_regulation_eu_2024_1689",
+      "docs_research_high_level_synthesis_formal_cut_list_ordered_by_drop_priority",
       "docs_research_high_level_synthesis_nist_ai_risk_management_framework_nist_ai_rmf_1_0_2023",
       "docs_research_high_level_synthesis_project_state_verification_rigor",
-      "docs_research_high_level_synthesis_the_5_unique_architectural_differentiators"
+      "docs_research_high_level_synthesis_the_5_unique_architectural_differentiators",
+      "docs_research_high_level_synthesis_what_biasaperture_will_never_do"
+    ],
+    "16": [
+      "src_bias_aperture_report_templates_generator",
+      "src_bias_aperture_report_templates_generator_htmlreportgenerator",
+      "src_bias_aperture_report_templates_generator_htmlreportgenerator_generate",
+      "src_bias_aperture_report_templates_generator_htmlreportgenerator_init",
+      "src_bias_aperture_report_templates_generator_htmlreportgenerator_prepare_template_context",
+      "src_bias_aperture_report_templates_generator_htmlreportgenerator_save",
+      "src_bias_aperture_report_templates_generator_py_any",
+      "src_bias_aperture_report_templates_generator_py_path",
+      "src_bias_aperture_report_templates_generator_rationale_1",
+      "src_bias_aperture_report_templates_generator_rationale_189",
+      "src_bias_aperture_report_templates_generator_rationale_206",
+      "src_bias_aperture_report_templates_generator_rationale_33",
+      "src_bias_aperture_report_templates_generator_rationale_55",
+      "src_bias_aperture_report_templates_generator_rationale_67",
+      "src_bias_aperture_report_templates_generator_reportcontext"
     ],
     "17": [
-      "src_tests_test_backend_harmonization",
-      "src_tests_test_backend_harmonization_rationale_1",
-      "src_tests_test_backend_harmonization_rationale_19",
-      "src_tests_test_backend_harmonization_rationale_49",
-      "src_tests_test_backend_harmonization_rationale_68",
-      "src_tests_test_backend_harmonization_rationale_95",
-      "src_tests_test_backend_harmonization_test_disparate_impact_ratio_zero_denominator_contract",
-      "src_tests_test_backend_harmonization_test_equal_opportunity_signed_vs_unsigned_adapter",
-      "src_tests_test_backend_harmonization_test_equalized_odds_max_vs_mean_divergence",
-      "src_tests_test_backend_harmonization_test_sample_size_pre_filtering_instability_skew"
-    ],
-    "18": [
-      "src_tests_conftest_mock_core_four_results",
-      "src_tests_conftest_py_fixture",
-      "src_tests_conftest_py_metricresult",
-      "src_tests_conftest_py_subjectrecord",
-      "src_tests_conftest_rationale_10",
-      "src_tests_conftest_rationale_73",
-      "src_tests_conftest_sample_subject_records"
-    ],
-    "19": [
-      "scripts_explore_fairface",
-      "scripts_explore_fairface_explore_split",
-      "scripts_explore_fairface_main",
-      "scripts_explore_fairface_parse_bool",
-      "scripts_explore_fairface_print_report",
-      "scripts_explore_fairface_py_path",
-      "scripts_explore_fairface_rationale_1",
-      "scripts_explore_fairface_splitreport",
-      "scripts_explore_fairface_splitreport_is_clean"
-    ],
-    "20": [
-      "counter",
-      "dataframe",
-      "enum",
-      "src_bias_aperture_cli",
-      "src_bias_aperture_cli_rationale_1",
-      "src_bias_aperture_data_ingestion",
-      "src_bias_aperture_data_ingestion_dataingestionpipeline",
-      "src_bias_aperture_data_ingestion_dataingestionpipeline_compute_cohort_profile",
-      "src_bias_aperture_data_ingestion_dataingestionpipeline_handle_issue",
-      "src_bias_aperture_data_ingestion_dataingestionpipeline_ingest_dataframe",
-      "src_bias_aperture_data_ingestion_dataingestionpipeline_ingest_file",
-      "src_bias_aperture_data_ingestion_dataingestionpipeline_ingest_records",
-      "src_bias_aperture_data_ingestion_dataingestionpipeline_init",
-      "src_bias_aperture_data_ingestion_dataingestionpipeline_resolve_image_col",
-      "src_bias_aperture_data_ingestion_ingestionconfig",
-      "src_bias_aperture_data_ingestion_ingestionresult",
-      "src_bias_aperture_data_ingestion_ovrtransformer",
-      "src_bias_aperture_data_ingestion_ovrtransformer_binarize",
-      "src_bias_aperture_data_ingestion_ovrtransformer_decompose_all",
-      "src_bias_aperture_data_ingestion_ovrtransformer_get_classes",
-      "src_bias_aperture_data_ingestion_py_any",
-      "src_bias_aperture_data_ingestion_py_path",
-      "src_bias_aperture_data_ingestion_py_subjectrecord",
-      "src_bias_aperture_data_ingestion_rationale_1",
-      "src_bias_aperture_data_ingestion_rationale_113",
-      "src_bias_aperture_data_ingestion_rationale_127",
-      "src_bias_aperture_data_ingestion_rationale_139",
-      "src_bias_aperture_data_ingestion_rationale_155",
-      "src_bias_aperture_data_ingestion_rationale_163",
-      "src_bias_aperture_data_ingestion_rationale_176",
-      "src_bias_aperture_data_ingestion_rationale_203",
-      "src_bias_aperture_data_ingestion_rationale_213",
-      "src_bias_aperture_data_ingestion_rationale_467",
-      "src_bias_aperture_data_ingestion_rationale_486",
-      "src_bias_aperture_data_ingestion_rationale_502",
-      "src_bias_aperture_data_ingestion_rationale_54",
-      "src_bias_aperture_data_ingestion_rationale_587",
-      "src_bias_aperture_data_ingestion_rationale_600",
-      "src_bias_aperture_data_ingestion_rationale_617",
-      "src_bias_aperture_data_ingestion_rationale_62",
-      "src_bias_aperture_data_ingestion_rationale_652",
-      "src_bias_aperture_data_ingestion_rationale_69",
-      "src_bias_aperture_data_ingestion_rationale_78",
-      "src_bias_aperture_data_ingestion_rationale_91",
-      "src_bias_aperture_data_ingestion_schemavalidationerror",
-      "src_bias_aperture_data_ingestion_subgroupcellstats",
-      "src_bias_aperture_data_ingestion_subgroupcohortprofile",
-      "src_bias_aperture_data_ingestion_validationissue",
-      "src_bias_aperture_data_ingestion_validationmode",
-      "src_bias_aperture_data_ingestion_validationseverity",
-      "src_bias_aperture_data_ingestion_validationsummary",
-      "src_bias_aperture_data_ingestion_validationsummary_post_init",
-      "src_tests_test_data_ingestion",
-      "src_tests_test_data_ingestion_py_fixture",
-      "src_tests_test_data_ingestion_test_cohort_profile_contingency_support",
-      "src_tests_test_data_ingestion_test_deduplicate_strategy_drop_duplicates",
-      "src_tests_test_data_ingestion_test_empty_dataset_handling",
-      "src_tests_test_data_ingestion_test_exact_and_conflicting_duplicates",
-      "src_tests_test_data_ingestion_test_file_not_found",
-      "src_tests_test_data_ingestion_test_image_column_alias_resolution",
-      "src_tests_test_data_ingestion_test_invalid_age_label_strict_mode",
-      "src_tests_test_data_ingestion_test_invalid_demographic_taxonomy_permissive_mode",
-      "src_tests_test_data_ingestion_test_invalid_demographic_taxonomy_strict_mode",
-      "src_tests_test_data_ingestion_test_invalid_gender_label_strict_mode",
-      "src_tests_test_data_ingestion_test_json_ingestion_happy_path",
-      "src_tests_test_data_ingestion_test_missing_column_permissive_mode_records_issues",
-      "src_tests_test_data_ingestion_test_missing_column_strict_mode_raises",
-      "src_tests_test_data_ingestion_test_null_and_nan_handling",
-      "src_tests_test_data_ingestion_test_ovr_transformer",
-      "src_tests_test_data_ingestion_test_strict_ingestion_happy_path",
-      "src_tests_test_data_ingestion_test_unsupported_extension",
-      "src_tests_test_data_ingestion_valid_csv",
-      "src_tests_test_data_ingestion_valid_dataframe",
-      "src_tests_test_data_ingestion_valid_json",
-      "str"
-    ],
-    "21": [
-      "research_low_level_specification_1_0_1_multi_class_one_vs_rest_ovr_evaluation_policy",
-      "research_low_level_specification_1_0_audited_target_configurations",
-      "research_low_level_specification_1_formal_semantics_of_audited_targets_demographic_attributes",
-      "research_low_level_specification_3_1_resnet_34_multi_task_head_tensor_slicing",
-      "research_low_level_specification_3_2_preprocessing_alignment_pipeline",
-      "research_low_level_specification_3_fairface_architecture_preprocessing_deep_dive",
-      "research_low_level_specification_4_resolution_guide_for_the_21_cross_track_conflicts",
-      "research_low_level_specification_biasaperture_research_sprint_low_level_technical_specification"
-    ],
-    "22": [
       "context_feed_biasaperture_novelty_integration_defense",
       "context_feed_biasaperture_novelty_integration_defense_1_schema_bridge",
       "context_feed_biasaperture_novelty_integration_defense_2_regulatory_mapping",
@@ -567,7 +534,23 @@
       "context_feed_biasaperture_novelty_integration_defense_what_biasaperture_actually_solves",
       "context_feed_biasaperture_novelty_integration_defense_why_this_isn_t_research_novelty_and_shouldn_t_pretend_to_be"
     ],
-    "23": [
+    "18": [
+      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_1_executive_summary_objectives",
+      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_2_audit_findings_resolution_matrix",
+      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_3_1_native_aif360_backend_src_bias_aperture_fairness_backends_py",
+      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_3_2_additive_shapley_surrogate_explainability_src_bias_aperture_explainability_py",
+      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_3_3_cli_integration_src_bias_aperture_cli_py",
+      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_3_4_package_dependency_alignment_pyproject_toml_uv_lock",
+      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_3_code_modifications_breakdown",
+      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_4_test_suite_validation_evidence",
+      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_5_git_remote_synchronization_provenance",
+      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_6_next_steps_remaining_roadmap",
+      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_core_goals_accomplished",
+      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_pytest_execution_summary",
+      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_ruff_quality_checks",
+      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync_session_walkthrough_full_codebase_audit_discrepancy_resolution_multi_remote_git_synchronization"
+    ],
+    "19": [
       "docs_biasaperture_novelty_integration_defense",
       "docs_biasaperture_novelty_integration_defense_1_schema_bridge",
       "docs_biasaperture_novelty_integration_defense_2_regulatory_mapping",
@@ -583,42 +566,23 @@
       "docs_biasaperture_novelty_integration_defense_what_biasaperture_actually_solves",
       "docs_biasaperture_novelty_integration_defense_why_this_isn_t_research_novelty_and_shouldn_t_pretend_to_be"
     ],
-    "24": [
-      "src_bias_aperture_fairness_statistics",
-      "src_bias_aperture_fairness_statistics_compute_contingency_chi2",
-      "src_bias_aperture_fairness_statistics_compute_stratified_bootstrap_ci",
-      "src_bias_aperture_fairness_statistics_holm_bonferroni_correction",
-      "src_bias_aperture_fairness_statistics_py_ndarray",
-      "src_bias_aperture_fairness_statistics_rationale_1",
-      "src_bias_aperture_fairness_statistics_rationale_140",
-      "src_bias_aperture_fairness_statistics_rationale_34",
-      "src_bias_aperture_fairness_statistics_rationale_91",
-      "src_tests_test_fairness_statistics",
-      "src_tests_test_fairness_statistics_rationale_1",
-      "src_tests_test_fairness_statistics_test_bootstrap_ci_coverage",
-      "src_tests_test_fairness_statistics_test_contingency_chi2",
-      "src_tests_test_fairness_statistics_test_holm_bonferroni_correction"
+    "20": [
+      "research_research_tracks_runner_guide",
+      "research_research_tracks_runner_guide_after_all_20_complete",
+      "research_research_tracks_runner_guide_checklist",
+      "research_research_tracks_runner_guide_implementation_order",
+      "research_research_tracks_runner_guide_parallel_research_runner_guide_20_claude_desktop_instances",
+      "research_research_tracks_runner_guide_phase_1_critical_read_these_first",
+      "research_research_tracks_runner_guide_phase_2_medium_read_these_second",
+      "research_research_tracks_runner_guide_phase_3_low_read_last",
+      "research_research_tracks_runner_guide_priority_order_if_reviewing_as_they_finish",
+      "research_research_tracks_runner_guide_quick_start_5_minutes_setup",
+      "research_research_tracks_runner_guide_step_1_open_20_claude_desktop_windows",
+      "research_research_tracks_runner_guide_step_2_for_every_window_paste_the_system_context_first",
+      "research_research_tracks_runner_guide_step_3_paste_each_track_s_prompt",
+      "research_research_tracks_runner_guide_step_4_save_results"
     ],
-    "25": [
-      "research_low_level_specification_1_1_demographic_parity_difference_dpd",
-      "research_low_level_specification_1_2_equalized_odds_difference_eod_resolving_definitional_divergence",
-      "research_low_level_specification_1_3_equal_opportunity_difference_eop_resolving_sign_mismatch",
-      "research_low_level_specification_1_4_disparate_impact_ratio_dir_edge_cases",
-      "research_low_level_specification_2_mathematical_fairness_formulations_backend_harmonization",
-      "research_low_level_specification_the_divergence_found_in_research_track_14",
-      "research_low_level_specification_the_divergence_found_in_research_tracks_09_10_14",
-      "research_low_level_specification_the_locked_resolution"
-    ],
-    "26": [
-      "research_claim_ledger",
-      "research_claim_ledger_1_verification_lifecycle",
-      "research_claim_ledger_2_master_research_claim_register",
-      "research_claim_ledger_3_invalidated_claims_research_failures_refutations",
-      "research_claim_ledger_4_claim_verification_status_summary",
-      "research_claim_ledger_academic_audit_statement",
-      "research_claim_ledger_biasaperture_research_claim_ledger"
-    ],
-    "27": [
+    "21": [
       "research_data_exploration_report",
       "research_data_exploration_report_1_fairface",
       "research_data_exploration_report_2_utkface",
@@ -632,31 +596,7 @@
       "research_data_exploration_report_utkface_3_malformed_filenames_excluded",
       "research_data_exploration_report_utkface_race_categories_schema_py_s_locked_race_labels"
     ],
-    "28": [
-      "research_context_feed_model_interface",
-      "research_context_feed_model_interface_inprocessinterface",
-      "research_context_feed_model_interface_inprocessinterface_get_predictions",
-      "research_context_feed_model_interface_inprocessinterface_init",
-      "research_context_feed_model_interface_modelinterface",
-      "research_context_feed_model_interface_modelinterface_get_predictions",
-      "research_context_feed_model_interface_predictionsfileinterface",
-      "research_context_feed_model_interface_predictionsfileinterface_get_predictions",
-      "research_context_feed_model_interface_predictionsfileinterface_init",
-      "research_context_feed_model_interface_predictionsfileinterface_load_rows",
-      "research_context_feed_model_interface_py_abc",
-      "research_context_feed_model_interface_py_any",
-      "research_context_feed_model_interface_py_path",
-      "research_context_feed_model_interface_py_subjectrecord",
-      "research_context_feed_model_interface_rationale_1",
-      "research_context_feed_model_interface_rationale_45",
-      "research_context_feed_model_interface_rationale_49",
-      "research_context_feed_model_interface_rationale_54",
-      "research_context_feed_model_interface_rationale_84",
-      "research_context_feed_schema",
-      "research_context_feed_schema_metricresult_post_init",
-      "research_context_feed_schema_rationale_1",
-      "research_context_feed_schema_rationale_83",
-      "research_context_feed_schema_subjectrecord",
+    "22": [
       "scripts_explore_utkface",
       "scripts_explore_utkface_age_bucket",
       "scripts_explore_utkface_explore_utkface",
@@ -668,98 +608,9 @@
       "scripts_explore_utkface_rationale_66",
       "scripts_explore_utkface_rationale_88",
       "scripts_explore_utkface_utkexplorationreport",
-      "scripts_explore_utkface_utkexplorationreport_is_clean",
-      "src_bias_aperture_model_interface",
-      "src_bias_aperture_model_interface_inprocessinterface",
-      "src_bias_aperture_model_interface_inprocessinterface_get_predictions",
-      "src_bias_aperture_model_interface_inprocessinterface_init",
-      "src_bias_aperture_model_interface_modelinterface",
-      "src_bias_aperture_model_interface_modelinterface_get_predictions",
-      "src_bias_aperture_model_interface_predictionsfileinterface",
-      "src_bias_aperture_model_interface_predictionsfileinterface_get_predictions",
-      "src_bias_aperture_model_interface_predictionsfileinterface_init",
-      "src_bias_aperture_model_interface_predictionsfileinterface_load_rows",
-      "src_bias_aperture_model_interface_py_abc",
-      "src_bias_aperture_model_interface_py_any",
-      "src_bias_aperture_model_interface_py_path",
-      "src_bias_aperture_model_interface_py_subjectrecord",
-      "src_bias_aperture_model_interface_rationale_1",
-      "src_bias_aperture_model_interface_rationale_45",
-      "src_bias_aperture_model_interface_rationale_49",
-      "src_bias_aperture_model_interface_rationale_54",
-      "src_bias_aperture_model_interface_rationale_84",
-      "src_bias_aperture_schema_metricresult_post_init",
-      "src_tests_test_model_interface",
-      "src_tests_test_model_interface_py_fixture",
-      "src_tests_test_model_interface_test_csv_happy_path",
-      "src_tests_test_model_interface_test_in_process_interface_not_implemented",
-      "src_tests_test_model_interface_test_in_process_interface_rejects_bad_framework",
-      "src_tests_test_model_interface_test_json_happy_path",
-      "src_tests_test_model_interface_test_missing_file_raises",
-      "src_tests_test_model_interface_test_unrecognised_race_label_rejected",
-      "src_tests_test_model_interface_test_unsupported_extension_rejected",
-      "src_tests_test_model_interface_valid_csv",
-      "src_tests_test_model_interface_valid_json",
-      "valueerror"
+      "scripts_explore_utkface_utkexplorationreport_is_clean"
     ],
-    "29": [
-      "research_context_feed_schema_metricresult",
-      "research_context_feed_schema_rationale_109",
-      "src_bias_aperture_explainability",
-      "src_bias_aperture_explainability_compute_ita",
-      "src_bias_aperture_explainability_explanationresult",
-      "src_bias_aperture_explainability_py_metricresult",
-      "src_bias_aperture_explainability_py_path",
-      "src_bias_aperture_explainability_py_subjectrecord",
-      "src_bias_aperture_explainability_rationale_1",
-      "src_bias_aperture_explainability_rationale_114",
-      "src_bias_aperture_explainability_rationale_181",
-      "src_bias_aperture_explainability_rationale_39",
-      "src_bias_aperture_explainability_rationale_51",
-      "src_bias_aperture_explainability_rationale_57",
-      "src_bias_aperture_explainability_rationale_72",
-      "src_bias_aperture_explainability_shapexplainerengine",
-      "src_bias_aperture_explainability_shapexplainerengine_explain_disparity",
-      "src_bias_aperture_explainability_shapexplainerengine_explain_surrogate",
-      "src_bias_aperture_explainability_shapexplainerengine_init",
-      "src_bias_aperture_explainability_shapexplainerengine_should_explain",
-      "src_bias_aperture_schema_metricresult",
-      "src_bias_aperture_schema_rationale_110",
-      "src_tests_test_explainability",
-      "src_tests_test_explainability_rationale_1",
-      "src_tests_test_explainability_test_compute_ita",
-      "src_tests_test_explainability_test_shap_explainer_selective_triggering",
-      "src_tests_test_explainability_test_shap_surrogate_attribution_on_records",
-      "src_tests_test_known_answer_fairness_metrics",
-      "src_tests_test_known_answer_fairness_metrics_compute_known_answer_rates",
-      "src_tests_test_known_answer_fairness_metrics_py_subjectrecord",
-      "src_tests_test_known_answer_fairness_metrics_rationale_1",
-      "src_tests_test_known_answer_fairness_metrics_rationale_113",
-      "src_tests_test_known_answer_fairness_metrics_rationale_27",
-      "src_tests_test_known_answer_fairness_metrics_rationale_63",
-      "src_tests_test_known_answer_fairness_metrics_test_known_answer_8_record_baseline_math",
-      "src_tests_test_known_answer_fairness_metrics_test_known_answer_replicated_n64_gated_execution",
-      "src_tests_test_schema",
-      "src_tests_test_schema_test_boundary_sample_size_exactly_min_does_not_require_flag",
-      "src_tests_test_schema_test_label_vocabulary_sizes",
-      "src_tests_test_schema_test_metric_result_valid_row",
-      "src_tests_test_schema_test_nfr003_correct_flagged_row",
-      "src_tests_test_schema_test_nfr003_flagged_row_with_metric_value_raises",
-      "src_tests_test_schema_test_nfr003_small_sample_without_flag_raises",
-      "src_tests_test_schema_test_subject_record_construction"
-    ],
-    "30": [
-      "bias_aperture_report_generator",
-      "claude_biasaperture",
-      "eu_ai_act",
-      "fairface_dataset",
-      "nfr_001_significance",
-      "nfr_002_uncertainty",
-      "nfr_003_sample_size_guard",
-      "nist_ai_rmf",
-      "utkface_dataset"
-    ],
-    "31": [
+    "23": [
       "claude",
       "claude_1_schema_invariants_m1_lock_src_bias_aperture_schema_py",
       "claude_2_statistical_safety_guards",
@@ -772,7 +623,7 @@
       "claude_git_sync_workflow",
       "claude_project_overview"
     ],
-    "32": [
+    "24": [
       "context_feed_claude",
       "context_feed_claude_1_schema_invariants_m1_lock_src_bias_aperture_schema_py",
       "context_feed_claude_2_statistical_safety_guards",
@@ -785,20 +636,46 @@
       "context_feed_claude_git_sync_workflow",
       "context_feed_claude_project_overview"
     ],
-    "33": [
-      "readme",
-      "readme_abstract",
-      "readme_biasaperture",
-      "readme_branching_workstreams",
-      "readme_building_the_report",
-      "readme_license",
-      "readme_local_git_workflow_auto_sync_sync_ps1",
-      "readme_project_progress_roadmap",
-      "readme_python_development_testing_code_style",
-      "readme_repository_structure",
-      "readme_vs_code_setup"
+    "25": [
+      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_10_next_action_immediate",
+      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_1_executive_summary_session_goals",
+      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_2_project_state_recap_as_of_2026_09_01",
+      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_4_ownership_trait_rationale",
+      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_6_key_acceptance_criteria_do_not_compromise",
+      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_7_remaining_risks_mitigations",
+      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_8_success_metrics_definition_of_done",
+      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_9_session_artifacts_references",
+      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_aaradhya_bei_ioe_redwood_unicorn_hair",
+      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_session_clarity_task_prioritization_biasaperture_m5_integration_phase",
+      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_tisha_bct_ioe_black_walnut_dragon_heartstring"
     ],
-    "34": [
+    "26": [
+      "enum",
+      "src_bias_aperture_data_ingestion",
+      "src_bias_aperture_data_ingestion_rationale_1",
+      "src_bias_aperture_data_ingestion_rationale_113",
+      "src_bias_aperture_data_ingestion_rationale_69",
+      "src_bias_aperture_data_ingestion_rationale_91",
+      "src_bias_aperture_data_ingestion_subgroupcellstats",
+      "src_bias_aperture_data_ingestion_validationseverity",
+      "src_bias_aperture_data_ingestion_validationsummary",
+      "src_bias_aperture_data_ingestion_validationsummary_post_init",
+      "str"
+    ],
+    "27": [
+      "research_context_feed_model_interface_inprocessinterface_init",
+      "research_context_feed_model_interface_predictionsfileinterface_get_predictions",
+      "research_context_feed_model_interface_predictionsfileinterface_load_rows",
+      "research_context_feed_model_interface_py_any",
+      "research_context_feed_schema_metricresult_post_init",
+      "src_bias_aperture_model_interface_inprocessinterface_init",
+      "src_bias_aperture_model_interface_predictionsfileinterface_get_predictions",
+      "src_bias_aperture_model_interface_predictionsfileinterface_load_rows",
+      "src_bias_aperture_model_interface_py_any",
+      "src_bias_aperture_schema_metricresult_post_init",
+      "valueerror"
+    ],
+    "28": [
       "results_stream_c_fairness_engine",
       "results_stream_c_fairness_engine_bootstrap_ci_track_11_locked_implementation_approach",
       "results_stream_c_fairness_engine_chi_squared_testing_track_12_locked_implementation_approach",
@@ -811,36 +688,7 @@
       "results_stream_c_fairness_engine_open_flags_requiring_owner_decision",
       "results_stream_c_fairness_engine_stream_c_synthesis_fairness_engine_tracks_09_14"
     ],
-    "35": [
-      "weekly_reports_2026_08_21_wk3_report",
-      "weekly_reports_2026_08_21_wk3_report_1_executive_summary_objectives",
-      "weekly_reports_2026_08_21_wk3_report_2_work_packages_milestone_mapping",
-      "weekly_reports_2026_08_21_wk3_report_3_1_functional_requirements_regulatory_mapping_fr_001_fr_005",
-      "weekly_reports_2026_08_21_wk3_report_3_2_system_architecture_flow_design",
-      "weekly_reports_2026_08_21_wk3_report_3_3_engineering_standards_package_scaffolding",
-      "weekly_reports_2026_08_21_wk3_report_3_detailed_accomplishments_technical_highlights",
-      "weekly_reports_2026_08_21_wk3_report_4_git_commit_provenance_week_3",
-      "weekly_reports_2026_08_21_wk3_report_5_next_steps_lookahead_week_4",
-      "weekly_reports_2026_08_21_wk3_report_biasaperture_weekly_project_report_wk3",
-      "weekly_reports_2026_08_21_wk3_report_key_objectives"
-    ],
-    "36": [
-      "research_low_level_specification",
-      "research_mid_level_architecture",
-      "research_mid_level_architecture_1_system_topology_component_overview",
-      "research_mid_level_architecture_3_comprehensive_testing_verification_architecture",
-      "research_mid_level_architecture_biasaperture_research_sprint_mid_level_architectural_design",
-      "weekly_reports_2026_08_31_wk4_report"
-    ],
-    "37": [
-      "weekly_reports_2026_08_31_wk4_report_1_executive_summary_objectives",
-      "weekly_reports_2026_08_31_wk4_report_2_work_packages_milestone_mapping",
-      "weekly_reports_2026_08_31_wk4_report_4_git_commit_provenance_week_4",
-      "weekly_reports_2026_08_31_wk4_report_5_master_to_dos_remaining_roadmap",
-      "weekly_reports_2026_08_31_wk4_report_biasaperture_weekly_project_report_wk4",
-      "weekly_reports_2026_08_31_wk4_report_key_objectives"
-    ],
-    "38": [
+    "29": [
       "weekly_reports_2026_08_07_wk1_report",
       "weekly_reports_2026_08_07_wk1_report_1_executive_summary_objectives",
       "weekly_reports_2026_08_07_wk1_report_2_work_packages_milestone_mapping",
@@ -853,7 +701,56 @@
       "weekly_reports_2026_08_07_wk1_report_biasaperture_weekly_project_report_wk1",
       "weekly_reports_2026_08_07_wk1_report_key_objectives"
     ],
-    "39": [
+    "30": [
+      "weekly_reports_2026_08_21_wk3_report",
+      "weekly_reports_2026_08_21_wk3_report_1_executive_summary_objectives",
+      "weekly_reports_2026_08_21_wk3_report_2_work_packages_milestone_mapping",
+      "weekly_reports_2026_08_21_wk3_report_3_1_functional_requirements_regulatory_mapping_fr_001_fr_005",
+      "weekly_reports_2026_08_21_wk3_report_3_2_system_architecture_flow_design",
+      "weekly_reports_2026_08_21_wk3_report_3_3_engineering_standards_package_scaffolding",
+      "weekly_reports_2026_08_21_wk3_report_3_detailed_accomplishments_technical_highlights",
+      "weekly_reports_2026_08_21_wk3_report_4_git_commit_provenance_week_3",
+      "weekly_reports_2026_08_21_wk3_report_5_next_steps_lookahead_week_4",
+      "weekly_reports_2026_08_21_wk3_report_biasaperture_weekly_project_report_wk3",
+      "weekly_reports_2026_08_21_wk3_report_key_objectives"
+    ],
+    "31": [
+      "docs_proposal_defense_guide_1_defense_format_strategy",
+      "docs_proposal_defense_guide_4_the_novelty_question_your_most_important_defense",
+      "docs_proposal_defense_guide_7_numbers_you_must_know_cold",
+      "docs_proposal_defense_guide_biasaperture_proposal_defense_preparation_guide",
+      "docs_proposal_defense_guide_presentation_time_budget",
+      "docs_proposal_defense_guide_table_of_contents",
+      "docs_proposal_defense_guide_the_5_step_defense_framework",
+      "docs_proposal_defense_guide_what_a_proposal_defense_is",
+      "docs_proposal_defense_guide_what_not_to_say",
+      "docs_proposal_defense_guide_your_strategic_advantage"
+    ],
+    "32": [
+      "src_bias_aperture_data_ingestion_ovrtransformer",
+      "src_bias_aperture_data_ingestion_ovrtransformer_binarize",
+      "src_bias_aperture_data_ingestion_ovrtransformer_decompose_all",
+      "src_bias_aperture_data_ingestion_ovrtransformer_get_classes",
+      "src_bias_aperture_data_ingestion_py_subjectrecord",
+      "src_bias_aperture_data_ingestion_rationale_587",
+      "src_bias_aperture_data_ingestion_rationale_600",
+      "src_bias_aperture_data_ingestion_rationale_617",
+      "src_bias_aperture_data_ingestion_rationale_652",
+      "src_tests_test_data_ingestion_test_ovr_transformer"
+    ],
+    "33": [
+      "src_tests_test_backend_harmonization",
+      "src_tests_test_backend_harmonization_rationale_1",
+      "src_tests_test_backend_harmonization_rationale_19",
+      "src_tests_test_backend_harmonization_rationale_49",
+      "src_tests_test_backend_harmonization_rationale_68",
+      "src_tests_test_backend_harmonization_rationale_95",
+      "src_tests_test_backend_harmonization_test_disparate_impact_ratio_zero_denominator_contract",
+      "src_tests_test_backend_harmonization_test_equal_opportunity_signed_vs_unsigned_adapter",
+      "src_tests_test_backend_harmonization_test_equalized_odds_max_vs_mean_divergence",
+      "src_tests_test_backend_harmonization_test_sample_size_pre_filtering_instability_skew"
+    ],
+    "34": [
       "weekly_reports_2026_08_14_wk2_report",
       "weekly_reports_2026_08_14_wk2_report_1_executive_summary_objectives",
       "weekly_reports_2026_08_14_wk2_report_2_work_packages_milestone_mapping",
@@ -865,15 +762,7 @@
       "weekly_reports_2026_08_14_wk2_report_biasaperture_weekly_project_report_wk2",
       "weekly_reports_2026_08_14_wk2_report_key_objectives"
     ],
-    "40": [
-      "weekly_reports_2026_08_31_wk4_report_3_1_20_track_parallel_research_sprint_3_level_syntheses",
-      "weekly_reports_2026_08_31_wk4_report_3_2_dataset_profiling_empirical_discoveries",
-      "weekly_reports_2026_08_31_wk4_report_3_3_native_aif360_backend_harmonization_src_bias_aperture_fairness_backends_py",
-      "weekly_reports_2026_08_31_wk4_report_3_4_exact_additive_shapley_surrogate_explainability_src_bias_aperture_explainability_py",
-      "weekly_reports_2026_08_31_wk4_report_3_5_test_suite_code_quality_55_55_tests_passing",
-      "weekly_reports_2026_08_31_wk4_report_3_detailed_accomplishments_technical_highlights"
-    ],
-    "41": [
+    "35": [
       "context_feed_context",
       "context_feed_context_biasaperture_system_context_paste_this_first",
       "context_feed_context_core_four_disparity_metrics",
@@ -884,12 +773,18 @@
       "context_feed_context_statistical_requirements",
       "context_feed_context_tech_stack"
     ],
-    "42": [
-      "docs_pre_proposal_reading_guide_1_the_core_reasoning_chain",
-      "docs_pre_proposal_reading_guide_4_mental_hierarchy_meaning_to_justification_to_limitation_to_number",
-      "docs_pre_proposal_reading_guide_biasaperture_pre_proposal_defense_reading_guide"
+    "36": [
+      "dev_logs_weekly_reports_2026_08_07_wk1_report",
+      "dev_logs_weekly_reports_2026_08_14_wk2_report",
+      "dev_logs_weekly_reports_2026_08_21_wk3_report",
+      "dev_logs_weekly_reports_2026_08_31_weekly_report",
+      "dev_logs_weekly_reports_2026_08_31_wk4_report",
+      "docs_biasaperture_at",
+      "docs_proposal_defense_guide",
+      "docs_research_claim_ledger_md",
+      "docs_research_high_level_synthesis"
     ],
-    "43": [
+    "37": [
       "report_main_pdf",
       "report_src_images_architecture_highlevel_jpg",
       "report_src_images_gantt_png",
@@ -900,7 +795,29 @@
       "research_context_feed_literature_review_matrix_md",
       "research_context_feed_schema_lock_m1_md"
     ],
-    "44": [
+    "38": [
+      "research_low_level_specification_3_1_vectorized_stratified_bca_bootstrap_confidence_intervals",
+      "research_low_level_specification_3_2_chi_squared_contingency_holm_bonferroni_adjustment",
+      "research_low_level_specification_3_3_1_screening_invariant_n_ge_30_vs_conservative_support_rules",
+      "research_low_level_specification_3_3_2_dir_zero_denominator_reporting_invariant",
+      "research_low_level_specification_3_3_statistical_adequacy_estimand_mapping",
+      "research_low_level_specification_3_statistical_engine_implementation_details",
+      "research_low_level_specification_bootstrap_population_model_stratified_resampling_rationale",
+      "research_low_level_specification_mathematical_steps_for_bca",
+      "research_low_level_specification_why_a_custom_engine_is_employed"
+    ],
+    "39": [
+      "research_mid_level_architecture_2_1_module_1_ingestion_invariant_validation_data_ingestion_py_model_interface_py",
+      "research_mid_level_architecture_2_2_module_2_fairness_strategy_engine_bias_aperture_fairness",
+      "research_mid_level_architecture_2_3_module_3_statistical_rigor_engine_fairness_statistics_py",
+      "research_mid_level_architecture_2_4_module_4_targeted_explainability_proxy_detection_explainability_py",
+      "research_mid_level_architecture_2_5_module_5_compliance_report_generation_report",
+      "research_mid_level_architecture_2_component_design_interfacing",
+      "research_mid_level_architecture_ingestion_contracts_patterns",
+      "research_mid_level_architecture_shared_base_architecture_fairness_base_py",
+      "research_mid_level_architecture_two_mode_validation_engine"
+    ],
+    "40": [
       "research_tracks_context",
       "research_tracks_context_biasaperture_system_context_paste_this_first",
       "research_tracks_context_core_four_disparity_metrics",
@@ -911,12 +828,29 @@
       "research_tracks_context_statistical_requirements",
       "research_tracks_context_tech_stack"
     ],
-    "45": [
-      "docs_research_high_level_synthesis_6_scope_invariants_descoping_strategy_cut_list",
-      "docs_research_high_level_synthesis_formal_cut_list_ordered_by_drop_priority",
-      "docs_research_high_level_synthesis_what_biasaperture_will_never_do"
+    "41": [
+      "scripts_explore_fairface",
+      "scripts_explore_fairface_explore_split",
+      "scripts_explore_fairface_main",
+      "scripts_explore_fairface_parse_bool",
+      "scripts_explore_fairface_print_report",
+      "scripts_explore_fairface_py_path",
+      "scripts_explore_fairface_rationale_1",
+      "scripts_explore_fairface_splitreport",
+      "scripts_explore_fairface_splitreport_is_clean"
     ],
-    "46": [
+    "42": [
+      "src_bias_aperture_model_interface",
+      "src_bias_aperture_model_interface_inprocessinterface_get_predictions",
+      "src_bias_aperture_model_interface_modelinterface",
+      "src_bias_aperture_model_interface_modelinterface_get_predictions",
+      "src_bias_aperture_model_interface_py_abc",
+      "src_bias_aperture_model_interface_py_subjectrecord",
+      "src_bias_aperture_model_interface_rationale_1",
+      "src_bias_aperture_model_interface_rationale_45",
+      "src_bias_aperture_model_interface_rationale_49"
+    ],
+    "43": [
       "context_feed_schema_lock_m1",
       "context_feed_schema_lock_m1_change_policy",
       "context_feed_schema_lock_m1_classifier_baseline",
@@ -926,10 +860,17 @@
       "context_feed_schema_lock_m1_schema_lock_milestone_m1_wp1",
       "context_feed_schema_lock_m1_what_this_unblocks"
     ],
-    "47": [
-      "src_bias_aperture_init"
+    "44": [
+      "dev_logs_2026_08_31_task_division_and_roadmap_audit_1_executive_summary_context",
+      "dev_logs_2026_08_31_task_division_and_roadmap_audit_2_the_harry_potter_trait_based_profile_method_16_file_c_users_aaradhya_downloads_organized_fuse_20ai_20fellowship_capstone_20project_fuseai_fellowship_biasaperture_a_diagnostic_framework_for_demographic_bias_auditing_in_facial_analysis_models_docs_biasaperture_at_md_l258_l299",
+      "dev_logs_2026_08_31_task_division_and_roadmap_audit_3_real_git_commit_provenance_task_division_matrix",
+      "dev_logs_2026_08_31_task_division_and_roadmap_audit_4_master_to_dos_table_viva_defense_alignment",
+      "dev_logs_2026_08_31_task_division_and_roadmap_audit_5_verification_sync_execution",
+      "dev_logs_2026_08_31_task_division_and_roadmap_audit_fact_checked_delivered_work_table",
+      "dev_logs_2026_08_31_task_division_and_roadmap_audit_master_to_dos_matrix",
+      "dev_logs_2026_08_31_task_division_and_roadmap_audit_master_walkthrough_biasaperture_audit_task_division_git_provenance_remaining_roadmap"
     ],
-    "48": [
+    "45": [
       "docs_data_governance",
       "docs_data_governance_1_1_ingestion_restrictions",
       "docs_data_governance_1_dataset_provenance_licensing",
@@ -939,7 +880,17 @@
       "docs_data_governance_4_researcher_ethics_responsibilities",
       "docs_data_governance_biasaperture_data_governance_privacy_protocol"
     ],
-    "49": [
+    "46": [
+      "docs_proposal_defense_guide_5_anticipated_hard_questions_scripted_answers_32_questions",
+      "docs_proposal_defense_guide_category_a_scope_novelty",
+      "docs_proposal_defense_guide_category_b_statistical_rigor_methodology",
+      "docs_proposal_defense_guide_category_c_datasets_preprocessing",
+      "docs_proposal_defense_guide_category_d_architecture_implementation",
+      "docs_proposal_defense_guide_category_e_regulatory_alignment_ethics",
+      "docs_proposal_defense_guide_category_f_feasibility_reliability_risk",
+      "docs_proposal_defense_guide_category_g_research_integrity_project_status"
+    ],
+    "47": [
       "docs_schema_lock_m1",
       "docs_schema_lock_m1_change_policy",
       "docs_schema_lock_m1_classifier_baseline",
@@ -949,17 +900,64 @@
       "docs_schema_lock_m1_schema_lock_milestone_m1_wp1",
       "docs_schema_lock_m1_what_this_unblocks"
     ],
+    "48": [
+      "research_low_level_specification_1_0_1_multi_class_one_vs_rest_ovr_evaluation_policy",
+      "research_low_level_specification_1_0_audited_target_configurations",
+      "research_low_level_specification_1_formal_semantics_of_audited_targets_demographic_attributes",
+      "research_low_level_specification_3_1_resnet_34_multi_task_head_tensor_slicing",
+      "research_low_level_specification_3_2_preprocessing_alignment_pipeline",
+      "research_low_level_specification_3_fairface_architecture_preprocessing_deep_dive",
+      "research_low_level_specification_4_resolution_guide_for_the_21_cross_track_conflicts",
+      "research_low_level_specification_biasaperture_research_sprint_low_level_technical_specification"
+    ],
+    "49": [
+      "research_low_level_specification_1_1_demographic_parity_difference_dpd",
+      "research_low_level_specification_1_2_equalized_odds_difference_eod_resolving_definitional_divergence",
+      "research_low_level_specification_1_3_equal_opportunity_difference_eop_resolving_sign_mismatch",
+      "research_low_level_specification_1_4_disparate_impact_ratio_dir_edge_cases",
+      "research_low_level_specification_2_mathematical_fairness_formulations_backend_harmonization",
+      "research_low_level_specification_the_divergence_found_in_research_track_14",
+      "research_low_level_specification_the_divergence_found_in_research_tracks_09_10_14",
+      "research_low_level_specification_the_locked_resolution"
+    ],
     "50": [
-      "sync",
-      "sync_get_conventionalcommitmessage",
-      "sync_get_inferredbranch",
-      "sync_initialize_remotes",
-      "sync_push_allremotes",
-      "sync_switch_tobranch",
-      "sync_sync_alloriginbranches",
-      "sync_update_tracker"
+      "src_tests_test_offline_report_contract",
+      "src_tests_test_offline_report_contract_rationale_1",
+      "src_tests_test_offline_report_contract_rationale_15",
+      "src_tests_test_offline_report_contract_rationale_38",
+      "src_tests_test_offline_report_contract_rationale_77",
+      "src_tests_test_offline_report_contract_test_offline_html_contract_catches_violations",
+      "src_tests_test_offline_report_contract_test_offline_html_contract_validation",
+      "src_tests_test_offline_report_contract_verify_offline_html_contract"
     ],
     "51": [
+      "docs_proposal_defense_guide_3_slide_by_slide_script_talking_points",
+      "docs_proposal_defense_guide_architecture_slide_9_the_pipeline",
+      "docs_proposal_defense_guide_descoping_slide_17_feasibility_and_risk_planning",
+      "docs_proposal_defense_guide_harmonization_slide_11_engineering_novelty_in_practice",
+      "docs_proposal_defense_guide_opening_slide_2_the_hook",
+      "docs_proposal_defense_guide_problem_statement_regulatory_context_slides_3_4",
+      "docs_proposal_defense_guide_statistical_safeguards_slide_12_inferential_credibility"
+    ],
+    "52": [
+      "docs_proposal_defense_guide_6_traps_to_avoid",
+      "docs_proposal_defense_guide_trap_1_overclaiming_novelty",
+      "docs_proposal_defense_guide_trap_2_oversimplifying_the_engineering_effort",
+      "docs_proposal_defense_guide_trap_3_claiming_causal_explanations",
+      "docs_proposal_defense_guide_trap_4_overstating_regulatory_certification",
+      "docs_proposal_defense_guide_trap_5_misrepresenting_project_phase",
+      "docs_proposal_defense_guide_trap_6_misattributing_sample_size_invariants"
+    ],
+    "53": [
+      "research_claim_ledger",
+      "research_claim_ledger_1_verification_lifecycle",
+      "research_claim_ledger_2_master_research_claim_register",
+      "research_claim_ledger_3_invalidated_claims_research_failures_refutations",
+      "research_claim_ledger_4_claim_verification_status_summary",
+      "research_claim_ledger_academic_audit_statement",
+      "research_claim_ledger_biasaperture_research_claim_ledger"
+    ],
+    "54": [
       "results_stream_b_report_generation",
       "results_stream_b_report_generation_architecture_track_05_ready_to_implement",
       "results_stream_b_report_generation_eu_ai_act_article_10_mapping_track_08_sub_clause_level_ready_to_consume",
@@ -968,7 +966,7 @@
       "results_stream_b_report_generation_open_flags_requiring_owner_decision",
       "results_stream_b_report_generation_stream_b_synthesis_report_generation_tracks_05_08"
     ],
-    "52": [
+    "55": [
       "results_stream_d_explainability",
       "results_stream_d_explainability_open_flags_requiring_owner_decision",
       "results_stream_d_explainability_proxy_variable_detection_methodology_track_16_builds_on_track_15_s_shap_primitives",
@@ -977,55 +975,16 @@
       "results_stream_d_explainability_stream_d_synthesis_explainability_tracks_15_16",
       "results_stream_d_explainability_trigger_point_and_interface_track_15"
     ],
-    "53": [
-      "agent",
-      "agent_1_non_negotiable_project_constraints",
-      "agent_2_directory_layout_module_ownership",
-      "agent_3_build_test_commands",
-      "agent_4_git_branching_strategy",
-      "agent_agent_md_developer_ai_agent_guidelines"
-    ],
-    "54": [
-      "agents",
-      "agents_1_non_negotiable_project_constraints",
-      "agents_2_directory_layout_module_ownership",
-      "agents_3_build_test_commands",
-      "agents_4_git_branching_strategy",
-      "agents_agent_md_developer_ai_agent_guidelines"
-    ],
-    "55": [
-      "antigravity",
-      "antigravity_antigravity_md_google_antigravity_gemini_coding_guidelines",
-      "antigravity_key_context_metadata",
-      "antigravity_mission_purpose",
-      "antigravity_operating_invariants_for_antigravity",
-      "antigravity_role_task_ownership_allocation"
-    ],
     "56": [
-      "github_pull_request_template",
-      "github_pull_request_template_changes_made",
-      "github_pull_request_template_checklist",
-      "github_pull_request_template_purpose",
-      "github_pull_request_template_related_issues",
-      "github_pull_request_template_testing_verification"
+      "sync",
+      "sync_get_conventionalcommitmessage",
+      "sync_initialize_remotes",
+      "sync_push_allremotes",
+      "sync_switch_tobranch",
+      "sync_sync_alloriginbranches",
+      "sync_update_tracker"
     ],
     "57": [
-      "results_cross_track_conflict_log",
-      "results_cross_track_conflict_log_blocking_needed_before_wp4_implementation_starts",
-      "results_cross_track_conflict_log_cross_track_conflict_discrepancy_log_biasaperture_20_track_research_sprint",
-      "results_cross_track_conflict_log_documentation_data_corrections_needed_not_architectural_but_currently_wrong_in_project_docs",
-      "results_cross_track_conflict_log_needs_owner_decision_not_blocking_implementation_start_but_unresolved",
-      "results_cross_track_conflict_log_process_notes_not_content_conflicts_flagging_for_the_record"
-    ],
-    "58": [
-      "results_stream_e_architecture_testing",
-      "results_stream_e_architecture_testing_fairness_base_py_design_track_17_code_delivered_ready_for_review",
-      "results_stream_e_architecture_testing_open_flags_requiring_owner_decision",
-      "results_stream_e_architecture_testing_stream_e_synthesis_architecture_testing_tracks_17_18",
-      "results_stream_e_architecture_testing_test_suite_architecture_track_18_grounded_against_live_repo_state",
-      "results_stream_e_architecture_testing_track_field_name_discrepancies_track_17_caught_and_worked_around"
-    ],
-    "59": [
       "weekly_reports_2026_08_31_weekly_report",
       "weekly_reports_2026_08_31_weekly_report_1_executive_summary",
       "weekly_reports_2026_08_31_weekly_report_2_weekly_reports_breakdown",
@@ -1034,434 +993,526 @@
       "weekly_reports_2026_08_31_weekly_report_5_related_master_documentation",
       "weekly_reports_2026_08_31_weekly_report_biasaperture_monthly_progress_weekly_reports_index"
     ],
+    "58": [
+      "agent",
+      "agent_1_non_negotiable_project_constraints",
+      "agent_2_directory_layout_module_ownership",
+      "agent_3_build_test_commands",
+      "agent_4_git_branching_strategy",
+      "agent_agent_md_developer_ai_agent_guidelines"
+    ],
+    "59": [
+      "agents",
+      "agents_1_non_negotiable_project_constraints",
+      "agents_2_directory_layout_module_ownership",
+      "agents_3_build_test_commands",
+      "agents_4_git_branching_strategy",
+      "agents_agent_md_developer_ai_agent_guidelines"
+    ],
     "60": [
-      "src_bias_aperture_report"
+      "antigravity",
+      "antigravity_antigravity_md_google_antigravity_gemini_coding_guidelines",
+      "antigravity_key_context_metadata",
+      "antigravity_mission_purpose",
+      "antigravity_operating_invariants_for_antigravity",
+      "antigravity_role_task_ownership_allocation"
     ],
     "61": [
-      "dev_logs_weekly_reports_2026_08_07_wk1_report",
-      "dev_logs_weekly_reports_2026_08_14_wk2_report",
-      "dev_logs_weekly_reports_2026_08_21_wk3_report",
-      "dev_logs_weekly_reports_2026_08_31_weekly_report",
-      "dev_logs_weekly_reports_2026_08_31_wk4_report",
-      "docs_biasaperture_at",
-      "docs_pre_proposal_reading_guide",
-      "docs_proposal_defense_guide",
-      "docs_research_claim_ledger_md",
-      "docs_research_high_level_synthesis"
+      "docs_proposal_defense_guide_8_mock_grilling_checklist",
+      "docs_proposal_defense_guide_round_1_foundations_scope_5_min",
+      "docs_proposal_defense_guide_round_2_technical_statistical_depth_10_min",
+      "docs_proposal_defense_guide_round_3_novelty_integration_defense_5_min",
+      "docs_proposal_defense_guide_round_4_feasibility_risks_roadmap_5_min",
+      "docs_proposal_defense_guide_round_5_rapid_fire_metrics_constants_3_min"
     ],
     "62": [
-      "src_bias_aperture_fairness_backends_crossvalidationorchestrator_run",
-      "src_bias_aperture_fairness_backends_divergencealert",
-      "src_bias_aperture_fairness_backends_py_metricresult",
-      "src_bias_aperture_fairness_backends_rationale_953",
-      "src_bias_aperture_fairness_backends_rationale_989"
+      "github_pull_request_template",
+      "github_pull_request_template_changes_made",
+      "github_pull_request_template_checklist",
+      "github_pull_request_template_purpose",
+      "github_pull_request_template_related_issues",
+      "github_pull_request_template_testing_verification"
     ],
     "63": [
+      "research_low_level_specification",
+      "research_mid_level_architecture",
+      "research_mid_level_architecture_1_system_topology_component_overview",
+      "research_mid_level_architecture_3_comprehensive_testing_verification_architecture",
+      "research_mid_level_architecture_biasaperture_research_sprint_mid_level_architectural_design",
+      "weekly_reports_2026_08_31_wk4_report"
+    ],
+    "64": [
+      "results_cross_track_conflict_log",
+      "results_cross_track_conflict_log_blocking_needed_before_wp4_implementation_starts",
+      "results_cross_track_conflict_log_cross_track_conflict_discrepancy_log_biasaperture_20_track_research_sprint",
+      "results_cross_track_conflict_log_documentation_data_corrections_needed_not_architectural_but_currently_wrong_in_project_docs",
+      "results_cross_track_conflict_log_needs_owner_decision_not_blocking_implementation_start_but_unresolved",
+      "results_cross_track_conflict_log_process_notes_not_content_conflicts_flagging_for_the_record"
+    ],
+    "65": [
+      "results_stream_e_architecture_testing",
+      "results_stream_e_architecture_testing_fairness_base_py_design_track_17_code_delivered_ready_for_review",
+      "results_stream_e_architecture_testing_open_flags_requiring_owner_decision",
+      "results_stream_e_architecture_testing_stream_e_synthesis_architecture_testing_tracks_17_18",
+      "results_stream_e_architecture_testing_test_suite_architecture_track_18_grounded_against_live_repo_state",
+      "results_stream_e_architecture_testing_track_field_name_discrepancies_track_17_caught_and_worked_around"
+    ],
+    "66": [
+      "weekly_reports_2026_08_31_wk4_report_1_executive_summary_objectives",
+      "weekly_reports_2026_08_31_wk4_report_2_work_packages_milestone_mapping",
+      "weekly_reports_2026_08_31_wk4_report_4_git_commit_provenance_week_4",
+      "weekly_reports_2026_08_31_wk4_report_5_master_to_dos_remaining_roadmap",
+      "weekly_reports_2026_08_31_wk4_report_biasaperture_weekly_project_report_wk4",
+      "weekly_reports_2026_08_31_wk4_report_key_objectives"
+    ],
+    "67": [
+      "weekly_reports_2026_08_31_wk4_report_3_1_20_track_parallel_research_sprint_3_level_syntheses",
+      "weekly_reports_2026_08_31_wk4_report_3_2_dataset_profiling_empirical_discoveries",
+      "weekly_reports_2026_08_31_wk4_report_3_3_native_aif360_backend_harmonization_src_bias_aperture_fairness_backends_py",
+      "weekly_reports_2026_08_31_wk4_report_3_4_exact_additive_shapley_surrogate_explainability_src_bias_aperture_explainability_py",
+      "weekly_reports_2026_08_31_wk4_report_3_5_test_suite_code_quality_55_55_tests_passing",
+      "weekly_reports_2026_08_31_wk4_report_3_detailed_accomplishments_technical_highlights"
+    ],
+    "68": [
+      "bias_aperture_at_md",
+      "bias_aperture_fairness_backends",
+      "dev_logs_2026_08_31_session_walkthrough_audit_and_sync",
+      "dev_logs_2026_08_31_task_division_and_roadmap_audit",
+      "dev_logs_2026_09_01_session_clarity_and_task_prioritization"
+    ],
+    "69": [
       "research_research_tracks_track_01_fairface_dataset_md",
       "research_results_stream_a_data_pipeline_md",
       "research_tracks_track_01_fairface_dataset",
       "research_tracks_track_01_fairface_dataset_instructions",
       "research_tracks_track_01_fairface_dataset_prompt"
     ],
-    "64": [
+    "70": [
       "results_stream_a_data_pipeline",
       "results_stream_a_data_pipeline_locked_findings_verified_against_primary_source_safe_to_build_on",
       "results_stream_a_data_pipeline_open_flags_requiring_owner_decision_not_resolved_by_any_track",
       "results_stream_a_data_pipeline_stream_a_synthesis_data_pipeline_tracks_01_04",
       "results_stream_a_data_pipeline_validation_architecture_track_03_ready_to_implement_against_track_01_04_s_confirmed_column_names"
     ],
-    "65": [
+    "71": [
       "results_stream_f_defense_regulatory",
       "results_stream_f_defense_regulatory_competitor_analysis_track_20_7_tools_surveyed_live_verified",
       "results_stream_f_defense_regulatory_nist_ai_rmf_mapping_track_19",
       "results_stream_f_defense_regulatory_open_flags_requiring_owner_decision",
       "results_stream_f_defense_regulatory_stream_f_synthesis_defense_regulatory_tracks_19_20"
     ],
-    "66": [
-      "src_tests_init"
+    "72": [
+      "src_bias_aperture_data_ingestion_dataingestionpipeline_compute_cohort_profile",
+      "src_bias_aperture_data_ingestion_rationale_127",
+      "src_bias_aperture_data_ingestion_rationale_502",
+      "src_bias_aperture_data_ingestion_subgroupcohortprofile",
+      "src_tests_test_data_ingestion_test_cohort_profile_contingency_support"
     ],
-    "67": [
-      "tisha_manandhar"
-    ],
-    "68": [
+    "73": [
       "data_readme",
       "data_readme_data_directory_layout",
       "data_readme_directory_structure",
       "data_readme_sourcing_the_fairface_benchmark_fr_001"
     ],
-    "69": [
+    "74": [
+      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_3_master_to_dos_complete_task_breakdown",
+      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_priority_1_empirical_benchmark_execution_start_now",
+      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_priority_2_compliance_data_validation_parallel_with_p1",
+      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_priority_3_defense_finalization_after_p1_p2"
+    ],
+    "75": [
+      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_5_execution_plan_timeline",
+      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_week_of_2026_09_01_this_week_p1_execution",
+      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_week_of_2026_09_08_next_week_p2_execution",
+      "dev_logs_2026_09_01_session_clarity_and_task_prioritization_week_of_2026_09_15_following_week_p3_execution"
+    ],
+    "76": [
       "docs_fellowship_aif_literature_review_guidelines_literature_review_guidelines",
       "docs_fellowship_aif_project_requirement_templates_project_requirement_templates",
       "docs_fellowship_biasaperture_literature_review_literature_review",
       "docs_fellowship_biasaperture_user_requirement_document_user_requirement_document"
     ],
-    "70": [
+    "77": [
       "docs_literature_review_matrix_buolamwini_gebru_2018",
       "docs_literature_review_matrix_karkkainen_joo_2021",
       "docs_schema_lock_m1_fairface_resnet34",
       "docs_schema_lock_m1_internal_schema"
     ],
-    "71": [
+    "78": [
       "docs_literature_review_matrix_hardt_et_al_2016",
       "docs_literature_review_matrix_watkins_et_al_2022",
       "docs_schema_lock_m1_constants",
       "docs_schema_lock_m1_detection_engine_output"
     ],
-    "72": [
+    "79": [
       "research_tracks_track_02_utkface_comparison",
       "research_tracks_track_02_utkface_comparison_instructions",
       "research_tracks_track_02_utkface_comparison_prompt",
       "research_tracks_track_02_utkface_comparison_track_02_utkface_comparison_risk_assessment"
     ],
-    "73": [
+    "80": [
       "research_tracks_track_03_data_validation",
       "research_tracks_track_03_data_validation_instructions",
       "research_tracks_track_03_data_validation_prompt",
       "research_tracks_track_03_data_validation_track_03_pandas_data_validation_patterns"
     ],
-    "74": [
+    "81": [
       "research_tracks_track_04_predict_analysis",
       "research_tracks_track_04_predict_analysis_instructions",
       "research_tracks_track_04_predict_analysis_prompt",
       "research_tracks_track_04_predict_analysis_track_04_fairface_predict_py_source_code_analysis"
     ],
-    "75": [
+    "82": [
       "research_tracks_track_05_jinja2_templates",
       "research_tracks_track_05_jinja2_templates_instructions",
       "research_tracks_track_05_jinja2_templates_prompt",
       "research_tracks_track_05_jinja2_templates_track_05_jinja2_html_report_template_patterns"
     ],
-    "76": [
+    "83": [
       "research_tracks_track_06_model_cards",
       "research_tracks_track_06_model_cards_instructions",
       "research_tracks_track_06_model_cards_prompt",
       "research_tracks_track_06_model_cards_track_06_model_cards_specification_deep_dive"
     ],
-    "77": [
+    "84": [
       "research_tracks_track_07_fairface_datasheet",
       "research_tracks_track_07_fairface_datasheet_instructions",
       "research_tracks_track_07_fairface_datasheet_prompt",
       "research_tracks_track_07_fairface_datasheet_track_07_fairface_datasheet_draft"
     ],
-    "78": [
+    "85": [
       "research_tracks_track_08_eu_ai_act",
       "research_tracks_track_08_eu_ai_act_instructions",
       "research_tracks_track_08_eu_ai_act_prompt",
       "research_tracks_track_08_eu_ai_act_track_08_eu_ai_act_article_10_regulatory_mapping"
     ],
-    "79": [
+    "86": [
       "research_tracks_track_09_fairlearn",
       "research_tracks_track_09_fairlearn_instructions",
       "research_tracks_track_09_fairlearn_prompt",
       "research_tracks_track_09_fairlearn_track_09_fairlearn_api_metricframe_core_four"
     ],
-    "80": [
+    "87": [
       "research_tracks_track_10_aif360",
       "research_tracks_track_10_aif360_instructions",
       "research_tracks_track_10_aif360_prompt",
       "research_tracks_track_10_aif360_track_10_aif360_api_binarylabeldataset_cross_validation"
     ],
-    "81": [
+    "88": [
       "research_tracks_track_11_bootstrap_ci",
       "research_tracks_track_11_bootstrap_ci_instructions",
       "research_tracks_track_11_bootstrap_ci_prompt",
       "research_tracks_track_11_bootstrap_ci_track_11_bootstrap_confidence_intervals"
     ],
-    "82": [
+    "89": [
       "research_tracks_track_12_chi_squared",
       "research_tracks_track_12_chi_squared_instructions",
       "research_tracks_track_12_chi_squared_prompt",
       "research_tracks_track_12_chi_squared_track_12_chi_squared_significance_testing"
     ],
-    "83": [
+    "90": [
       "research_tracks_track_13_disparate_impact",
       "research_tracks_track_13_disparate_impact_instructions",
       "research_tracks_track_13_disparate_impact_prompt",
       "research_tracks_track_13_disparate_impact_track_13_disparate_impact_ratio_implementation_legal_context"
     ],
-    "84": [
+    "91": [
       "research_tracks_track_14_eod_eop",
       "research_tracks_track_14_eod_eop_instructions",
       "research_tracks_track_14_eod_eop_prompt",
       "research_tracks_track_14_eod_eop_track_14_equalized_odds_equal_opportunity_theory_to_code"
     ],
-    "85": [
+    "92": [
       "research_tracks_track_15_shap_integration",
       "research_tracks_track_15_shap_integration_instructions",
       "research_tracks_track_15_shap_integration_prompt",
       "research_tracks_track_15_shap_integration_track_15_shap_for_image_classifiers"
     ],
-    "86": [
+    "93": [
       "research_tracks_track_16_proxy_detection",
       "research_tracks_track_16_proxy_detection_instructions",
       "research_tracks_track_16_proxy_detection_prompt",
       "research_tracks_track_16_proxy_detection_track_16_proxy_variable_detection_via_shap"
     ],
-    "87": [
+    "94": [
       "research_tracks_track_17_strategy_pattern",
       "research_tracks_track_17_strategy_pattern_instructions",
       "research_tracks_track_17_strategy_pattern_prompt",
       "research_tracks_track_17_strategy_pattern_track_17_strategy_pattern_for_dual_fairness_backends"
     ],
-    "88": [
+    "95": [
       "research_tracks_track_18_pytest_patterns",
       "research_tracks_track_18_pytest_patterns_instructions",
       "research_tracks_track_18_pytest_patterns_prompt",
       "research_tracks_track_18_pytest_patterns_track_18_pytest_testing_patterns_for_fairness_metrics"
     ],
-    "89": [
+    "96": [
       "research_tracks_track_19_nist_rmf",
       "research_tracks_track_19_nist_rmf_instructions",
       "research_tracks_track_19_nist_rmf_prompt",
       "research_tracks_track_19_nist_rmf_track_19_nist_ai_rmf_detailed_mapping"
     ],
-    "90": [
+    "97": [
       "research_tracks_track_20_competitor_analysis",
       "research_tracks_track_20_competitor_analysis_instructions",
       "research_tracks_track_20_competitor_analysis_prompt",
       "research_tracks_track_20_competitor_analysis_track_20_competitor_deep_analysis"
     ],
-    "91": [
+    "98": [
+      "src_tests_test_data_ingestion_py_fixture",
+      "src_tests_test_data_ingestion_valid_csv",
+      "src_tests_test_data_ingestion_valid_dataframe",
+      "src_tests_test_data_ingestion_valid_json"
+    ],
+    "99": [
       "antigravity_sync_ps1",
       "antigravity_uv",
       "pre_commit_config_ruff"
     ],
-    "92": [
+    "100": [
       "docs_research_pdf_high_level_synthesis_document",
       "docs_research_pdf_low_level_specification_document",
       "docs_research_pdf_mid_level_architecture_document"
     ],
-    "93": [
+    "101": [
       "research_research_tracks_track_19_nist_rmf_mapping",
       "research_research_tracks_track_20_competitor_analysis",
       "stream_f_synthesis"
     ],
-    "94": [
-      "scripts_run_fairface_inference",
-      "scripts_run_fairface_inference_main",
-      "scripts_run_fairface_inference_rationale_256"
-    ],
-    "95": [
+    "102": [
       "agent_biasaperture",
       "src_bias_aperture_fairness_package"
     ],
-    "96": [
+    "103": [
       "context_feed_literature_review_matrix",
       "context_feed_literature_review_matrix_biasaperture_literature_review_matrix"
     ],
-    "97": [
+    "104": [
       "docs_changelog",
       "docs_changelog_biasaperture"
     ],
-    "98": [
+    "105": [
       "docs_literature_review_matrix",
       "docs_literature_review_matrix_biasaperture_literature_review_matrix"
     ],
-    "99": [
+    "106": [
       "docs_literature_review_matrix_gebru_et_al_2018",
       "docs_literature_review_matrix_mitchell_et_al_2019"
     ],
-    "100": [
+    "107": [
       "github_copilot_instructions",
       "github_copilot_instructions_graphify"
     ],
-    "101": [
+    "108": [
       "low_level_spec_bca",
       "mid_level_arch_proxy"
     ],
-    "102": [
+    "109": [
       "research_context_feed_context_md",
       "research_context_feed_runner_guide_md"
     ],
-    "103": [
-      "research_results_cross_track_conflict_log_md",
-      "research_results_stream_c_fairness_engine_md"
-    ],
-    "104": [
+    "110": [
       "scripts_download_fairface_data",
       "scripts_download_fairface_data_invoke_googledrivefiledownload"
     ],
-    "105": [
-      "aaradhya_dev_tamrakar"
-    ],
-    "106": [
-      "aif360_library"
-    ],
-    "108": [
-      "data_exploration_fairface"
-    ],
-    "109": [
-      "data_exploration_utkface"
-    ],
-    "110": [
-      "docs_fellowship_research_papers_list_pdf"
-    ],
     "111": [
-      "docs_literature_review_matrix_buscemi_et_al_2025"
+      "scripts_run_fairface_inference",
+      "scripts_run_fairface_inference_main"
     ],
     "112": [
-      "docs_literature_review_matrix_dehdashtian_et_al_2024"
+      "aif360_library"
     ],
     "113": [
-      "docs_literature_review_matrix_kurian_et_al_2024"
+      "data_exploration_fairface"
     ],
     "114": [
-      "fairlearn_library"
+      "data_exploration_utkface"
     ],
     "115": [
-      "mid_level_arch_orchestrator"
+      "docs_fellowship_research_papers_list_pdf"
     ],
     "116": [
-      "pkg_bias_aperture"
+      "docs_literature_review_matrix_buscemi_et_al_2025"
     ],
     "117": [
-      "pre_commit_config_hooks"
+      "docs_literature_review_matrix_dehdashtian_et_al_2024"
     ],
     "118": [
-      "report_at_fuse_aif"
+      "docs_literature_review_matrix_kurian_et_al_2024"
     ],
     "119": [
-      "report_src_images_logo_png"
+      "eu_ai_act_article_10"
     ],
     "120": [
-      "research_research_tracks_context_metric_result"
+      "fairlearn_library"
     ],
     "121": [
-      "research_research_tracks_track_03_data_validation"
+      "mid_level_arch_orchestrator"
     ],
     "122": [
-      "research_research_tracks_track_04_predict_analysis"
+      "pkg_bias_aperture"
     ],
     "123": [
-      "research_research_tracks_track_13_disparate_impact"
+      "pre_commit_config_hooks"
     ],
     "124": [
-      "research_research_tracks_track_14_eod_eop"
+      "report_at_fuse_aif"
     ],
     "125": [
-      "scripts_fairface_images_setup"
+      "report_src_images_logo_png"
     ],
     "126": [
-      "session_2_summary"
+      "research_research_tracks_context_metric_result"
     ],
     "127": [
-      "src_requirements_txt"
+      "research_research_tracks_track_03_data_validation"
+    ],
+    "128": [
+      "research_research_tracks_track_04_predict_analysis"
     ],
     "129": [
-      "track_02_utkface"
+      "research_research_tracks_track_13_disparate_impact"
     ],
     "130": [
+      "research_research_tracks_track_14_eod_eop"
+    ],
+    "131": [
+      "research_results_cross_track_conflict_log"
+    ],
+    "132": [
+      "research_results_stream_c_fairness_engine_md"
+    ],
+    "133": [
+      "scripts_fairface_images_setup"
+    ],
+    "134": [
+      "src_bias_aperture_init"
+    ],
+    "135": [
+      "src_bias_aperture_report"
+    ],
+    "136": [
+      "src_requirements_txt"
+    ],
+    "137": [
+      "src_tests_init"
+    ],
+    "138": [
+      "track_02_utkface"
+    ],
+    "139": [
       "verification_guide_scrutiny"
     ]
   },
   "cohesion": {
-    "0": 0.2222222222222222,
-    "1": 0.0796221322537112,
-    "2": 0.05263157894736842,
-    "3": 0.06218487394957983,
-    "4": 0.058823529411764705,
-    "5": 0.15384615384615385,
-    "6": 0.14,
-    "7": 0.14,
-    "8": 0.2222222222222222,
-    "9": 0.08333333333333333,
-    "10": 0.1695906432748538,
-    "11": 0.09090909090909091,
-    "12": 0.09523809523809523,
-    "13": 0.14285714285714285,
-    "14": 0.043478260869565216,
-    "15": 0.15384615384615385,
-    "16": 0.16666666666666666,
-    "17": 0.2,
-    "18": 0.2857142857142857,
-    "19": 0.3888888888888889,
-    "20": 0.058018018018018015,
-    "21": 0.25,
-    "22": 0.14285714285714285,
-    "23": 0.14285714285714285,
-    "24": 0.21978021978021978,
-    "25": 0.2857142857142857,
-    "26": 0.2857142857142857,
-    "27": 0.16666666666666666,
-    "28": 0.0504828797190518,
-    "29": 0.080338266384778,
-    "30": 0.25,
-    "31": 0.18181818181818182,
-    "32": 0.18181818181818182,
-    "33": 0.18181818181818182,
-    "34": 0.18181818181818182,
-    "35": 0.18181818181818182,
-    "36": 0.3333333333333333,
-    "37": 0.3333333333333333,
-    "38": 0.18181818181818182,
-    "39": 0.2,
-    "40": 0.3333333333333333,
-    "41": 0.2222222222222222,
-    "42": 0.6666666666666666,
-    "43": 0.2222222222222222,
-    "44": 0.2222222222222222,
-    "45": 0.6666666666666666,
+    "0": 0.052393857271906055,
+    "1": 0.06578947368421052,
+    "2": 0.06218487394957983,
+    "3": 0.058823529411764705,
+    "4": 0.10227272727272728,
+    "5": 0.06666666666666667,
+    "6": 0.23,
+    "7": 0.08333333333333333,
+    "8": 0.09090909090909091,
+    "9": 0.09523809523809523,
+    "10": 0.14035087719298245,
+    "11": 0.13450292397660818,
+    "12": 0.11764705882352941,
+    "13": 0.1503267973856209,
+    "14": 0.19117647058823528,
+    "15": 0.13333333333333333,
+    "16": 0.19047619047619047,
+    "17": 0.14285714285714285,
+    "18": 0.14285714285714285,
+    "19": 0.14285714285714285,
+    "20": 0.14285714285714285,
+    "21": 0.16666666666666666,
+    "22": 0.2878787878787879,
+    "23": 0.18181818181818182,
+    "24": 0.18181818181818182,
+    "25": 0.18181818181818182,
+    "26": 0.2,
+    "27": 0.2545454545454545,
+    "28": 0.18181818181818182,
+    "29": 0.18181818181818182,
+    "30": 0.18181818181818182,
+    "31": 0.2,
+    "32": 0.35555555555555557,
+    "33": 0.2,
+    "34": 0.2,
+    "35": 0.2222222222222222,
+    "36": 0.2777777777777778,
+    "37": 0.2222222222222222,
+    "38": 0.2222222222222222,
+    "39": 0.2222222222222222,
+    "40": 0.2222222222222222,
+    "41": 0.3888888888888889,
+    "42": 0.25,
+    "43": 0.25,
+    "44": 0.25,
+    "45": 0.25,
     "46": 0.25,
-    "47": 1.0,
+    "47": 0.25,
     "48": 0.25,
-    "49": 0.25,
+    "49": 0.2857142857142857,
     "50": 0.32142857142857145,
     "51": 0.2857142857142857,
     "52": 0.2857142857142857,
-    "53": 0.3333333333333333,
-    "54": 0.3333333333333333,
-    "55": 0.3333333333333333,
-    "56": 0.3333333333333333,
-    "57": 0.3333333333333333,
+    "53": 0.2857142857142857,
+    "54": 0.2857142857142857,
+    "55": 0.2857142857142857,
+    "56": 0.38095238095238093,
+    "57": 0.2857142857142857,
     "58": 0.3333333333333333,
-    "59": 0.2857142857142857,
-    "60": 1.0,
-    "61": 0.24444444444444444,
-    "62": 0.4,
-    "63": 0.4,
-    "64": 0.4,
-    "65": 0.4,
-    "66": 1.0,
-    "67": 1.0,
-    "68": 0.5,
-    "69": 0.5,
-    "70": 0.6666666666666666,
-    "71": 0.5,
-    "72": 0.5,
+    "59": 0.3333333333333333,
+    "60": 0.3333333333333333,
+    "61": 0.3333333333333333,
+    "62": 0.3333333333333333,
+    "63": 0.3333333333333333,
+    "64": 0.3333333333333333,
+    "65": 0.3333333333333333,
+    "66": 0.3333333333333333,
+    "67": 0.3333333333333333,
+    "68": 0.4,
+    "69": 0.4,
+    "70": 0.4,
+    "71": 0.4,
+    "72": 0.4,
     "73": 0.5,
     "74": 0.5,
     "75": 0.5,
     "76": 0.5,
-    "77": 0.8333333333333334,
+    "77": 0.6666666666666666,
     "78": 0.5,
     "79": 0.5,
     "80": 0.5,
     "81": 0.5,
     "82": 0.5,
     "83": 0.5,
-    "84": 0.5,
+    "84": 0.8333333333333334,
     "85": 0.5,
     "86": 0.5,
     "87": 0.5,
     "88": 0.5,
     "89": 0.5,
-    "90": 0.8333333333333334,
-    "91": 0.6666666666666666,
-    "92": 0.6666666666666666,
-    "93": 0.6666666666666666,
-    "94": 0.6666666666666666,
-    "95": 1.0,
-    "96": 1.0,
-    "97": 1.0,
-    "98": 1.0,
-    "99": 1.0,
-    "100": 1.0,
-    "101": 1.0,
+    "90": 0.5,
+    "91": 0.5,
+    "92": 0.5,
+    "93": 0.5,
+    "94": 0.5,
+    "95": 0.5,
+    "96": 0.5,
+    "97": 0.8333333333333334,
+    "98": 0.5,
+    "99": 0.6666666666666666,
+    "100": 0.6666666666666666,
+    "101": 0.6666666666666666,
     "102": 1.0,
     "103": 1.0,
     "104": 1.0,
     "105": 1.0,
     "106": 1.0,
+    "107": 1.0,
     "108": 1.0,
     "109": 1.0,
     "110": 1.0,
@@ -1482,8 +1533,18 @@
     "125": 1.0,
     "126": 1.0,
     "127": 1.0,
+    "128": 1.0,
     "129": 1.0,
-    "130": 1.0
+    "130": 1.0,
+    "131": 1.0,
+    "132": 1.0,
+    "133": 1.0,
+    "134": 1.0,
+    "135": 1.0,
+    "136": 1.0,
+    "137": 1.0,
+    "138": 1.0,
+    "139": 1.0
   },
   "gods": [
     {
@@ -1502,14 +1563,14 @@
       "degree": 21
     },
     {
-      "id": "src_bias_aperture_schema_metricresult",
-      "label": "MetricResult",
+      "id": "docs_proposal_defense_guide_2_slide_deck_outline_15_20_slides",
+      "label": "2. Slide Deck Outline (15\u201320 slides)",
       "degree": 21
     },
     {
-      "id": "docs_proposal_defense_guide_2_slide_deck_outline_15_20_slides",
-      "label": "2. Slide Deck Outline (15–20 slides)",
-      "degree": 21
+      "id": "src_bias_aperture_schema_metricresult",
+      "label": "MetricResult",
+      "degree": 20
     },
     {
       "id": "src_bias_aperture_schema_subjectrecord",
@@ -1524,7 +1585,7 @@
     {
       "id": "research_context_feed_schema_metricresult",
       "label": "MetricResult",
-      "degree": 19
+      "degree": 18
     },
     {
       "id": "context_feed_biasaperture_at_biasaperture_at_v6",
@@ -1532,9 +1593,9 @@
       "degree": 17
     },
     {
-      "id": "src_bias_aperture_data_ingestion_validationmode",
-      "label": "ValidationMode",
-      "degree": 14
+      "id": "bias_aperture_root",
+      "label": "BiasAperture",
+      "degree": 16
     }
   ],
   "surprises": [
@@ -1547,7 +1608,7 @@
       ],
       "confidence": "INFERRED",
       "relation": "references",
-      "why": "inferred connection - not explicitly stated in source; crosses file types (doc ↔ image); connects across different repos/directories; peripheral node `High-Level Architecture Diagram` unexpectedly reaches hub `BiasAperture-AT Project Log`"
+      "why": "inferred connection - not explicitly stated in source; crosses file types (doc \u2194 image); connects across different repos/directories; peripheral node `High-Level Architecture Diagram` unexpectedly reaches hub `BiasAperture-AT Project Log`"
     },
     {
       "source": "Project Gantt Chart",
@@ -1558,7 +1619,7 @@
       ],
       "confidence": "INFERRED",
       "relation": "references",
-      "why": "inferred connection - not explicitly stated in source; crosses file types (doc ↔ image); connects across different repos/directories; peripheral node `Project Gantt Chart` unexpectedly reaches hub `BiasAperture-AT Project Log`"
+      "why": "inferred connection - not explicitly stated in source; crosses file types (doc \u2194 image); connects across different repos/directories; peripheral node `Project Gantt Chart` unexpectedly reaches hub `BiasAperture-AT Project Log`"
     },
     {
       "source": "System Workflow Flowchart",
@@ -1569,7 +1630,7 @@
       ],
       "confidence": "INFERRED",
       "relation": "references",
-      "why": "inferred connection - not explicitly stated in source; crosses file types (doc ↔ image); connects across different repos/directories; peripheral node `System Workflow Flowchart` unexpectedly reaches hub `BiasAperture-AT Project Log`"
+      "why": "inferred connection - not explicitly stated in source; crosses file types (doc \u2194 image); connects across different repos/directories; peripheral node `System Workflow Flowchart` unexpectedly reaches hub `BiasAperture-AT Project Log`"
     },
     {
       "source": "BiasAperture-AT Project Log",
@@ -1580,13 +1641,13 @@
       ],
       "confidence": "EXTRACTED",
       "relation": "references",
-      "why": "crosses file types (doc ↔ paper); connects across different repos/directories; peripheral node `BiasAperture Proposal Report` unexpectedly reaches hub `BiasAperture-AT Project Log`"
+      "why": "crosses file types (doc \u2194 paper); connects across different repos/directories; peripheral node `BiasAperture Proposal Report` unexpectedly reaches hub `BiasAperture-AT Project Log`"
     },
     {
-      "source": "ReportContext",
-      "target": "MetricResult",
+      "source": "DataIngestionPipeline",
+      "target": "SubjectRecord",
       "source_files": [
-        "src/bias_aperture/report/generator.py",
+        "src/bias_aperture/data_ingestion.py",
         "research/context feed/schema.py"
       ],
       "confidence": "INFERRED",
@@ -1594,41 +1655,8 @@
       "why": "inferred connection - not explicitly stated in source; connects across different repos/directories; bridges separate communities"
     }
   ],
-  "questions": [
-    {
-      "type": "bridge_node",
-      "question": "Why does `SubjectRecord` connect `Model Interface Layer` to `Fairness Backend Orchestration`, `Base Fairness Classes`, `Mock Testing Data`, `Data Ingestion Pipeline`, `Explainability Engine`?",
-      "why": "High betweenness centrality (0.020) - this node is a cross-community bridge."
-    },
-    {
-      "type": "bridge_node",
-      "question": "Why does `Monthly Progress & Weekly Reports Index (2026-08-31)` connect `Project Report Index` to `Project Audit and Tasks`?",
-      "why": "High betweenness centrality (0.015) - this node is a cross-community bridge."
-    },
-    {
-      "type": "bridge_node",
-      "question": "Why does `ShapExplainerEngine` connect `Explainability Engine` to `CLI and Report Generation`, `Data Ingestion Pipeline`, `Model Interface Layer`?",
-      "why": "High betweenness centrality (0.014) - this node is a cross-community bridge."
-    },
-    {
-      "type": "verify_inferred",
-      "question": "Are the 2 inferred relationships involving `DataIngestionPipeline` (e.g. with `SubjectRecord` and `test_cohort_profile_contingency_support()`) actually correct?",
-      "why": "`DataIngestionPipeline` has 2 INFERRED edges - model-reasoned connections that need verification."
-    },
-    {
-      "type": "verify_inferred",
-      "question": "Are the 22 inferred relationships involving `SubjectRecord` (e.g. with `InProcessInterface` and `ModelInterface`) actually correct?",
-      "why": "`SubjectRecord` has 22 INFERRED edges - model-reasoned connections that need verification."
-    },
-    {
-      "type": "isolated_nodes",
-      "question": "What connects `2.3. Module 3: Statistical Rigor Engine (`fairness/statistics.py`)`, `2.4. Module 4: Targeted Explainability & Proxy Detection (`explainability.py`)`, `2.5. Module 5: Compliance Report Generation (`report/`)` to the rest of the system?",
-      "why": "482 weakly-connected nodes found - possible documentation gaps or missing edges."
-    },
-    {
-      "type": "low_cohesion",
-      "question": "Should `CLI and Report Generation` be split into smaller, more focused modules?",
-      "why": "Cohesion score 0.0796221322537112 - nodes in this community are weakly interconnected."
-    }
-  ]
+  "tokens": {
+    "input": 85024,
+    "output": 6405
+  }
 }

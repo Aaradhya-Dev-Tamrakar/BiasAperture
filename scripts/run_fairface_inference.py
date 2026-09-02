@@ -7,13 +7,12 @@ a schema-aligned predictions CSV for the bias audit engine.
 
 Usage:
     uv run python scripts/run_fairface_inference.py
-    uv run python scripts/run_fairface_inference.py --fairface-root ../FairFace --batch-size 32 --device cuda
+    uv run python scripts/run_fairface_inference.py --fairface-root data/fairface-img-margin025-trainval --batch-size 32 --device cuda
 
 Requirements:
-    - FairFace repo cloned (../FairFace)
-    - FairFace validation images in: ../FairFace/faces/val/
-    - Label CSV in: ../FairFace/data/fairface_label_val.csv
-    - predict.py in: ../FairFace/
+    - FairFace validation split in: data/fairface-img-margin025-trainval/
+    - Label CSV in: data/fairface-img-margin025-trainval/data/fairface_label_val.csv
+    - predict.py and checkpoint available from the configured FairFace source
 """
 
 import argparse
@@ -53,8 +52,8 @@ OUTPUT:
     parser.add_argument(
         "--fairface-root",
         type=Path,
-        default=Path(__file__).parent.parent / "FairFace",
-        help="Path to FairFace repository root (default: ../FairFace)"
+        default=Path(__file__).parent.parent / "data" / "fairface-img-margin025-trainval",
+        help="Path to FairFace data root (default: data/fairface-img-margin025-trainval)",
     )
     parser.add_argument(
         "--batch-size",
@@ -460,9 +459,9 @@ OUTPUT:
     print()
     print("Next: Run BiasAperture audit on predictions CSV")
     print()
-    print(f"  uv run python -m bias_aperture.cli audit \\")
-    print(f"    --predictions {output_csv} \\")
-    print(f"    --output report/audit_report.html \\")
+    print("  uv run python -m bias_aperture.cli \\")
+    print(f"    --predictions-file {output_csv} \\")
+    print("    --output-report report/audit_report.html \\")
     print(f"    --explain")
     print()
 

@@ -2,7 +2,7 @@
 
 ## Status: ✅ INFERENCE COMPLETE
 
-The validation inference was executed successfully and produced the verified predictions file at `data/processed/fairface_predictions_val.csv`.
+The validation inference was executed successfully and produced the verified predictions file at `data/processed/fairface_predictions_val.csv`. No additional image download or inference setup is required for the current repository state.
 
 **Verified evidence**:
 
@@ -26,14 +26,14 @@ The validation inference was executed successfully and produced the verified pre
 # After download completes:
 cd "path\to\FairFace"
 Expand-Archive -Path "fairface_val_padding0.25.zip" -DestinationPath "."
-# This creates: FairFace/face_images/val/ (or FairFace/faces/val/ depending on structure)
+# This creates: data/fairface-img-margin025-trainval/face_images/val/ (or faces/val)
 ```
 
 ### Step 3: Verify Structure
 
 ```powershell
 # Count images
-(Get-ChildItem 'FairFace/faces/val' -Recurse -Filter "*.jpg" | Measure-Object).Count
+(Get-ChildItem 'data/fairface-img-margin025-trainval/faces/val' -Recurse -Filter "*.jpg" | Measure-Object).Count
 # Should return: 10954
 ```
 
@@ -42,8 +42,8 @@ Expand-Archive -Path "fairface_val_padding0.25.zip" -DestinationPath "."
 ## Option 2: Direct Download with PowerShell (If Manual Download Fails)
 
 ```powershell
-# CD to FairFace directory
-cd "C:\Users\Aaradhya\Downloads\_Organized\Fuse AI Fellowship\Capstone Project\fuseai-fellowship\FairFace"
+# CD to the project root
+cd "C:\Users\Aaradhya\Downloads\_Organized\Fuse AI Fellowship\Capstone Project\fuseai-fellowship\BiasAperture-A-Diagnostic-Framework-for-Demographic-Bias-Auditing-in-Facial-Analysis-Models"
 
 # Download ZIP
 $GoogleDriveFileId = "1Z1RqRo0_JiavaZw2yzZG6WETdZQ8qX86"
@@ -93,16 +93,14 @@ FairFace/
 
 ```powershell
 cd "C:\Users\Aaradhya\Downloads\_Organized\Fuse AI Fellowship\Capstone Project\fuseai-fellowship"
-cd FairFace
-(Get-ChildItem 'faces/val' -Recurse -Filter "*.jpg" | Measure-Object).Count
+(Get-ChildItem 'data/fairface-img-margin025-trainval/faces/val' -Recurse -Filter "*.jpg" | Measure-Object).Count
 # Should return: 10954
 ```
 
 ### 2. Run Inference Pipeline
 
 ```powershell
-cd "..\BiasAperture-A-Diagnostic-Framework-for-Demographic-Bias-Auditing-in-Facial-Analysis-Models"
-uv run python scripts/run_fairface_inference.py --fairface-root ../FairFace
+uv run python scripts/run_fairface_inference.py --fairface-root data/fairface-img-margin025-trainval
 ```
 
 ### 3. Verify Output
@@ -129,9 +127,9 @@ Get-ChildItem 'FairFace' -Recurse -Directory -Filter "val" | Format-Table FullNa
 
 **Solution**: The extract may create intermediate folders. Ensure your directory structure matches:
 
-- `FairFace/faces/val/*.jpg` (10,954 files)
+- `data/fairface-img-margin025-trainval/faces/val/*.jpg` (10,954 files)
   OR
-- `FairFace/face_images/val/*.jpg` (10,954 files)
+- `data/fairface-img-margin025-trainval/face_images/val/*.jpg` (10,954 files)
 
 If it's the second, update the inference script path accordingly.
 

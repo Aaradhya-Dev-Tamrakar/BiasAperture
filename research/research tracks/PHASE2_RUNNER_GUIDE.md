@@ -3,6 +3,7 @@
 Continues the original `RUNNER_GUIDE.md` (20-track capstone sprint, tracks 01–20, now complete) into a second sprint: tracks 21–38, planning BiasAperture's evolution from capstone to full product.
 
 ## Execution model
+
 All 18 tasks already exist as real orchestrator MCP tasks, created under one parent epic:
 
 - **Epic:** `task_2026-09-02_002` — "BiasAperture Phase 2: Product Upgrade Sprint"
@@ -10,10 +11,13 @@ All 18 tasks already exist as real orchestrator MCP tasks, created under one par
 - See `PHASE2_TASK_MAP.md` for the track ↔ task_id mapping.
 
 Each of your 18 available users claims one task:
+
 ```
 claim_task(account="userN", task_id="task_2026-09-02_0XX")
 ```
+
 ...works the prompt embedded in that task's `spec` (also mirrored in the matching `track_NN_*.md` file here for readability), and hands off via:
+
 ```
 submit_checkpoint(task_id="task_2026-09-02_0XX", result_text="<summary + full markdown>")
 ```
@@ -31,6 +35,7 @@ If an executor is running manually in Claude Desktop instead of via the orchestr
 | **K** — Business / Go-to-Market & Regulatory Expansion | Pricing, licensing, regulatory coverage beyond EU AI Act | 36, 37, 38 |
 
 ## Status update (2026-09-02)
+
 - **Track 23 — dropped.** Do not claim. See `PHASE2_TASK_MAP.md` for full reasoning.
 - **Track 22 — parked/blocked.** Do not claim yet; holds until Tracks 25 and 36 land. See `PHASE2_TASK_MAP.md`.
 - 16 tracks are open to claim now.
@@ -38,6 +43,7 @@ If an executor is running manually in Claude Desktop instead of via the orchestr
 ## Priority order (if reviewing as they finish)
 
 ### 🔴 Phase 1 — Critical (read first)
+
 | Track | File | What it unlocks |
 |---|---|---|
 | 21 | `track_21_continuous_streaming_audit_mode.md` | Novelty differentiator #1, WP6 spec seed |
@@ -50,6 +56,7 @@ If an executor is running manually in Claude Desktop instead of via the orchestr
 | 36 | `track_36_regulatory_expansion_map_beyond_eu_ai_act.md` | Blocking for any non-EU client claim |
 
 ### 🟡 Phase 2 — Medium
+
 | Track | File |
 |---|---|
 | 23 | `track_23_cross_modal_schema_generalization_v2_architecture.md` |
@@ -63,6 +70,7 @@ If an executor is running manually in Claude Desktop instead of via the orchestr
 | 38 | `track_38_licensing_strategy_open_core_vs_commercial.md` |
 
 ## After all 18 complete — synthesis order
+
 1. Streams G (21–24) + K (36–38) → refresh `docs/BiasAperture_NOVELTY_INTEGRATION_DEFENSE.md` with a "Phase 2" section — do not overwrite the capstone defense, append.
 2. Stream H (25–28) → single "Product UI/UX Spec" doc; Track 26's proposal is the one that needs explicit Aaradhya/Tisha sign-off before anything is built.
 3. Stream I (29–32) → "Modular Architecture v2" doc, each proposal checked against schema.py for zero drift from the M1 lock.
@@ -70,6 +78,7 @@ If an executor is running manually in Claude Desktop instead of via the orchestr
 5. Joint review pass → cross_track_conflict_log-style pass over the 18 outputs before any implementation branch is opened (e.g. `feat/phase2-*`).
 
 ## Checklist
+
 - [ ] All 18 results captured via `submit_checkpoint` (or saved to `results/` if run manually)
 - [ ] Track 25 (dashboard architecture) decision made before starting Track 32 implementation
 - [ ] Track 26 (drill-down UX) reviewed and signed off by Aaradhya/Tisha before implementation
