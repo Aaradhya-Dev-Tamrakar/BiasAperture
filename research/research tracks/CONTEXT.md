@@ -9,6 +9,14 @@ You are researching for **BiasAperture**, a demographic bias auditing platform f
 - **Classifier**: ResNet-34 pretrained on FairFace (dchen236/FairFace, race_7 variant)
 - **Regulatory**: EU AI Act Article 10 + NIST AI RMF (AI 100-1)
 
+## Phase-2 Research
+
+The original capstone sprint covers Tracks 01–20. The separate Phase-2 Product
+Upgrade Sprint covers Tracks 21–38; use `PHASE2_CONTEXT.md` and
+`PHASE2_RUNNER_GUIDE.md` for its additive rules, dependencies, and status. The
+merged findings are in `../results/synth_phase2.md`. Track 22 is parked and
+Track 23 is dropped; 16 tracks are currently available to claim.
+
 ## Core Four Disparity Metrics
 
 1. `demographic_parity_difference`

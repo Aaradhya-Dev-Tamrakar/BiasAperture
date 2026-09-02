@@ -31,7 +31,7 @@ BiasAperture bridges this operational gap. It consumes facial image datasets and
                     ▼
      [ 3. Targeted Explainability ] ─────────► Triggered on Flagged Disparities (p < α, n ≥ 30)
                     │                         ├── SHAP (PartitionExplainer / GradientExplainer)
-                    │                         └── Proxy Detection (Attribution Shift + ITA Skin Tone)
+                    │                         └── Current proxy evidence: demographic-dummy surrogate attribution
                     ▼
      [ 4. Compliance Report Generator ] ─────► Self-Contained HTML (Mitchell Model Card + Gebru Datasheet)
                                               └── Regulatory Tracing: EU AI Act Art. 10 & NIST AI RMF

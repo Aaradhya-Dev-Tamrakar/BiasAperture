@@ -598,7 +598,7 @@ src/bias_aperture/
 │   ├── orchestrator.py          # CrossValidationOrchestrator
 │   ├── statistics.py            # BCa bootstrap, Chi-squared, Holm-Bonferroni
 │   └── exceptions.py            # Custom exceptions
-├── explainability.py            # SHAP triggers + ITA skin tone
+├── explainability.py            # Demographic-dummy surrogate attribution
 ├── cli.py                       # High-level CLI facade
 └── __init__.py
 
@@ -679,10 +679,8 @@ Step 6: Confidence
 
 Step 7: Explainability
   Conditional trigger: p < 0.05 AND n ≥ 30
-  ├─ SHAP pixel attribution
-  ├─ Face parsing (BiSeNet)
-  └─ ITA skin-tone analysis
-  → PNG base64 artifacts
+   └─ Demographic-dummy surrogate attribution
+   → Attribution evidence for the report
 
 Step 8: Report
   Jinja2 compilation

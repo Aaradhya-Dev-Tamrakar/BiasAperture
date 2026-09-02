@@ -68,7 +68,10 @@ The general workflow is:
 
 ## Explainability layer
 
-The project includes a SHAP-based explainability layer to attribute disparities to input features and model behavior. This helps answer not only whether bias exists, but also which types of inputs or patterns are most associated with the disparity.
+The project includes a surrogate attribution layer to connect disparities with
+the demographic-dummy features used by the current implementation. Richer
+spatial/pixel SHAP and ITA skin-tone proxy analysis remains a deferred design
+item; do not describe it as implemented.
 
 ## Reporting and compliance
 
@@ -100,6 +103,11 @@ The README indicates the project is in the final integration and reporting phase
 - fairness metric engine and statistical validation
 - SHAP explainability support
 - orchestration and final report generation
+
+The Phase-2 Product Upgrade Sprint is a separate research-only effort covering
+Tracks 21–38. Track 22 is parked, Track 23 is dropped, and 16 tracks are
+currently available to claim. See `research/results/synth_phase2.md` for the
+merged findings and open owner decisions.
 
 ## Scope boundaries
 

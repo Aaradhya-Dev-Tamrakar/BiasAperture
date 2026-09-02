@@ -81,4 +81,3 @@ Never push directly without running the sync script or adhering to conventional 
 - **Style**: PEP 8 compliance, 88 character line limit enforced by `ruff`.
 - **Typing**: Strict type hints (`from __future__ import annotations`, `typing`, `dataclasses`).
 - **Interfaces**: Strategy pattern for fairness backends (`FairnessBackend`), Adapter pattern for model interface (`ModelInterface`).
-

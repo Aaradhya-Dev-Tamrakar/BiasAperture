@@ -31,7 +31,8 @@ Cross-modal generalization dilutes the vision/face-classifier niche that `BiasAp
 **Track 22 — PARKED (blocked, owner_account=user6, hold):**
 Leaderboard framing shifts the product's buyer mental model (compliance-audit → model-comparison tool) — needs a deliberate re-scoping decision, not default execution. Holds until Track 25 (dashboard architecture) and Track 36 (regulatory expansion) land. Unblock via `unblock_task` + `release_task` once ready to re-open.
 
-**17 active tracks now available to claim** (16 pending + 22 once unparked).
+**16 pending tracks are currently available to claim.** Track 22 remains parked
+until Tracks 25 and 36 land; Track 23 remains dropped.
 
 All 20 tasks confirmed created (verified via tool response echo — each returned `status: "pending"`, `parent_id: "task_2026-09-02_002"` except the epic itself).
 

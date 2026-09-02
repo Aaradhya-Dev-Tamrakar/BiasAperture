@@ -25,11 +25,17 @@ This file provides specialized context and execution instructions for **Google D
 | **Stream Data (WP2)** | `feat/stream-data` | **Tisha (`@tiixsha`)** | FairFace ingestion & validation, disk count audit (97.7k), `dlib` 5-point alignment, demographic test matrix (100% complete) |
 | **Stream Report (WP3)** | `feat/stream-report` | **Tisha (`@tiixsha`)** | Jinja2 offline HTML report template, Model Cards & Datasheets structure, EU AI Act & NIST mapping (100% complete) |
 | **WP4 Detection Engine** | `feat/wp4-engine` | **Aaradhya (`@AaradhyaDT`)** | Pure-math metrics, Fairlearn + AIF360 backends, chi-squared tests, BCa bootstrap CIs (100% complete) |
-| **WP5 Integration & CLI** | `feat/wp5-integration` | **Aaradhya (`@AaradhyaDT`)** / Joint | Conditional SHAP attribution, `bias-aperture` CLI facade, benchmark case studies (55/55 tests passing) |
+| **WP5 Integration & CLI** | `feat/wp5-integration` | **Aaradhya (`@AaradhyaDT`)** / Joint | Surrogate attribution, `bias-aperture` CLI facade, validation benchmark and report review (55/55 tests passing) |
 
 ---
 
 ## Operating Invariants for Antigravity
+
+Phase 2 is a separate research-only product-upgrade sprint covering Tracks
+21–38. Read `research/research tracks/PHASE2_CONTEXT.md` and
+`research/results/synth_phase2.md` before proposing product work. Track 22 is
+parked, Track 23 is dropped, and Phase-2 changes must remain additive to the M1
+schema and diagnostic-only scope.
 
 1. **Powershell & UV Tool Execution**:
    - Always run Python commands and tests via `uv`:
@@ -37,8 +43,7 @@ This file provides specialized context and execution instructions for **Google D
      uv run --extra dev pytest
      uv run --extra dev ruff check src/
      uv run --extra dev ruff format src/
-     ```
-   - Sync remotes across configured endpoints (`origin` and `duo` compulsory, `org` optional mirror) via `pwsh`:
+     ```   - Sync remotes across configured endpoints (`origin` and `duo` compulsory, `org` optional mirror) via `pwsh`:
      ```powershell
      pwsh -File .\sync.ps1 -m "feat(module): description"
      ```

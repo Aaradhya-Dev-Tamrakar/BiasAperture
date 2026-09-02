@@ -4,7 +4,7 @@ Additive context only. Nothing here overrides `CONTEXT.md` or the M1 schema lock
 
 ## Where the project actually is (as of Sept 2, 2026)
 
-- WP1–WP4 complete (100%): schema lock, FairFace ingestion (97,698 images verified), Fairlearn+AIF360 dual-backend engine, BCa bootstrap, chi-squared, SHAP explainability.
+- WP1–WP4 complete (100%): schema lock, FairFace ingestion (97,698 images verified), Fairlearn+AIF360 dual-backend engine, BCa bootstrap, chi-squared, and demographic-dummy surrogate attribution.
 - WP5 ~90%: inference run complete (10,954/10,954 validation images, schema-valid CSV at `data/processed/fairface_predictions_val.csv`); remaining step is generating/reviewing the audit HTML report and finalizing `report/main.pdf`.
 - Real, tested source tree exists: `src/bias_aperture/{schema,model_interface,data_ingestion,explainability,cli}.py` + `fairness/` + `report/` packages, with a full pytest suite (`src/tests/`).
 

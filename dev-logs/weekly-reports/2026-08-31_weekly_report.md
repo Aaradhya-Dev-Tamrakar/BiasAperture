@@ -32,7 +32,9 @@ The complete weekly development logs are divided into dedicated reports:
 | **[WK1 Report](2026-08-07_WK1_report.md)** | `2026-08-01` $\to$ `2026-08-07` | **Inception, LaTeX & Environment** | Custom `at_fuse_aif.cls` document class, Overleaf optimization, VS Code recipes, `README.md` baseline, initial `sync.ps1`. |
 | **[WK2 Report](2026-08-14_WK2_report.md)** | `2026-08-08` $\to$ `2026-08-14` | **M1 Schema Lock & Literature Matrix** | Milestone M1 schema contract (`schema.py`, `schema-lock-m1.md`), $n < 30$ sample guards, 9-paper literature matrix in Walden format. |
 | **[WK3 Report](2026-08-21_WK3_report.md)** | `2026-08-15` $\to$ `2026-08-21` | **Requirements, Architecture & Standards** | Functional requirements (`FR-001`–`FR-005`), statutory mappings (EU AI Act / NIST AI RMF), 5-module system architecture, TA/Khwopa standards (Ruff, pyproject.toml), agent guidelines. |
-| **[WK4 Report](2026-08-31_WK4_report.md)** | `2026-08-22` $\to$ `2026-08-31` | **Research Sprint, Core Engine & CLI** | 20-track research sprint, 3-level synthesis, `CLAIM_LEDGER.md`, FairFace disk verification (97,698 images), Fairlearn + native AIF360 backends, BCa bootstrap ($B \ge 1,000$), $\chi^2$ significance tests, SHAP explainer, `bias-aperture` CLI, 55/55 Pytest tests, multi-remote sync. |
+| **[WK4 Report](2026-08-27_WK4_report.md)** | `2026-08-22` $\to$ `2026-08-27` (Thursday close) | **Research Sprint, Core Engine & CLI** | 20-track research sprint, 3-level synthesis, `CLAIM_LEDGER.md`, FairFace disk verification (97,698 images), Fairlearn + native AIF360 backends, BCa bootstrap ($B \ge 1,000$), $\chi^2$ significance tests, SHAP explainer, `bias-aperture` CLI, 55/55 Pytest tests, multi-remote sync. |
+
+The current report after the August 27 cutoff is [WK5 Report](2026-09-02_WK5_report.md), covering August 28 through September 2 and the Phase-2 Product Upgrade Sprint.
 
 ---
 

@@ -1,1 +1,0 @@
-{"nodes": [{"id": "bias_aperture_root", "label": "BiasAperture", "file_type": "concept", "source_file": "README.md", "rationale": "A diagnostic and evaluative framework for auditing demographic bias in facial analysis systems."}], "edges": [], "hyperedges": []}

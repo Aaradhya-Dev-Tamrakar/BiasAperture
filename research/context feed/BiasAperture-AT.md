@@ -7,7 +7,7 @@ Fuse Capstone Project — BiasAperture (Fairness & Bias Audit)
 **Supervisor:** Shreejan Kisee
 **Program:** Fusemachines AI Fellowship (AIF) 2026
 
-**Status:** Feasibility study reviewed (accurate) · Parallel work structure defined · Named ownership assigned (§16) · Novelty check completed (§12) · SHAP explainability layer added (§3) · Proposal report (main.pdf) cross-validated against full source set, zero contradictions (§13) · Repo restructured with docs/ + sync.ps1, literature review matrix built (§15) · Packaging & Ruff standards configured
+**Status:** Feasibility study reviewed (accurate) · Parallel work structure defined · Named ownership assigned (§16) · Novelty check completed (§12) · Explainability layer documented (§3; current implementation uses demographic-dummy surrogate attribution) · Proposal report (main.pdf) cross-validated against full source set, zero contradictions (§13) · Repo restructured with docs/ + sync.ps1, literature review matrix built (§15) · Packaging & Ruff standards configured · Phase-2 Product Upgrade Sprint synthesized in `research/results/synth_phase2.md`
 
 ---
 
