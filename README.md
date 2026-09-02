@@ -67,7 +67,7 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 ## Project Progress & Roadmap
 
 ```
-Overall Progress: [████████████████████] 90% (Milestones M1–M4 Completed · Inference Baseline Verified · Audit Stage Active)
+Overall Progress: [██████████████████░░] 90% (Milestones M1–M4 Completed · Inference Complete · M5 Audit/Report Active)
 ```
 
 | Work Package / Milestone | Stream / Focus | Status | Progress Bar | Deliverables & Implementation State |
@@ -76,7 +76,40 @@ Overall Progress: [████████████████████]
 | **WP2 / M2: Data Ingestion & Test Matrix** | Stream A (Tisha) | Completed | `[████████████████████] 100%` | FairFace ingestion pipeline (`data_ingestion.py`), disk verification (97,698 images), UTKFace profiling |
 | **WP3 / M3: Compliance Report Generation** | Stream B (Tisha/Aaradhya) | Completed | `[████████████████████] 100%` | Offline standalone Jinja2 HTML report (`generator.py`), embedded Base64 charts, EU AI Act & NIST mapping |
 | **WP4 / M4: Statistical Detection Engine & SHAP** | WP4 (Aaradhya) | Completed | `[████████████████████] 100%` | Pure-math metrics, Fairlearn + native AIF360 backends, BCa bootstrap ($B \ge 1,000$), $\chi^2$ significance tests, SHAP surrogate attribution |
-| **WP5 / M5: System Orchestration & Case Study** | Integration / Joint | Active | `[██████████████████░░]  90%` | Benchmark inference verified (`10,954/10,954` processed), CSV schema validated, now running audit/report generation over `data/processed/fairface_predictions_val.csv` |
+| **WP5 / M5: System Orchestration & Case Study** | Integration / Joint | Active | `[██████████████████░░]  90%` | Benchmark inference complete (`10,954/10,954` processed), CSV schema validated; next: generate and review the audit report |
+
+### Current TODOs (September 2, 2026)
+
+**Aaradhya**
+
+* [ ] Run `bias-aperture audit` on `data/processed/fairface_predictions_val.csv`.
+* [ ] Verify the standalone HTML report includes DPD, DIR, EOP, EOD, 95% bootstrap CIs, chi-squared p-values, sample sizes, and `n < 30` guards.
+* [ ] Finalize `report/main.pdf` with empirical tables, confidence intervals, p-values, and disparity visualizations.
+* [ ] Seal reproducible empirical claims in `docs/research/CLAIM_LEDGER.md`.
+
+**Tisha**
+
+* [ ] Confirm defense date, duration, format, and marking breakdown with TA Shreejan Kisee.
+* [ ] Audit the generated Model Card and Datasheet against EU AI Act Articles 10 and 13.
+* [ ] Verify all 126 race × age × gender bins and document sample-size enforcement.
+* [ ] Prepare the dataset and compliance sections for the defense.
+
+**Joint**
+
+* [ ] Confirm timeline and dependencies after the TA responds.
+* [ ] Create the 10–15 minute presentation and rehearse the end-to-end CLI demo.
+* [ ] Practice scrutiny questions on the `n ≥ 30` guard, chi-squared testing, bootstrap CIs, backend differences, and diagnostic-only scope.
+
+### Questions for the TA
+
+* What are the confirmed defense date, duration, and required format?
+* Must both team members present, and how are individual contributions assessed?
+* Are slides, a live demonstration, or both required?
+* Is FairFace alone sufficient, allowing UTKFace to be removed from the final scope?
+* Do the CLI and offline HTML report satisfy the deliverable requirements?
+* Are Fairlearn, AIF360, and SHAP all mandatory, or can some be presented as focused validation components?
+* What is the confirmed final deadline and are there interim milestones?
+* Which evidence is expected: tests, profiling, metric results, generated report, runtime measurements, and end-to-end audit?
 
 ## Branching & Workstreams
 
