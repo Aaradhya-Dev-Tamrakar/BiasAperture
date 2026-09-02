@@ -100,9 +100,11 @@ Overall Progress: [██████████████████░░]
 **Aaradhya**
 
 * [x] Run the FairFace gender audit with explicit CSV column mappings; generated `report/audit_report_val_gender.html` with 10,954 records and 12 metric rows.
+
   ```powershell
   uv run bias-aperture --predictions-file data/processed/fairface_predictions_val.csv --protected-attr gender --true-label-col true_gender --predicted-label-col predicted_gender --race-col subgroup_race --gender-col subgroup_gender --age-col subgroup_age --output-report report/audit_report_val_gender.html
   ```
+
 * [ ] Verify the standalone HTML report includes DPD, DIR, EOP, EOD, 95% bootstrap CIs, chi-squared p-values, sample sizes, and `n < 30` guards.
 * [ ] Finalize `report/main.pdf` with empirical tables, confidence intervals, p-values, and disparity visualizations.
 * [ ] Seal reproducible empirical claims in `docs/research/CLAIM_LEDGER.md`.
