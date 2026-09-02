@@ -28,6 +28,19 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 │   ├── references.bib
 │   ├── main.pdf                # Compiled proposal (tracked; build artifacts are not)
 │   └── src/                    # Frontmatter, chapters, backmatter, images
+├── specs/                      # Numbered implementation-facing specifications
+│   ├── 00-overview-and-mvp-scope.md
+│   ├── 01-architecture.md
+│   ├── 02-data-model.md
+│   ├── 03-orchestrator.md
+│   ├── 04-intake-and-classification.md
+│   ├── 05-audit-engine.md
+│   ├── 06-statistics-and-confidence.md
+│   ├── 07-explainability.md
+│   ├── 08-report-and-compliance.md
+│   ├── 09-verification.md
+│   ├── 10-security-and-governance.md
+│   └── 11-requirements-traceability.md
 ├── docs/                       # TA/reviewer-facing meta-documentation
 │   ├── BiasAperture-AT.md      # Master project planning and task assignments (v6)
 │   ├── schema-lock-m1.md       # Milestone M1 schema specification
@@ -50,6 +63,32 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 └── README.md
 ```
 
+<<<<<<< Updated upstream
+=======
+The implementation-facing specification set is indexed at
+[`specs/00-overview-and-mvp-scope.md`](specs/00-overview-and-mvp-scope.md).
+The M1 schema remains authoritative in
+[`docs/schema-lock-m1.md`](docs/schema-lock-m1.md) and
+[`src/bias_aperture/schema.py`](src/bias_aperture/schema.py).
+
+## Research Sprints
+
+The original capstone research sprint covered Tracks 01–20 and produced the
+three-level design documents under [`docs/research/`](docs/research/). The
+follow-on **Phase-2 Product Upgrade Sprint** covers Tracks 21–38 and studies
+the evolution from a capstone CLI to a product-ready audit platform. Its
+research-only synthesis is [`research/results/synth_phase2.md`](research/results/synth_phase2.md),
+with execution guidance in
+[`research/research tracks/PHASE2_RUNNER_GUIDE.md`](research/research%20tracks/PHASE2_RUNNER_GUIDE.md)
+and the track map in
+[`research/research tracks/PHASE2_TASK_MAP.md`](research/research%20tracks/PHASE2_TASK_MAP.md).
+
+Phase 2 has 16 tracks available to claim or complete. Track 22 is parked until
+Tracks 25 and 36 land, and Track 23 is dropped pending resolution of its scope
+conflict. Phase-2 proposals remain additive and must preserve the locked M1
+schema, diagnostic-only scope, and NFR-001/002/003 statistical safeguards.
+
+>>>>>>> Stashed changes
 ## Project Progress & Roadmap
 
 ```
