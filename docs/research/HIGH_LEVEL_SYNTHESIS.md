@@ -2,7 +2,7 @@
 
 **Target Audience:** Project Leads, Fellowship Supervisors, Technical Assessors, Viva Defense Panel  
 **Document Level:** High-Level (Executive, Novelty Defense, Regulatory Mapping & Strategic Overview)  
-**Date:** August 2026  
+**Date:** September 2, 2026  
 **Context:** Phase 1 capstone synthesis; Phase 2 product-upgrade research is tracked separately
 
 ---
@@ -191,8 +191,8 @@ In academic evaluation and technical auditing, we maintain an explicit distincti
 
 - **Research & Design Specification**: **Complete (100%)** — All mathematical harmonizations, backend strategies, and schema contracts are locked.
 - **Empirical Verification & Implementation**: **Largely Complete (90%)** — Formally tracked in [`docs/research/CLAIM_LEDGER.md`](file:///c:/Users/Aaradhya/Downloads/_Organized/Fuse%20AI%20Fellowship/Capstone%20Project/BiasAperture/docs/research/CLAIM_LEDGER.md) across 20 claims (10 codified in passing automated tests, 10 verified via primary sources, external datasets, and REPL probes).
-- **Implementation**: **Operational (55/55 tests passing)** — Core schema, model interfaces, data ingestion pipeline, dual fairness backends (`FairlearnBackend`, `AIF360Backend`), statistical confidence resampler (BCa bootstrap), standalone Jinja2 HTML compliance report compiler, and CLI orchestrator are fully implemented and verified.
-- **End-to-End Validation**: **In progress (WP5)** — validation inference is complete for 10,954/10,954 FairFace validation images; audit report generation and review remain.
+- **Implementation**: **Operational (56/56 tests passing)** — Core schema, model interfaces, data ingestion pipeline, dual fairness backends (`FairlearnBackend`, `AIF360Backend`), statistical confidence resampler (BCa bootstrap), standalone Jinja2 HTML compliance report compiler, and CLI orchestrator are fully implemented and verified.
+- **End-to-End Validation**: **In progress (WP5)** — validation inference is complete for 10,954/10,954 FairFace validation images, and the gender audit report has been generated; report review and empirical table finalization remain.
 
 > **Methodology Chapter Formulation:**  
 > *"BiasAperture employed parallel AI-assisted reconnaissance to accelerate source exploration and hypothesis generation; all consequential technical claims were subsequently organized into an auditable claim ledger and subjected to primary-source inspection, isolated empirical probing, known-answer validation, and reproducibility testing before implementation."*
@@ -205,13 +205,14 @@ Overall Progress: [██████████████████░░]
 ├── WP2: Data Ingestion & Test Matrix (100% - COMPLETED, 17/17 tests passing)
 ├── WP3: Compliance Reporting (100% - COMPLETED, standalone offline HTML generator verified)
 ├── WP4: Fairness Engine & Explainability (100% - COMPLETED, dual-backend & bootstrap verified)
-└── WP5: Integration & CLI (90% - IN PROGRESS, validation inference complete)
+└── WP5: Integration & CLI (90% - IN PROGRESS, inference and first audit report complete)
 ```
 
-With the core diagnostic pipeline implemented and tested across 55 unit and integration tests, final work focuses on:
+With the core diagnostic pipeline implemented and tested across 56 unit and integration tests, final work focuses on:
 
 1. ✅ `bias_aperture/data_ingestion.py` complete with validation modes & OvR transformer (Stream A complete).
 2. ✅ `bias_aperture/report/generator.py` and Jinja2 HTML templates complete with zero-network offline guarantee (Stream B complete).
 3. ✅ `bias_aperture/fairness/` backends, statistical engines (BCa bootstrap, χ² FWER), and explainability module complete (WP4 complete).
 4. ✅ `bias_aperture/cli.py` entrypoint wired and tested (WP5).
-5. Generate and review the audit report from `data/processed/fairface_predictions_val.csv`, then finalize the empirical tables in `report/main.pdf`.
+5. ✅ Generate the first gender audit report from `data/processed/fairface_predictions_val.csv` (`report/audit_report_val_gender.html`).
+6. Review the audit report and finalize the empirical tables in `report/main.pdf`.

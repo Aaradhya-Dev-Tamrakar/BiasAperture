@@ -117,7 +117,7 @@ guessed or imputed.
 
 ---
 
-## 4. Open Decision — NOT YET RESOLVED
+## 4. Historical Decision — UTKFace Excluded
 
 ### UTKFace race categories → schema.py's locked RACE_LABELS
 
@@ -137,7 +137,8 @@ This is **not** a mechanical mapping:
   elsewhere — it does not cleanly separate into FairFace's
   `Latino_Hispanic` vs. `Middle Eastern`.
 
-**Status:** Open. Requires a project-level decision (not something to
+**Status:** Resolved. UTKFace is excluded from the working benchmark; FairFace
+remains the sole implementation dataset. No project-level remapping is required.
 resolve inside an exploration or ingestion script), since `schema.py`'s
 label vocabularies are locked at M1 and any interpretation choice here
 affects every downstream fairness metric computed on UTKFace data.

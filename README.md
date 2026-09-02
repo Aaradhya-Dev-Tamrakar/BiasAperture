@@ -84,7 +84,7 @@ schema, diagnostic-only scope, and NFR-001/002/003 statistical safeguards.
 ## Project Progress & Roadmap
 
 ```
-Overall Progress: [██████████████████░░] 90% (Milestones M1–M4 Completed · Inference Complete · M5 Audit/Report Active; 55 tests passing)
+Overall Progress: [██████████████████░░] 90% (Milestones M1–M4 Completed · Inference Complete · M5 Audit/Report Active; 56 tests passing)
 ```
 
 | Work Package / Milestone | Stream / Focus | Status | Progress Bar | Deliverables & Implementation State |
@@ -93,13 +93,16 @@ Overall Progress: [██████████████████░░]
 | **WP2 / M2: Data Ingestion & Test Matrix** | Stream A (Tisha) | Completed | `[████████████████████] 100%` | FairFace ingestion pipeline (`data_ingestion.py`), disk verification (97,698 images), UTKFace profiling |
 | **WP3 / M3: Compliance Report Generation** | Stream B (Tisha/Aaradhya) | Completed | `[████████████████████] 100%` | Offline standalone Jinja2 HTML report (`generator.py`), embedded Base64 charts, EU AI Act & NIST mapping |
 | **WP4 / M4: Statistical Detection Engine & SHAP** | WP4 (Aaradhya) | Completed | `[████████████████████] 100%` | Pure-math metrics, Fairlearn + native AIF360 backends, BCa bootstrap ($B \ge 1,000$), $\chi^2$ significance tests, SHAP surrogate attribution |
-| **WP5 / M5: System Orchestration & Case Study** | Integration / Joint | Active | `[██████████████████░░]  90%` | Benchmark inference complete (`10,954/10,954` processed), CSV schema validated; next: generate and review the audit report |
+| **WP5 / M5: System Orchestration & Case Study** | Integration / Joint | Active | `[██████████████████░░]  90%` | Benchmark inference complete (`10,954/10,954` processed), CSV schema validated, and gender audit report generated; next: review report outputs and finalize empirical tables |
 
 ### Current TODOs (September 2, 2026)
 
 **Aaradhya**
 
-* [ ] Run `bias-aperture --predictions-file data/processed/fairface_predictions_val.csv --output-report report/audit_report_val.html --explain`.
+* [x] Run the FairFace gender audit with explicit CSV column mappings; generated `report/audit_report_val_gender.html` with 10,954 records and 12 metric rows.
+  ```powershell
+  uv run bias-aperture --predictions-file data/processed/fairface_predictions_val.csv --protected-attr gender --true-label-col true_gender --predicted-label-col predicted_gender --race-col subgroup_race --gender-col subgroup_gender --age-col subgroup_age --output-report report/audit_report_val_gender.html
+  ```
 * [ ] Verify the standalone HTML report includes DPD, DIR, EOP, EOD, 95% bootstrap CIs, chi-squared p-values, sample sizes, and `n < 30` guards.
 * [ ] Finalize `report/main.pdf` with empirical tables, confidence intervals, p-values, and disparity visualizations.
 * [ ] Seal reproducible empirical claims in `docs/research/CLAIM_LEDGER.md`.

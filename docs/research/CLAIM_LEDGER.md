@@ -3,7 +3,7 @@
 **Project:** BiasAperture (Demographic Bias Auditing Platform for Computer Vision)  
 **Document Purpose:** Auditable, reproducible tracking ledger for all scientific, mathematical, architectural, and regulatory claims generated during research and design.  
 **Version:** 1.4.0 (Audit-Grade with Conflict Log Cross-Referencing & Inference Scope)  
-**Last Updated:** August 2026
+**Last Updated:** September 2, 2026
 
 ---
 
@@ -80,7 +80,7 @@ Preserving refuted hypotheses is an essential research integrity discipline. The
 
 ```
 Total Tracked Research Claims: 20 active + 9 invalidated
-├── REPRODUCIBLE (Codified in Passing Automated Test Suite): 10 claims (50%)
+├── REPRODUCIBLE (Codified in Passing Automated Test Suite): 10 claims (50%; 56 tests passing)
 ├── VERIFIED (Primary Source / Tensor / Gazette / Script Inspected): 10 claims (50%)
 ├── ASSERTED (Pending Initial Verification): 0 claims (0%)
 └── INVALIDATED (Formally Refuted & Documented): 9 claims
