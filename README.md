@@ -11,6 +11,51 @@ A fairness and bias audit system proposal report submitted for the Fusemachines 
 
 BiasAperture is a diagnostic and evaluative software platform that computes subgroup and intersectional fairness metrics for a third-party facial-analysis model and reports them in a standardised, regulator-legible format. It is organised into five cooperating modules covering data ingestion, model interfacing, fairness-metric computation, explainability, and report generation. Its analytical core computes four disparity metrics — demographic parity difference, equalized odds difference, equal opportunity difference, and disparate impact ratio — using AIF360 and Fairlearn as independent, cross-validating backends, with every reported disparity accompanied by a chi-squared significance test and a bootstrap confidence interval. The current explainability implementation uses demographic-dummy surrogate attribution; richer spatial SHAP and ITA analysis remain deferred. Findings are traced to their specific basis under Article 10 of the EU AI Act and the corresponding function of the NIST AI Risk Management Framework. The current case study uses FairFace; UTKFace was profiled and cut from the implementation scope. BiasAperture is scoped strictly as diagnostic: it does not mitigate bias, retrain models, or generate synthetic demographic data.
 
+## System Architecture
+
+The platform is coordinated by a CLI + YAML **orchestration and configuration layer** that drives two parallel intake paths and a linear downstream analysis pipeline:
+
+```mermaid
+flowchart TD
+    FF[("FairFace dataset<br/>108,501 images")]
+    UTK[("UTKFace dataset<br/>20,000+ images")]
+    PT[/"PyTorch / TensorFlow model"/]
+    BB[/"Black-box API / predictions file"/]
+
+    subgraph BA["BiasAperture Platform"]
+        direction TB
+        ORCH["Orchestration & configuration layer<br/>CLI + YAML config"]
+        ING["Data ingestion &<br/>preprocessing module"]
+        MIF["Model interface module"]
+        FME["Fairness metrics engine<br/><b>AIF360</b> · <b>Fairlearn</b>"]
+        EXP["Explainability layer<br/><b>SHAP</b>"]
+        REP["Report generation module<br/><b>Jinja2 Templates</b> · <b>Model Cards</b>"]
+
+        ORCH -.-> ING
+        ORCH -.-> MIF
+        ING --> FME
+        MIF --> FME
+        FME --> EXP
+        FME --> REP
+        EXP --> REP
+    end
+
+    FF --> ING
+    UTK --> ING
+    PT --> MIF
+    BB --> MIF
+
+    REP --> COMP["Compliance report (HTML / PDF)"]
+    REG["Regulatory traceability:<br/>EU AI Act Annex IV · NIST AI RMF"] --> COMP
+```
+
+- **Data ingestion & preprocessing module** — consumes the FairFace (108,501 images) and UTKFace (20,000+ images, evaluated then formally cut per Cut-List #2) datasets and normalises them into the locked M1 schema. Implemented in `src/bias_aperture/schema.py` and the ingestion pipeline under `src/bias_aperture/`.
+- **Model interface module** — abstracts over the subject under audit, accepting either a PyTorch/TensorFlow model, a black-box API, or a static predictions file. Implemented in `src/bias_aperture/model_interface.py` (`ModelInterface` & `PredictionsFileInterface`).
+- **Fairness metrics engine** — computes the Core Four disparity metrics (demographic parity difference, equalized odds difference, equal opportunity difference, disparate impact ratio) using **AIF360** and **Fairlearn** as independent, cross-validating backends, each result paired with a $\chi^2$ significance test and a BCa bootstrap confidence interval. Implemented in `src/bias_aperture/fairness/` (WP4).
+- **Explainability layer** — attributes flagged disparities to input features via **SHAP**.
+- **Report generation module** — renders findings into offline, zero-network **Jinja2**-templated HTML/PDF compliance reports with accompanying model cards. Implemented in `src/bias_aperture/report/` (WP3).
+- **Compliance report** — the final artifact, with every finding traced to its specific basis under **EU AI Act Annex IV** and the corresponding **NIST AI RMF** function.
+
 ## Repository Structure
 
 ```BiasAperture/
@@ -142,6 +187,20 @@ Overall Progress: [██████████████████░░]
 | `feat/stream-report` | Stream B (WP3) | Tisha (`@tiixsha`) | Jinja2 HTML compliance report scaffolding |
 | `feat/wp4-engine` | WP4 | Aaradhya (`@AaradhyaDT`) | Fairness computation backends, statistics, and SHAP |
 | `feat/wp5-integration` | WP5 | Aaradhya (`@AaradhyaDT`) / Joint | CLI orchestrator, benchmark execution & case study |
+| Branch                 | Stream / Work Package | Primary Owner            | Target Focus & Verification Mandate                                                                |
+| ---------------------- | --------------------- | ------------------------- | -------------------------------------------------------------------------------------------------- |
+| `main`                 | Production / Base     | Joint                    | Stable base holding M1 schema, documentation, and LaTeX report                                     |
+| `feat/stream-data`     | Stream A (WP2)        | Tisha (`@tiixsha`)       | FairFace dataset ingestion, `dlib` 5-point landmark alignment & demographic test-matrix            |
+| `feat/stream-report`   | Stream B (WP3)        | Tisha (`@tiixsha`)       | Jinja2 HTML compliance report scaffolding, zero-network offline rendering, EU AI Act mapping       |
+| `feat/wp4-engine`      | Stream C (WP4)        | Aaradhya (`@AaradhyaDT`) | Fairness backends harmonization (AIF360 + Fairlearn), BCa bootstrap CIs, and $\chi^2$ significance |
+| `feat/wp5-integration` | Stream D (WP5)        | Aaradhya (`@AaradhyaDT`) | SHAP explainability layer, pipeline orchestration, and end-to-end benchmark case studies           |
+
+## Research Verification & Viva Defense Allocation
+
+Empirical claims are verified across independent audit streams as detailed in the [Verification & Scrutiny Guide](docs/research/VERIFICATION_AND_SCRUTINY_GUIDE.md):
+
+- **Tisha Manandhar**: Leads defense on Dataset Integrity (FairFace 97.7k count verification & alignment), Demographic Test Matrix Scaffolding, Regulatory Alignment (EU AI Act Art. 10/13 & NIST AI RMF Measure 2.11), and Standalone Compliance Reporting.
+- **Aaradhya Dev Tamrakar**: Leads defense on Statistical Significance Engine ($\chi^2$ asymptotic tests, BCa Bootstrap Confidence Intervals), Dual-Backend Harmonization (AIF360 vs Fairlearn Equalized Odds max-of-gaps), and SHAP Feature Attribution.
 
 ## Python Development, Testing & Code Style
 
