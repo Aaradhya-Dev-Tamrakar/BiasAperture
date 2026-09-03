@@ -81,6 +81,19 @@ flowchart TD
 │   ├── references.bib
 │   ├── main.pdf                # Compiled proposal (tracked; build artifacts are not)
 │   └── src/                    # Frontmatter, chapters, backmatter, images
+├── specs/                      # Numbered implementation-facing specifications
+│   ├── 00-overview-and-mvp-scope.md
+│   ├── 01-architecture.md
+│   ├── 02-data-model.md
+│   ├── 03-orchestrator.md
+│   ├── 04-intake-and-classification.md
+│   ├── 05-audit-engine.md
+│   ├── 06-statistics-and-confidence.md
+│   ├── 07-explainability.md
+│   ├── 08-report-and-compliance.md
+│   ├── 09-verification.md
+│   ├── 10-security-and-governance.md
+│   └── 11-requirements-traceability.md
 ├── docs/                       # TA/reviewer-facing meta-documentation
 │   ├── BiasAperture-AT.md      # Master project planning and task assignments (v10)
 │   ├── PROPOSAL_DEFENSE_GUIDE.md # Comprehensive Viva defense Q&A guide
