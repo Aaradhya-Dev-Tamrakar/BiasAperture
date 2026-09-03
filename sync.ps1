@@ -233,17 +233,6 @@ function Get-ConventionalCommitMessage {
     return "$type($scopeStr): update $summary"
 }
 
-function Update-Tracker {
-    $trackerPath = Join-Path $repoRoot 'docs/CHANGELOG.md'
-    if (-not (Test-Path $trackerPath)) {
-        New-Item -ItemType Directory -Force -Path (Split-Path $trackerPath) | Out-Null
-        "# BiasAperture - Changelog`n" | Set-Content $trackerPath
-    }
-    $timestamp = Get-Date -Format 'yyyy-MM-dd HH:mm'
-    Add-Content $trackerPath "- $timestamp - sync"
-    git add $trackerPath
-}
-
 Initialize-Remotes
 
 if ($PSCmdlet.ParameterSetName -eq 'Pull') {
@@ -269,9 +258,6 @@ git add -A
 
 $staged = git diff --cached --name-only
 if ($staged) {
-    Update-Tracker
-    git add -A
-
     if (-not $m) {
         $m = Get-ConventionalCommitMessage
         if (-not $m) { $m = "chore(repo): sync" }

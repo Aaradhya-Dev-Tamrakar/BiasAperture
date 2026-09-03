@@ -49,12 +49,12 @@ flowchart TD
     REG["Regulatory traceability:<br/>EU AI Act Annex IV · NIST AI RMF"] --> COMP
 ```
 
-- **Data ingestion & preprocessing module** — consumes the FairFace (108,501 images) and UTKFace (20,000+ images, evaluated then formally cut per Cut-List #2) datasets and normalises them into the locked M1 schema. Implemented in `src/bias_aperture/schema.py` and the ingestion pipeline under `src/bias_aperture/`.
-- **Model interface module** — abstracts over the subject under audit, accepting either a PyTorch/TensorFlow model, a black-box API, or a static predictions file. Implemented in `src/bias_aperture/model_interface.py` (`ModelInterface` & `PredictionsFileInterface`).
-- **Fairness metrics engine** — computes the Core Four disparity metrics (demographic parity difference, equalized odds difference, equal opportunity difference, disparate impact ratio) using **AIF360** and **Fairlearn** as independent, cross-validating backends, each result paired with a $\chi^2$ significance test and a BCa bootstrap confidence interval. Implemented in `src/bias_aperture/fairness/` (WP4).
-- **Explainability layer** — attributes flagged disparities to input features via **SHAP**.
-- **Report generation module** — renders findings into offline, zero-network **Jinja2**-templated HTML/PDF compliance reports with accompanying model cards. Implemented in `src/bias_aperture/report/` (WP3).
-- **Compliance report** — the final artifact, with every finding traced to its specific basis under **EU AI Act Annex IV** and the corresponding **NIST AI RMF** function.
+* **Data ingestion & preprocessing module** — consumes the FairFace (108,501 images) and UTKFace (20,000+ images, evaluated then formally cut per Cut-List #2) datasets and normalises them into the locked M1 schema. Implemented in `src/bias_aperture/schema.py` and the ingestion pipeline under `src/bias_aperture/`.
+* **Model interface module** — abstracts over the subject under audit, accepting either a PyTorch/TensorFlow model, a black-box API, or a static predictions file. Implemented in `src/bias_aperture/model_interface.py` (`ModelInterface` & `PredictionsFileInterface`).
+* **Fairness metrics engine** — computes the Core Four disparity metrics (demographic parity difference, equalized odds difference, equal opportunity difference, disparate impact ratio) using **AIF360** and **Fairlearn** as independent, cross-validating backends, each result paired with a $\chi^2$ significance test and a BCa bootstrap confidence interval. Implemented in `src/bias_aperture/fairness/` (WP4).
+* **Explainability layer** — attributes flagged disparities to input features via **SHAP**.
+* **Report generation module** — renders findings into offline, zero-network **Jinja2**-templated HTML/PDF compliance reports with accompanying model cards. Implemented in `src/bias_aperture/report/` (WP3).
+* **Compliance report** — the final artifact, with every finding traced to its specific basis under **EU AI Act Annex IV** and the corresponding **NIST AI RMF** function.
 
 ## Repository Structure
 
@@ -81,6 +81,19 @@ flowchart TD
 │   ├── references.bib
 │   ├── main.pdf                # Compiled proposal (tracked; build artifacts are not)
 │   └── src/                    # Frontmatter, chapters, backmatter, images
+├── specs/                      # Numbered implementation-facing specifications
+│   ├── 00-overview-and-mvp-scope.md
+│   ├── 01-architecture.md
+│   ├── 02-data-model.md
+│   ├── 03-orchestrator.md
+│   ├── 04-intake-and-classification.md
+│   ├── 05-audit-engine.md
+│   ├── 06-statistics-and-confidence.md
+│   ├── 07-explainability.md
+│   ├── 08-report-and-compliance.md
+│   ├── 09-verification.md
+│   ├── 10-security-and-governance.md
+│   └── 11-requirements-traceability.md
 ├── docs/                       # TA/reviewer-facing meta-documentation
 │   ├── BiasAperture-AT.md      # Master project planning and task assignments (v10)
 │   ├── PROPOSAL_DEFENSE_GUIDE.md # Comprehensive Viva defense Q&A guide
@@ -199,8 +212,8 @@ Overall Progress: [██████████████████░░]
 
 Empirical claims are verified across independent audit streams as detailed in the [Verification & Scrutiny Guide](docs/research/VERIFICATION_AND_SCRUTINY_GUIDE.md):
 
-- **Tisha Manandhar**: Leads defense on Dataset Integrity (FairFace 97.7k count verification & alignment), Demographic Test Matrix Scaffolding, Regulatory Alignment (EU AI Act Art. 10/13 & NIST AI RMF Measure 2.11), and Standalone Compliance Reporting.
-- **Aaradhya Dev Tamrakar**: Leads defense on Statistical Significance Engine ($\chi^2$ asymptotic tests, BCa Bootstrap Confidence Intervals), Dual-Backend Harmonization (AIF360 vs Fairlearn Equalized Odds max-of-gaps), and SHAP Feature Attribution.
+* **Tisha Manandhar**: Leads defense on Dataset Integrity (FairFace 97.7k count verification & alignment), Demographic Test Matrix Scaffolding, Regulatory Alignment (EU AI Act Art. 10/13 & NIST AI RMF Measure 2.11), and Standalone Compliance Reporting.
+* **Aaradhya Dev Tamrakar**: Leads defense on Statistical Significance Engine ($\chi^2$ asymptotic tests, BCa Bootstrap Confidence Intervals), Dual-Backend Harmonization (AIF360 vs Fairlearn Equalized Odds max-of-gaps), and SHAP Feature Attribution.
 
 ## Python Development, Testing & Code Style
 
