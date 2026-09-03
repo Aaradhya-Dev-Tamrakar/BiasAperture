@@ -187,6 +187,8 @@ def run_batch_prediction(
     batch_size: int = 64,
     device: str = "cuda",
     max_samples: int | None = None,
+    start_index: int = 0,
+    end_index: int | None = None,
 ) -> int:
     """
     Run batch predictions on FairFace split.
@@ -199,6 +201,8 @@ def run_batch_prediction(
         batch_size: Batch size (not used for single-image inference, but kept for API compatibility)
         device: "cuda" or "cpu"
         max_samples: Limit number of samples (for dev/testing)
+        start_index: Start row index into the labels CSV (for sharding across parallel runs)
+        end_index: End row index (exclusive) into the labels CSV (for sharding across parallel runs)
 
     Returns:
         Exit code (0 = success, 1 = failure)
@@ -235,6 +239,18 @@ def run_batch_prediction(
     except Exception as e:
         print(f"[ERROR] Failed to read labels CSV: {e}", file=sys.stderr)
         return 1
+
+    # ========================================================================
+    # Slice for sharding (parallel runs across multiple processes)
+    # ========================================================================
+    if end_index is not None:
+        df_labels = df_labels.iloc[start_index:end_index]
+    elif start_index:
+        df_labels = df_labels.iloc[start_index:]
+
+    if start_index or end_index is not None:
+        print(f"[*] Sharded to rows [{start_index}:{end_index if end_index is not None else 'end'}] "
+              f"({len(df_labels)} rows)")
 
     if max_samples:
         df_labels = df_labels.head(max_samples)
@@ -339,6 +355,11 @@ Examples:
   # Development subset (100 images for testing)
   python scripts/predict.py --data-root data/raw/fairface --split val \\
     --output data/processed/fairface_predictions_val_dev.csv --max-samples 100
+
+  # Sharded run (e.g. worker 1 of 4, rows 0-2739) for parallel processing
+  python scripts/predict.py --data-root data/raw/fairface --split val \\
+    --output data/processed/fairface_predictions_val_part1.csv \\
+    --start-index 0 --end-index 2739
         """,
     )
 
@@ -384,6 +405,18 @@ Examples:
         type=int,
         help="Limit predictions to N samples (for testing/dev subsets)",
     )
+    parser.add_argument(
+        "--start-index",
+        type=int,
+        default=0,
+        help="Start row index into the labels CSV, for sharding across parallel runs (default: 0)",
+    )
+    parser.add_argument(
+        "--end-index",
+        type=int,
+        default=None,
+        help="End row index (exclusive) into the labels CSV, for sharding across parallel runs (default: end)",
+    )
 
     args = parser.parse_args(argv)
 
@@ -395,6 +428,8 @@ Examples:
         batch_size=args.batch_size,
         device=args.device,
         max_samples=args.max_samples,
+        start_index=args.start_index,
+        end_index=args.end_index,
     )
 
 
