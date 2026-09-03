@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiasAperture — Demographic Bias Audit & Compliance Dossier</title>
+    <style>
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --brand-blue: #2563eb;
+            --accent-green: #16a34a;
+            --accent-red: #dc2626;
+            --accent-amber: #d97706;
+            --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-stack);
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            margin: 0;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            background-color: var(--bg-card);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.8rem;
+            color: #1e293b;
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .meta-item {
+            background: #f1f5f9;
+            padding: 0.75rem;
+            border-radius: 6px;
+        }
+
+        .meta-label {
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            display: block;
+        }
+
+        .section-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+            font-size: 1.3rem;
+            color: #1e293b;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: #f8fafc;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-pass {
+            background-color: #dcfce7;
+            color: #15803d;
+        }
+
+        .badge-warn {
+            background-color: #fef3c7;
+            color: #b45309;
+        }
+
+        .badge-fail {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .badge-guard {
+            background-color: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .regulatory-box {
+            background-color: #eff6ff;
+            border-left: 4px solid var(--brand-blue);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.85rem;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* --- Executive Summary Strip --- */
+        .exec-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .exec-stat {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--brand-blue);
+            border-radius: 6px;
+            padding: 1rem 1.25rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .exec-stat.exec-stat-alert {
+            border-left-color: var(--accent-red);
+        }
+
+        .exec-stat-value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1e293b;
+            display: block;
+            line-height: 1.2;
+        }
+
+        .exec-stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* --- Inline SVG bar charts (offline-contract safe: no external
+           assets, pure inline <svg> emitted by Jinja) --- */
+        .ci-bar-cell {
+            min-width: 220px;
+        }
+
+        .metric-bars-cell {
+            min-width: 200px;
+        }
+
+        svg.inline-chart {
+            display: block;
+        }
+
+        svg.inline-chart text {
+            font-family: var(--font-stack);
+        }
+
+        /* --- Collapsed insufficient-sample summary block --- */
+        details.insufficient-block {
+            margin-top: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: #f8fafc;
+        }
+
+        details.insufficient-block summary {
+            cursor: pointer;
+            padding: 0.75rem 1rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            list-style: none;
+        }
+
+        details.insufficient-block summary::-webkit-details-marker {
+            display: none;
+        }
+
+        details.insufficient-block summary::before {
+            content: "▸ ";
+        }
+
+        details.insufficient-block[open] summary::before {
+            content: "▾ ";
+        }
+
+        .insufficient-list {
+            padding: 0 1rem 1rem 1rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .insufficient-list span.subgroup-chip {
+            display: inline-block;
+            background: #e2e8f0;
+            border-radius: 4px;
+            padding: 0.15rem 0.5rem;
+            margin: 0.15rem 0.25rem 0.15rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>BiasAperture — Demographic Fairness Audit Dossier</h1>
+            <p style="color: var(--text-muted); margin: 0;">Diagnostic Demographic Bias Evaluation & Regulatory Traceability Report</p>
+            <div class="meta-grid">
+                <div class="meta-item">
+                    <span class="meta-label">Audited Model</span>
+                    <strong>{{ context.model_name }}</strong>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Evaluation Dataset</span>
+                    <strong>{{ context.dataset_name }} (N={{ context.total_subjects }})</strong>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Protected Axis</span>
+                    <strong>{{ context.protected_axis | capitalize }}</strong>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Audit Date</span>
+                    <strong>{{ context.timestamp }}</strong>
+                </div>
+            </div>
+        </header>
+
+        <!-- 0. Executive Summary Strip -->
+        <div class="exec-summary">
+            <div class="exec-stat{% if exec_summary.flagged_significant_count > 0 %} exec-stat-alert{% endif %}">
+                <span class="exec-stat-value">{{ exec_summary.flagged_significant_count }} / {{ exec_summary.valid_subgroups }}</span>
+                <span class="exec-stat-label">Subgroups with significant disparity (p &lt; 0.05)</span>
+            </div>
+            <div class="exec-stat">
+                <span class="exec-stat-value">
+                    {% if exec_summary.worst_group_label %}
+                        {{ exec_summary.worst_group_label }}
+                    {% else %}
+                        —
+                    {% endif %}
+                </span>
+                <span class="exec-stat-label">Largest deviation subgroup</span>
+            </div>
+            <div class="exec-stat">
+                <span class="exec-stat-value">
+                    {% if exec_summary.worst_metric_label %}
+                        {{ exec_summary.worst_metric_label }} = {{ "%.3f"|format(exec_summary.worst_metric_value) }}
+                    {% else %}
+                        —
+                    {% endif %}
+                </span>
+                <span class="exec-stat-label">Worst headline metric</span>
+            </div>
+            <div class="exec-stat">
+                <span class="exec-stat-value">{{ exec_summary.insufficient_count }}</span>
+                <span class="exec-stat-label">Subgroups flagged n &lt; 30 (NFR-003)</span>
+            </div>
+        </div>
+
+        <!-- 1. Executive Summary & Core Four Headline Metrics -->
+        <div class="section-card">
+            <h2>1. Headline Fairness Metrics (Core Four — Cross-Group Overview)</h2>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">
+                Summary metrics evaluated across all eligible demographic strata (n ≥ 30 per NFR-003). Accompanied by 95% stratified BCa bootstrap confidence intervals and Pearson's χ² test of independence. <em>Note: each CI band is scaled to its own row — dot colour (red = CI excludes null), not bar width, indicates significance across rows.</em>
+            </p>
+            {% macro ci_whisker_svg(value, ci_lower, ci_upper, null_point=0.0) %}
+                {# Fixed-width inline SVG: axis spans null_point ± max(|ci|, 0.05)
+                   with 10% padding so bars never clip; whisker = CI band,
+                   dot = point estimate, dashed line = null/no-disparity point. #}
+                {% set span = [(ci_upper - null_point) | abs, (null_point - ci_lower) | abs, 0.05] | max %}
+                {% set axis_min = null_point - span * 1.15 %}
+                {% set axis_max = null_point + span * 1.15 %}
+                {% set w = 200 %}
+                {% set h = 34 %}
+                {% set scale = w / (axis_max - axis_min) %}
+                <svg class="inline-chart" width="{{ w }}" height="{{ h }}" viewBox="0 0 {{ w }} {{ h }}" role="img" aria-label="Point estimate {{ '%.3f'|format(value) }} with 95% CI [{{ '%.3f'|format(ci_lower) }}, {{ '%.3f'|format(ci_upper) }}]">
+                    <line x1="{{ ((null_point - axis_min) * scale) }}" y1="4" x2="{{ ((null_point - axis_min) * scale) }}" y2="{{ h - 4 }}" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,2" />
+                    <line x1="{{ ((ci_lower - axis_min) * scale) }}" y1="{{ h/2 }}" x2="{{ ((ci_upper - axis_min) * scale) }}" y2="{{ h/2 }}" stroke="#64748b" stroke-width="2" />
+                    <line x1="{{ ((ci_lower - axis_min) * scale) }}" y1="{{ h/2 - 5 }}" x2="{{ ((ci_lower - axis_min) * scale) }}" y2="{{ h/2 + 5 }}" stroke="#64748b" stroke-width="2" />
+                    <line x1="{{ ((ci_upper - axis_min) * scale) }}" y1="{{ h/2 - 5 }}" x2="{{ ((ci_upper - axis_min) * scale) }}" y2="{{ h/2 + 5 }}" stroke="#64748b" stroke-width="2" />
+                    <circle cx="{{ ((value - axis_min) * scale) }}" cy="{{ h/2 }}" r="4.5" fill="{{ '#dc2626' if (ci_lower > null_point or ci_upper < null_point) else '#2563eb' }}" />
+                </svg>
+            {% endmacro %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric Name</th>
+                        <th>Point Estimate</th>
+                        <th>95% Bootstrap CI</th>
+                        <th class="ci-bar-cell">CI Band vs. Null</th>
+                        <th>Significance (p-value)</th>
+                        <th>Regulatory Clause</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for m in summary_metrics %}
+                    <tr>
+                        <td><strong>{{ m.metric_name | replace('_', ' ') | title }}</strong></td>
+                        <td>
+                            {% if m.metric_value is not none %}
+                                {{ "%.3f"|format(m.metric_value) }}
+                            {% else %}
+                                <span class="badge badge-guard">N/A (n &lt; 30)</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if m.ci_lower is not none and m.ci_upper is not none %}
+                                [{{ "%.3f"|format(m.ci_lower) }}, {{ "%.3f"|format(m.ci_upper) }}]
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+                        <td class="ci-bar-cell">
+                            {% if m.metric_value is not none and m.ci_lower is not none and m.ci_upper is not none %}
+                                {{ ci_whisker_svg(m.metric_value, m.ci_lower, m.ci_upper, 1.0 if m.metric_name == 'disparate_impact_ratio' else 0.0) }}
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if m.p_value is not none %}
+                                p={{ "%.4f"|format(m.p_value) }}
+                                {% if m.p_value < 0.05 %}
+                                    <span class="badge badge-fail">p &lt; 0.05</span>
+                                {% else %}
+                                    <span class="badge badge-pass">p ≥ 0.05</span>
+                                {% endif %}
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+                        <td><small>{{ context.regulatory_map.get(m.metric_name, "NIST AI RMF 2.11 / EU AI Act Art. 10") }}</small></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 2. Per-Subgroup Disparity Analysis -->
+        <div class="section-card">
+            <h2>2. Per-Subgroup Disparity Matrix</h2>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">
+                Detailed stratification across individual demographic groups, ordered by largest deviation from the null (no-disparity) point, most significant first. Subgroups below the NFR-003 sample threshold (n &lt; 30) are strictly flagged, uncomputed to prevent small-sample estimation artifacts, and summarised separately below.
+            </p>
+            {% macro metric_bars_svg(bars) %}
+                {# Small-multiple bar per Core Four metric present on this
+                   subgroup: bar length = deviation from null point, scaled
+                   against a fixed 0.30 reference span (values beyond that
+                   clip visually to keep rows a uniform height); red = p<0.05. #}
+                {% set ref_span = 0.30 %}
+                {% set bar_h = 12 %}
+                {% set gap = 4 %}
+                {% set label_w = 34 %}
+                {% set track_w = 130 %}
+                {% set h = (bars | length) * (bar_h + gap) %}
+                <svg class="inline-chart" width="{{ label_w + track_w + 8 }}" height="{{ h }}" viewBox="0 0 {{ label_w + track_w + 8 }} {{ h }}" role="img" aria-label="Per-metric deviation bars for {{ bars | length }} metrics">
+                    {% for b in bars %}
+                        {% set y = loop.index0 * (bar_h + gap) %}
+                        {% set frac = [b.deviation / ref_span, 1.0] | min %}
+                        {% set bar_len = frac * track_w %}
+                        <text x="0" y="{{ y + bar_h - 2 }}" font-size="9" fill="#475569">{{ b.label }}</text>
+                        <rect x="{{ label_w }}" y="{{ y }}" width="{{ track_w }}" height="{{ bar_h }}" fill="#f1f5f9" rx="2" />
+                        <rect x="{{ label_w }}" y="{{ y }}" width="{{ bar_len }}" height="{{ bar_h }}" fill="{{ '#dc2626' if b.significant else '#2563eb' }}" rx="2" />
+                    {% endfor %}
+                </svg>
+            {% endmacro %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subgroup</th>
+                        <th>Sample Size (n)</th>
+                        <th>DPD</th>
+                        <th>EOD (Max-Gap)</th>
+                        <th>EOP</th>
+                        <th>DIR (Symmetric)</th>
+                        <th class="metric-bars-cell">Deviation from Null (red = p &lt; 0.05)</th>
+                        <th>Data Integrity Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for group in subgroup_matrix %}
+                    <tr>
+                        <td><strong>{{ group.label }}</strong></td>
+                        <td>{{ group.sample_size }}</td>
+                        <td>{{ group.dpd }}</td>
+                        <td>{{ group.eod }}</td>
+                        <td>{{ group.eop }}</td>
+                        <td>{{ group.dir }}</td>
+                        <td class="metric-bars-cell">
+                            {% if group.metric_bars %}
+                                {{ metric_bars_svg(group.metric_bars) }}
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+                        <td>
+                            <span class="badge badge-pass">Audited (Valid)</span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {% if insufficient_groups %}
+            <details class="insufficient-block">
+                <summary>{{ insufficient_groups | length }} subgroup{{ 's' if insufficient_groups | length != 1 else '' }} flagged: n &lt; 30 (NFR-003) — not computed, click to expand</summary>
+                <div class="insufficient-list">
+                    Per NFR-003, the following subgroups fell below the minimum reportable sample size and were <strong>not</strong> assigned a metric value (flagged, never fabricated):
+                    <div style="margin-top: 0.5rem;">
+                        {% for group in insufficient_groups %}
+                            <span class="subgroup-chip">
+                                <span class="badge badge-guard">Flagged: n &lt; 30 (NFR-003)</span>
+                                {{ group.label }} (n={{ group.sample_size }})
+                            </span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </details>
+            {% endif %}
+        </div>
+
+        <!-- 3. Model Card & Dataset Datasheet (Mitchell / Gebru) -->
+        <div class="section-card">
+            <h2>3. Governance Documentation & Intended Use</h2>
+            <div class="regulatory-box">
+                <strong>EU AI Act (Regulation EU 2024/1689) Article 10 / Annex IV Alignment:</strong>
+                This audit dossier provides verifiable diagnostic documentation of demographic performance disparities. It does not perform model retraining or in-situ weight modifications.
+            </div>
+            <p><strong>Model Description:</strong> {{ context.model_description }}</p>
+            <p><strong>Evaluation Protocol:</strong> Standalone offline evaluation using dual-backend cross-validation (Fairlearn + AIF360) and 1,000-resample stratified BCa bootstrap estimation.</p>
+        </div>
+
+        <footer>
+            <p>Generated deterministically by <strong>BiasAperture v0.1.0</strong> • Pure Standalone HTML • Zero External CDNs</p>
+        </footer>
+    </div>
+</body>
+</html>

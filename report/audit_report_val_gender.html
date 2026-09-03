@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,7 +39,7 @@
             border-radius: 8px;
             border: 1px solid var(--border-color);
             margin-bottom: 2rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
 
         h1 {
@@ -75,7 +76,7 @@
             border-radius: 8px;
             padding: 1.5rem;
             margin-bottom: 2rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
 
         h2 {
@@ -93,7 +94,8 @@
             font-size: 0.9rem;
         }
 
-        th, td {
+        th,
+        td {
             padding: 0.75rem 1rem;
             text-align: left;
             border-bottom: 1px solid var(--border-color);
@@ -165,7 +167,7 @@
             border-left: 4px solid var(--brand-blue);
             border-radius: 6px;
             padding: 1rem 1.25rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
 
         .exec-stat.exec-stat-alert {
@@ -249,11 +251,13 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <header>
             <h1>BiasAperture — Demographic Fairness Audit Dossier</h1>
-            <p style="color: var(--text-muted); margin: 0;">Diagnostic Demographic Bias Evaluation & Regulatory Traceability Report</p>
+            <p style="color: var(--text-muted); margin: 0;">Diagnostic Demographic Bias Evaluation & Regulatory
+                Traceability Report</p>
             <div class="meta-grid">
                 <div class="meta-item">
                     <span class="meta-label">Audited Model</span>
@@ -269,7 +273,7 @@
                 </div>
                 <div class="meta-item">
                     <span class="meta-label">Audit Date</span>
-                    <strong>2026-09-02 12:56:49 UTC</strong>
+                    <strong>2026-09-02 12:29:04 UTC</strong>
                 </div>
             </div>
         </header>
@@ -282,17 +286,17 @@
             </div>
             <div class="exec-stat">
                 <span class="exec-stat-value">
-                    
-                        Female
-                    
+
+                    Female
+
                 </span>
                 <span class="exec-stat-label">Largest deviation subgroup</span>
             </div>
             <div class="exec-stat">
                 <span class="exec-stat-value">
-                    
-                        DIR = 0.070
-                    
+
+                    DIR = 0.070
+
                 </span>
                 <span class="exec-stat-label">Worst headline metric</span>
             </div>
@@ -306,9 +310,12 @@
         <div class="section-card">
             <h2>1. Headline Fairness Metrics (Core Four — Cross-Group Overview)</h2>
             <p style="font-size: 0.9rem; color: var(--text-muted);">
-                Summary metrics evaluated across all eligible demographic strata (n ≥ 30 per NFR-003). Accompanied by 95% stratified BCa bootstrap confidence intervals and Pearson's χ² test of independence. <em>Note: each CI band is scaled to its own row — dot colour (red = CI excludes null), not bar width, indicates significance across rows.</em>
+                Summary metrics evaluated across all eligible demographic strata (n ≥ 30 per NFR-003). Accompanied by
+                95% stratified BCa bootstrap confidence intervals and Pearson's χ² test of independence. <em>Note: each
+                    CI band is scaled to its own row — dot colour (red = CI excludes null), not bar width, indicates
+                    significance across rows.</em>
             </p>
-            
+
             <table>
                 <thead>
                     <tr>
@@ -321,143 +328,153 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                     <tr>
                         <td><strong>Demographic Parity Difference</strong></td>
                         <td>
-                            
-                                0.923
-                            
+
+                            0.923
+
                         </td>
                         <td>
-                            
-                                [0.915, 0.930]
-                            
+
+                            [0.915, 0.930]
+
                         </td>
                         <td class="ci-bar-cell">
-                            
-                                
-                
-                
-                
-                
-                
-                
-                
-                <svg class="inline-chart" width="200" height="34" viewBox="0 0 200 34" role="img" aria-label="Point estimate 0.923 with 95% CI [0.915, 0.930]">
-                    <line x1="100.00000000000001" y1="4" x2="100.00000000000001" y2="30" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,2" />
-                    <line x1="185.5691290487462" y1="17.0" x2="186.95652173913047" y2="17.0" stroke="#64748b" stroke-width="2" />
-                    <line x1="185.5691290487462" y1="12.0" x2="185.5691290487462" y2="22.0" stroke="#64748b" stroke-width="2" />
-                    <line x1="186.95652173913047" y1="12.0" x2="186.95652173913047" y2="22.0" stroke="#64748b" stroke-width="2" />
-                    <circle cx="186.32456616890002" cy="17.0" r="4.5" fill="#dc2626" />
-                </svg>
-            
-                            
+
+
+
+
+
+
+
+
+
+                            <svg class="inline-chart" width="200" height="34" viewBox="0 0 200 34" role="img"
+                                aria-label="Point estimate 0.923 with 95% CI [0.915, 0.930]">
+                                <line x1="100.00000000000001" y1="4" x2="100.00000000000001" y2="30" stroke="#cbd5e1"
+                                    stroke-width="1" stroke-dasharray="2,2" />
+                                <line x1="185.5691290487462" y1="17.0" x2="186.95652173913047" y2="17.0"
+                                    stroke="#64748b" stroke-width="2" />
+                                <line x1="185.5691290487462" y1="12.0" x2="185.5691290487462" y2="22.0" stroke="#64748b"
+                                    stroke-width="2" />
+                                <line x1="186.95652173913047" y1="12.0" x2="186.95652173913047" y2="22.0"
+                                    stroke="#64748b" stroke-width="2" />
+                                <circle cx="186.32456616890002" cy="17.0" r="4.5" fill="#dc2626" />
+                            </svg>
+
+
                         </td>
                         <td>
-                            
-                                p=0.0000
-                                
-                                    <span class="badge badge-fail">p &lt; 0.05</span>
-                                
-                            
+
+                            p=0.0000
+
+                            <span class="badge badge-fail">p &lt; 0.05</span>
+
+
                         </td>
                         <td><small>EU AI Act Art. 10(2)(f) / NIST Measure 2.11</small></td>
                     </tr>
-                    
+
                     <tr>
                         <td><strong>Equalized Odds Difference</strong></td>
                         <td>
-                            
-                                <span class="badge badge-guard">N/A (n &lt; 30)</span>
-                            
+
+                            <span class="badge badge-guard">N/A (n &lt; 30)</span>
+
                         </td>
                         <td>
-                            
-                                —
-                            
+
+                            —
+
                         </td>
                         <td class="ci-bar-cell">
-                            
-                                —
-                            
+
+                            —
+
                         </td>
                         <td>
-                            
-                                —
-                            
+
+                            —
+
                         </td>
                         <td><small>EU AI Act Art. 10(2)(g) / NIST Measure 2.11</small></td>
                     </tr>
-                    
+
                     <tr>
                         <td><strong>Equal Opportunity Difference</strong></td>
                         <td>
-                            
-                                <span class="badge badge-guard">N/A (n &lt; 30)</span>
-                            
+
+                            <span class="badge badge-guard">N/A (n &lt; 30)</span>
+
                         </td>
                         <td>
-                            
-                                —
-                            
+
+                            —
+
                         </td>
                         <td class="ci-bar-cell">
-                            
-                                —
-                            
+
+                            —
+
                         </td>
                         <td>
-                            
-                                —
-                            
+
+                            —
+
                         </td>
                         <td><small>EU AI Act Art. 10(3) / NIST Measure 2.11</small></td>
                     </tr>
-                    
+
                     <tr>
                         <td><strong>Disparate Impact Ratio</strong></td>
                         <td>
-                            
-                                0.039
-                            
+
+                            0.039
+
                         </td>
                         <td>
-                            
-                                [0.033, 0.044]
-                            
+
+                            [0.033, 0.044]
+
                         </td>
                         <td class="ci-bar-cell">
-                            
-                                
-                
-                
-                
-                
-                
-                
-                
-                <svg class="inline-chart" width="200" height="34" viewBox="0 0 200 34" role="img" aria-label="Point estimate 0.039 with 95% CI [0.033, 0.044]">
-                    <line x1="100.00000000000001" y1="4" x2="100.00000000000001" y2="30" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,2" />
-                    <line x1="13.043478260869557" y1="17.0" x2="14.007277768293102" y2="17.0" stroke="#64748b" stroke-width="2" />
-                    <line x1="13.043478260869557" y1="12.0" x2="13.043478260869557" y2="22.0" stroke="#64748b" stroke-width="2" />
-                    <line x1="14.007277768293102" y1="12.0" x2="14.007277768293102" y2="22.0" stroke="#64748b" stroke-width="2" />
-                    <circle cx="13.50176947142887" cy="17.0" r="4.5" fill="#dc2626" />
-                </svg>
-            
-                            
+
+
+
+
+
+
+
+
+
+                            <svg class="inline-chart" width="200" height="34" viewBox="0 0 200 34" role="img"
+                                aria-label="Point estimate 0.039 with 95% CI [0.033, 0.044]">
+                                <line x1="100.00000000000001" y1="4" x2="100.00000000000001" y2="30" stroke="#cbd5e1"
+                                    stroke-width="1" stroke-dasharray="2,2" />
+                                <line x1="13.043478260869557" y1="17.0" x2="14.007277768293102" y2="17.0"
+                                    stroke="#64748b" stroke-width="2" />
+                                <line x1="13.043478260869557" y1="12.0" x2="13.043478260869557" y2="22.0"
+                                    stroke="#64748b" stroke-width="2" />
+                                <line x1="14.007277768293102" y1="12.0" x2="14.007277768293102" y2="22.0"
+                                    stroke="#64748b" stroke-width="2" />
+                                <circle cx="13.50176947142887" cy="17.0" r="4.5" fill="#dc2626" />
+                            </svg>
+
+
                         </td>
                         <td>
-                            
-                                p=0.0000
-                                
-                                    <span class="badge badge-fail">p &lt; 0.05</span>
-                                
-                            
+
+                            p=0.0000
+
+                            <span class="badge badge-fail">p &lt; 0.05</span>
+
+
                         </td>
                         <td><small>EEOC 4/5ths Rule / EU AI Act Annex IV §2(g)</small></td>
                     </tr>
-                    
+
                 </tbody>
             </table>
         </div>
@@ -466,9 +483,12 @@
         <div class="section-card">
             <h2>2. Per-Subgroup Disparity Matrix</h2>
             <p style="font-size: 0.9rem; color: var(--text-muted);">
-                Detailed stratification across individual demographic groups, ordered by largest deviation from the null (no-disparity) point, most significant first. Subgroups below the NFR-003 sample threshold (n &lt; 30) are strictly flagged, uncomputed to prevent small-sample estimation artifacts, and summarised separately below.
+                Detailed stratification across individual demographic groups, ordered by largest deviation from the null
+                (no-disparity) point, most significant first. Subgroups below the NFR-003 sample threshold (n &lt; 30)
+                are strictly flagged, uncomputed to prevent small-sample estimation artifacts, and summarised separately
+                below.
             </p>
-            
+
             <table>
                 <thead>
                     <tr>
@@ -483,7 +503,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                     <tr>
                         <td><strong>Female</strong></td>
                         <td>5162</td>
@@ -492,40 +512,41 @@
                         <td>—</td>
                         <td>0.070</td>
                         <td class="metric-bars-cell">
-                            
-                                
-                
-                
-                
-                
-                
-                
-                
-                <svg class="inline-chart" width="172" height="32" viewBox="0 0 172 32" role="img" aria-label="Per-metric deviation bars for 2 metrics">
-                    
-                        
-                        
-                        
-                        <text x="0" y="10" font-size="9" fill="#475569">DPD</text>
-                        <rect x="34" y="0" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="0" width="130.0" height="12" fill="#dc2626" rx="2" />
-                    
-                        
-                        
-                        
-                        <text x="0" y="26" font-size="9" fill="#475569">DIR</text>
-                        <rect x="34" y="16" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="16" width="130.0" height="12" fill="#dc2626" rx="2" />
-                    
-                </svg>
-            
-                            
+
+
+
+
+
+
+
+
+
+                            <svg class="inline-chart" width="172" height="32" viewBox="0 0 172 32" role="img"
+                                aria-label="Per-metric deviation bars for 2 metrics">
+
+
+
+
+                                <text x="0" y="10" font-size="9" fill="#475569">DPD</text>
+                                <rect x="34" y="0" width="130" height="12" fill="#f1f5f9" rx="2" />
+                                <rect x="34" y="0" width="130.0" height="12" fill="#dc2626" rx="2" />
+
+
+
+
+                                <text x="0" y="26" font-size="9" fill="#475569">DIR</text>
+                                <rect x="34" y="16" width="130" height="12" fill="#f1f5f9" rx="2" />
+                                <rect x="34" y="16" width="130.0" height="12" fill="#dc2626" rx="2" />
+
+                            </svg>
+
+
                         </td>
                         <td>
                             <span class="badge badge-pass">Audited (Valid)</span>
                         </td>
                     </tr>
-                    
+
                     <tr>
                         <td><strong>Male</strong></td>
                         <td>5792</td>
@@ -534,51 +555,52 @@
                         <td>0.000</td>
                         <td>0.547</td>
                         <td class="metric-bars-cell">
-                            
-                                
-                
-                
-                
-                
-                
-                
-                
-                <svg class="inline-chart" width="172" height="48" viewBox="0 0 172 48" role="img" aria-label="Per-metric deviation bars for 3 metrics">
-                    
-                        
-                        
-                        
-                        <text x="0" y="10" font-size="9" fill="#475569">DPD</text>
-                        <rect x="34" y="0" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="0" width="130.0" height="12" fill="#dc2626" rx="2" />
-                    
-                        
-                        
-                        
-                        <text x="0" y="26" font-size="9" fill="#475569">EOP</text>
-                        <rect x="34" y="16" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="16" width="0.0" height="12" fill="#dc2626" rx="2" />
-                    
-                        
-                        
-                        
-                        <text x="0" y="42" font-size="9" fill="#475569">DIR</text>
-                        <rect x="34" y="32" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="32" width="130.0" height="12" fill="#dc2626" rx="2" />
-                    
-                </svg>
-            
-                            
+
+
+
+
+
+
+
+
+
+                            <svg class="inline-chart" width="172" height="48" viewBox="0 0 172 48" role="img"
+                                aria-label="Per-metric deviation bars for 3 metrics">
+
+
+
+
+                                <text x="0" y="10" font-size="9" fill="#475569">DPD</text>
+                                <rect x="34" y="0" width="130" height="12" fill="#f1f5f9" rx="2" />
+                                <rect x="34" y="0" width="130.0" height="12" fill="#dc2626" rx="2" />
+
+
+
+
+                                <text x="0" y="26" font-size="9" fill="#475569">EOP</text>
+                                <rect x="34" y="16" width="130" height="12" fill="#f1f5f9" rx="2" />
+                                <rect x="34" y="16" width="0.0" height="12" fill="#dc2626" rx="2" />
+
+
+
+
+                                <text x="0" y="42" font-size="9" fill="#475569">DIR</text>
+                                <rect x="34" y="32" width="130" height="12" fill="#f1f5f9" rx="2" />
+                                <rect x="34" y="32" width="130.0" height="12" fill="#dc2626" rx="2" />
+
+                            </svg>
+
+
                         </td>
                         <td>
                             <span class="badge badge-pass">Audited (Valid)</span>
                         </td>
                     </tr>
-                    
+
                 </tbody>
             </table>
 
-            
+
         </div>
 
         <!-- 3. Model Card & Dataset Datasheet (Mitchell / Gebru) -->
@@ -586,15 +608,20 @@
             <h2>3. Governance Documentation & Intended Use</h2>
             <div class="regulatory-box">
                 <strong>EU AI Act (Regulation EU 2024/1689) Article 10 / Annex IV Alignment:</strong>
-                This audit dossier provides verifiable diagnostic documentation of demographic performance disparities. It does not perform model retraining or in-situ weight modifications.
+                This audit dossier provides verifiable diagnostic documentation of demographic performance disparities.
+                It does not perform model retraining or in-situ weight modifications.
             </div>
-            <p><strong>Model Description:</strong> ImageNet-pretrained ResNet-34 terminating in an 18-unit linear head sliced for race (7), gender (2), and age (9) classification.</p>
-            <p><strong>Evaluation Protocol:</strong> Standalone offline evaluation using dual-backend cross-validation (Fairlearn + AIF360) and 1,000-resample stratified BCa bootstrap estimation.</p>
+            <p><strong>Model Description:</strong> ImageNet-pretrained ResNet-34 terminating in an 18-unit linear head
+                sliced for race (7), gender (2), and age (9) classification.</p>
+            <p><strong>Evaluation Protocol:</strong> Standalone offline evaluation using dual-backend cross-validation
+                (Fairlearn + AIF360) and 1,000-resample stratified BCa bootstrap estimation.</p>
         </div>
 
         <footer>
-            <p>Generated deterministically by <strong>BiasAperture v0.1.0</strong> • Pure Standalone HTML • Zero External CDNs</p>
+            <p>Generated deterministically by <strong>BiasAperture v0.1.0</strong> • Pure Standalone HTML • Zero
+                External CDNs</p>
         </footer>
     </div>
 </body>
+
 </html>

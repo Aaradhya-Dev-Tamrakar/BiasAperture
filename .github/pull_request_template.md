@@ -3,7 +3,7 @@
 
 ## 🛠️ Changes Made
 <!-- Bulleted list of specific changes, new classes, or fixed issues. -->
-- [ ] 
+- [ ]
 
 ## 🔗 Related Issues
 <!-- Link related issues e.g. Closes #2 -->
@@ -16,6 +16,7 @@ Closes #
 - [ ] Schema invariants verified (`SubjectRecord` / `MetricResult`)
 
 ## 📋 Checklist
+
 - [ ] Code follows project coding standards (PEP8, Ruff 88-char, type hints)
 - [ ] No hardcoded secrets or raw data committed
 - [ ] All CI / unit tests pass cleanly

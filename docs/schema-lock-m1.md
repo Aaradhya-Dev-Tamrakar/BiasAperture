@@ -6,19 +6,20 @@ version lives in `src/bias_aperture/schema.py`.
 
 ## Classifier baseline
 
-**dchen236/FairFace** — inference fork of the FairFace paper's official
-pretrained ResNet-34 (`res34_fair_align_multi_7_20190809.pt`), **race_7**
+**dchen236/FairFace** (and `joojs/fairface`) — inference fork of the FairFace
+paper's official pretrained ResNet-34 (`fairface_alldata_20191111.pt`, with
+`res34_fair_align_multi_7_20190809.pt` as alternative checkpoint), **race_7**
 variant (not race_4).
 
 Rationale: matches FairFace's own 7 race groups (White, Black, Indian,
 East Asian, Southeast Asian, Middle Eastern, Latino), the dataset
-`requirements.tex` FR-001 names as primary, and gives finer-grained
-subgroup resolution than race_4 for the fairness metrics in FR-003. This
-is also the "public pretrained checkpoint and inference script" the
-report's descoping table (cutlist #4) already assumes as the fallback if
-in-process inference is cut — so locking on it now means WP2's
-predictions-file path and the descope fallback are the same artifact,
-not two.
+`requirements.tex` FR-001 names as primary (97,698 released images on disk:
+86,744 train + 10,954 val), and gives finer-grained subgroup resolution than
+race_4 for the fairness metrics in FR-003. This is also the "public pretrained
+checkpoint and inference script" the report's descoping table (cutlist #4)
+already assumes as the fallback if in-process inference is cut — so locking
+on it now means WP2's predictions-file path and the descope fallback are the
+same artifact, not two.
 
 ## Internal schema (FR-001)
 

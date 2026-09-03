@@ -37,7 +37,7 @@ BiasAperture/
 │   └── tests/                     # Pytest suite
 ├── docs/                          # Meta-documentation, schema lock, literature matrix
 ├── report/                        # LaTeX report source and compiled main.pdf
-├── sync.ps1                       # Dual-remote synchronization script
+├── sync.ps1                       # Multi-remote sync script (origin & duo compulsory, org mirror)
 └── pyproject.toml                 # Ruff & pytest configuration
 ```
 

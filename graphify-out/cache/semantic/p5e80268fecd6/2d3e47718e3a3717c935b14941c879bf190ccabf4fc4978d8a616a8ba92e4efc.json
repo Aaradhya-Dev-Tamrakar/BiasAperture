@@ -1,0 +1,1 @@
+{"nodes": [{"id": "docs_research_low_level_specification", "label": "Low-Level Technical Specification", "file_type": "document", "source_file": "docs/research/LOW_LEVEL_SPECIFICATION.md", "rationale": "Formal mathematical definitions for metrics (DPD, EOD, EOP, DIR) and statistical algorithms."}], "edges": [], "hyperedges": []}

@@ -15,13 +15,36 @@ authors = [
 ]
 dependencies = [
     "pandas>=2.0.0",
+    "numpy>=1.24.0",
+    "scipy>=1.10.0",
+    "jinja2>=3.1.0",
+    "shap>=0.49.1",
+    "torch>=2.0.0",
+    "torchvision>=0.15.0",
+    "pillow>=9.0.0",
 ]
 
 [project.optional-dependencies]
+fairness = [
+    "fairlearn>=0.10.0",
+    "aif360>=0.6.0",
+    "scikit-learn>=1.3.0",
+]
 dev = [
     "pytest>=7.0.0",
     "ruff>=0.4.0",
+    "torch>=2.0.0",
+    "torchvision>=0.15.0",
+    "pillow>=9.0.0",
+    "fairlearn>=0.10.0",
+    "aif360>=0.6.0",
+    "scikit-learn>=1.3.0",
+    "jinja2>=3.1.0",
+    "shap>=0.49.1",
 ]
+
+[project.scripts]
+bias-aperture = "bias_aperture.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

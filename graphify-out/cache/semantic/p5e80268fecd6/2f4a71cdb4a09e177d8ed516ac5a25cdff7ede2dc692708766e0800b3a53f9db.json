@@ -1,0 +1,1 @@
+{"nodes": [{"id": "docs_research_mid_level_architecture", "label": "Mid-Level Architectural Design", "file_type": "document", "source_file": "docs/research/MID_LEVEL_ARCHITECTURE.md", "rationale": "Describes system topology, component interactions, and design patterns like Strategy and Adapter."}], "edges": [], "hyperedges": []}

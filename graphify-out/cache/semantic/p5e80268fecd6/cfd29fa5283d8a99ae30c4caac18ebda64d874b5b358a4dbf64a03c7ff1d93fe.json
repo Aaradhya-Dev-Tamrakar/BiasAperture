@@ -1,0 +1,1 @@
+{"nodes": [{"id": "research_results_cross_track_conflict_log", "label": "Phase-1 Cross-Track Conflict & Discrepancy Log", "file_type": "document", "source_file": "research/results/cross_track_conflict_log.md", "rationale": "Logs technical discrepancies between backends (Fairlearn vs AIF360) and schema issues."}], "edges": [], "hyperedges": []}
