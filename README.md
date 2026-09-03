@@ -17,7 +17,7 @@ The platform is coordinated by a CLI + YAML **orchestration and configuration la
 
 ```mermaid
 flowchart TD
-    FF[("FairFace dataset<br/>108,501 images")]
+    FF[("FairFace dataset<br/>97.698 images")]
     UTK[("UTKFace dataset<br/>20,000+ images")]
     PT[/"PyTorch / TensorFlow model"/]
     BB[/"Black-box API / predictions file"/]
