@@ -10,9 +10,9 @@ This directory manages datasets and precomputed test matrices for BiasAperture.
 
 ```
 data/
-├── raw/                 # Original, untouched datasets
-│   ├── fairface/        # FairFace margin025 images and official label CSVs (97,698 released images)
-│   └── utkface/         # [CUT] Secondary benchmark (cut per Cut-List #2 / Track 02)
+├── fairface-img-margin025-trainval/  # FairFace images and official label CSVs
+│   ├── data/             # fairface_label_{train,val}.csv
+│   └── faces/            # margin025 train/val images
 └── processed/           # Schema-aligned test matrices and stratified subsets
     ├── fairface_predictions_val.csv    # ✅ Verified validation inference output (10,954 records)
     └── fairface_dev_5000.csv           # Stratified development subset (n=5,000)
@@ -30,4 +30,4 @@ data/
 2. **Classifier Baseline Weights (WBS 1.2)**:
    - Default Checkpoint: `fairface_alldata_20191111.pt` (ResNet-34, 18-unit head, 7-race multi-task; loaded by default in `predict.py`).
    - Alternative Checkpoint: `res34_fair_align_multi_7_20190809.pt` (older variant).
-   - Inference script: `predict.py`.
+   - Inference script: `scripts/run_fairface_inference.py`.

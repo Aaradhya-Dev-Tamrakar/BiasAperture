@@ -1,6 +1,6 @@
 # BiasAperture
 
-* A Diagnostic and Evaluative Framework for Auditing Demographic Bias in Facial Analysis Systems *
+- A Diagnostic and Evaluative Framework for Auditing Demographic Bias in Facial Analysis Systems \*
 
 A fairness and bias audit system proposal report submitted for the Fusemachines AI Fellowship Program, Kathmandu, Nepal.
 
@@ -17,8 +17,9 @@ The platform is coordinated by a CLI + YAML **orchestration and configuration la
 
 ```mermaid
 flowchart TD
-    FF[("FairFace dataset<br/>97.698 images")]
-    UTK[("UTKFace dataset<br/>20,000+ images")]
+    FF[("FairFace dataset<br/>97,698 images")]
+    UTK[("UTKFace dataset<br/><b>[CUT]</b> profiled only")]
+    CUT["Research comparison<br/>DEX age noise + race-category collapse"]
     PT[/"PyTorch / TensorFlow model"/]
     BB[/"Black-box API / predictions file"/]
 
@@ -41,20 +42,23 @@ flowchart TD
     end
 
     FF --> ING
-    UTK --> ING
+    UTK -.-> CUT
     PT --> MIF
     BB --> MIF
 
     REP --> COMP["Compliance report (HTML / PDF)"]
     REG["Regulatory traceability:<br/>EU AI Act Annex IV · NIST AI RMF"] --> COMP
+
+    classDef cut stroke-dasharray: 5 5, fill:#f5f5f5, stroke:#777, color:#555
+    class UTK,CUT cut
 ```
 
-* **Data ingestion & preprocessing module** — consumes the FairFace (108,501 images) and UTKFace (20,000+ images, evaluated then formally cut per Cut-List #2) datasets and normalises them into the locked M1 schema. Implemented in `src/bias_aperture/schema.py` and the ingestion pipeline under `src/bias_aperture/`.
-* **Model interface module** — abstracts over the subject under audit, accepting either a PyTorch/TensorFlow model, a black-box API, or a static predictions file. Implemented in `src/bias_aperture/model_interface.py` (`ModelInterface` & `PredictionsFileInterface`).
-* **Fairness metrics engine** — computes the Core Four disparity metrics (demographic parity difference, equalized odds difference, equal opportunity difference, disparate impact ratio) using **AIF360** and **Fairlearn** as independent, cross-validating backends, each result paired with a $\chi^2$ significance test and a BCa bootstrap confidence interval. Implemented in `src/bias_aperture/fairness/` (WP4).
-* **Explainability layer** — attributes flagged disparities to input features via **SHAP**.
-* **Report generation module** — renders findings into offline, zero-network **Jinja2**-templated HTML/PDF compliance reports with accompanying model cards. Implemented in `src/bias_aperture/report/` (WP3).
-* **Compliance report** — the final artifact, with every finding traced to its specific basis under **EU AI Act Annex IV** and the corresponding **NIST AI RMF** function.
+- **Data ingestion & preprocessing module** — consumes the released FairFace artifact (97,698 images) and normalises it into the locked M1 schema. UTKFace was evaluated and formally cut from implementation scope per Cut-List #2. Implemented in `src/bias_aperture/schema.py` and the ingestion pipeline under `src/bias_aperture/`.
+- **Model interface module** — abstracts over the subject under audit, accepting either a PyTorch/TensorFlow model, a black-box API, or a static predictions file. Implemented in `src/bias_aperture/model_interface.py` (`ModelInterface` & `PredictionsFileInterface`).
+- **Fairness metrics engine** — computes the Core Four disparity metrics (demographic parity difference, equalized odds difference, equal opportunity difference, disparate impact ratio) using **AIF360** and **Fairlearn** as independent, cross-validating backends, each result paired with a $\chi^2$ significance test and a BCa bootstrap confidence interval. Implemented in `src/bias_aperture/fairness/` (WP4).
+- **Explainability layer** — attributes flagged disparities to input features via **SHAP**.
+- **Report generation module** — renders findings into offline, zero-network **Jinja2**-templated HTML/PDF compliance reports with accompanying model cards. Implemented in `src/bias_aperture/report/` (WP3).
+- **Compliance report** — the final artifact, with every finding traced to its specific basis under **EU AI Act Annex IV** and the corresponding **NIST AI RMF** function.
 
 ## Repository Structure
 
@@ -145,75 +149,75 @@ schema, diagnostic-only scope, and NFR-001/002/003 statistical safeguards.
 Overall Progress: [██████████████████░░] 90% (Milestones M1–M4 Completed · Inference Complete · M5 Audit/Report Active; 56 tests passing)
 ```
 
-| Work Package / Milestone | Stream / Focus | Status | Progress Bar | Deliverables & Implementation State |
-|---|---|---|---|---|
-| **WP1 / M1: Schema Lock & Baseline** | Foundations / Joint | Completed | `[████████████████████] 100%` | Locked schema (`schema.py`), FairFace ResNet-34 baseline fixed, test fixtures |
-| **WP2 / M2: Data Ingestion & Test Matrix** | Stream A (Tisha) | Completed | `[████████████████████] 100%` | FairFace ingestion pipeline (`data_ingestion.py`), disk verification (97,698 images), UTKFace profiling |
-| **WP3 / M3: Compliance Report Generation** | Stream B (Tisha/Aaradhya) | Completed | `[████████████████████] 100%` | Offline standalone Jinja2 HTML report (`generator.py`), embedded Base64 charts, EU AI Act & NIST mapping |
-| **WP4 / M4: Statistical Detection Engine & SHAP** | WP4 (Aaradhya) | Completed | `[████████████████████] 100%` | Pure-math metrics, Fairlearn + native AIF360 backends, BCa bootstrap ($B \ge 1,000$), $\chi^2$ significance tests, SHAP surrogate attribution |
-| **WP5 / M5: System Orchestration & Case Study** | Integration / Joint | Active | `[██████████████████░░]  90%` | Benchmark inference complete (`10,954/10,954` processed), CSV schema validated, and gender audit report generated; next: review report outputs and finalize empirical tables |
+| Work Package / Milestone                          | Stream / Focus            | Status    | Progress Bar                  | Deliverables & Implementation State                                                                                                                                          |
+| ------------------------------------------------- | ------------------------- | --------- | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **WP1 / M1: Schema Lock & Baseline**              | Foundations / Joint       | Completed | `[████████████████████] 100%` | Locked schema (`schema.py`), FairFace ResNet-34 baseline fixed, test fixtures                                                                                                |
+| **WP2 / M2: Data Ingestion & Test Matrix**        | Stream A (Tisha)          | Completed | `[████████████████████] 100%` | FairFace ingestion pipeline (`data_ingestion.py`), disk verification (97,698 images), UTKFace profiling                                                                      |
+| **WP3 / M3: Compliance Report Generation**        | Stream B (Tisha/Aaradhya) | Completed | `[████████████████████] 100%` | Offline standalone Jinja2 HTML report (`generator.py`), embedded Base64 charts, EU AI Act & NIST mapping                                                                     |
+| **WP4 / M4: Statistical Detection Engine & SHAP** | WP4 (Aaradhya)            | Completed | `[████████████████████] 100%` | Pure-math metrics, Fairlearn + native AIF360 backends, BCa bootstrap ($B \ge 1,000$), $\chi^2$ significance tests, SHAP surrogate attribution                                |
+| **WP5 / M5: System Orchestration & Case Study**   | Integration / Joint       | Active    | `[██████████████████░░]  90%` | Benchmark inference complete (`10,954/10,954` processed), CSV schema validated, and gender audit report generated; next: review report outputs and finalize empirical tables |
 
 ### Current TODOs (September 2, 2026)
 
 **Aaradhya**
 
-* [x] Run the FairFace gender audit with explicit CSV column mappings; generated `report/audit_report_val_gender.html` with 10,954 records and 12 metric rows.
+- [x] Run the FairFace gender audit with explicit CSV column mappings; generated `report/audit_report_val_gender.html` with 10,954 records and 12 metric rows.
 
   ```powershell
   uv run bias-aperture --predictions-file data/processed/fairface_predictions_val.csv --protected-attr gender --true-label-col true_gender --predicted-label-col predicted_gender --race-col subgroup_race --gender-col subgroup_gender --age-col subgroup_age --output-report report/audit_report_val_gender.html
   ```
 
-* [ ] Verify the standalone HTML report includes DPD, DIR, EOP, EOD, 95% bootstrap CIs, chi-squared p-values, sample sizes, and `n < 30` guards.
-* [ ] Finalize `report/main.pdf` with empirical tables, confidence intervals, p-values, and disparity visualizations.
-* [ ] Seal reproducible empirical claims in `docs/research/CLAIM_LEDGER.md`.
+- [ ] Verify the standalone HTML report includes DPD, DIR, EOP, EOD, 95% bootstrap CIs, chi-squared p-values, sample sizes, and `n < 30` guards.
+- [ ] Finalize `report/main.pdf` with empirical tables, confidence intervals, p-values, and disparity visualizations.
+- [ ] Seal reproducible empirical claims in `docs/research/CLAIM_LEDGER.md`.
 
 **Tisha**
 
-* [ ] Confirm defense date, duration, format, and marking breakdown with TA Shreejan Kisee.
-* [ ] Audit the generated Model Card and Datasheet against EU AI Act Articles 10 and 13.
-* [ ] Verify all 126 race × age × gender bins and document sample-size enforcement.
-* [ ] Prepare the dataset and compliance sections for the defense.
+- [ ] Confirm defense date, duration, format, and marking breakdown with TA Shreejan Kisee.
+- [ ] Audit the generated Model Card and Datasheet against EU AI Act Articles 10 and 13.
+- [ ] Verify all 126 race × age × gender bins and document sample-size enforcement.
+- [ ] Prepare the dataset and compliance sections for the defense.
 
 **Joint**
 
-* [ ] Confirm timeline and dependencies after the TA responds.
-* [ ] Create the 10–15 minute presentation and rehearse the end-to-end CLI demo.
-* [ ] Practice scrutiny questions on the `n ≥ 30` guard, chi-squared testing, bootstrap CIs, backend differences, and diagnostic-only scope.
+- [ ] Confirm timeline and dependencies after the TA responds.
+- [ ] Create the 10–15 minute presentation and rehearse the end-to-end CLI demo.
+- [ ] Practice scrutiny questions on the `n ≥ 30` guard, chi-squared testing, bootstrap CIs, backend differences, and diagnostic-only scope.
 
 ### Questions for the TA
 
-* What are the confirmed defense date, duration, and required format?
-* Must both team members present, and how are individual contributions assessed?
-* Are slides, a live demonstration, or both required?
-* Is FairFace alone sufficient, allowing UTKFace to be removed from the final scope?
-* Do the CLI and offline HTML report satisfy the deliverable requirements?
-* Are Fairlearn, AIF360, and SHAP all mandatory, or can some be presented as focused validation components?
-* What is the confirmed final deadline and are there interim milestones?
-* Which evidence is expected: tests, profiling, metric results, generated report, runtime measurements, and end-to-end audit?
+- What are the confirmed defense date, duration, and required format?
+- Must both team members present, and how are individual contributions assessed?
+- Are slides, a live demonstration, or both required?
+- Is FairFace alone sufficient, allowing UTKFace to be removed from the final scope?
+- Do the CLI and offline HTML report satisfy the deliverable requirements?
+- Are Fairlearn, AIF360, and SHAP all mandatory, or can some be presented as focused validation components?
+- What is the confirmed final deadline and are there interim milestones?
+- Which evidence is expected: tests, profiling, metric results, generated report, runtime measurements, and end-to-end audit?
 
 ## Branching & Workstreams
 
-| Branch | Stream / Work Package | Primary Owner | Description |
-|---|---|---|---|
-| `main` | Production / Base | Joint | Stable base holding locked schema, verified engine, docs, and report |
-| `feat/stream-data` | Stream A (WP2) | Tisha (`@tiixsha`) | FairFace dataset ingestion & test-matrix construction |
-| `feat/stream-report` | Stream B (WP3) | Tisha (`@tiixsha`) | Jinja2 HTML compliance report scaffolding |
-| `feat/wp4-engine` | WP4 | Aaradhya (`@AaradhyaDT`) | Fairness computation backends, statistics, and SHAP |
-| `feat/wp5-integration` | WP5 | Aaradhya (`@AaradhyaDT`) / Joint | CLI orchestrator, benchmark execution & case study |
-| Branch                 | Stream / Work Package | Primary Owner            | Target Focus & Verification Mandate                                                                |
-| ---------------------- | --------------------- | ------------------------- | -------------------------------------------------------------------------------------------------- |
-| `main`                 | Production / Base     | Joint                    | Stable base holding M1 schema, documentation, and LaTeX report                                     |
-| `feat/stream-data`     | Stream A (WP2)        | Tisha (`@tiixsha`)       | FairFace dataset ingestion, `dlib` 5-point landmark alignment & demographic test-matrix            |
-| `feat/stream-report`   | Stream B (WP3)        | Tisha (`@tiixsha`)       | Jinja2 HTML compliance report scaffolding, zero-network offline rendering, EU AI Act mapping       |
-| `feat/wp4-engine`      | Stream C (WP4)        | Aaradhya (`@AaradhyaDT`) | Fairness backends harmonization (AIF360 + Fairlearn), BCa bootstrap CIs, and $\chi^2$ significance |
-| `feat/wp5-integration` | Stream D (WP5)        | Aaradhya (`@AaradhyaDT`) | SHAP explainability layer, pipeline orchestration, and end-to-end benchmark case studies           |
+| Branch                 | Stream / Work Package | Primary Owner                    | Description                                                                                        |
+| ---------------------- | --------------------- | -------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `main`                 | Production / Base     | Joint                            | Stable base holding locked schema, verified engine, docs, and report                               |
+| `feat/stream-data`     | Stream A (WP2)        | Tisha (`@tiixsha`)               | FairFace dataset ingestion & test-matrix construction                                              |
+| `feat/stream-report`   | Stream B (WP3)        | Tisha (`@tiixsha`)               | Jinja2 HTML compliance report scaffolding                                                          |
+| `feat/wp4-engine`      | WP4                   | Aaradhya (`@AaradhyaDT`)         | Fairness computation backends, statistics, and SHAP                                                |
+| `feat/wp5-integration` | WP5                   | Aaradhya (`@AaradhyaDT`) / Joint | CLI orchestrator, benchmark execution & case study                                                 |
+| Branch                 | Stream / Work Package | Primary Owner                    | Target Focus & Verification Mandate                                                                |
+| ---------------------- | --------------------- | -------------------------        | -------------------------------------------------------------------------------------------------- |
+| `main`                 | Production / Base     | Joint                            | Stable base holding M1 schema, documentation, and LaTeX report                                     |
+| `feat/stream-data`     | Stream A (WP2)        | Tisha (`@tiixsha`)               | FairFace dataset ingestion, `dlib` 5-point landmark alignment & demographic test-matrix            |
+| `feat/stream-report`   | Stream B (WP3)        | Tisha (`@tiixsha`)               | Jinja2 HTML compliance report scaffolding, zero-network offline rendering, EU AI Act mapping       |
+| `feat/wp4-engine`      | Stream C (WP4)        | Aaradhya (`@AaradhyaDT`)         | Fairness backends harmonization (AIF360 + Fairlearn), BCa bootstrap CIs, and $\chi^2$ significance |
+| `feat/wp5-integration` | Stream D (WP5)        | Aaradhya (`@AaradhyaDT`)         | SHAP explainability layer, pipeline orchestration, and end-to-end benchmark case studies           |
 
 ## Research Verification & Viva Defense Allocation
 
 Empirical claims are verified across independent audit streams as detailed in the [Verification & Scrutiny Guide](docs/research/VERIFICATION_AND_SCRUTINY_GUIDE.md):
 
-* **Tisha Manandhar**: Leads defense on Dataset Integrity (FairFace 97.7k count verification & alignment), Demographic Test Matrix Scaffolding, Regulatory Alignment (EU AI Act Art. 10/13 & NIST AI RMF Measure 2.11), and Standalone Compliance Reporting.
-* **Aaradhya Dev Tamrakar**: Leads defense on Statistical Significance Engine ($\chi^2$ asymptotic tests, BCa Bootstrap Confidence Intervals), Dual-Backend Harmonization (AIF360 vs Fairlearn Equalized Odds max-of-gaps), and SHAP Feature Attribution.
+- **Tisha Manandhar**: Leads defense on Dataset Integrity (FairFace 97.7k count verification & alignment), Demographic Test Matrix Scaffolding, Regulatory Alignment (EU AI Act Art. 10/13 & NIST AI RMF Measure 2.11), and Standalone Compliance Reporting.
+- **Aaradhya Dev Tamrakar**: Leads defense on Statistical Significance Engine ($\chi^2$ asymptotic tests, BCa Bootstrap Confidence Intervals), Dual-Backend Harmonization (AIF360 vs Fairlearn Equalized Odds max-of-gaps), and SHAP Feature Attribution.
 
 ## Python Development, Testing & Code Style
 
@@ -264,8 +268,8 @@ Build artifacts (`.aux`, `.bbl`, `.toc`, `.synctex.gz`, etc.) are git-ignored; o
 
 Recommended extensions for editing/compiling `report/`:
 
-* **[LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop)** (James Yu) — compile, preview, autocomplete, SyncTeX
-* **[LaTeX Utilities](https://marketplace.visualstudio.com/items?itemName=tecosaur.latex-utilities)** (tecosaur) — glossary/word-count add-ons on top of Workshop
+- **[LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop)** (James Yu) — compile, preview, autocomplete, SyncTeX
+- **[LaTeX Utilities](https://marketplace.visualstudio.com/items?itemName=tecosaur.latex-utilities)** (tecosaur) — glossary/word-count add-ons on top of Workshop
 
 Skip generic "LaTeX" language-support extensions (e.g. Mathematic Inc's) — redundant with Workshop and can conflict on snippets/keybindings.
 
