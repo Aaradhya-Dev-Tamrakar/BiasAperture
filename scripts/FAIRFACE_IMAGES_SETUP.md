@@ -160,10 +160,10 @@ If it's the second, update the inference script path accordingly.
 | 2. Prepare local FairFace data | ✅ Done | local validation split available in `data/fairface-img-margin025-trainval` |
 | 3. Run inference | ✅ Done | `data/processed/fairface_predictions_val.csv` (10,954 rows) |
 | 4. Validate schema | ✅ Done | `✓ SCHEMA VALID` |
-| 5. Generate audit/report | 🔄 Next | fairness audit over the predictions CSV |
+| 5. Generate audit/report | ✅ Done | `report/audit_report_val_gender.html` (12 metric rows) |
 
 ---
 
-**Current state**: The inference baseline is complete and ready for the audit stage.
+**Current state**: The inference baseline and first gender audit report are complete. Remaining work is report review and empirical table finalization.
 
-**Next action**: Run the fairness/audit workflow against `data/processed/fairface_predictions_val.csv`.
+**Next action**: Review the generated report and finalize the empirical tables in `report/main.pdf`.

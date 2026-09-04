@@ -1,5 +1,8 @@
 # Data Exploration Report — FairFace & UTKFace
 
+> Historical WP1 exploration record. FairFace is the active benchmark; UTKFace
+> was profiled and subsequently cut from implementation scope.
+
 **Phase:** WP1 — Data ingestion & exploration
 **Datasets:** FairFace (primary), UTKFace (secondary)
 **Scripts:** `scripts/explore_fairface.py`, `scripts/explore_utkface.py`
@@ -8,8 +11,8 @@
 
 ## 1. FairFace
 
-**Source:** `data/raw/fairface/` — `fairface_label_train.csv`,
-`fairface_label_val.csv`, images under `detected_faces/{train,val}/`
+**Source:** `data/fairface-img-margin025-trainval/` — labels under `data/`
+and images under `faces/{train,val}/`
 
 **Validation performed:** every row's `age`, `gender`, `race` checked
 against the locked vocabularies in `schema.py`; every row's image file
@@ -47,7 +50,7 @@ this way.
 
 ## 2. UTKFace
 
-**Source:** `data/raw/utkface/detected_faces/` — no label CSV; labels
+**Historical source:** `data/raw/utkface/detected_faces/` — no label CSV; labels
 are encoded in each filename as `[age]_[gender]_[race]_[date&time].jpg`
 (age 0–116 integer, gender 0/1, race 0–4).
 
