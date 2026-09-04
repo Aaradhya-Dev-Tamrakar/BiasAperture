@@ -1,6 +1,6 @@
 # BiasAperture
 
-* A Diagnostic and Evaluative Framework for Auditing Demographic Bias in Facial Analysis Systems *
+- A Diagnostic and Evaluative Framework for Auditing Demographic Bias in Facial Analysis Systems \*
 
 A fairness and bias audit system proposal report submitted for the Fusemachines AI Fellowship Program, Kathmandu, Nepal.
 
@@ -77,22 +77,22 @@ BiasAperture is a proposed diagnostic and evaluative software platform that comp
 Overall Progress: [██████░░░░░░░░░░░░░░] 32% (Milestone M1 Schema Locked)
 ```
 
-| Work Package / Milestone | Stream / Focus | Status | Progress Bar | Deliverables & Implementation State |
-|---|---|---|---|---|
-| **WP1 / M1: Schema Lock & Baseline** | Foundations / Joint | Completed | `[████████████████████] 100%` | Locked schema (`schema.py`), FairFace ResNet-34 baseline fixed, test suite passing (14/14) |
-| **WP2 / M2: Data Ingestion & Test Matrix** | Stream A (Aaradhya) | In Progress | `[██████░░░░░░░░░░░░░░]  30%` | Directory scaffolding (`data/`), FairFace sourcing guide, data ingestion pipeline in progress |
-| **WP3 / M2: Compliance Report Scaffolding** | Stream B (Aaradhya/Tisha) | In Progress | `[████░░░░░░░░░░░░░░░░]  20%` | Package scaffolding (`report/`), Model Card & Jinja2 HTML generation structure in progress |
-| **WP4 / M3: Statistical Detection Engine & SHAP** | WP4 (Tisha) | In Progress | `[██░░░░░░░░░░░░░░░░░░]  10%` | Fairness package scaffolded (`fairness/`), AIF360/Fairlearn backends, bootstrap CIs & SHAP planned |
-| **WP5 / M4: System Orchestration & Case Study** | Integration / Joint | Planned | `[░░░░░░░░░░░░░░░░░░░░]   0%` | Mock-to-real swap, full FairFace benchmark audit run, and final report bundle export |
+| Work Package / Milestone                          | Stream / Focus            | Status      | Progress Bar                  | Deliverables & Implementation State                                                                |
+| ------------------------------------------------- | ------------------------- | ----------- | ----------------------------- | -------------------------------------------------------------------------------------------------- |
+| **WP1 / M1: Schema Lock & Baseline**              | Foundations / Joint       | Completed   | `[████████████████████] 100%` | Locked schema (`schema.py`), FairFace ResNet-34 baseline fixed, test suite passing (14/14)         |
+| **WP2 / M2: Data Ingestion & Test Matrix**        | Stream A (Aaradhya)       | In Progress | `[██████░░░░░░░░░░░░░░]  30%` | Directory scaffolding (`data/`), FairFace sourcing guide, data ingestion pipeline in progress      |
+| **WP3 / M2: Compliance Report Scaffolding**       | Stream B (Aaradhya/Tisha) | In Progress | `[████░░░░░░░░░░░░░░░░]  20%` | Package scaffolding (`report/`), Model Card & Jinja2 HTML generation structure in progress         |
+| **WP4 / M3: Statistical Detection Engine & SHAP** | WP4 (Tisha)               | In Progress | `[██░░░░░░░░░░░░░░░░░░]  10%` | Fairness package scaffolded (`fairness/`), AIF360/Fairlearn backends, bootstrap CIs & SHAP planned |
+| **WP5 / M4: System Orchestration & Case Study**   | Integration / Joint       | Planned     | `[░░░░░░░░░░░░░░░░░░░░]   0%` | Mock-to-real swap, full FairFace benchmark audit run, and final report bundle export               |
 
 ## Branching & Workstreams
 
-| Branch | Stream / Work Package | Primary Owner | Description |
-|---|---|---|---|
-| `main` | Production / Base | Joint | Stable base holding M1 schema, docs, and report |
-| `feat/stream-data` | Stream A (WP2) | Aaradhya (`@AaradhyaDT`) | FairFace dataset ingestion & test-matrix construction |
-| `feat/stream-report` | Stream B (WP3) | Aaradhya (`@AaradhyaDT`), Tisha review | Jinja2 HTML compliance report scaffolding |
-| `feat/wp4-engine` | WP4 | Tisha (`@tiixsha`) | Fairness computation backends, statistics, and SHAP |
+| Branch               | Stream / Work Package | Primary Owner                          | Description                                           |
+| -------------------- | --------------------- | -------------------------------------- | ----------------------------------------------------- |
+| `main`               | Production / Base     | Joint                                  | Stable base holding M1 schema, docs, and report       |
+| `feat/stream-data`   | Stream A (WP2)        | Aaradhya (`@AaradhyaDT`)               | FairFace dataset ingestion & test-matrix construction |
+| `feat/stream-report` | Stream B (WP3)        | Aaradhya (`@AaradhyaDT`), Tisha review | Jinja2 HTML compliance report scaffolding             |
+| `feat/wp4-engine`    | WP4                   | Tisha (`@tiixsha`)                     | Fairness computation backends, statistics, and SHAP   |
 
 ## Python Development, Testing & Code Style
 
@@ -111,7 +111,6 @@ pre-commit install
 ```
 
 ## Local Git Workflow & Auto-Sync (`sync.ps1`)
-
 
 ```powershell
 .\sync.ps1                                  # stage all, conventional-commit, pull --rebase, push
@@ -144,8 +143,8 @@ Build artifacts (`.aux`, `.bbl`, `.toc`, `.synctex.gz`, etc.) are git-ignored; o
 
 Recommended extensions for editing/compiling `report/`:
 
-* **[LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop)** (James Yu) — compile, preview, autocomplete, SyncTeX
-* **[LaTeX Utilities](https://marketplace.visualstudio.com/items?itemName=tecosaur.latex-utilities)** (tecosaur) — glossary/word-count add-ons on top of Workshop
+- **[LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop)** (James Yu) — compile, preview, autocomplete, SyncTeX
+- **[LaTeX Utilities](https://marketplace.visualstudio.com/items?itemName=tecosaur.latex-utilities)** (tecosaur) — glossary/word-count add-ons on top of Workshop
 
 Skip generic "LaTeX" language-support extensions (e.g. Mathematic Inc's) — redundant with Workshop and can conflict on snippets/keybindings.
 
