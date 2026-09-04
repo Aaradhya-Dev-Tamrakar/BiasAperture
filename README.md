@@ -149,6 +149,7 @@ schema, diagnostic-only scope, and NFR-001/002/003 statistical safeguards.
 Overall Progress: [██████████████████░░] 90% (Milestones M1–M4 Completed · Inference Complete · M5 Audit/Report Active; 56 tests passing)
 ```
 
+<<<<<<< HEAD
 | Work Package / Milestone                          | Stream / Focus            | Status    | Progress Bar                  | Deliverables & Implementation State                                                                                                                                          |
 | ------------------------------------------------- | ------------------------- | --------- | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **WP1 / M1: Schema Lock & Baseline**              | Foundations / Joint       | Completed | `[████████████████████] 100%` | Locked schema (`schema.py`), FairFace ResNet-34 baseline fixed, test fixtures                                                                                                |
@@ -218,6 +219,24 @@ Empirical claims are verified across independent audit streams as detailed in th
 
 - **Tisha Manandhar**: Leads defense on Dataset Integrity (FairFace 97.7k count verification & alignment), Demographic Test Matrix Scaffolding, Regulatory Alignment (EU AI Act Art. 10/13 & NIST AI RMF Measure 2.11), and Standalone Compliance Reporting.
 - **Aaradhya Dev Tamrakar**: Leads defense on Statistical Significance Engine ($\chi^2$ asymptotic tests, BCa Bootstrap Confidence Intervals), Dual-Backend Harmonization (AIF360 vs Fairlearn Equalized Odds max-of-gaps), and SHAP Feature Attribution.
+=======
+| Work Package / Milestone                          | Stream / Focus            | Status      | Progress Bar                  | Deliverables & Implementation State                                                                |
+| ------------------------------------------------- | ------------------------- | ----------- | ----------------------------- | -------------------------------------------------------------------------------------------------- |
+| **WP1 / M1: Schema Lock & Baseline**              | Foundations / Joint       | Completed   | `[████████████████████] 100%` | Locked schema (`schema.py`), FairFace ResNet-34 baseline fixed, test suite passing (14/14)         |
+| **WP2 / M2: Data Ingestion & Test Matrix**        | Stream A (Aaradhya)       | In Progress | `[██████░░░░░░░░░░░░░░]  30%` | Directory scaffolding (`data/`), FairFace sourcing guide, data ingestion pipeline in progress      |
+| **WP3 / M2: Compliance Report Scaffolding**       | Stream B (Aaradhya/Tisha) | In Progress | `[████░░░░░░░░░░░░░░░░]  20%` | Package scaffolding (`report/`), Model Card & Jinja2 HTML generation structure in progress         |
+| **WP4 / M3: Statistical Detection Engine & SHAP** | WP4 (Tisha)               | In Progress | `[██░░░░░░░░░░░░░░░░░░]  10%` | Fairness package scaffolded (`fairness/`), AIF360/Fairlearn backends, bootstrap CIs & SHAP planned |
+| **WP5 / M4: System Orchestration & Case Study**   | Integration / Joint       | Planned     | `[░░░░░░░░░░░░░░░░░░░░]   0%` | Mock-to-real swap, full FairFace benchmark audit run, and final report bundle export               |
+
+## Branching & Workstreams
+
+| Branch               | Stream / Work Package | Primary Owner                          | Description                                           |
+| -------------------- | --------------------- | -------------------------------------- | ----------------------------------------------------- |
+| `main`               | Production / Base     | Joint                                  | Stable base holding M1 schema, docs, and report       |
+| `feat/stream-data`   | Stream A (WP2)        | Aaradhya (`@AaradhyaDT`)               | FairFace dataset ingestion & test-matrix construction |
+| `feat/stream-report` | Stream B (WP3)        | Aaradhya (`@AaradhyaDT`), Tisha review | Jinja2 HTML compliance report scaffolding             |
+| `feat/wp4-engine`    | WP4                   | Tisha (`@tiixsha`)                     | Fairness computation backends, statistics, and SHAP   |
+>>>>>>> 0c09acd (docs: sync README and compiled report)
 
 ## Python Development, Testing & Code Style
 
