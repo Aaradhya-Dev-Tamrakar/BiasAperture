@@ -54,10 +54,15 @@ BiasAperture/
 
 ## 4. Git & Branching Strategy
 
-- **`main`**: Clean, validated baseline.
-- **`feat/stream-data`**: Stream A (WP2) — Data ingestion & test matrix.
-- **`feat/stream-report`**: Stream B (WP3) — Report template scaffolding.
-- **`feat/wp4-engine`**: WP4 — Fairness backends & statistical testing.
-- **`feat/wp5-integration`**: WP5 — Orchestration & mock-to-real integration.
+- **`main`**: Canonical baseline and active research/development branch. All verification, documentation, and reporting converge directly here.
+- **Historical Stream Checkpoints (Preserved)**:
+  - `feat/stream-data`: Stream A (WP2) — Data ingestion & test matrix (fully absorbed into `main`).
+  - `feat/stream-report`: Stream B (WP3) — Report template scaffolding (fully absorbed into `main`).
+  - `feat/ui-ux-report`: UI/UX & Jinja2 design iterations (fully absorbed into `main`).
+  - `feat/wp4-engine`: WP4 — Fairness backends & statistical testing (fully absorbed into `main`).
+  - `feat/wp5-integration`: WP5 — Orchestration & mock-to-real integration (fully absorbed into `main`).
+  - `update-literature-review`: PR #1 matrix & literature expansion (merged into `main`).
+  *(Note: These branches are intentionally preserved as milestone snapshots across remotes; new work should branch from or target `main` directly).*
 
 Always write conventional commit messages: `feat:`, `fix:`, `docs:`, `chore:`, `test:`, `refactor:`.
+
