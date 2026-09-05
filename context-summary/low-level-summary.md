@@ -31,7 +31,7 @@
 - Execute dual-backend fairness computations (Fairlearn + AIF360)
 - Measure demographic disparities across 7 races, 2 genders, 9 age groups
 - Generate standalone HTML compliance reports (EU AI Act & NIST AI RMF compliant)
-- Trigger targeted SHAP explainability on statistically significant disparities
+- Trigger targeted surrogate explainability (SHAP deferred) on statistically significant disparities
 
 ### What it explicitly does NOT do (hard scope boundary)
 
@@ -406,7 +406,7 @@ Ready for fairness engine
 **Guarantees**:
 
 - Zero CDN/JavaScript runtime dependencies
-- Base64-encoded inline images (SHAP attributions)
+- Base64-encoded inline images or text summaries (surrogate attribution; SHAP deferred)
 - Embedded CSS (no external stylesheets)
 - Self-contained standalone export
 
@@ -414,7 +414,7 @@ Ready for fairness engine
 
 - **Templating**: Jinja2 (custom implementation, not TFX Model Card Toolkit)
 - **Styling**: Inline CSS with semantic HTML5
-- **Images**: Base64 PNG encoding for SHAP visual attribution
+- **Images**: Base64 PNG encoding for visual attribution (surrogate/SHAP fallback)
 
 ### Report Structure
 
@@ -435,7 +435,7 @@ Ready for fairness engine
 ### Generation Flow
 
 ```
-MetricResult[] + MetricResult[SHAP]
+MetricResult[] + MetricResult[Surrogate/SHAP]
         ↓
 Jinja2 Context Dictionary
         ↓
@@ -445,7 +445,7 @@ Template Rendering
         ├─ Metric tables (DPD, EOD, EOP, DIR)
         ├─ Statistical confidence (CI, p-value)
         ├─ Regulatory mapping
-        └─ Inline Base64 PNG SHAP images
+        └─ Inline Base64 PNG attribution visualizations (surrogate/SHAP fallback)
         ↓
 compliance.html (standalone)
 ```
@@ -466,7 +466,7 @@ Explainability runs **only if** a metric row satisfies both conditions:
 ### Architecture
 
 ```
-Metric Result Row ──► [Is Disparity Flagged?] ──► NO ──► Skip SHAP (Zero overhead)
+Metric Result Row ──► [Is Disparity Flagged?] ──► NO ──► Skip surrogate/SHAP (Zero overhead)
                            │ (p<0.05 AND n≥30)
                            ▼ YES
                     [Explainer Strategy]
@@ -505,7 +505,7 @@ Metric Result Row ──► [Is Disparity Flagged?] ──► NO ──► Skip 
 
 **Dual-Signal Analysis**:
 
-1. **Spatial SHAP Attribution Shift**: Which facial regions drive the disparity?
+1. **Spatial Attribution Shift (SHAP deferred; surrogate implemented)**: Which facial regions drive the disparity?
    - Eye regions? Mouth? Skin texture?
    - Indicates what proxy features model relies on
 
@@ -514,7 +514,7 @@ Metric Result Row ──► [Is Disparity Flagged?] ──► NO ──► Skip 
    - Correlate with disparity magnitude
    - Evidence of skin-tone-based discrimination
 
-**Output**: Annotated SHAP heatmap + ITA histogram + proxy risk assessment
+**Output**: Annotated surrogate/SHAP fallback heatmap + ITA histogram + proxy risk assessment
 
 ---
 
@@ -688,7 +688,7 @@ Step 8: Report
   ├─ Datasheet (Gebru framework)
   ├─ Metric tables + confidence intervals
   ├─ Regulatory mapping (EU AI Act, NIST AI RMF)
-  └─ Inline SHAP visualizations
+  └─ Inline surrogate visualizations (SHAP deferred)
   → compliance.html (standalone offline)
 ```
 

@@ -7,7 +7,7 @@ This repository contains **BiasAperture**, a demographic bias auditing platform 
 ## 1. Non-Negotiable Project Constraints
 
 1. **Strict Diagnostic Scope**:
-   - The platform **only** ingests datasets, runs model inferences, measures demographic disparities, computes statistical confidence, attributes features with SHAP, and outputs compliance reports.
+   - The platform **only** ingests datasets, runs model inferences, measures demographic disparities, computes statistical confidence, attributes features with surrogate attribution (SHAP deferred), and outputs compliance reports.
    - **DO NOT** implement model retraining, fine-tuning, weights debiasing, or synthetic image generation.
 
 2. **Schema Invariance (Milestone M1)**:
@@ -33,7 +33,7 @@ BiasAperture/
 │   │   ├── data_ingestion.py      # Stream Data (WP2) — FairFace loading & alignment
 │   │   ├── report/                # Stream Report (WP3) — HTML & Jinja2 generation
 │   │   ├── fairness/              # WP4 — Fairlearn & AIF360 backends, statistics
-│   │   └── explainability.py      # WP4 (FR-005) — SHAP attribution on flagged disparities
+│   │   └── explainability.py      # WP4 (FR-005) — surrogate attribution on flagged disparities (SHAP deferred)
 │   └── tests/                     # Pytest suite
 ├── docs/                          # Meta-documentation, schema lock, literature matrix
 ├── report/                        # LaTeX report source and compiled main.pdf

@@ -217,7 +217,7 @@ You have completed an extensive research verification and specification phase:
 
 ## 4. The Novelty Question — Your Most Important Defense
 
-When examiners ask: _"Aren't you just combining existing toolkits like Fairlearn, AIF360, and SHAP?"_
+When examiners ask: _"Aren't you just combining existing toolkits like Fairlearn, AIF360, and surrogate attribution (with SHAP deferred)?"_
 
 ### What NOT to Say
 
@@ -299,11 +299,11 @@ When examiners ask: _"Aren't you just combining existing toolkits like Fairlearn
 
 > "When $\max_a(\text{selection rate}_a) = 0$, meaning no subgroup receives positive predictions, DIR is defined by policy contract as $1.0$ accompanied by an `absolute_selection_warning = True` flag, since no comparative selection disparity exists. When $\min = 0$ and $\max > 0$, DIR is $0.0$. These boundary contracts are codified in our automated tests."
 
-**Q12: "Why choose SHAP over other explainability methods like LIME?"**
+**Q12: "Why choose surrogate explainability / SHAP over other explainability methods like LIME?"**
 
-> "The current explainability implementation uses demographic-dummy surrogate attribution; richer spatial SHAP and ITA analysis remain deferred. We selected SHAP because it provides a theoretically grounded additive attribution framework and supports the black-box explanation path required by our prediction-file interface. The choice is architectural, not a claim that SHAP produces causal explanations."
+> "The current explainability implementation uses demographic-dummy surrogate attribution; richer spatial SHAP and ITA analysis remain deferred. We selected SHAP-based surrogate formulations because they provide a theoretically grounded additive attribution framework and support the black-box explanation path required by our prediction-file interface. The choice is architectural, not a claim that surrogate attribution produces causal explanations."
 
-**Q13: "Can SHAP feature attributions prove that a model is biased due to facial features?"**
+**Q13: "Can feature attributions (surrogate or SHAP deferred) prove that a model is biased due to facial features?"**
 
 > "No, and we explicitly document this limitation. In accordance with Bilodeau et al. (2022) impossibility theorems, additive feature attribution methods cannot guarantee distinguishing spurious correlations from causal features in neural networks. The current explainability implementation uses demographic-dummy surrogate attribution and provides exploratory proxy evidence, not causal proof; richer spatial SHAP and ITA analysis remain deferred."
 
@@ -315,9 +315,9 @@ When examiners ask: _"Aren't you just combining existing toolkits like Fairlearn
 
 > "FairFace was specifically constructed for balanced demographic distribution across 7 race groups, 9 age bins, and 2 genders, totaling 97,698 human-annotated images on disk. Its granularity matches the multi-group intersectional schema required for our evaluation."
 
-**Q15: "Why was UTKFace descoped from the primary evaluation?"**
+**Q15: "Why was UTKFace cut and descoped from the primary evaluation?"**
 
-> "Our preliminary research verification revealed two major limitations: UTKFace collapses Asian subcategories into a single class (supporting only 3 of our 7 locked race categories) and relies on DEX model-estimated age labels rather than human annotations. We formally descoped it under Cut-List item #2 to preserve schema and data integrity."
+> "Our preliminary research verification of UTKFace (cut under Cut-List item #2) revealed two major limitations: it collapses Asian subcategories into a single class (supporting only 3 of our 7 locked race categories) and relies on DEX model-estimated age labels rather than human annotations."
 
 **Q16: "Why use `dlib` 5-point alignment instead of MTCNN for preprocessing?"**
 
@@ -419,7 +419,7 @@ When examiners ask: _"Aren't you just combining existing toolkits like Fairlearn
 
 ### ❌ Trap 3: Claiming Causal Explanations
 
-- **Don't say:** _"SHAP explains why the model is biased."_
+- **Don't say:** _"Feature attribution or surrogate models (SHAP deferred) explain why the model is biased."_
 - **Do say:** _"The current explainability implementation uses demographic-dummy surrogate attribution, which provides feature attributions that highlight visual proxy correlations associated with detected disparities, subject to known non-causal theoretical bounds; richer spatial SHAP and ITA analysis remain deferred."_
 
 ### ❌ Trap 4: Overstating Regulatory Certification
@@ -458,7 +458,7 @@ When examiners ask: _"Aren't you just combining existing toolkits like Fairlearn
 | **ResNet-34 Output Layer**   | 18 units (`torch.Size([18, 512])`)                                        | Multi-task slice: [0:7], [7:9], [9:18] (Claim R-001)                               |
 | **EOD Divergence Example**   | Fairlearn: 0.3000 (max) vs AIF360: 0.2000 (mean)                          | Verified math discrepancy (Claim R-005)                                            |
 | **Small-Sample Distortion**  | $\sim 3\times$ (FairFace val) to $\sim 45\times$ (synthetic outlier)      | Distortion from unfiltered $n < 30$ (Claim R-008)                                  |
-| **Descoping Tiers**          | 5 formal tiers                                                            | Web UI $\to$ UTKFace $\to$ PDF $\to$ In-Process $\to$ AIF360                       |
+| **Descoping Tiers**          | 5 formal tiers                                                            | Web UI $\to$ UTKFace (cut) $\to$ PDF $\to$ In-Process $\to$ AIF360                 |
 | **Known-Answer Proof**       | $\text{DPD}=0.500, \text{EOD}=0.500, \text{EOP}=0.500, \text{DIR}=0.3333$ | 8-record deterministic baseline (Claim R-020)                                      |
 
 ---

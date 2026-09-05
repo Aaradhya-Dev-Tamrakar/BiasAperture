@@ -244,8 +244,8 @@ function Get-InferredBranch {
 
     foreach ($f in $files) {
         if ($f -match 'data_ingestion|test_data_ingestion') { $hasStreamData = $true }
-        elseif ($f -match 'report/templates/|report.html\.j2|report/generator\.py') { $hasUiUx = $true }
-        elseif ($f -match 'report/|test_offline_report') { $hasStreamReport = $true }
+        elseif ($f -match 'src/bias_aperture/report/templates/|report\.html\.j2|src/bias_aperture/report/generator\.py') { $hasUiUx = $true }
+        elseif ($f -match 'src/bias_aperture/report|test_offline_report') { $hasStreamReport = $true }
         elseif ($f -match 'fairness/|explainability|test_backend_harmonization|test_known_answer') { $hasStreamEngine = $true }
         elseif ($f -match 'pipeline|orchestrator') { $hasStreamIntegration = $true }
     }

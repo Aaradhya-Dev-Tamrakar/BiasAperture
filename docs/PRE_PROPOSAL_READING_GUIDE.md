@@ -114,10 +114,10 @@ You do not need to read dozens of papers. Deeply understand these **9 foundation
 #### 6. Bilodeau et al. (2022) — *Impossibility Theorems for Feature Attribution*
 
 * **What to Read:** Introduction and the Core Impossibility Theorem.
-* **The Insight:** Additive linear feature attribution methods (SHAP, Integrated Gradients) cannot mathematically guarantee distinguishing whether a deep neural network is utilizing a true causal feature versus a correlated spurious proxy in general data distributions.
+* **The Insight:** Additive linear feature attribution methods (surrogate models, SHAP, Integrated Gradients) cannot mathematically guarantee distinguishing whether a deep neural network is utilizing a true causal feature versus a correlated spurious proxy in general data distributions.
 * **Takeaway for BiasAperture:**
   * **Attribution Evidence is not, by itself, causal evidence of discrimination.**
-  * SHAP highlighting a facial region does not prove the model is discriminatory because of that demographic trait.
+  * Feature attribution (surrogate or deferred spatial SHAP) highlighting a demographic proxy does not prove the model is discriminatory because of that demographic trait.
   * This justifies our strict naming convention: **Proxy Evidence Analysis**, providing exploratory visual diagnostic evidence, not causal proof.
 
 ---
@@ -184,8 +184,8 @@ Master these 12 questions to defend the proposal from first principles:
 
 ### 7. Explainability Limits
 
-* **Q:** *Can SHAP feature attribution prove that a model is racially biased?*
-* **A:** No. Per Bilodeau et al. (2022) impossibility theorems, SHAP attribution is not, by itself, causal evidence of discrimination. Deep networks may utilize features that correlate with demographic traits without establishing causal mechanisms. SHAP provides **Proxy Evidence Analysis** (exploratory visual association), not causal proof.
+* **Q:** *Can surrogate feature attribution or SHAP prove that a model is racially biased?*
+* **A:** No. Per Bilodeau et al. (2022) impossibility theorems, surrogate feature attribution (and deferred spatial SHAP) is not, by itself, causal evidence of discrimination. Deep networks may utilize features that correlate with demographic traits without establishing causal mechanisms. Feature attribution provides **Proxy Evidence Analysis** (exploratory visual association), not causal proof.
 
 ### 8. Backend Harmonization
 

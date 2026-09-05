@@ -8,11 +8,11 @@ This chapter specifies what BiasAperture must do, its \glspl{fr}, and how well i
 Functional requirements are listed using IEEE~830-style ``shall'' statements, one capability per requirement.
 
 \begin{enumerate}
-    \item \textbf{FR-001 (Data Ingestion):} The system shall load, validate, and standardise a benchmark dataset (FairFace or UTKFace) or a compatible custom dataset, checking image integrity and aligning demographic annotation fields (race or ethnicity, perceived gender, age group) into a common internal schema.
+    \item \textbf{FR-001 (Data Ingestion):} The system shall load, validate, and standardise a benchmark dataset (principally FairFace; UTKFace was profiled and cut from the implementation scope) or a compatible custom dataset, checking image integrity and aligning demographic annotation fields (race or ethnicity, perceived gender, age group) into a common internal schema.
     \item \textbf{FR-002 (Dual-Mode Model Interface):} The system shall obtain predictions from a target facial-analysis model either by direct in-process inference against a supplied PyTorch or TensorFlow model object, or by batch ingestion of a precomputed predictions file in \gls{csv} or \gls{json} format.
     \item \textbf{FR-003 (Fairness Metric Computation):} The system shall compute, per subgroup and per demographic intersection, the four Core~Four disparity metrics, \gls{dpd}, \gls{eod}, \gls{eop}, and \gls{dir}, using AIF360 and Fairlearn as independent, cross-validating computational backends.
     \item \textbf{FR-004 (Statistical Significance Testing):} The system shall accompany every reported disparity with a chi-squared test of independence between the predicted-label distribution and the demographic subgroup, and with a bootstrap confidence interval on the subgroup accuracy difference.
-    \item \textbf{FR-005 (Explainability):} The system shall generate \gls{shap}-based feature-attribution output identifying which input features are most associated with a detected disparity, to support diagnosis of proxy-variable entanglement.
+    \item \textbf{FR-005 (Explainability):} The system shall generate surrogate feature-attribution output (with spatial \gls{shap} analysis deferred) identifying which input features are most associated with a detected disparity, to support diagnosis of proxy-variable entanglement.
     \item \textbf{FR-006 (Report Generation):} The system shall assemble the computed metrics, statistical tests, and dataset and model provenance information into a standardised, exportable \gls{html} fairness report, structurally informed by the Model Cards and Datasheets for Datasets conventions, with every metric row showing subgroup sample size, point estimate, 95\% confidence interval, and either a \(p\)-value or an insufficient-sample flag.
     \item \textbf{FR-007 (Regulatory Traceability):} The system shall map every computed metric, in the generated report, to its corresponding clause under Article~10 or Annex~IV of the \gls{eu} \gls{ai} Act and to its corresponding function within the \gls{nist} \gls{ai} \gls{rmf}.
     \item \textbf{FR-008 (Orchestration and Configuration):} The system shall expose a command-line configuration interface through which an auditor selects the benchmark dataset, the model or predictions source, and the metrics to compute, and shall re-run identically given the same configuration and inputs.
@@ -29,7 +29,7 @@ Functional requirements are listed using IEEE~830-style ``shall'' statements, on
     \item \textbf{NFR-005 (Modularity):} The system shall maintain strict separation of concerns across its architectural modules, each exposing a narrow, well-defined interface, so that any module can be unit-tested and extended independently of the others.
     \item \textbf{NFR-006 (Reproducibility):} Bootstrap resampling shall use fixed random seeds, and third-party dependency versions (AIF360, Fairlearn, PyTorch or TensorFlow) shall be pinned in a lock-file to prevent silent behavioural drift between runs.
     \item \textbf{NFR-007 (Portability):} The system shall run cross-platform on any environment supporting the pinned Python dependency stack, without requiring proprietary or platform-specific components.
-    \item \textbf{NFR-008 (Explainability Performance):} \gls{shap} attribution shall be computed only on flagged disparities rather than the full dataset by default, to keep explainability overhead a small fraction of total runtime.
+    \item \textbf{NFR-008 (Explainability Performance):} Surrogate feature attribution (with spatial \gls{shap} analysis deferred) shall be computed only on flagged disparities rather than the full dataset by default, to keep explainability overhead a small fraction of total runtime.
 \end{enumerate}
 
 \section{System Requirements}
@@ -49,6 +49,6 @@ This section answers what machine and software stack are required to build and r
     \item \textbf{Model interface:} PyTorch or TensorFlow, whichever framework the audited model was built in.
     \item \textbf{Image preprocessing:} OpenCV, pandas, NumPy.
     \item \textbf{Fairness computation:} AIF360, Fairlearn, scikit-learn, SciPy.
-    \item \textbf{Explainability:} \gls{shap}.
+    \item \textbf{Explainability:} Demographic-dummy surrogate attribution (scikit-learn; \gls{shap} deferred).
     \item \textbf{Report generation:} Jinja2 for \gls{html} templating.
 \end{itemize}

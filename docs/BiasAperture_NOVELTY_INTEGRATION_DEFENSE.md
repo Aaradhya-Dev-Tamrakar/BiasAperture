@@ -43,10 +43,10 @@ Not "make a new fairness metric" or "fix bias" — instead, **design the interfa
 
 ### 3. **Explainability Envelope**
 
-- SHAP local feature attribution integrated into the statistical pipeline (not bolted on after).
-- For every flagged disparity, automatically compute which facial features (eyes, skin tone proxy, etc.) drive it.
-- **Gain:** moving from "model is biased for women" → "model is biased for women, and that's because it over-weights skin-darkness features."
-- **Time saved:** 1 week (would otherwise need manual SHAP runs on top of the base pipeline).
+- Surrogate feature attribution integrated into the statistical pipeline (with richer spatial SHAP deferred).
+- For every flagged disparity, automatically compute which features drive it via demographic-dummy surrogates.
+- **Gain:** moving from "model is biased for women" → "model is biased for women, and that's because it over-weights demographic proxy features."
+- **Time saved:** 1 week (would otherwise need manual surrogate attribution runs on top of the base pipeline; spatial SHAP deferred).
 
 ### 4. **Repeated Auditability**
 
@@ -63,7 +63,7 @@ Not "make a new fairness metric" or "fix bias" — instead, **design the interfa
 
 - No new fairness metric.
 - No new statistical test.
-- No new dataset (FairFace and UTKFace already exist).
+- No new dataset (FairFace is used; UTKFace was profiled and cut).
 - Contribution: **the fit**, **the interface**, **the workflow design**.
 
 **Analogy:** Docker wasn't "new software" — containerization tech existed. Docker's contribution was making containers usable in one command, composable, and replicable. The value wasn't the technology, it was solving the *friction problem*.

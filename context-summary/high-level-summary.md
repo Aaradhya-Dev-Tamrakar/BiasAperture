@@ -48,7 +48,7 @@ A key rule is the minimum subgroup sample-size guard: subgroups with n < 30 must
 
 ## Data pipeline
 
-BiasAperture relies on dataset ingestion and validation as a foundation. The repository includes support for benchmark datasets such as FairFace and UTKFace, with data profiling and validation workflows to ensure the demographic metadata and groupings are consistent.
+BiasAperture relies on dataset ingestion and validation as a foundation. The repository uses FairFace as its primary benchmark dataset (UTKFace was profiled and cut per Cut-List #2), with data profiling and validation workflows to ensure the demographic metadata and groupings are consistent.
 
 The project treats data quality as central to fairness auditing because subgroup analysis is only trustworthy when the dataset and metadata are appropriately structured.
 
@@ -101,7 +101,7 @@ The README indicates the project is in the final integration and reporting phase
 - schema lock and baseline definition
 - data ingestion and test matrix setup
 - fairness metric engine and statistical validation
-- SHAP explainability support
+- surrogate explainability support (SHAP deferred)
 - orchestration and final report generation
 
 The Phase-2 Product Upgrade Sprint is a separate research-only effort covering

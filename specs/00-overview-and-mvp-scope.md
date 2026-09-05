@@ -14,7 +14,7 @@ The project audits demographic disparities in facial-analysis predictions. It do
 
 The MVP accepts a FairFace-aligned predictions file, validates it against the locked internal schema, computes the Core Four disparity metrics across demographic axes, attaches statistical evidence, optionally produces targeted explainability output, and writes a standalone HTML compliance report.
 
-The current case study is FairFace validation data and a FairFace ResNet-34 prediction export. UTKFace, web UI, PDF export, and direct in-process inference remain outside the current implemented path unless explicitly enabled and verified.
+The current case study is FairFace validation data and a FairFace ResNet-34 prediction export. UTKFace was cut (per Cut-List #2); web UI, PDF export, and direct in-process inference remain outside the current implemented path unless explicitly enabled and verified.
 
 ## Authority and status
 

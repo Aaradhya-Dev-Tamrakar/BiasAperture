@@ -6,7 +6,7 @@
 
 The primary MVP path reads a CSV or JSON prediction export. Source-specific columns are mapped into the common schema, including FairFace demographic columns and caller-selected `true_label` and `predicted_label` columns.
 
-The FairFace baseline uses the race-7 taxonomy, two gender labels, and nine age bins. UTKFace alignment is not part of the current case-study claim.
+The FairFace baseline uses the race-7 taxonomy, two gender labels, and nine age bins. UTKFace was cut (per Cut-List #2) and is not part of the current case-study claim.
 
 ## Audit target
 

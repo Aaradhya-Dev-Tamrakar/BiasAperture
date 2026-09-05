@@ -72,7 +72,7 @@ Never push directly without running the sync script or adhering to conventional 
 - `feat/stream-data` — **Stream A (Data Pipeline)**: FairFace ingestion, dataset profiling, test matrix scaffolding (Tisha).
 - `feat/stream-report` — **Stream B (Report Scaffolding)**: Jinja2 HTML report templates, Model Cards / Datasheets structure, EU AI Act mapping (Tisha).
 - `feat/wp4-engine` — **WP4 (Detection Engine)**: Fairlearn & AIF360 backends, pure-math metrics, chi-squared tests, BCa bootstrap CIs (Aaradhya).
-- `feat/wp5-integration` — **WP5 (Integration & CLI)**: SHAP explainability layer, `bias-aperture` CLI orchestrator facade (Aaradhya / Joint).
+- `feat/wp5-integration` — **WP5 (Integration & CLI)**: surrogate explainability layer (SHAP deferred), `bias-aperture` CLI orchestrator facade (Aaradhya / Joint).
 
 ---
 

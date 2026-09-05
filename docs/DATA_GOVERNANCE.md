@@ -35,7 +35,7 @@ BiasAperture operates strictly within these diagnostic safeguards:
 
 1. **Diagnostic Exclusivity**: Data is processed solely to measure disparity metrics and feature attributions; no biometric identification, surveillance, user profiling, or model retraining is performed.
 2. **Synthetic / Anonymized Intermediate Artifacts**: Intermediate reports, confusion matrices, and bootstrap distributions contain only aggregate statistics ($n, p\text{-value}, \text{CI}$) rather than individual biometric identifiers.
-3. **SHAP Attribution Masking**: Saliency heatmaps and feature attribution overlays are rendered as normalized gradient masks; original facial chips are not serialized into report payloads unless explicitly configured with local privacy flags.
+3. **Feature Attribution & Surrogate Masking**: Attribution overlays (demographic-dummy surrogates or deferred spatial SHAP) are rendered as normalized gradient masks or aggregate dummy weights; original facial chips are not serialized into report payloads unless explicitly configured with local privacy flags.
 
 ---
 

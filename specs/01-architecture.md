@@ -43,6 +43,6 @@ The architecture is diagnostic only. No stage owns training, retraining, weight 
 
 ## Deferred architecture
 
-A web UI, PDF export, multi-dataset production workflow, and richer image-native SHAP/ITA pipeline are not required to claim the current MVP. They may be researched separately, but must preserve the M1 schema and statistical safeguards.
+A web UI, PDF export, multi-dataset production workflow, and richer image-native SHAP/ITA pipeline are deferred (surrogate attribution is implemented) and not required to claim the current MVP. They may be researched separately, but must preserve the M1 schema and statistical safeguards.
 
 See the [mid-level architecture reference](../docs/research/MID_LEVEL_ARCHITECTURE.md) for design rationale and [verification](09-verification.md) for evidence expectations.
