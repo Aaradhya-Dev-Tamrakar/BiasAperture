@@ -264,3 +264,6 @@ datasets/
 research/results/exploration_report.txt
 research/exploration_reports/
 *.dat
+
+presentation/
+
