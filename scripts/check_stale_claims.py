@@ -11,11 +11,15 @@ research/results/DISCREPANCY_LEDGER.md:
      "pre-discard" / "pre-annotation" qualifier nearby. 108,501 is the
      pre-discard/pre-annotation total; 97,698 is the actual released
      count on disk (ledger §A).
-  2. UTKFace mentioned without a nearby "cut" qualifier. "Secondary" is
-     NOT an acceptable substitute — the ledger explicitly names
-     "secondary benchmark" framing itself as the undersell pattern,
-     since it implies UTKFace is still an active dataset rather than
-     cut per Cut-List #2 (ledger §A).
+  2. UTKFace mentioned without a nearby "cut"/"removed"/"dropped"/
+     "excluded" qualifier. "Secondary" alone is NOT an acceptable
+     substitute — the ledger explicitly names "secondary benchmark"
+     framing itself as the undersell pattern, since it implies UTKFace
+     is still an active dataset rather than cut per Cut-List #2
+     (ledger §A). "Removed"/"dropped"/"excluded" are accepted synonyms
+     for "cut" itself (same disposition, different verb) — this is not
+     a loosening of the guard's intent, since all four words assert the
+     same formally-cut status "secondary" fails to assert.
   3. SHAP mentioned without a nearby "surrogate" / "deferred" /
      "fallback" qualifier. Current implementation attempts SHAP and
      falls back to demographic-dummy surrogate attribution on failure
@@ -75,12 +79,17 @@ RULES: tuple[Rule, ...] = (
     Rule(
         name="utkface-not-cut",
         target=re.compile(r"\bUTKFace\b", re.IGNORECASE),
-        qualifiers=(re.compile(r"\bcut\b", re.IGNORECASE),),
+        qualifiers=(
+            re.compile(r"\bcut\b", re.IGNORECASE),
+            re.compile(r"\bremoved?\b", re.IGNORECASE),
+            re.compile(r"\bdrop(?:s|ped|ping)?\b", re.IGNORECASE),
+            re.compile(r"\bexcluded\b", re.IGNORECASE),
+        ),
         message=(
-            "UTKFace without 'cut' within ~15 words — 'secondary' does "
-            "not satisfy this guard, it IS the undersell pattern being "
-            "caught (UTKFace was cut per Cut-List #2, "
-            "DISCREPANCY_LEDGER.md §A)"
+            "UTKFace without 'cut'/'removed'/'dropped'/'excluded' within "
+            "~15 words — 'secondary' alone does not satisfy this guard, "
+            "it IS the undersell pattern being caught (UTKFace was cut "
+            "per Cut-List #2, DISCREPANCY_LEDGER.md §A)"
         ),
     ),
     Rule(
