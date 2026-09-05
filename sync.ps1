@@ -31,6 +31,98 @@ $orgUrl = 'https://github.com/Aaradhya-Dev-Tamrakar/BiasAperture.git'
 $duoRemote = 'duo'
 $duoUrl = 'https://github.com/AaradhyaDT/BiasAperture.git'
 
+# Files that must ONLY be edited on main to avoid perennial merge conflicts.
+# sync.ps1 will warn (but not block) if any of these are staged on a feature branch.
+$conflictProneFiles = @(
+    'docs/CHANGELOG.md',
+    'README.md',
+    'report/main.pdf'
+)
+
+# ── Conflict-prevention helpers ───────────────────────────────────────────────
+
+function Test-MergeConflictRisk {
+    <#
+    .SYNOPSIS
+    Warns when conflict-prone shared files are staged on a feature branch.
+    These files (CHANGELOG.md, README.md, report/main.pdf) are edited on every
+    branch by sync, causing guaranteed merge conflicts at integration time.
+    #>
+    param([string]$CurrentBranch)
+    if ($CurrentBranch -eq 'main') { return }
+
+    $staged = git diff --cached --name-only 2>$null
+    $riskyFiles = $staged | Where-Object {
+        $f = $_.Replace('\', '/')
+        $conflictProneFiles -contains $f
+    }
+
+    if ($riskyFiles) {
+        Write-Warning (@(
+            "MERGE-CONFLICT RISK: The following shared files are staged on branch [$CurrentBranch].",
+            "Edits to these files on feature branches cause conflicts when merging to main.",
+            "Consider: (a) un-staging them now, or (b) ensuring main is rebased before merging.",
+            "Affected: $($riskyFiles -join ', ')"
+        ) -join "`n")
+
+        # Specific binary-PDF guard: merging a PDF is always manual.
+        if ($riskyFiles -contains 'report/main.pdf') {
+            Write-Warning "report/main.pdf is a binary — it CANNOT be auto-merged. Only commit compiled PDFs on main."
+        }
+    }
+}
+
+function Sync-FeatureBranchWithMain {
+    <#
+    .SYNOPSIS
+    Rebases the current feature branch against origin/main so it stays current.
+    Skips if already up to date. This prevents long branch drift which is the
+    primary cause of merge conflicts at integration time.
+    #>
+    param([string]$CurrentBranch)
+    if ($CurrentBranch -eq 'main') { return }
+
+    # Fetch latest main quietly
+    $null = git fetch $originRemote main --quiet 2>$null
+    if ($LASTEXITCODE -ne 0) {
+        Write-Warning "Could not fetch origin/main for drift check. Skipping auto-rebase."
+        return
+    }
+
+    $behind = [int](git rev-list --count "$CurrentBranch..refs/remotes/$originRemote/main" 2>$null)
+    if ($behind -gt 0) {
+        Write-Host "Branch [$CurrentBranch] is $behind commit(s) behind origin/main. Rebasing to prevent drift..."
+        git rebase "refs/remotes/$originRemote/main"
+        if ($LASTEXITCODE -ne 0) {
+            Write-Warning "Auto-rebase failed. Resolve conflicts manually, then re-run sync.ps1."
+            git rebase --abort 2>$null
+            throw "Rebase of [$CurrentBranch] against origin/main failed. Aborting sync."
+        }
+        Write-Host "Rebase complete. Branch [$CurrentBranch] is now up to date with main."
+    }
+    else {
+        Write-Host "Branch [$CurrentBranch] is up to date with origin/main. No rebase needed."
+    }
+}
+
+function Skip-ChangelogOnFeatureBranch {
+    <#
+    .SYNOPSIS
+    Removes docs/CHANGELOG.md from the staging area when on a feature branch.
+    CHANGELOG is append-only on main; letting it accumulate per-branch timestamps
+    is the single largest source of merge conflicts in this repo.
+    #>
+    param([string]$CurrentBranch)
+    if ($CurrentBranch -eq 'main') { return }
+
+    $staged = git diff --cached --name-only 2>$null
+    if ($staged -contains 'docs/CHANGELOG.md') {
+        git restore --staged 'docs/CHANGELOG.md' 2>$null
+        git restore 'docs/CHANGELOG.md' 2>$null
+        Write-Host "[conflict-guard] Unstaged docs/CHANGELOG.md — CHANGELOG is main-only to prevent merge conflicts."
+    }
+}
+
 function Initialize-Remotes {
     $remotes = git remote
     if ($remotes -notcontains $originRemote) {
@@ -254,7 +346,21 @@ if ($targetBranch -and ($targetBranch -ne $currentBranch)) {
     Switch-ToBranch -Target $targetBranch
 }
 
+# Re-read current branch after any potential switch
+$currentBranch = git rev-parse --abbrev-ref HEAD
+
+# ── Conflict-prevention: rebase feature branch against main before staging ──
+# This keeps feature branches current and prevents drift-induced merge conflicts.
+Sync-FeatureBranchWithMain -CurrentBranch $currentBranch
+
 git add -A
+
+# ── Conflict-prevention: drop CHANGELOG from staging on feature branches ──
+# CHANGELOG timestamps are main-only; per-branch timestamps cause conflicts.
+Skip-ChangelogOnFeatureBranch -CurrentBranch $currentBranch
+
+# ── Conflict-prevention: warn about risky shared files staged on feature branches ──
+Test-MergeConflictRisk -CurrentBranch $currentBranch
 
 $staged = git diff --cached --name-only
 if ($staged) {
