@@ -62,7 +62,6 @@ BiasAperture/
   - `feat/wp4-engine`: WP4 — Fairness backends & statistical testing (fully absorbed into `main`).
   - `feat/wp5-integration`: WP5 — Orchestration & mock-to-real integration (fully absorbed into `main`).
   - `update-literature-review`: PR #1 matrix & literature expansion (merged into `main`).
-  *(Note: These branches are intentionally preserved as milestone snapshots across remotes; new work should branch from or target `main` directly).*
+    _(Note: These branches are intentionally preserved as milestone snapshots across remotes; new work should branch from or target `main` directly)._
 
 Always write conventional commit messages: `feat:`, `fix:`, `docs:`, `chore:`, `test:`, `refactor:`.
-

@@ -22,11 +22,9 @@ jobs:
       - name: Set up Python
         run: uv python install 3.10
 
-      - name: Install dependencies
-        run: uv sync --extra dev
-
       - name: Lint with ruff
-        run: uv run ruff check src/
+        run: uv run --extra dev ruff check src/
 
       - name: Run test suite
-        run: uv run pytest
+        run: uv run --extra dev pytest src/tests
+
