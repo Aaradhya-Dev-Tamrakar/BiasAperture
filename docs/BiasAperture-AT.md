@@ -41,12 +41,12 @@ Three components (per catalog Key Goals):
 
 Distribution principle: separate what one person can complete solo from what genuinely needs two people working together — driven by whether a step requires shared judgment/iteration, not just by how long it takes.
 
-| Phase | Nature | Mode |
-| --- | --- | --- |
-| Classifier selection | Short, foundational — determines what the test matrix must match | Together |
-| Test-matrix construction | Long (dataset sourcing/curation), but mechanical once scoped | Solo |
+| Phase                        | Nature                                                                                | Mode     |
+| ---------------------------- | ------------------------------------------------------------------------------------- | -------- |
+| Classifier selection         | Short, foundational — determines what the test matrix must match                      | Together |
+| Test-matrix construction     | Long (dataset sourcing/curation), but mechanical once scoped                          | Solo     |
 | Statistical detection engine | Long AND judgment-heavy — method selection, validating disparities are real vs. noise | Together |
-| Report generation | Short, mechanical once detection output + format exist | Solo |
+| Report generation            | Short, mechanical once detection output + format exist                                | Solo     |
 
 **Key distinction:** the detection engine is both the slowest phase and the one requiring joint work — it is not split just because it's the long pole. Test-matrix work is long but doesn't need two people in the room simultaneously.
 
@@ -65,13 +65,13 @@ An earlier working split (A = statistical bias detection, T = testing-matrix + r
 
 `Fairness_and_Bias_Audit_System_Feasibility_study.zip` (main.tex/main.pdf/references.bib, 27pp) checked against primary sources — **accurate, no errors found**:
 
-| Claim | Source-checked value | Doc's value | Result |
-| --- | --- | --- | --- |
-| Gender Shades error-rate gap | 34.7% vs 0.8% (PMLR v81, pp.77–91) | "exceeding thirty percentage points" | ✅ |
-| FairFace scale/taxonomy | 108,501 pre-discard images (97,698 released), 7 exact race categories | Matches exactly | ✅ |
-| EU AI Act citation | Reg. (EU) 2024/1689, 13 June 2024 | Matches exactly | ✅ |
-| NIST AI RMF citation | NIST AI 100-1, Jan 2023 | Matches exactly | ✅ |
-| All 18 bib entries | — | Resolve to real papers, correct venue/year | ✅ |
+| Claim                        | Source-checked value                                                  | Doc's value                                | Result |
+| ---------------------------- | --------------------------------------------------------------------- | ------------------------------------------ | ------ |
+| Gender Shades error-rate gap | 34.7% vs 0.8% (PMLR v81, pp.77–91)                                    | "exceeding thirty percentage points"       | ✅     |
+| FairFace scale/taxonomy      | 108,501 pre-discard images (97,698 released), 7 exact race categories | Matches exactly                            | ✅     |
+| EU AI Act citation           | Reg. (EU) 2024/1689, 13 June 2024                                     | Matches exactly                            | ✅     |
+| NIST AI RMF citation         | NIST AI 100-1, Jan 2023                                               | Matches exactly                            | ✅     |
+| All 18 bib entries           | —                                                                     | Resolve to real papers, correct venue/year | ✅     |
 
 Proposes 5 architectural modules (data ingestion, model interface, fairness metrics engine, report generation, orchestration) validated against FairFace (with UTKFace subsequently cut per Cut-List #2), using AIF360 + Fairlearn as computational back ends, reporting modelled on Model Cards + Datasheets for Datasets.
 
@@ -79,13 +79,13 @@ Two structural gaps identified, addressed in §9–§10: scope reads as fully co
 
 ## Cut-List (if behind schedule — drop in this order)
 
-| Order | Cut | Why first/last |
-| --- | --- | --- |
-| 1 | Web UI (Streamlit/Flask), keep CLI only | Pure UX layer, zero grading relevance to the fairness-engineering core |
-| 2 | UTKFace [CUT], keep FairFace only | Architecture already anticipated this cut; UTKFace's DEX label-noise is already the doc's own flagged risk. Note (§15): UTKFace has no corresponding bib entry in report/references.bib as of v5 — cut per Cut-List #2, a source paper for UTKFace is therefore not needed. |
-| 3 | PDF export, keep HTML only | HTML+Jinja2 alone satisfies "standardised, exportable" and the Model Cards/Datasheets structure |
-| 4 | Direct in-process inference, keep predictions-file (CSV/JSON) ingestion only | Actually the simpler mode; removes GPU/dependency-version risk entirely (doc's own flagged risk); confirmed predict.py + pretrained checkpoint are public — see §9 |
-| 5 | AIF360, keep Fairlearn only | Last resort — Fairlearn alone computes all 4 named disparity metrics, but this is the only cut that measurably weakens the "methodologically defensible" claim |
+| Order | Cut                                                                          | Why first/last                                                                                                                                                                                                                                                              |
+| ----- | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1     | Web UI (Streamlit/Flask), keep CLI only                                      | Pure UX layer, zero grading relevance to the fairness-engineering core                                                                                                                                                                                                      |
+| 2     | UTKFace [CUT], keep FairFace only                                            | Architecture already anticipated this cut; UTKFace's DEX label-noise is already the doc's own flagged risk. Note (§15): UTKFace has no corresponding bib entry in report/references.bib as of v5 — cut per Cut-List #2, a source paper for UTKFace is therefore not needed. |
+| 3     | PDF export, keep HTML only                                                   | HTML+Jinja2 alone satisfies "standardised, exportable" and the Model Cards/Datasheets structure                                                                                                                                                                             |
+| 4     | Direct in-process inference, keep predictions-file (CSV/JSON) ingestion only | Actually the simpler mode; removes GPU/dependency-version risk entirely (doc's own flagged risk); confirmed predict.py + pretrained checkpoint are public — see §9                                                                                                          |
+| 5     | AIF360, keep Fairlearn only                                                  | Last resort — Fairlearn alone computes all 4 named disparity metrics, but this is the only cut that measurably weakens the "methodologically defensible" claim                                                                                                              |
 
 **Non-negotiable core, never cut:** ingestion + one model + fairness engine + one report format + scope-boundary statement.
 
@@ -104,10 +104,10 @@ A confirmed: wants work to run **concurrent and codependent**, not sequential �
 
 Fix — same two solo phases, restructured to both start day one:
 
-| Stream | Blocks on | Deliverable |
-| --- | --- | --- |
-| Test-matrix construction (ingestion) | Nothing — starts immediately | Curated FairFace-based dataset + predictions CSV (via predict.py above), schema-aligned |
-| Report scaffolding | Nothing — starts immediately | HTML+Jinja2 template, Model Cards structure, built/tested against a hand-written mock metrics dict |
+| Stream                               | Blocks on                    | Deliverable                                                                                        |
+| ------------------------------------ | ---------------------------- | -------------------------------------------------------------------------------------------------- |
+| Test-matrix construction (ingestion) | Nothing — starts immediately | Curated FairFace-based dataset + predictions CSV (via predict.py above), schema-aligned            |
+| Report scaffolding                   | Nothing — starts immediately | HTML+Jinja2 template, Model Cards structure, built/tested against a hand-written mock metrics dict |
 
 The codependency — shared schema, locked in one ~30-min joint session before either stream starts:
 
@@ -150,12 +150,12 @@ Existing fairness toolkits (AIF360, Fairlearn) assume tabular data and single pr
 
 General-purpose/tabular-first tools already known via §7 sources (AIF360, Fairlearn) do not cover face-specific ingestion + demographic schema + regulatory reporting. Additional tools surfaced; none close the gap:
 
-| Tool | Category | Why it doesn't solve the friction |
-| --- | --- | --- |
-| Aequitas (DSSG, U. Chicago) | Open-source bias audit toolkit | Tabular/binary-classification-first, same limitation as AIF360/Fairlearn |
-| FairSight | Visual analytics for classifier bias | General classification, not face/image-native; no regulatory mapping |
-| FairTest | Unintended-association testing | General-purpose; no face schema, no repeated-audit interface |
-| Themis-ml, FAT Forensics, What-If Tool | General fairness/mitigation libraries | Same tabular/general-purpose limitation; no compliance reporting |
+| Tool                                                     | Category                                                                   | Why it doesn't solve the friction                                                            |
+| -------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| Aequitas (DSSG, U. Chicago)                              | Open-source bias audit toolkit                                             | Tabular/binary-classification-first, same limitation as AIF360/Fairlearn                     |
+| FairSight                                                | Visual analytics for classifier bias                                       | General classification, not face/image-native; no regulatory mapping                         |
+| FairTest                                                 | Unintended-association testing                                             | General-purpose; no face schema, no repeated-audit interface                                 |
+| Themis-ml, FAT Forensics, What-If Tool                   | General fairness/mitigation libraries                                      | Same tabular/general-purpose limitation; no compliance reporting                             |
 | NGO Algorithm Audit — JFAM (unsupervised-bias-detection) | Audit-framed, OECD-catalogued, Stanford AI Audit Competition 2023 finalist | Binary classifiers generally, not face-specific; early-stage, docs WIP; no regulatory schema |
 
 ### Defense Framing (Updated August 20, 2026)
@@ -170,7 +170,7 @@ Answer: "Integration, yes — but solving a real one. Right now, auditing a depl
 
 ### Engineering Decisions That Differ from Industry Optimization (August 20, 2026 Reflation)
 
-The real strength of BiasAperture is not that "no one does this yet" — it's understanding *why* industry doesn't do this and explaining what a student team chose differently:
+The real strength of BiasAperture is not that "no one does this yet" — it's understanding _why_ industry doesn't do this and explaining what a student team chose differently:
 
 #### 1. Dual-backend validation (AIF360 + Fairlearn in parallel)
 
@@ -222,24 +222,24 @@ Why a student team centers it:
 
 Consolidated here so neither drops through the cracks — both are edits pending on the same file, `feasibility_study.pdf`:
 
-| Item | Description | Target | Status |
-| --- | --- | --- | --- |
-| 1 | Add one sentence to §2.2 (Current Fairness Toolkits) naming Aequitas alongside AIF360/Fairlearn, same tabular-limitation caveat. Prominent enough (DSSG/U. Chicago, most "top fairness toolkit" roundups) that an examiner may ask "why not Aequitas" — lit review should preempt this. | feasibility_study.pdf §2.2 | Not yet applied (unchanged as of v5) |
-| 2 | Add the surrogate attribution / deferred SHAP explainability layer (§3 above) to the module list. | feasibility_study.pdf §3.1.3 | Not yet applied to feasibility_study.pdf — but now reflected in report/src/chapters/requirements.tex as FR-005 surrogate attribution (§15). Two different documents; feasibility_study.pdf edit itself remains outstanding. |
+| Item | Description                                                                                                                                                                                                                                                                             | Target                       | Status                                                                                                                                                                                                                      |
+| ---- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1    | Add one sentence to §2.2 (Current Fairness Toolkits) naming Aequitas alongside AIF360/Fairlearn, same tabular-limitation caveat. Prominent enough (DSSG/U. Chicago, most "top fairness toolkit" roundups) that an examiner may ask "why not Aequitas" — lit review should preempt this. | feasibility_study.pdf §2.2   | Not yet applied (unchanged as of v5)                                                                                                                                                                                        |
+| 2    | Add the surrogate attribution / deferred SHAP explainability layer (§3 above) to the module list.                                                                                                                                                                                       | feasibility_study.pdf §3.1.3 | Not yet applied to feasibility_study.pdf — but now reflected in report/src/chapters/requirements.tex as FR-005 surrogate attribution (§15). Two different documents; feasibility_study.pdf edit itself remains outstanding. |
 
 ## Proposal Report — Cross-Validated (August 1, 2026)
 
 `report/main.pdf` (BiasAperture proposal, submitted to repo, July 2026) checked this session against the full engineering-strategy notebook source set — EU AI Act full text (EUR-Lex), Article 10 source, NIST AI RMF, AIF360 docs, Fairlearn docs, FairFace (with UTKFace cut) dataset profiles, Model Cards paper, Datasheets for Datasets paper, and the feasibility study itself:
 
-| Claim | Result |
-| --- | --- |
-| Art. 10 in force 2 Aug 2026 | ✅ Supported — Art. 113 EUR-Lex |
-| Table 4-3 mapping (10(2)/10(3)/10(4)/10(5)) | ✅ Supported — matches actual EUR-Lex sub-clause content |
-| AIF360 + Fairlearn implement DPD/EOD/EOP/DIR | ✅ Supported |
-| FairFace 97,698 released images (108,501 pre-discard) | ✅ Supported |
-| Gender Shades 34.7% vs 0.8% | ✅ Supported |
+| Claim                                                                  | Result                                                                                                                                                                                                 |
+| ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Art. 10 in force 2 Aug 2026                                            | ✅ Supported — Art. 113 EUR-Lex                                                                                                                                                                        |
+| Table 4-3 mapping (10(2)/10(3)/10(4)/10(5))                            | ✅ Supported — matches actual EUR-Lex sub-clause content                                                                                                                                               |
+| AIF360 + Fairlearn implement DPD/EOD/EOP/DIR                           | ✅ Supported                                                                                                                                                                                           |
+| FairFace 97,698 released images (108,501 pre-discard)                  | ✅ Supported                                                                                                                                                                                           |
+| Gender Shades 34.7% vs 0.8%                                            | ✅ Supported                                                                                                                                                                                           |
 | Requirements/architecture/schedule/risk register vs. feasibility study | ✅ Supported — Explainability Layer (§3 above) is a documented addition beyond the original feasibility scope, not drift; Appendix D risk register is a verbatim reproduction of feasibility Table 8.1 |
-| EU AI Act = Reg. (EU) 2024/1689 | ✅ Supported |
+| EU AI Act = Reg. (EU) 2024/1689                                        | ✅ Supported                                                                                                                                                                                           |
 
 Zero unsupported or contradicted claims. Proposal is factually submission-ready; §13's two items remain the only open documentation gaps (both on feasibility_study.pdf, not main.pdf).
 
@@ -273,26 +273,26 @@ New, separate exercise conducted in a Claude chat session — unrelated to §1�
 
 **Task Assignment Table:**
 
-| Task | Owner | Reasoning |
-| --- | --- | --- |
-| Data Exploration (FairFace + cut UTKFace profiling — distributions, malformed/missing attributes) | A | Consistent, low-fluctuation output under varying input conditions — least prone to introducing noise while working through messy, unfamiliar data |
-| Model Specification Finalise (locking metric set — AIF360/Fairlearn choices, diagnostic scope) | T | High-power, high-precision execution; will not let an unverified or half-settled spec pass through |
-| Proposal Report Finalise | T drafts claims/scope, A formats & compiles | T's intolerance for overstatement keeps the report's claims honest against what's actually been decided; A's steady execution handles consistent formatting and assembly |
-| Presentation Draft | A | Adaptable — able to restructure and adjust the narrative as content from other modules shifts closer to the deadline |
-| Task Division (this task itself — next sprint's split) | Joint | Both weigh in; no single-owner reasoning applies to planning the split |
+| Task                                                                                              | Owner                                       | Reasoning                                                                                                                                                                |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Data Exploration (FairFace + cut UTKFace profiling — distributions, malformed/missing attributes) | A                                           | Consistent, low-fluctuation output under varying input conditions — least prone to introducing noise while working through messy, unfamiliar data                        |
+| Model Specification Finalise (locking metric set — AIF360/Fairlearn choices, diagnostic scope)    | T                                           | High-power, high-precision execution; will not let an unverified or half-settled spec pass through                                                                       |
+| Proposal Report Finalise                                                                          | T drafts claims/scope, A formats & compiles | T's intolerance for overstatement keeps the report's claims honest against what's actually been decided; A's steady execution handles consistent formatting and assembly |
+| Presentation Draft                                                                                | A                                           | Adaptable — able to restructure and adjust the narrative as content from other modules shifts closer to the deadline                                                     |
+| Task Division (this task itself — next sprint's split)                                            | Joint                                       | Both weigh in; no single-owner reasoning applies to planning the split                                                                                                   |
 
 **Prior module-level split** (established earlier in the same chat session, for reference):
 
-| Task | Owner | Reasoning |
-| --- | --- | --- |
-| Data ingestion & preprocessing | A | Consistent output handling messy/malformed data |
-| Cross-module integration & handling unexpected dataset/metric behavior | A | High adaptability |
-| Bias metric implementation (AIF360/Fairlearn) | T | High-power precision; no unverified results pass through |
-| Surrogate attribution / deferred SHAP explainability visualization | T | Detail-dense, rigorous presentation work |
-| Statistical significance / validation | T | Uncompromising standard against unsupported conclusions |
-| Report drafting (claims/findings narrative) | A | Steady assembly across shifting inputs |
-| Report review (accuracy check) | T | Natural check against overstated claims |
-| LaTeX formatting & final compilation | A | Consistent, reliable on fixed repeatable process |
+| Task                                                                   | Owner | Reasoning                                                |
+| ---------------------------------------------------------------------- | ----- | -------------------------------------------------------- |
+| Data ingestion & preprocessing                                         | A     | Consistent output handling messy/malformed data          |
+| Cross-module integration & handling unexpected dataset/metric behavior | A     | High adaptability                                        |
+| Bias metric implementation (AIF360/Fairlearn)                          | T     | High-power precision; no unverified results pass through |
+| Surrogate attribution / deferred SHAP explainability visualization     | T     | Detail-dense, rigorous presentation work                 |
+| Statistical significance / validation                                  | T     | Uncompromising standard against unsupported conclusions  |
+| Report drafting (claims/findings narrative)                            | A     | Steady assembly across shifting inputs                   |
+| Report review (accuracy check)                                         | T     | Natural check against overstated claims                  |
+| LaTeX formatting & final compilation                                   | A     | Consistent, reliable on fixed repeatable process         |
 
 **Note:** A mentioned sending T a screenshot of the module-level split table above, prior to the coming-week plan being defined.
 
@@ -304,12 +304,12 @@ Formal lock of the empirical verification, stream ownership, git feature branche
 
 ### Stream & Branch Matrix
 
-| Work Package / Stream | Owner | Verification Mandate & Empirical Probes | Dedicated Git Branch |
-| :--- | :--- | :--- | :--- |
-| **Stream A: Data Pipeline & Test Matrix** *(WP2)* | **T** | • Disk byte counts (86,744 train + 10,954 val = 97,698 actual images vs 108k paper claim); • 5-point `dlib` landmark alignment vs MTCNN behavior on raw tensors; • Validate demographic cell coverage across 7 race $\times$ 9 age $\times$ 2 gender groups. | `feat/stream-data` |
-| **Stream B: Regulatory & Reporting Engine** *(WP3)* | **T** | • Legal clause-to-metric verification: Trace EU AI Act Article 10(2)(f), 10(3), Article 13 & NIST AI RMF Measure 2.11; • Offline rendering audit: Verify self-contained HTML report with 0 external network calls (embedded CSS/SVG/surrogate SHAP fallback base64). | `feat/stream-report` |
-| **Stream C: Fairness Engine & Statistical Math** *(WP4)* | **A** | • Hand-calculation verification of the 8-record known-answer baseline (DPD, DIR, EOP, EOD); • Dual-backend harmonization: Prove Fairlearn vs. AIF360 Equalized Odds divergence (max-gap vs mean-gap); • Prove $n < 30$ CLT sample-size guard prevents $3\times$–$45\times$ disparity distortions. | `feat/wp4-engine` |
-| **Stream D: Explainability & Orchestration** *(WP4/WP5)* | **A** | • Verify Individual Typology Angle (ITA) CIELAB dermatological equations; • Verify `PartitionExplainer` stability over `DeepExplainer` on ResNet-34 architectures; • Orchestration pipeline and dual-remote sync integrity. | `feat/wp5-integration` |
+| Work Package / Stream                                    | Owner | Verification Mandate & Empirical Probes                                                                                                                                                                                                                                                           | Dedicated Git Branch   |
+| :------------------------------------------------------- | :---- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :--------------------- |
+| **Stream A: Data Pipeline & Test Matrix** _(WP2)_        | **T** | • Disk byte counts (86,744 train + 10,954 val = 97,698 actual images vs 108k paper claim); • 5-point `dlib` landmark alignment vs MTCNN behavior on raw tensors; • Validate demographic cell coverage across 7 race $\times$ 9 age $\times$ 2 gender groups.                                      | `feat/stream-data`     |
+| **Stream B: Regulatory & Reporting Engine** _(WP3)_      | **T** | • Legal clause-to-metric verification: Trace EU AI Act Article 10(2)(f), 10(3), Article 13 & NIST AI RMF Measure 2.11; • Offline rendering audit: Verify self-contained HTML report with 0 external network calls (embedded CSS/SVG/surrogate SHAP fallback base64).                              | `feat/stream-report`   |
+| **Stream C: Fairness Engine & Statistical Math** _(WP4)_ | **A** | • Hand-calculation verification of the 8-record known-answer baseline (DPD, DIR, EOP, EOD); • Dual-backend harmonization: Prove Fairlearn vs. AIF360 Equalized Odds divergence (max-gap vs mean-gap); • Prove $n < 30$ CLT sample-size guard prevents $3\times$–$45\times$ disparity distortions. | `feat/wp4-engine`      |
+| **Stream D: Explainability & Orchestration** _(WP4/WP5)_ | **A** | • Verify Individual Typology Angle (ITA) CIELAB dermatological equations; • Verify `PartitionExplainer` stability over `DeepExplainer` on ResNet-34 architectures; • Orchestration pipeline and dual-remote sync integrity.                                                                       | `feat/wp5-integration` |
 
 ### Viva / Defense Division of Responsibilities
 
@@ -322,16 +322,16 @@ Following the completion of Milestone M1 and the 20-track research sprint, tasks
 
 ### 1. Work Package & Stream Allocation
 
-| Stream / Work Package | Primary Owner | Target Feature Branch | Core Deliverables | Output Contract & Data Handoff |
-| --- | :---: | --- | --- | --- |
-| **Stream A: Data Pipeline & Test Matrix** *(WP2)* | **T** | `feat/stream-data` | • Two-mode ingestion (`data_ingestion.py`: Strict/Profiling); • In-process `dlib` 5-point alignment adapter (`model_interface.py`); • Unitary & 126 intersectional subgroup slice indexers; • Stratified synthetic dev matrices ($n=5,000$, edge-case $n<30$). | Yields `Iterator[SubjectRecord]` strictly validated against `schema.py` |
-| **Stream B: Regulatory & Reporting Engine** *(WP3)* | **T** | `feat/stream-report` | • Jinja2 standalone single-file HTML report (`report/generator.py`); • Zero-network embedded styling, responsive grids & SVG badges; • Mitchell et al. Model Card & Gebru et al. Datasheet integration; • Statutory crosswalks (EU AI Act Art. 10/13/15 & NIST AI RMF Measure 2.11). | Ingests `list[MetricResult]` and renders zero-network `audit_report.html` |
-| **Stream C: Fairness Engine & Statistical Math** *(WP4)* | **A** | `feat/wp4-engine` | • `FairnessBackend` strategy base + $n \ge 30$ sample guard; • `FairlearnBackend` & harmonized `AIF360Backend` (max-of-gaps EOD, `abs()` EOP); • Dual-backend `CrossValidationOrchestrator` ($\lvert \Delta \rvert > \epsilon$ warnings); • Vectorized stratified BCa bootstrap CI ($B \ge 1,000$) & $\chi^2$ / Holm FWER testing. | Ingests `Iterator[SubjectRecord]` and produces `list[MetricResult]` |
-| **Stream D: Explainability & Orchestration** *(WP4/WP5)* | **A** | `feat/wp5-integration` | • Current demographic-dummy surrogate attribution; • Richer spatial SHAP, BiSeNet face parsing, and CIELAB ITA skin-tone proxy analysis deferred; • Master CLI (`bias-aperture audit`) & orchestration pipeline; • FairFace validation inference and audit report review. | Chains Ingestion $\to$ Model $\to$ Fairness $\to$ Stats $\to$ Explainability $\to$ Report |
-| **Stream E: Capstone Paper & Viva Defense** *(Joint)* | **A + T** | `main` | • LaTeX report final synchronization (`report/main.pdf`); • 20-minute defense presentation deck; • Supervisor dry-run & empirical claim grilling via `CLAIM_LEDGER.md`. | Capstone submission & defense |
+| Stream / Work Package                                    | Primary Owner | Target Feature Branch  | Core Deliverables                                                                                                                                                                                                                                                                                                                  | Output Contract & Data Handoff                                                            |
+| -------------------------------------------------------- | :-----------: | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| **Stream A: Data Pipeline & Test Matrix** _(WP2)_        |     **T**     | `feat/stream-data`     | • Two-mode ingestion (`data_ingestion.py`: Strict/Profiling); • In-process `dlib` 5-point alignment adapter (`model_interface.py`); • Unitary & 126 intersectional subgroup slice indexers; • Stratified synthetic dev matrices ($n=5,000$, edge-case $n<30$).                                                                     | Yields `Iterator[SubjectRecord]` strictly validated against `schema.py`                   |
+| **Stream B: Regulatory & Reporting Engine** _(WP3)_      |     **T**     | `feat/stream-report`   | • Jinja2 standalone single-file HTML report (`report/generator.py`); • Zero-network embedded styling, responsive grids & SVG badges; • Mitchell et al. Model Card & Gebru et al. Datasheet integration; • Statutory crosswalks (EU AI Act Art. 10/13/15 & NIST AI RMF Measure 2.11).                                               | Ingests `list[MetricResult]` and renders zero-network `audit_report.html`                 |
+| **Stream C: Fairness Engine & Statistical Math** _(WP4)_ |     **A**     | `feat/wp4-engine`      | • `FairnessBackend` strategy base + $n \ge 30$ sample guard; • `FairlearnBackend` & harmonized `AIF360Backend` (max-of-gaps EOD, `abs()` EOP); • Dual-backend `CrossValidationOrchestrator` ($\lvert \Delta \rvert > \epsilon$ warnings); • Vectorized stratified BCa bootstrap CI ($B \ge 1,000$) & $\chi^2$ / Holm FWER testing. | Ingests `Iterator[SubjectRecord]` and produces `list[MetricResult]`                       |
+| **Stream D: Explainability & Orchestration** _(WP4/WP5)_ |     **A**     | `feat/wp5-integration` | • Current demographic-dummy surrogate attribution; • Richer spatial SHAP, BiSeNet face parsing, and CIELAB ITA skin-tone proxy analysis deferred; • Master CLI (`bias-aperture audit`) & orchestration pipeline; • FairFace validation inference and audit report review.                                                          | Chains Ingestion $\to$ Model $\to$ Fairness $\to$ Stats $\to$ Explainability $\to$ Report |
+| **Stream E: Capstone Paper & Viva Defense** _(Joint)_    |   **A + T**   | `main`                 | • LaTeX report final synchronization (`report/main.pdf`); • 20-minute defense presentation deck; • Supervisor dry-run & empirical claim grilling via `CLAIM_LEDGER.md`.                                                                                                                                                            | Capstone submission & defense                                                             |
 
 ### 2. Four-Week Sprint Timeline & Execution Status
- 
+
 - **Sprint 1 (Week 1 / Aug 24–30) — M2 Foundation [COMPLETED]:**
   - Tisha: Dataset Ingestion (A1) + Jinja2 HTML Scaffold (B1, B2).
   - Aaradhya: Fairness Backend Strategy (C1, C2, C3) + Mock Test Harness.
@@ -385,12 +385,12 @@ Fellowship schedule or confirmed by the TA.
 
 The Google Classroom marking scheme shown on August 26, 2026 is:
 
-| Category | Weight |
-| --- | ---: |
-| Project | 40% |
-| Assignments | 20% |
-| Quizzes | 20% |
-| Exam | 20% |
+| Category    | Weight |
+| ----------- | -----: |
+| Project     |    40% |
+| Assignments |    20% |
+| Quizzes     |    20% |
+| Exam        |    20% |
 
 The project is therefore the largest single assessment category, but the screenshot
 does not specify how the project component itself is divided between proposal defense,
@@ -417,23 +417,28 @@ dashboard semantics, regulatory-map shape, NFR bounds, and licensing mechanism.
 Following a comprehensive audit across code artifacts, specifications, and proposal documentation (`research/results/DISCREPANCY_LEDGER.md`), key discrepancies regarding empirical dataset scale, benchmark scope, and explainability mechanisms were reconciled to reflect exact repository ground truth:
 
 ### 1. Dataset Scale Alignment (FairFace 97,698 Released vs. 108,501 Pre-Discard)
+
 - **Empirical Ground Truth**: FairFace contains exactly 97,698 released image files on disk across splits (86,744 training images + 10,954 validation images).
 - **Resolution**: The historical 108,501 figure represents the pre-discard / pre-annotation raw scraped total reported in Karkkainen & Joo (2021). All specification files, throughput targets (NFR-004), and reporting chapters are harmonized to distinguish the 97,698 released benchmark total from the 108,501 pre-discard total.
 
 ### 2. Benchmark Scope Lock (UTKFace Formal Exclusion)
+
 - **Status**: UTKFace is confirmed as definitively **cut** per Cut-List #2 (due to severe DEX label-noise and misaligned racial taxonomies).
 - **Resolution**: Legacy references framing UTKFace as an active secondary benchmark are resolved by cutting it; the cut UTKFace dataset was utilized solely for preliminary ingestion profiling; FairFace serves as the single authoritative benchmark dataset for all audit and case study evaluations.
 
 ### 3. Explainability Architecture: Surrogate Attribution (SHAP Deferred)
+
 - **Implementation Reality**: The operational feature explainability engine (`explainability.py`) implements a demographic-dummy surrogate attribution model (linear Shapley value credit assignment over tabular protected groups) triggered on flagged metric disparities (FR-005).
 - **Scope Clarification**: Full spatial / pixel-level SHAP (`shap.PartitionExplainer` on image tensors) is deferred to future work due to compute overhead and adversarial brittleness. In compliance with Bilodeau et al. (2022) and Slack et al. (2020), surrogate attribution outputs are strictly reported as "no proxy reliance identified under the surrogate method", avoiding unwarranted claims of proven fairness.
 
 ### 4. Expansion of Literature Review Matrix (Bedrock Foundations & September 5 Addendum)
+
 The literature review matrix (`docs/literature-review-matrix.md`) is expanded from 9 to 20 papers across three cohorts:
 
 **Cohort 1 — Original 9 papers** (Buolamwini & Gebru 2018, Grother et al. 2019, Dwork et al. 2012, Hardt et al. 2016, Kärkkäinen & Joo 2021, Bird et al. 2020, Barocas et al. 2019, Mehrabi et al. 2021, Raji & Buolamwini 2019).
 
 **Cohort 2 — 5 foundational / methodological papers** added to ground formal credit allocation, attribution impossibility, and risk-management:
+
 - **Shapley (1953)**: Axiomatic foundation of cooperative game theory (Efficiency, Symmetry, Dummy, Additivity) establishing the unique fair credit division rule.
 - **Lundberg & Lee (2017)**: Additive feature attribution unifying LIME/DeepLIFT under KernelSHAP with the optimal Shapley kernel weighting $\pi(z')$.
 - **Bilodeau et al. (2022)**: Impossibility theorems proving that no additive feature attribution method can guarantee causal proxy discovery, mandating conservative reporting language.
@@ -441,6 +446,7 @@ The literature review matrix (`docs/literature-review-matrix.md`) is expanded fr
 - **NIST AI RMF 1.0 (2023)**: Operationalization of the Measure function (Measure 2.11) as a repeatable bias auditing process mapped alongside EU AI Act Article 10.
 
 **Cohort 3 — 6 September 5, 2026 addendum papers** grounding the three open validity threats (ITA robustness, open-set recognition, domain shift):
+
 - **Howard et al. (2021)** (Tier 1 Central): ITA-colorimetry illumination control, motivating the ITA skin-tone axis in BiasAperture's intersectional analysis.
 - **Fournier-Montgieux et al. (2024)** (Tier 1 Central Limitation/Validity Threat): Open-set recognition limitations that bound the claimed performance envelope.
 - **Cascone et al. (2021)** (Tier 2 Contextual): Spectral / NIR cross-domain performance degradation framing domain-shift as an out-of-scope limitation.
@@ -452,7 +458,7 @@ All 20 papers are synchronized with `report/src/chapters/literatureReview.tex` (
 
 ---
 
-*Exported from Fuse capstone planning session — reflects state as of this export, not a final locked plan.*
+_Exported from Fuse capstone planning session — reflects state as of this export, not a final locked plan._
 
 **Revision:** A/T naming applied throughout, replacing full names/initials, per confirmed decision from prior session.
 
