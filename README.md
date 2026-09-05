@@ -6,13 +6,14 @@ A fairness and bias audit system proposal and implementation submitted for the *
 
 **Authors:** Aaradhya Dev Tamrakar, Tisha Manandhar  
 **Supervisor:** Shreejan Kisee, Teaching Assistant, Fusemachines AI Fellowship  
-**Status:** Milestones M1–M4 Completed (100%) · M5 System Orchestration & Case Studies Active (90%) · 67/67 Tests Passing  
+**Status:** Milestones M1–M4 Completed (100%) · M5 System Orchestration & Case Studies Active (90%) · 67/67 Tests Passing
 
 ---
 
 ## Abstract
 
 BiasAperture is a diagnostic and evaluative software platform that computes subgroup and intersectional fairness metrics for third-party computer vision models and outputs standardized, regulator-legible compliance reports. Organised into five modular tiers (data ingestion, model interfacing, dual fairness computation, surrogate explainability, and report generation), the analytical core computes the **Core Four** disparity metrics:
+
 1. **Demographic Parity Difference (DPD)**
 2. **Disparate Impact Ratio (DIR)**
 3. **Equal Opportunity Difference (EOP)**
@@ -27,6 +28,7 @@ Flagged disparities are attributed to demographic proxy axes using exact **addit
 ## Non-Negotiable Diagnostic Scope
 
 In accordance with fellowship research guidelines and architectural invariants:
+
 - **Strictly Diagnostic & Evaluative**: BiasAperture measures, attributes, and reports demographic disparities. It **does NOT** perform model retraining, in-processing weights debiasing, fine-tuning, or synthetic image generation.
 - **Statistical Integrity**: Subgroups with $n < 30$ samples are never assigned computed metric values; they are marked with `insufficient_sample=True` and `metric_value=None` (enforced by `MetricResult.__post_init__`).
 - **Zero-Network Offline Execution**: The entire pipeline, from tabular intake to standalone Jinja2 HTML report compilation, operates in air-gapped/offline environments with zero external CDN dependencies.
@@ -188,13 +190,13 @@ BiasAperture/
 Overall Progress: [██████████████████░░] 90% (Milestones M1–M4 Complete · Inference Complete · M5 Active)
 ```
 
-| Work Package / Milestone | Stream / Focus | Status | Progress | Deliverables & Implementation State |
-| :--- | :--- | :---: | :---: | :--- |
-| **WP1 / M1: Schema Lock & Baseline** | Foundations / Joint | Completed | `[████████████████████] 100%` | Locked internal schema (`schema.py`), FairFace ResNet-34 classifier baseline fixed, frozen demographic taxonomies, shared test fixtures. |
-| **WP2 / M2: Data Ingestion & Test Matrix** | Stream A (Tisha) | Completed | `[████████████████████] 100%` | Ingestion pipeline (`data_ingestion.py`), alias resolution, 97,698 FairFace images disk verified, UTKFace profiled and cut. |
-| **WP3 / M3: Compliance Report Generation** | Stream B (Tisha/Aaradhya) | Completed | `[████████████████████] 100%` | Zero-network Jinja2 HTML report generator (`generator.py`), embedded SVG charts, EU AI Act Art. 10/13 & NIST AI RMF mapping. |
-| **WP4 / M4: Statistical Detection & Explainability** | WP4 (Aaradhya) | Completed | `[████████████████████] 100%` | Dual backends (Fairlearn + AIF360), $\chi^2$ asymptotic tests, BCa bootstrap ($B \ge 1,000$), $n < 30$ guards, exact additive Shapley surrogate attribution. |
-| **WP5 / M5: System Orchestration & Case Studies** | Integration / Joint | Active | `[██████████████████░░]  90%` | CLI orchestrator (`cli.py`), benchmark inference complete (`10,954/10,954`), validation audit reports generated (`report/*.html`), 18-slide Beamer presentation deck compiled; next: oral defense delivery. |
+| Work Package / Milestone                             | Stream / Focus            |  Status   |           Progress            | Deliverables & Implementation State                                                                                                                                                                         |
+| :--------------------------------------------------- | :------------------------ | :-------: | :---------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **WP1 / M1: Schema Lock & Baseline**                 | Foundations / Joint       | Completed | `[████████████████████] 100%` | Locked internal schema (`schema.py`), FairFace ResNet-34 classifier baseline fixed, frozen demographic taxonomies, shared test fixtures.                                                                    |
+| **WP2 / M2: Data Ingestion & Test Matrix**           | Stream A (Tisha)          | Completed | `[████████████████████] 100%` | Ingestion pipeline (`data_ingestion.py`), alias resolution, 97,698 FairFace images disk verified, UTKFace profiled and cut.                                                                                 |
+| **WP3 / M3: Compliance Report Generation**           | Stream B (Tisha/Aaradhya) | Completed | `[████████████████████] 100%` | Zero-network Jinja2 HTML report generator (`generator.py`), embedded SVG charts, EU AI Act Art. 10/13 & NIST AI RMF mapping.                                                                                |
+| **WP4 / M4: Statistical Detection & Explainability** | WP4 (Aaradhya)            | Completed | `[████████████████████] 100%` | Dual backends (Fairlearn + AIF360), $\chi^2$ asymptotic tests, BCa bootstrap ($B \ge 1,000$), $n < 30$ guards, exact additive Shapley surrogate attribution.                                                |
+| **WP5 / M5: System Orchestration & Case Studies**    | Integration / Joint       |  Active   | `[██████████████████░░]  90%` | CLI orchestrator (`cli.py`), benchmark inference complete (`10,954/10,954`), validation audit reports generated (`report/*.html`), 18-slide Beamer presentation deck compiled; next: oral defense delivery. |
 
 ---
 
@@ -257,6 +259,7 @@ The presentation deck is located in `presentation/` and uses a custom theme tail
 cd presentation
 .\build.ps1
 ```
+
 The compiled output is saved to `presentation/main.pdf`. Speaker notes, slide-by-slide scripts, and anticipated Q&A are detailed in [presentation/speaker_notes.md](presentation/speaker_notes.md).
 
 ### 2. Academic Proposal LaTeX Report
@@ -271,6 +274,7 @@ bibtex main
 pdflatex -interaction=nonstopmode main.tex
 pdflatex -interaction=nonstopmode main.tex
 ```
+
 The compiled document is saved to `report/main.pdf`.
 
 ---
@@ -279,12 +283,12 @@ The compiled document is saved to `report/main.pdf`.
 
 Every metric and finding produced by BiasAperture is mapped to international legal and engineering standards:
 
-| Regulatory Standard | Article / Clause / Subcategory | BiasAperture Implementation |
-| :--- | :--- | :--- |
-| **EU AI Act** | **Article 10(2)(f)**: Examination in view of possible biases | Dual-backend Core Four metric suite evaluating statistical disparities across unitary and intersectional subgroups. |
-| **EU AI Act** | **Article 10(3)**: Data governance & statistical representation | Subgroup support contingency profiling (`compute_cohort_profile`), $n < 30$ reporting suppression guards. |
-| **EU AI Act** | **Article 13**: Transparency & provision of information | Standalone zero-network HTML compliance reports containing model cards, evaluation parameters, and audit summaries. |
-| **NIST AI RMF 1.0** | **MEASURE 2.11**: Fairness and bias evaluation | Asymptotic $\chi^2$ independence tests and 95% BCa bootstrap confidence intervals ensuring inferential validity. |
+| Regulatory Standard | Article / Clause / Subcategory                                   | BiasAperture Implementation                                                                                            |
+| :------------------ | :--------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------- |
+| **EU AI Act**       | **Article 10(2)(f)**: Examination in view of possible biases     | Dual-backend Core Four metric suite evaluating statistical disparities across unitary and intersectional subgroups.    |
+| **EU AI Act**       | **Article 10(3)**: Data governance & statistical representation  | Subgroup support contingency profiling (`compute_cohort_profile`), $n < 30$ reporting suppression guards.              |
+| **EU AI Act**       | **Article 13**: Transparency & provision of information          | Standalone zero-network HTML compliance reports containing model cards, evaluation parameters, and audit summaries.    |
+| **NIST AI RMF 1.0** | **MEASURE 2.11**: Fairness and bias evaluation                   | Asymptotic $\chi^2$ independence tests and 95% BCa bootstrap confidence intervals ensuring inferential validity.       |
 | **NIST AI RMF 1.0** | **MAP 1.5 & GOVERN 1.2**: Risk assessment & legal accountability | Targeted additive Shapley surrogate attribution uncovering demographic proxy features contributing to disparity flags. |
 
 ---
@@ -293,13 +297,13 @@ Every metric and finding produced by BiasAperture is mapped to international leg
 
 The team operates on distinct feature streams synchronized via `sync.ps1`:
 
-| Branch | Stream / Work Package | Owner | Primary Focus & Verification Mandate |
-| :--- | :--- | :--- | :--- |
-| `main` | Production / Baseline | Joint | Clean, validated baseline holding locked schema, verified engine, reports, and presentation. |
-| `feat/stream-data` | Stream A (WP2) | Tisha (`@tiixsha`) | Ingestion pipeline, FairFace landmark alignment, demographic cohort matrix construction. |
-| `feat/stream-report` | Stream B (WP3) | Tisha (`@tiixsha`) | Zero-network HTML compliance report scaffolding, Jinja2 templating, regulatory mapping. |
-| `feat/wp4-engine` | WP4 | Aaradhya (`@AaradhyaDT`) | Fairness backends (AIF360 + Fairlearn), BCa bootstrap CIs ($B \ge 1,000$), $\chi^2$ tests. |
-| `feat/wp5-integration` | WP5 | Aaradhya (`@AaradhyaDT`) / Joint | CLI orchestrator (`cli.py`), surrogate explainability, benchmark validation inference, end-to-end integration. |
+| Branch                 | Stream / Work Package | Owner                            | Primary Focus & Verification Mandate                                                                           |
+| :--------------------- | :-------------------- | :------------------------------- | :------------------------------------------------------------------------------------------------------------- |
+| `main`                 | Production / Baseline | Joint                            | Clean, validated baseline holding locked schema, verified engine, reports, and presentation.                   |
+| `feat/stream-data`     | Stream A (WP2)        | Tisha (`@tiixsha`)               | Ingestion pipeline, FairFace landmark alignment, demographic cohort matrix construction.                       |
+| `feat/stream-report`   | Stream B (WP3)        | Tisha (`@tiixsha`)               | Zero-network HTML compliance report scaffolding, Jinja2 templating, regulatory mapping.                        |
+| `feat/wp4-engine`      | WP4                   | Aaradhya (`@AaradhyaDT`)         | Fairness backends (AIF360 + Fairlearn), BCa bootstrap CIs ($B \ge 1,000$), $\chi^2$ tests.                     |
+| `feat/wp5-integration` | WP5                   | Aaradhya (`@AaradhyaDT`) / Joint | CLI orchestrator (`cli.py`), surrogate explainability, benchmark validation inference, end-to-end integration. |
 
 ### Multi-Remote Synchronization Script (`sync.ps1`)
 
