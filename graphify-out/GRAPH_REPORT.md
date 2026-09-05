@@ -1,89 +1,117 @@
-# Graph Report - BiasAperture-A-Diagnostic-Framework-for-Demographic-Bias-Auditing-in-Facial-Analysis-Models  (2026-09-02)
+# Graph Report - BiasAperture-A-Diagnostic-Framework-for-Demographic-Bias-Auditing-in-Facial-Analysis-Models  (2026-09-05)
 
 ## Corpus Check
-- cluster-only mode — file stats not available
+- 161 files · ~156,389 words
+- Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1126 nodes · 1419 edges · 144 communities (92 shown, 44 thin omitted)
-- Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 86 edges (avg confidence: 0.92)
+- 1440 nodes · 1788 edges · 174 communities (120 shown, 45 thin omitted)
+- Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 101 edges (avg confidence: 0.92)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `7ff30a82`
+- Built from commit: `36ec49e4`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- fairness/__init__.py
-- PredictionsFileInterface
-- BiasAperture-AT (v6)
+- SubjectRecord
 - Session Clarity & Task Prioritization — BiasAperture M5 Integration Phase
+- Phase-2 Research Synthesis
+- BiasAperture: Integration as Innovation
+- DataIngestionPipeline
 - BiasAperture-AT (v10)
-- Implementation Order
 - 3. The 12 Master First-Principles Questions
 - cli.py
+- Implementation Order
+- Research Report: SHAP Explainability Principles & Feature Weighting
 - BiasAperture — Research Sprint: Low-Level Technical Specification
-- DataIngestionPipeline
-- 3. Stream-by-Stream Verification Protocols
-- 2. Slide Deck Outline (15–20 slides)
-- Phase-2 Research Synthesis
-- .ingest_records
+- 4.2 Complete 18-Slide Presentation Blueprint & Talking Points
 - BiasAperture — Research Sprint: High-Level Executive Synthesis
-- test_report_generator.py
-- HTMLReportGenerator
-- BiasAperture — System Context (paste this first)
-- BiasAperture: Integration as Innovation
-- BiasAperture: Integration as Innovation
-- MetricResult
-- Quick Start (5 minutes setup)
-- ShapExplainerEngine
-- BiasAperture
-- SubjectRecord
-- 2. Component Design & Interfacing
-- bias_aperture/schema.py
-- 3. Detailed Accomplishments & Technical Highlights
+- fairness/__init__.py
+- 3. Stream-by-Stream Verification Protocols
+- predict_single_image
+- .ingest_records
+- 2. Slide Deck Outline (15–20 slides)
 - Data Exploration Report — FairFace & UTKFace
+- BiasAperture-AT (v11)
+- PredictionsFileInterface
+- 2026-08-27_WK4_report.md
+- 01 - Architecture
+- Part 3: System Architecture, Methodology & Mathematical Formulation
+- MVP Scope Specification
+- ValidationMode
+- InProcessInterface
+- BiasAperture: Integration as Innovation
+- Quick Start (5 minutes setup)
+- track_A_dataset_scale_utkface.md
+- Discrepancy Ledger — Independent Verification Report
+- CLAUDE.md — Assistant Instructions for BiasAperture
+- ValueError
+- 2. Component Design & Interfacing
+- Report Generator
+- PROPOSAL_DEFENSE_MASTER_DOSSIER.md
+- Part 1: Product Requirements Document (PRD) & Problem Statement [10 Marks]
 - explore_utkface.py
 - CLAUDE.md — Assistant Instructions for BiasAperture
-- Monthly Progress & Weekly Reports Index (2026-08-31)
-- data_ingestion.py
+- 3. Detailed Accomplishments & Technical Highlights
+- BiasAperture — Weekly Project Report (WK5)
+- BiasAperture — Presentation Discrepancy Notes
 - Stream C Synthesis — Fairness Engine (Tracks 09–14)
 - BiasAperture — Weekly Project Report (WK1)
 - BiasAperture — Weekly Project Report (WK3)
-- CLAUDE.md — Assistant Instructions for BiasAperture
 - BiasAperture — Proposal Defense Preparation Guide
-- OvRTransformer
+- _verify_offline_html_contract
 - test_backend_harmonization.py
 - BiasAperture — Weekly Project Report (WK2)
 - BiasAperture — System Context (paste this first)
+- 5.3 Scripted Answers to 32 Anticipated Defense Questions
+- BiasAperture — Discrepancy Ledger
+- BiasAperture — Gate 0–3 Merged Results
+- BiasAperture — System Context (paste this first)
 - explore_fairface.py
-- conftest.py
+- sync.ps1
 - Schema Lock — Milestone M1 (WP1)
-- BiasAperture — Data Governance & Privacy Protocol
 - 5. Anticipated Hard Questions & Scripted Answers (32 Questions)
-- Schema Lock — Milestone M1 (WP1)
+- Part 2: Literature Review, Theoretical Framework & Positioning [10 Marks]
+- check_stale_claims.py
 - 3. Slide-by-Slide Script & Talking Points
 - 6. Traps to Avoid
-- BiasAperture — Research Claim Ledger
+- Part 5: Q&A Grilling Defense, Hard Questions & Traps [5 Marks Q&A Handling]
+- Schema Lock — Milestone M1 (WP1)
+- stratified_sample
+- Discrepancy Verification Report Summary
 - Stream B Synthesis — Report Generation (Tracks 05–08)
 - Stream D Synthesis — Explainability (Tracks 15–16)
-- sync.ps1
-- BiasAperture — Monthly Progress & Weekly Reports Index
+- .compute_cohort_profile
+- InProcessInterface
 - AGENT.md — Developer & AI Agent Guidelines
 - AGENT.md — Developer & AI Agent Guidelines
-- HIGH_LEVEL_SYNTHESIS.md
+- ANTIGRAVITY.md — Google Antigravity & Gemini Coding Guidelines
 - 8. Mock Grilling Checklist
+- Part 4: Presentation & Defense Strategy [5 Marks Clarity & Structure]
 - pull_request_template.md
+- Track C — Architecture/Module Structural Claims vs. Actual `src/` Code
+- Gate 3 — Decision-Support Brief (`task_2026-09-04_011`, user10)
 - Cross-Track Conflict & Discrepancy Log — BiasAperture 20-Track Research Sprint
 - Stream E Synthesis — Architecture & Testing (Tracks 17–18)
+- 00 - Overview and MVP Scope
+- Novelty & Prior-Art Check (July 30, 2026)
 - Track 01: FairFace Dataset Deep-Dive
+- Track D — Milestone/WP Completion % Claims vs. `CLAIM_LEDGER.md`
+- Gate 0 — Anti-Drift Guard Script (`task_2026-09-04_007`, user6)
+- B — Explainability: SHAP vs. Actual Demographic-Dummy Surrogate
 - Stream A Synthesis — Data Pipeline (Tracks 01–04)
 - Stream F Synthesis — Defense & Regulatory (Tracks 19–20)
-- .compute_cohort_profile
+- 03 - Orchestrator
+- 04-intake-and-classification.md
+- 10 - Security and Governance
+- test_image_column_alias_resolution_other_aliases
 - Data Directory Layout
 - BiasAperture Literature Review
-- FairFace: Face Attribute Dataset for Balanced Race, Gender, and Age for Bias Measurement and Mitigation
-- Detection Engine Output Schema
+- 09 - Verification
+- context feed/literature-review-matrix.md
+- fixture
 - Track 02 — UTKFace Comparison & Risk Assessment
 - Track 03 — Pandas Data Validation Patterns
 - Track 04 — FairFace predict.py Source Code Analysis
@@ -103,37 +131,41 @@
 - Track 18 — Pytest Testing Patterns for Fairness Metrics
 - Track 19 — NIST AI RMF Detailed Mapping
 - track_20_competitor_analysis.md
-- fixture
+- 06 - Statistics and Confidence
+- 08-report-and-compliance.md
 - Mid Level Architecture
+- BiasAperture
 - Stream F Synthesis (Defense & Regulatory)
-- BiasAperture Platform
-- context feed/literature-review-matrix.md
 - CHANGELOG.md
-- docs/literature-review-matrix.md
-- Datasheets for Datasets
+- Schema Constants
+- FairFace Pretrained ResNet-34
 - copilot-instructions.md
 - AIF360
 - Sync Script
-- BiasAperture High-Level Summary
-- BiasAperture Low-Level Technical Overview
-- FairFace Data Exploration
-- UTKFace Data Exploration
+- Fairness Backends
+- FairFace Benchmark
+- Statistical Rigor Layer
+- BiasAperture — High-Level Summary
 - 2026-09-02 Session Inference Completion
-- Project Planning (BiasAperture-AT)
-- Assessing High-Risk AI Systems under the EU AI Act: From Legal Requirements to Technical Verification
-- Fairness and Bias Mitigation in Computer Vision: A Survey
-- Where, Why, and How Is Bias Learned in Medical Image Analysis Models?
+- Weekly Project Report (WK1)
+- Weekly Project Report (WK2)
 - Fairlearn
 - bias_aperture
-- Pre-commit Hooks
-- Ruff Pre-commit
+- EU AI Act
+- Abstract
+- Branching & Workstreams
+- Building the Report
+- License
+- Local Git Workflow & Auto-Sync (`sync.ps1`)
+- Project Progress & Roadmap
+- Python Development, Testing & Code Style
+- Repository Structure
+- VS Code Setup
 - BiasAperture Proposal Report
-- High-Level Architecture Diagram
 - Project Gantt Chart
 - Fusemachines Logo
 - System Workflow Flowchart
 - BiasAperture Novelty Defense Memo
-- Literature Review Matrix
 - Parallel Research Runner Guide
 - Schema Lock Milestone M1
 - CONTEXT.md (Research Tracks)
@@ -145,436 +177,553 @@
 - Phase-1 Cross-Track Conflict & Discrepancy Log
 - Stream C Synthesis: Fairness Engine
 - FairFace Validation Images Setup Guide
-- Report Generator
+- Fairness Package
 - Pinned Dependencies
 - UTKFace Comparison
-- UTKFace Dataset
-- 4-Tier Scrutiny Framework
 
 ## God Nodes (most connected - your core abstractions)
-1. `DataIngestionPipeline` - 29 edges
-2. `SubjectRecord` - 24 edges
-3. `MetricResult` - 22 edges
-4. `IngestionConfig` - 21 edges
-5. `2. Slide Deck Outline (15–20 slides)` - 21 edges
-6. `MetricResult` - 20 edges
-7. `SubjectRecord` - 20 edges
+1. `DataIngestionPipeline` - 39 edges
+2. `IngestionConfig` - 30 edges
+3. `SubjectRecord` - 25 edges
+4. `SubjectRecord` - 21 edges
+5. `MetricResult` - 21 edges
+6. `2. Slide Deck Outline (15–20 slides)` - 21 edges
+7. `BiasAperture-AT (v11)` - 21 edges
 8. `BiasAperture-AT (v10)` - 20 edges
-9. `BiasAperture-AT (v6)` - 19 edges
-10. `Phase-2 Research Synthesis` - 19 edges
+9. `MetricResult` - 19 edges
+10. `4.2 Complete 18-Slide Presentation Blueprint & Talking Points` - 19 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `AIF360Backend` --uses--> `MetricResult`  [INFERRED]
-  src/bias_aperture/fairness/backends.py → research/context feed/schema.py
-- `CrossValidationOrchestrator` --uses--> `MetricResult`  [INFERRED]
-  src/bias_aperture/fairness/backends.py → research/context feed/schema.py
-- `FairlearnBackend` --uses--> `MetricResult`  [INFERRED]
-  src/bias_aperture/fairness/backends.py → research/context feed/schema.py
-- `FairnessBackend` --uses--> `MetricResult`  [INFERRED]
-  src/bias_aperture/fairness/base.py → research/context feed/schema.py
-- `FairnessBackend` --uses--> `SubjectRecord`  [INFERRED]
-  src/bias_aperture/fairness/base.py → research/context feed/schema.py
+- `HTML Report Generator` --references--> `NIST AI RMF`  [EXTRACTED]
+  src/bias_aperture/report/generator.py → AGENT.md
+- `BiasAperture High-Level Architecture Diagram` --references--> `BiasAperture Platform`  [INFERRED]
+  report/src/images/architecture_highlevel.jpg → README.md
+- `Cluster B - Explainability Verification` --semantically_similar_to--> `Surrogate Explainability Strategy`  [INFERRED] [semantically similar]
+  research/results/discrepancy_verification_report.md → specs/07-explainability.md
+- `test_in_process_interface_not_implemented()` --uses--> `InProcessInterface`  [INFERRED]
+  src/tests/test_model_interface.py → research/context feed/model_interface.py
+- `test_in_process_interface_rejects_bad_framework()` --uses--> `InProcessInterface`  [INFERRED]
+  src/tests/test_model_interface.py → research/context feed/model_interface.py
 
 ## Import Cycles
 - None detected.
 
 ## Hyperedges (group relationships)
+- **Regulatory Compliance Framework** — eu_ai_act, nist_ai_rmf [EXTRACTED 0.90]
+- **Regulatory Compliance Mapping** — docs_literature_review_matrix, research_context_feed_biasaperture_at [EXTRACTED 0.90]
+- **Audit Integrity Framework** — specs_02_data_model_subjectrecord, specs_05_audit_engine_core_four, specs_06_statistics_and_confidence_guards [EXTRACTED 0.95]
+- **Regulatory Compliance Framework** — docs_data_governance, docs_biasaperture_novelty_integration_defense_biasaperture_integration_as_innovation, eu_ai_act_article_10, nist_ai_rmf [EXTRACTED 0.95]
+- **Research Audit Tracks** — research_research_tracks_track_a_dataset_scale_utkface, research_research_tracks_track_b_shap_vs_surrogate, research_research_tracks_track_c_architecture_structural, research_research_tracks_track_d_milestone_claims [EXTRACTED 1.00]
+- **Claim Verification & Correction Workflow** — research_research_tracks_task_007_gate0_setup_prompt, research_research_tracks_task_008_gate1_setup_prompt, research_research_tracks_task_010_gate2_setup_prompt, research_research_tracks_task_011_gate3_setup_prompt [EXTRACTED 1.00]
+- **Dataset Scale & Scope Reconciliation** — fairface_dataset, utkface_dataset, research_results_discrepancy_ledger, research_results_discrepancy_fix_ledger [EXTRACTED 1.00]
+- **Discrepancy Verification Flow** — research_results_discrepancy_verification_report_summary, research_results_discrepancy_verification_report_cluster_a, research_results_discrepancy_verification_report_cluster_b, research_results_discrepancy_verification_report_cluster_c [EXTRACTED 1.00]
 - **Phase-2 Deployment & Ops Stream** — research_research_tracks_track_33_containerized_deployment_and_audit_as_a_service_model, research_research_tracks_track_34_enterprise_scale_performance_profiling, research_research_tracks_track_35_data_privacy_and_governance_for_third_party_client_audi [EXTRACTED 1.00]
 - **Phase-2 Modular Architecture Stream** — research_research_tracks_track_29_pluggable_fairness_metric_registry, research_research_tracks_track_30_model_agnostic_classifier_adapter_layer, research_research_tracks_track_31_config_driven_audit_as_code_profiles, research_research_tracks_track_32_api_first_service_layer [EXTRACTED 1.00]
 - **Phase 2 Product Upgrade Sprint** — research_research_tracks_phase2_context, research_research_tracks_phase2_runner_guide, research_research_tracks_phase2_task_map [EXTRACTED 1.00]
 - **Phase-2 UI/UX Research Stream** — research_research_tracks_track_25_web_dashboard_architecture_evaluation, research_research_tracks_track_26_interactive_drill_down_report_ux, research_research_tracks_track_27_executive_compliance_officer_summary_mode, research_research_tracks_track_28_accessibility_and_internationalization_of_reports [EXTRACTED 1.00]
-- **Project Team Roles and Traits** — aaradhyadt, tiixsha [EXTRACTED 1.00]
-- **Statistical & Safety Guards** — context_feed_claude, context_feed_context, metric_result_dataclass [INFERRED 0.90]
+- **Regulatory Compliance Framework** — eu_ai_act, nist_ai_rmf, bias_aperture_platform [EXTRACTED 1.00]
 
-## Communities (144 total, 44 thin omitted)
+## Communities (174 total, 45 thin omitted)
 
-### Community 0 - "fairness/__init__.py"
+### Community 0 - "SubjectRecord"
 Cohesion: 0.05
-Nodes (66): AIF360Backend, CrossValidationOrchestrator, DivergenceAlert, FairlearnBackend, MetricResult, ndarray, Fairness backends and dual-backend cross-validation orchestrator (WP4).…, AIF360 backend harmonized to compute max-of-gaps EOD and unsigned EOP. Directly… (+58 more)
+Nodes (56): MetricResult, BiasAperture internal schema — LOCKED at WP1 / Milestone M1. Per…, One row of the detection engine's output (FR-003/FR-004), the shape Stream B's…, One row of the common internal schema (FR-001) after ingestion and inference —…, SubjectRecord, OvRTransformer, SubjectRecord, r""" Multi-Class One-vs-Rest (OvR) evaluation helper. Transforms a multi-class… (+48 more)
 
-### Community 1 - "PredictionsFileInterface"
-Cohesion: 0.07
-Nodes (34): InProcessInterface, ModelInterface, PredictionsFileInterface, ABC, Any, Path, SubjectRecord, ModelInterface — FR-002 (Dual-Mode Model Interface), WBS 1.2. "The system shall… (+26 more)
+### Community 1 - "Session Clarity & Task Prioritization — BiasAperture M5 Integration Phase"
+Cohesion: 0.04
+Nodes (44): Aaradhya Dev Tamrakar, Session Walkthrough: Full Codebase Audit, 1. Executive Summary & Objectives, 2. Audit Findings & Resolution Matrix, 3.1 Native AIF360 Backend (`src/bias_aperture/fairness/backends.py`), 3.2 Additive Shapley Surrogate Explainability (`src/bias_aperture/explainability.py`), 3.3 CLI Integration (`src/bias_aperture/cli.py`), 3.4 Package & Dependency Alignment (`pyproject.toml`, `uv.lock`) (+36 more)
 
-### Community 2 - "BiasAperture-AT (v6)"
-Cohesion: 0.05
-Nodes (36): Aaradhya Dev Tamrakar, ANTIGRAVITY.md — Google Antigravity & Gemini Coding Guidelines, Key Context & Metadata, Mission & Purpose, Operating Invariants for Antigravity, Role & Task Ownership Allocation, §16. Coming-Week Task Assignment — Trait-Based Split (August 20, 2026), Acceptance Criteria (+28 more)
-
-### Community 3 - "Session Clarity & Task Prioritization — BiasAperture M5 Integration Phase"
-Cohesion: 0.06
-Nodes (34): Fairness Backends, 1. Executive Summary & Objectives, 2. Audit Findings & Resolution Matrix, 3.1 Native AIF360 Backend (`src/bias_aperture/fairness/backends.py`), 3.2 Additive Shapley Surrogate Explainability (`src/bias_aperture/explainability.py`), 3.3 CLI Integration (`src/bias_aperture/cli.py`), 3.4 Package & Dependency Alignment (`pyproject.toml`, `uv.lock`), 3. Code Modifications Breakdown (+26 more)
-
-### Community 4 - "BiasAperture-AT (v10)"
-Cohesion: 0.06
-Nodes (34): §16. Coming-Week Task Assignment — Trait-Based Split (August 20, 2026), §17. Research Verification & Feature Branch Allocation (August 23, 2026), §18. Master Task Division & 4-Week Sprint Roadmap (Implementation Phase, August 2026), §19. Proposal Defense & Final Deadline Check (August 26, 2026), 1. Dual-backend validation (AIF360 + Fairlearn in parallel), 1. Work Package & Stream Allocation, 2. Four-Week Sprint Timeline, 2. Per-subgroup-cell statistical completeness (n ≥ 30 minimum reporting threshold) (+26 more)
-
-### Community 5 - "Implementation Order"
-Cohesion: 0.07
-Nodes (28): After All 20 Complete, Checklist, Implementation Order, 🚀 Parallel Research Runner Guide — 20 Claude Desktop Instances, 🔴 Phase 1 — Critical (read these first), 🟡 Phase 2 — Medium (read these second), 🟢 Phase 3 — Low (read last), Priority Order (if reviewing as they finish) (+20 more)
-
-### Community 6 - "3. The 12 Master First-Principles Questions"
-Cohesion: 0.07
-Nodes (29): 10. Passing Audit Semantics, 11. Regulatory Alignment, 12. Scope Boundary, 1. Buolamwini & Gebru (2018) — *Gender Shades: Intersectional Accuracy Disparities in Commercial Gender Classification*, 1. Problem & Intersectional Masking, 1. The Core Reasoning Chain, 2. Fairness Metrics Hierarchy, 2. Kärkkäinen & Joo (2021) — *FairFace: Face Attribute Dataset for Balanced Race, Gender, and Age* (+21 more)
-
-### Community 7 - "cli.py"
-Cohesion: 0.13
-Nodes (19): ArgumentParser, build_parser(), main(), BiasAperture Command-Line Interface (WP5 / System Orchestration). Wires…, Construct CLI argument parser., HTMLReportGenerator, Any, Path (+11 more)
-
-### Community 8 - "BiasAperture — Research Sprint: Low-Level Technical Specification"
-Cohesion: 0.08
-Nodes (25): 1.0.1. Multi-Class One-vs-Rest (OvR) Evaluation Policy, 1.0. Audited Target Configurations, 1.1. Demographic Parity Difference (DPD), 1.2. Equalized Odds Difference (EOD) — Resolving Definitional Divergence, 1.3. Equal Opportunity Difference (EOP) — Resolving Sign Mismatch, 1.4. Disparate Impact Ratio (DIR) & Edge Cases, 1. Formal Semantics of Audited Targets & Demographic Attributes, 2. Mathematical Fairness Formulations & Backend Harmonization (+17 more)
-
-### Community 9 - "DataIngestionPipeline"
-Cohesion: 0.23
-Nodes (23): DataIngestionPipeline, IngestionConfig, Configuration options for data ingestion pipeline., Ingests, validates, profiles, and standardizes demographic prediction datasets., Raised when data violates the locked schema or taxonomy in STRICT mode., Validation behavior policy upon encountering invalid or corrupt data., SchemaValidationError, ValidationMode (+15 more)
-
-### Community 10 - "3. Stream-by-Stream Verification Protocols"
-Cohesion: 0.08
-Nodes (23): 1. The 4-Tier Scrutiny Framework, 2. Investigator Ownership & Stream Allocation, 3. Stream-by-Stream Verification Protocols, 4. Top 10 Viva / Defense Interrogation Questions (Self-Test), 5. Verification Checklist Before Any Milestone Merge, BiasAperture — Research Verification & Scrutiny Guide, Claim 1: EU AI Act Article 10 mandates statistical adequacy and bias detection, Claim 1: FairFace ResNet-34 uses an 18-unit linear head (not 3 separate heads) (+15 more)
-
-### Community 11 - "2. Slide Deck Outline (15–20 slides)"
-Cohesion: 0.10
-Nodes (21): 2. Slide Deck Outline (15–20 slides), Slide 10: The Core Four Disparity Metrics, Slide 11: Heterogeneous Backend Harmonization, Slide 12: Statistical Safeguards — Three-Tier Inferential Defense, Slide 13: Explainability — Targeted Proxy Evidence Analysis, Slide 14: Regulatory Traceability Mapping, Slide 15: Report Output — Self-Contained Offline HTML, Slide 16: Work Breakdown & Schedule (+13 more)
-
-### Community 12 - "Phase-2 Research Synthesis"
+### Community 2 - "Phase-2 Research Synthesis"
 Cohesion: 0.13
 Nodes (19): Track 21 — Continuous / Streaming Audit Mode, Track 22 — Multi-Model Comparative Benchmarking & Leaderboard, Track 23 — Cross-Modal Schema Generalization (v2 Architecture), Track 24 — Automated Bias Root-Cause Clustering, Track 25 — Web Dashboard Architecture Evaluation, Track 26 — Interactive Drill-Down Report UX, Track 27 — Executive / Compliance-Officer Summary Mode, Track 28 — Accessibility & Internationalization of Reports (+11 more)
 
-### Community 13 - ".ingest_records"
-Cohesion: 0.15
-Nodes (13): Counter, DataFrame, IngestionResult, Any, Path, Structured output returned by the data ingestion pipeline., Ingest records from a CSV or JSON file on disk., Ingest records from a pandas DataFrame. (+5 more)
+### Community 3 - "BiasAperture: Integration as Innovation"
+Cohesion: 0.09
+Nodes (21): 1. **Schema Bridge**, 2. **Regulatory Mapping**, 3. **Explainability Envelope**, 4. **Repeated Auditability**, BiasAperture: Integration as Innovation, Defense Memo — Why Integrating Existing Tools is Novel Here, How to Defend This to an Examiner, Key Insight from Your Conversation (+13 more)
 
-### Community 14 - "BiasAperture — Research Sprint: High-Level Executive Synthesis"
+### Community 4 - "DataIngestionPipeline"
+Cohesion: 0.12
+Nodes (37): DataIngestionPipeline, IngestionConfig, Configuration options for data ingestion pipeline., Ingests, validates, profiles, and standardizes demographic prediction datasets., Raised when data violates the locked schema or taxonomy in STRICT mode., SchemaValidationError, Gap fix: 'drop_duplicates' silently drops EXACT repeats of an image_id, but a…, Gap fix: under 'keep_all', an EXACT duplicate matches neither the… (+29 more)
+
+### Community 5 - "BiasAperture-AT (v10)"
+Cohesion: 0.06
+Nodes (34): §16. Coming-Week Task Assignment — Trait-Based Split (August 20, 2026), §17. Research Verification & Feature Branch Allocation (August 23, 2026), §18. Master Task Division & 4-Week Sprint Roadmap (Implementation Phase, August 2026), §19. Proposal Defense & Final Deadline Check (August 26, 2026), 1. Dual-backend validation (AIF360 + Fairlearn in parallel), 1. Work Package & Stream Allocation, 2. Four-Week Sprint Timeline, 2. Per-subgroup-cell statistical completeness (n ≥ 30 minimum reporting threshold) (+26 more)
+
+### Community 6 - "3. The 12 Master First-Principles Questions"
+Cohesion: 0.06
+Nodes (29): 10. Passing Audit Semantics, 11. Regulatory Alignment, 12. Scope Boundary, 1. Buolamwini & Gebru (2018) — *Gender Shades: Intersectional Accuracy Disparities in Commercial Gender Classification*, 1. Problem & Intersectional Masking, 1. The Core Reasoning Chain, 2. Fairness Metrics Hierarchy, 2. Kärkkäinen & Joo (2021) — *FairFace: Face Attribute Dataset for Balanced Race, Gender, and Age* (+21 more)
+
+### Community 7 - "cli.py"
+Cohesion: 0.10
+Nodes (24): ArgumentParser, build_parser(), main(), BiasAperture Command-Line Interface (WP5 / System Orchestration). Wires…, Construct CLI argument parser., HTMLReportGenerator, Any, Path (+16 more)
+
+### Community 8 - "Implementation Order"
+Cohesion: 0.07
+Nodes (28): After All 20 Complete, Checklist, Implementation Order, 🚀 Parallel Research Runner Guide — 20 Claude Desktop Instances, 🔴 Phase 1 — Critical (read these first), 🟡 Phase 2 — Medium (read these second), 🟢 Phase 3 — Low (read last), Priority Order (if reviewing as they finish) (+20 more)
+
+### Community 9 - "Research Report: SHAP Explainability Principles & Feature Weighting"
+Cohesion: 0.07
+Nodes (26): 1. Efficiency (Local Accuracy), 1. Executive Summary, 2.1 The Cooperative Game Theory Formulation, 2.2 The Four Axiomatic Pillars (Uniqueness Guarantee), 2. Symmetry (Equal Treatment), 2. Theoretical Foundations of SHAP, 3.1 Combinatorial Weights in Exact Shapley Formulation, 3.2 Regression Weights in KernelSHAP (+18 more)
+
+### Community 10 - "BiasAperture — Research Sprint: Low-Level Technical Specification"
+Cohesion: 0.08
+Nodes (25): 1.0.1. Multi-Class One-vs-Rest (OvR) Evaluation Policy, 1.0. Audited Target Configurations, 1.1. Demographic Parity Difference (DPD), 1.2. Equalized Odds Difference (EOD) — Resolving Definitional Divergence, 1.3. Equal Opportunity Difference (EOP) — Resolving Sign Mismatch, 1.4. Disparate Impact Ratio (DIR) & Edge Cases, 1. Formal Semantics of Audited Targets & Demographic Attributes, 2. Mathematical Fairness Formulations & Backend Harmonization (+17 more)
+
+### Community 11 - "4.2 Complete 18-Slide Presentation Blueprint & Talking Points"
+Cohesion: 0.11
+Nodes (19): 4.2 Complete 18-Slide Presentation Blueprint & Talking Points, Slide 10: System Architecture & Data Flow, Slide 11: The Core Four Fairness Metrics, Slide 12: Statistical Rigour — Beyond Bare Ratios, Slide 13: Explainability & Proxy Variable Triage, Slide 14: Automated Reporting & Regulatory Crosswalk, Slide 15: Benchmark Dataset & Baseline Model, Slide 16: Project Schedule & Sprint Milestones (+11 more)
+
+### Community 12 - "BiasAperture — Research Sprint: High-Level Executive Synthesis"
 Cohesion: 0.12
 Nodes (16): 1. Executive Summary & Vision, 2. The Five Operating Modules, 3.1. Phase 2: Product Upgrade Sprint (Tracks 21–38), 3. Phase 1: The 20-Track Research Sprint: Key Findings, 4.1. Reproducible Competitive Search Protocol, 4. Defensible Novelty & Competitor Positioning, 5. Regulatory Alignment: EU AI Act & NIST AI RMF, 6. Scope Invariants & Descoping Strategy (Cut-List) (+8 more)
 
-### Community 15 - "test_report_generator.py"
+### Community 13 - "fairness/__init__.py"
+Cohesion: 0.05
+Nodes (65): AIF360Backend, CrossValidationOrchestrator, DivergenceAlert, FairlearnBackend, MetricResult, ndarray, Fairness backends and dual-backend cross-validation orchestrator (WP4).…, AIF360 backend harmonized to compute max-of-gaps EOD and unsigned EOP. Directly… (+57 more)
+
+### Community 14 - "3. Stream-by-Stream Verification Protocols"
+Cohesion: 0.08
+Nodes (23): 1. The 4-Tier Scrutiny Framework, 2. Investigator Ownership & Stream Allocation, 3. Stream-by-Stream Verification Protocols, 4. Top 10 Viva / Defense Interrogation Questions (Self-Test), 5. Verification Checklist Before Any Milestone Merge, BiasAperture — Research Verification & Scrutiny Guide, Claim 1: EU AI Act Article 10 mandates statistical adequacy and bias detection, Claim 1: FairFace ResNet-34 uses an 18-unit linear head (not 3 separate heads) (+15 more)
+
+### Community 15 - "predict_single_image"
+Cohesion: 0.14
+Nodes (20): cnn_face_detection_model_v1, Compose, device, detect_and_align_face(), load_model(), main(), predict_single_image(), ndarray (+12 more)
+
+### Community 16 - ".ingest_records"
+Cohesion: 0.12
+Nodes (15): Counter, IngestionResult, Any, DataFrame, Path, Structured output returned by the data ingestion pipeline., Ingest records from a CSV or JSON file on disk., Ingest records from a pandas DataFrame. (+7 more)
+
+### Community 17 - "2. Slide Deck Outline (15–20 slides)"
+Cohesion: 0.10
+Nodes (21): 2. Slide Deck Outline (15–20 slides), Slide 10: The Core Four Disparity Metrics, Slide 11: Heterogeneous Backend Harmonization, Slide 12: Statistical Safeguards — Three-Tier Inferential Defense, Slide 13: Explainability — Targeted Proxy Evidence Analysis, Slide 14: Regulatory Traceability Mapping, Slide 15: Report Output — Self-Contained Offline HTML, Slide 16: Work Breakdown & Schedule (+13 more)
+
+### Community 18 - "Data Exploration Report — FairFace & UTKFace"
 Cohesion: 0.17
-Nodes (12): Compliance report generator engine (WP3 / Stream B). Compiles demographic…, Offline Compliance Report Contract Verification (R-015). This module validates…, Inspects HTML string for external network dependencies., R-015: Verifies that valid BiasAperture report HTML satisfies the offline…, Verifies that the validator correctly flags external network violations., test_offline_html_contract_catches_violations(), test_offline_html_contract_validation(), _verify_offline_html_contract() (+4 more)
+Nodes (11): 1. FairFace, 2. UTKFace, 3. Data Integrity Decision — RESOLVED, 4. Historical Decision — UTKFace Excluded, Data Exploration Report — FairFace & UTKFace, Distributions (combined view, valid rows), Distributions (valid files), Result — clean, after exclusion (+3 more)
 
-### Community 16 - "HTMLReportGenerator"
+### Community 19 - "BiasAperture-AT (v11)"
+Cohesion: 0.12
+Nodes (16): §16. Coming-Week Task Assignment — Trait-Based Split (August 20, 2026), Acceptance Criteria, Cut-List (if behind schedule — drop in this order), Feasibility Study — Reviewed, Naming History Note, Notes on Split Rationale (Historical), Outstanding Action Items, Problem Statement (+8 more)
+
+### Community 20 - "PredictionsFileInterface"
 Cohesion: 0.19
-Nodes (10): HTMLReportGenerator, Any, Path, Compliance report generator engine (WP3 / Stream B). Compiles demographic…, Render the standalone HTML report string. Parameters ---------- context :…, Generate and write the report to disk. Parameters ---------- context :…, Aggregated context data model for report generation., Standalone HTML compliance report compiler. (+2 more)
+Nodes (14): PredictionsFileInterface, Path, Batch ingestion of a precomputed predictions file (CSV or JSON). Expects the…, PredictionsFileInterface, Path, Batch ingestion of a precomputed predictions file (CSV or JSON). Expects the…, fixture, test_csv_happy_path() (+6 more)
 
-### Community 17 - "BiasAperture — System Context (paste this first)"
+### Community 21 - "2026-08-27_WK4_report.md"
+Cohesion: 0.17
+Nodes (9): BiasAperture-AT (v11), 1. Verification Lifecycle, 2. Master Research Claim Register, 3. Invalidated Claims (Research Failures & Refutations), 4. Claim Verification Status Summary, Academic Audit Statement, BiasAperture — Research Claim Ledger, FairFace Dataset (+1 more)
+
+### Community 22 - "01 - Architecture"
 Cohesion: 0.14
-Nodes (13): AIF360Backend, BiasAperture — System Context (paste this first), Core Four Disparity Metrics, Dual-Backend Architecture, Locked Schema (DO NOT modify), Output Schema (MetricResult dataclass), Project Scope, Statistical Requirements (+5 more)
+Nodes (16): 01 - Architecture, Components, Deferred architecture, Design rules, Pipeline, 02 - Data Model, Invariants, MetricResult (+8 more)
 
-### Community 18 - "BiasAperture: Integration as Innovation"
+### Community 23 - "Part 3: System Architecture, Methodology & Mathematical Formulation"
+Cohesion: 0.13
+Nodes (15): 1. Chi-Squared ($\chi^2$) Test of Independence (SciPy), 1. Disparate Impact Ratio (DIR) — Independence / Legal Metric, 2. Demographic Parity Difference (DPD) — Independence / Absolute Difference, 2. Stratified Bootstrap Confidence Intervals (95% CI), 3.1 End-to-End System Architecture, 3.2 Object-Oriented Software Design & SOLID Principles, 3.3 The Core Four Disparity Metrics (Formulation & Harmonization), 3.4 Statistical Rigour Protocol & Safeguard Guardrails (+7 more)
+
+### Community 24 - "MVP Scope Specification"
+Cohesion: 0.29
+Nodes (6): Low-Level Technical Specification, Mid-Level Architectural Design, MVP Scope Specification, 07 - Explainability, 11 - Requirements Traceability, Source requirements
+
+### Community 25 - "ValidationMode"
+Cohesion: 0.27
+Nodes (9): Enum, Data Ingestion & Invariant Validation Engine — WP2 (Stream A). Transforms raw…, Demographic cohort contingency support and eligibility status., Validation behavior policy upon encountering invalid or corrupt data., Severity classification of validation anomalies., SubgroupCellStats, ValidationMode, ValidationSeverity (+1 more)
+
+### Community 26 - "InProcessInterface"
+Cohesion: 0.24
+Nodes (8): InProcessInterface, ModelInterface, ABC, SubjectRecord, ModelInterface — FR-002 (Dual-Mode Model Interface), WBS 1.2. "The system shall…, Abstract contract both concrete interfaces satisfy (FR-002)., Yield one SubjectRecord per subject, in the locked schema., Direct in-process inference against a supplied PyTorch or TensorFlow model…
+
+### Community 27 - "BiasAperture: Integration as Innovation"
 Cohesion: 0.14
 Nodes (13): 1. **Schema Bridge**, 2. **Regulatory Mapping**, 3. **Explainability Envelope**, 4. **Repeated Auditability**, BiasAperture: Integration as Innovation, Defense Memo — Why Integrating Existing Tools is Novel Here, How to Defend This to an Examiner, Key Insight from Your Conversation (+5 more)
 
-### Community 19 - "BiasAperture: Integration as Innovation"
-Cohesion: 0.14
-Nodes (13): 1. **Schema Bridge**, 2. **Regulatory Mapping**, 3. **Explainability Envelope**, 4. **Repeated Auditability**, BiasAperture: Integration as Innovation, Defense Memo — Why Integrating Existing Tools is Novel Here, How to Defend This to an Examiner, Key Insight from Your Conversation (+5 more)
-
-### Community 20 - "MetricResult"
-Cohesion: 0.25
-Nodes (10): MetricResult, One row of the detection engine's output (FR-003/FR-004), the shape Stream B's…, MetricResult, One row of the detection engine's output (FR-003/FR-004), the shape Stream B's…, test_shap_explainer_selective_triggering(), test_boundary_sample_size_exactly_min_does_not_require_flag(), test_metric_result_valid_row(), test_nfr003_correct_flagged_row() (+2 more)
-
-### Community 21 - "Quick Start (5 minutes setup)"
+### Community 28 - "Quick Start (5 minutes setup)"
 Cohesion: 0.14
 Nodes (13): After All 20 Complete, Checklist, Implementation Order, 🚀 Parallel Research Runner Guide — 20 Claude Desktop Instances, 🔴 Phase 1 — Critical (read these first), 🟡 Phase 2 — Medium (read these second), 🟢 Phase 3 — Low (read last), Priority Order (if reviewing as they finish) (+5 more)
 
-### Community 22 - "ShapExplainerEngine"
-Cohesion: 0.21
-Nodes (10): ExplanationResult, MetricResult, Path, SubjectRecord, Compute exact additive Shapley attributions over demographic proxy axes. Uses…, Internal explanation artifact container., Targeted explainability engine for flagged demographic disparities., Check if metric result qualifies for targeted explanation. (+2 more)
+### Community 29 - "track_A_dataset_scale_utkface.md"
+Cohesion: 0.14
+Nodes (8): Output format, Prompt (task spec), Setup (paste first, before the Prompt section below), Track A — Dataset Scale & UTKFace Claims, Output format, Prompt (task spec), Setup (paste first, before the Prompt section below), Track B — Explainability Method Claims (SHAP vs. Demographic-Dummy Surrogate)
 
-### Community 23 - "BiasAperture"
-Cohesion: 0.15
-Nodes (13): BiasAperture, NFR-001 (Significance), NFR-002 (Uncertainty), NFR-003 (Sample Size Guard), Abstract, Branching & Workstreams, Building the Report, License (+5 more)
+### Community 30 - "Discrepancy Ledger — Independent Verification Report"
+Cohesion: 0.20
+Nodes (13): Cluster A — Dataset Scale (108,501 vs 97,698) & UTKFace, Cluster B — Explainability: SHAP vs Surrogate, Cluster C — Architecture/Structural Claims, Cluster D — WP Completion Claims, ✅ Confirmed Discrepancies, Critical Finding: Fix Ledger Error, Discrepancy Ledger — Independent Verification Report, Ground Truth Confirmed (+5 more)
 
-### Community 24 - "SubjectRecord"
-Cohesion: 0.23
-Nodes (11): BiasAperture internal schema — LOCKED at WP1 / Milestone M1. Per…, One row of the common internal schema (FR-001) after ingestion and inference —…, SubjectRecord, _compute_known_answer_rates(), SubjectRecord, Known-Answer Deterministic Fairness Metric Verification (R-020, R-007, R-010).…, Replicates the 8-record block x8 (n=32 per group, n=64 total) to verify that…, Helper to compute ground-truth group rates on SubjectRecord stream. (+3 more)
+### Community 31 - "CLAUDE.md — Assistant Instructions for BiasAperture"
+Cohesion: 0.18
+Nodes (10): 1. Schema Invariants (M1 Lock — `src/bias_aperture/schema.py`), 2. Statistical & Safety Guards, Active Workstreams & Branch Mapping, Architecture & Locked Contracts, CLAUDE.md — Assistant Instructions for BiasAperture, Coding Standards, Commands & Workflows, Environment & Testing (+2 more)
 
-### Community 25 - "2. Component Design & Interfacing"
+### Community 32 - "ValueError"
+Cohesion: 0.25
+Nodes (3): Any, Any, ValueError
+
+### Community 33 - "2. Component Design & Interfacing"
 Cohesion: 0.15
 Nodes (12): 1. System Topology & Component Overview, 2.1. Module 1: Ingestion & Invariant Validation (`data_ingestion.py`, `model_interface.py`), 2.2. Module 2: Fairness Strategy Engine (`bias_aperture/fairness/`), 2.3. Module 3: Statistical Rigor Engine (`fairness/statistics.py`), 2.4. Module 4: Targeted Explainability & Proxy Detection (`explainability.py`), 2.5. Module 5: Compliance Report Generation (`report/`), 2. Component Design & Interfacing, 3. Comprehensive Testing & Verification Architecture (+4 more)
 
-### Community 26 - "bias_aperture/schema.py"
-Cohesion: 0.23
-Nodes (10): compute_ita(), Explainability and visual proxy attribution module (WP4/WP5 / Stream D).…, Compute Individual Typology Angle (ITA) skin-tone colorimetry in degrees…, BiasAperture internal schema — LOCKED at WP1 / Milestone M1. Per…, One row of the common internal schema (FR-001) after ingestion and inference —…, SubjectRecord, Unit tests for Explainability & ITA calculations (WP4/WP5)., test_compute_ita() (+2 more)
-
-### Community 27 - "3. Detailed Accomplishments & Technical Highlights"
-Cohesion: 0.15
-Nodes (12): 1. Executive Summary & Objectives, 2. Work Packages & Milestone Mapping, 3.1 20-Track Parallel Research Sprint & 3-Level Syntheses, 3.2 Dataset Profiling & Empirical Discoveries, 3.3 Native AIF360 Backend Harmonization (`src/bias_aperture/fairness/backends.py`), 3.4 Exact Additive Shapley Surrogate Explainability (`src/bias_aperture/explainability.py`), 3.5 Test Suite & Code Quality (55/55 Tests Passing), 3. Detailed Accomplishments & Technical Highlights (+4 more)
-
-### Community 28 - "Data Exploration Report — FairFace & UTKFace"
+### Community 35 - "PROPOSAL_DEFENSE_MASTER_DOSSIER.md"
 Cohesion: 0.17
-Nodes (11): 1. FairFace, 2. UTKFace, 3. Data Integrity Decision — RESOLVED, 4. Open Decision — NOT YET RESOLVED, Data Exploration Report — FairFace & UTKFace, Distributions (combined view, valid rows), Distributions (valid files), Result — clean, after exclusion (+3 more)
+Nodes (11): BiasAperture Platform, AI Fellowship Project Evaluation Rubric, 6.1 Phase 1 Submission Checklist, 6.2 Repository Hygiene & Phase 2 Alignment Verification, BiasAperture — Master Proposal Defense Dossier, Complete Phase 1 Documentation, Specification, Literature Review, Architecture, and Defense Preparation Framework, Document Purpose & Fellowship Rubric Mapping, Executive Overview & Defense Identity (+3 more)
 
-### Community 29 - "explore_utkface.py"
+### Community 36 - "Part 1: Product Requirements Document (PRD) & Problem Statement [10 Marks]"
+Cohesion: 0.08
+Nodes (26): 1.10 Target Models & Model Interface Architecture, 1.11 Hardware, Software & Resource Sizing Specifications, 1.1 Problem Statement & The Operational Gap, 1.2 Project Context, Justification & Application Domains, 1.3 Strict Diagnostic Scope: Non-Negotiable Boundaries, 1.4 Project Goals & Specific Objectives, 1.5 System Constraints, Assumptions & Design Guarantees, 1.6 User Personas & Stakeholder Requirements (+18 more)
+
+### Community 37 - "explore_utkface.py"
 Cohesion: 0.29
 Nodes (10): _age_bucket(), explore_utkface(), main(), parse_utkface_filename(), print_report(), Path, scripts/explore_utkface.py — exploration of the raw UTKFace image set. UTKFace…, Bucket raw UTKFace age into human-readable ranges for reporting only. NOT the… (+2 more)
 
-### Community 30 - "CLAUDE.md — Assistant Instructions for BiasAperture"
+### Community 38 - "CLAUDE.md — Assistant Instructions for BiasAperture"
 Cohesion: 0.18
 Nodes (10): 1. Schema Invariants (M1 Lock — `src/bias_aperture/schema.py`), 2. Statistical & Safety Guards, Active Workstreams & Branch Mapping, Architecture & Locked Contracts, CLAUDE.md — Assistant Instructions for BiasAperture, Coding Standards, Commands & Workflows, Environment & Testing (+2 more)
 
-### Community 31 - "Monthly Progress & Weekly Reports Index (2026-08-31)"
-Cohesion: 0.22
-Nodes (8): Weekly Report WK1 (2026-08-07), Weekly Report WK2 (2026-08-14), Weekly Report WK3 (2026-08-21), Monthly Progress & Weekly Reports Index (2026-08-31), Weekly Report WK4 (2026-08-31), Research Claim Ledger, Low-Level Technical Specification, Mid-Level Architectural Design
+### Community 39 - "3. Detailed Accomplishments & Technical Highlights"
+Cohesion: 0.18
+Nodes (11): 1. Executive Summary & Objectives, 2. Work Packages & Milestone Mapping, 3.1 20-Track Parallel Research Sprint & 3-Level Syntheses, 3.2 Dataset Profiling & Empirical Discoveries, 3.3 Native AIF360 Backend Harmonization (`src/bias_aperture/fairness/backends.py`), 3.4 Exact Additive Shapley Surrogate Explainability (`src/bias_aperture/explainability.py`), 3.5 Test Suite & Code Quality (55/55 Tests Passing), 3. Detailed Accomplishments & Technical Highlights (+3 more)
 
-### Community 32 - "data_ingestion.py"
-Cohesion: 0.20
-Nodes (9): Enum, Data Ingestion & Invariant Validation Engine — WP2 (Stream A). Transforms raw…, Demographic cohort contingency support and eligibility status., Severity classification of validation anomalies., Aggregated report of data ingestion and validation results., SubgroupCellStats, ValidationSeverity, ValidationSummary (+1 more)
+### Community 40 - "BiasAperture — Weekly Project Report (WK5)"
+Cohesion: 0.18
+Nodes (10): 1. Executive Summary, 2. Work Completed, 3. Commit History and Work Diff, 4. Current Milestone State, 5. Open Decisions and Next Actions, 6. Evidence References, BiasAperture — Weekly Project Report (WK5), Documentation Synchronization (+2 more)
 
-### Community 33 - "Stream C Synthesis — Fairness Engine (Tracks 09–14)"
+### Community 41 - "BiasAperture — Presentation Discrepancy Notes"
+Cohesion: 0.18
+Nodes (10): 1. Dataset Scale — FairFace 108,501 vs. 97,698, 2. UTKFace Shown as Live Secondary Benchmark, 3. Orchestration Box — "CLI + YAML config", 4. Compliance Report Format — "HTML/PDF", 5. Article 10 Deadline — Stated as Current, 6. Core Four Metrics — Slide Numbering Error, 7. Minor Typo, 8. SHAP Explainability — No Surrogate Caveat (+2 more)
+
+### Community 42 - "Stream C Synthesis — Fairness Engine (Tracks 09–14)"
 Cohesion: 0.18
 Nodes (10): Bootstrap CI (Track 11) — locked implementation approach, Chi-squared testing (Track 12) — locked implementation approach, Cross-cutting architectural flag (Tracks 11, 13, 14 all raise the same underlying question independently), Disparate Impact Ratio (Track 13), Equalized Odds / Equal Opportunity (Track 14 — empirically cross-validated, not just theoretical), Multi-group handling — a real architecture asymmetry, not just an API-style difference, n≥30 guard — computed once, shared, enforced before any library call, Native library coverage — both backends need manual work for the same two metrics (+2 more)
 
-### Community 34 - "BiasAperture — Weekly Project Report (WK1)"
+### Community 43 - "BiasAperture — Weekly Project Report (WK1)"
 Cohesion: 0.18
 Nodes (10): 1. Executive Summary & Objectives, 2. Work Packages & Milestone Mapping, 3.1 Custom LaTeX Document Class & Optimization (`report/at_fuse_aif.cls`), 3.2 VS Code LaTeX Development Recipe, 3.3 Multi-Remote Git Synchronization Baseline (`sync.ps1`), 3. Detailed Accomplishments & Technical Highlights, 4. Git Commit Provenance (Week 1), 5. Next Steps & Lookahead (Week 2) (+2 more)
 
-### Community 35 - "BiasAperture — Weekly Project Report (WK3)"
+### Community 44 - "BiasAperture — Weekly Project Report (WK3)"
 Cohesion: 0.18
 Nodes (10): 1. Executive Summary & Objectives, 2. Work Packages & Milestone Mapping, 3.1 Functional Requirements & Regulatory Mapping (`FR-001`–`FR-005`), 3.2 System Architecture & Flow Design, 3.3 Engineering Standards & Package Scaffolding, 3. Detailed Accomplishments & Technical Highlights, 4. Git Commit Provenance (Week 3), 5. Next Steps & Lookahead (Week 4) (+2 more)
 
-### Community 36 - "CLAUDE.md — Assistant Instructions for BiasAperture"
-Cohesion: 0.20
-Nodes (10): 1. Schema Invariants (M1 Lock — `src/bias_aperture/schema.py`), 2. Statistical & Safety Guards, Active Workstreams & Branch Mapping, Architecture & Locked Contracts, CLAUDE.md — Assistant Instructions for BiasAperture, Coding Standards, Commands & Workflows, Environment & Testing (+2 more)
-
-### Community 37 - "BiasAperture — Proposal Defense Preparation Guide"
+### Community 45 - "BiasAperture — Proposal Defense Preparation Guide"
 Cohesion: 0.20
 Nodes (10): 1. Defense Format & Strategy, 4. The Novelty Question — Your Most Important Defense, 7. Numbers You Must Know Cold, BiasAperture — Proposal Defense Preparation Guide, Presentation Time Budget, Table of Contents, The 5-Step Defense Framework, What a Proposal Defense Is (+2 more)
 
-### Community 38 - "OvRTransformer"
-Cohesion: 0.36
-Nodes (7): OvRTransformer, SubjectRecord, r""" Multi-Class One-vs-Rest (OvR) evaluation helper. Transforms a multi-class…, Extract unique classes present across true, predicted, or both labels., Binarize ground truth and predictions against the specified target class., Decompose a multi-class dataset into M distinct binary OvR datasets., test_ovr_transformer()
+### Community 46 - "_verify_offline_html_contract"
+Cohesion: 0.32
+Nodes (7): Offline Compliance Report Contract Verification (R-015). This module validates…, Inspects HTML string for external network dependencies., R-015: Verifies that valid BiasAperture report HTML satisfies the offline…, Verifies that the validator correctly flags external network violations., test_offline_html_contract_catches_violations(), test_offline_html_contract_validation(), _verify_offline_html_contract()
 
-### Community 39 - "test_backend_harmonization.py"
+### Community 47 - "test_backend_harmonization.py"
 Cohesion: 0.20
 Nodes (9): Backend Harmonization & Edge-Case Mathematical Tests (R-005, R-006, R-008,…, R-005: Proves that worst-case max-gap (Hardt et al. / Fairlearn) and average-…, R-006: AIF360 returns signed difference (TPR_unprivileged - TPR_privileged),…, R-008: Verifies that evaluating metrics without pre-filtering small subgroups…, R-010: Tests the domain-specific policy conventions for zero denominators in…, test_disparate_impact_ratio_zero_denominator_contract(), test_equal_opportunity_signed_vs_unsigned_adapter(), test_equalized_odds_max_vs_mean_divergence() (+1 more)
 
-### Community 40 - "BiasAperture — Weekly Project Report (WK2)"
+### Community 48 - "BiasAperture — Weekly Project Report (WK2)"
 Cohesion: 0.20
 Nodes (9): 1. Executive Summary & Objectives, 2. Work Packages & Milestone Mapping, 3.1 Milestone M1 Schema Contract Formulation (`docs/schema-lock-m1.md`), 3.2 Literature Review Matrix Scaffolding, 3. Detailed Accomplishments & Technical Highlights, 4. Git Commit Provenance (Week 2), 5. Next Steps & Lookahead (Week 3), BiasAperture — Weekly Project Report (WK2) (+1 more)
 
-### Community 41 - "BiasAperture — System Context (paste this first)"
+### Community 49 - "BiasAperture — System Context (paste this first)"
 Cohesion: 0.22
 Nodes (8): BiasAperture — System Context (paste this first), Core Four Disparity Metrics, Dual-Backend Architecture, Locked Schema (DO NOT modify), Output Schema (MetricResult dataclass), Project Scope, Statistical Requirements, Tech Stack
 
-### Community 42 - "explore_fairface.py"
+### Community 50 - "5.3 Scripted Answers to 32 Anticipated Defense Questions"
+Cohesion: 0.22
+Nodes (9): 5.3 Scripted Answers to 32 Anticipated Defense Questions, Domain 1: Novelty & Contribution, Domain 2: Scope & Diagnostic Boundaries, Domain 3: Mathematics & Metrics, Domain 4: Statistical Validity & Guardrails, Domain 5: Explainability & Attribution, Domain 6: Regulatory & Legal Alignment, Domain 7: Data Governance & Benchmarks (+1 more)
+
+### Community 51 - "BiasAperture — Discrepancy Ledger"
+Cohesion: 0.22
+Nodes (9): Discrepancy Fix Ledger, Discrepancy Ledger, A — Dataset Scale (108,501 vs 97,698) & UTKFace Status, BiasAperture — Discrepancy Ledger, C — Architecture/Structural Claims vs. Actual `src/`, Cross-Cutting Root Causes, D — Milestone/WP Completion Claims vs. CLAIM_LEDGER.md + Test Coverage, Stale dataset-scale figures (still show unqualified 108,501) (+1 more)
+
+### Community 52 - "BiasAperture — Gate 0–3 Merged Results"
+Cohesion: 0.22
+Nodes (9): BiasAperture — Gate 0–3 Merged Results, Cross-check grep results (all 15-item files), Cross-cutting flags (surfaced across checkpoints, not previously in the ledger), Gate 1 — HIGH-Severity Fixes (`task_2026-09-04_008`, user7), Gate 1b — Design Patterns Table Fix (`task_2026-09-04_009`, user8), Gate 2 — MED-Severity Fixes (`task_2026-09-04_010`, user9), Open decision points (yours, not resolved here), README.md diagram bullets (+1 more)
+
+### Community 53 - "BiasAperture — System Context (paste this first)"
+Cohesion: 0.22
+Nodes (8): BiasAperture — System Context (paste this first), Core Four Disparity Metrics, Dual-Backend Architecture, Locked Schema (DO NOT modify), Output Schema (MetricResult dataclass), Project Scope, Statistical Requirements, Tech Stack
+
+### Community 54 - "explore_fairface.py"
 Cohesion: 0.39
 Nodes (7): explore_split(), main(), _parse_bool(), print_report(), Path, scripts/explore_fairface.py — exploration of the raw FairFace label CSVs…, SplitReport
 
-### Community 43 - "conftest.py"
-Cohesion: 0.25
-Nodes (8): mock_core_four_results(), fixture, MetricResult, SubjectRecord, Shared test fixtures for BiasAperture test suite., Provide a diverse list of SubjectRecords across race and gender categories., Provide a valid mock dictionary of Core Four MetricResults., sample_subject_records()
+### Community 55 - "sync.ps1"
+Cohesion: 0.28
+Nodes (3): Initialize-Remotes(), Push-AllRemotes(), Sync-AllOriginBranches()
 
-### Community 44 - "Schema Lock — Milestone M1 (WP1)"
+### Community 56 - "Schema Lock — Milestone M1 (WP1)"
 Cohesion: 0.25
 Nodes (7): Change policy, Classifier baseline, Constants locked with the schema, Detection engine output schema (FR-003/FR-004), Internal schema (FR-001), Schema Lock — Milestone M1 (WP1), What this unblocks
 
-### Community 45 - "BiasAperture — Data Governance & Privacy Protocol"
-Cohesion: 0.25
-Nodes (7): 1.1. Ingestion Restrictions, 1. Dataset Provenance & Licensing, 2.1. Statutory Justification for Bias Auditing, 2. Special-Category Demographic Data & Regulatory Safeguards, 3. Storage, Retention & Security Policy, 4. Researcher Ethics & Responsibilities, BiasAperture — Data Governance & Privacy Protocol
-
-### Community 46 - "5. Anticipated Hard Questions & Scripted Answers (32 Questions)"
+### Community 57 - "5. Anticipated Hard Questions & Scripted Answers (32 Questions)"
 Cohesion: 0.25
 Nodes (8): 5. Anticipated Hard Questions & Scripted Answers (32 Questions), Category A: Scope & Novelty, Category B: Statistical Rigor & Methodology, Category C: Datasets & Preprocessing, Category D: Architecture & Implementation, Category E: Regulatory Alignment & Ethics, Category F: Feasibility, Reliability & Risk, Category G: Research Integrity & Project Status
 
-### Community 47 - "Schema Lock — Milestone M1 (WP1)"
-Cohesion: 0.25
-Nodes (7): Change policy, Classifier baseline, Constants locked with the schema, Detection engine output schema (FR-003/FR-004), Internal schema (FR-001), Schema Lock — Milestone M1 (WP1), What this unblocks
+### Community 58 - "Part 2: Literature Review, Theoretical Framework & Positioning [10 Marks]"
+Cohesion: 0.14
+Nodes (14): 1. Intersectional Auditing Framework (Crenshaw, 1989; Buolamwini & Gebru, 2018), 2.1 Research Questions & Analytical Decomposition, 2.2 Foundational Conceptual Frameworks, 2.3 Critical Analysis of the Literature (The 14 Pillars), 2.4 Official Literature Review Matrix (Walden / AIF Standard), 2.5 Comparative Landscape Analysis: 7-Tool Audit Matrix, 2.6 Academic & Engineering Positioning: The Novelty Defense, 2. Group Fairness Parity Criteria (Hardt et al., 2016; Barocas et al., 2019) (+6 more)
 
-### Community 48 - "3. Slide-by-Slide Script & Talking Points"
+### Community 59 - "check_stale_claims.py"
+Cohesion: 0.36
+Nodes (7): check_text(), _line_number(), main(), _paragraphs_with_offset(), Split text into (start_offset, paragraph_text) pairs on blank lines., Return (line_number, rule_name, message) for each violation., Rule
+
+### Community 60 - "3. Slide-by-Slide Script & Talking Points"
 Cohesion: 0.29
 Nodes (7): 3. Slide-by-Slide Script & Talking Points, Architecture (Slide 9) — The Pipeline, Descoping (Slide 17) — Feasibility and Risk Planning, Harmonization (Slide 11) — Engineering Novelty in Practice, Opening (Slide 2) — The Hook, Problem Statement & Regulatory Context (Slides 3–4), Statistical Safeguards (Slide 12) — Inferential Credibility
 
-### Community 49 - "6. Traps to Avoid"
+### Community 61 - "6. Traps to Avoid"
 Cohesion: 0.29
 Nodes (7): 6. Traps to Avoid, ❌ Trap 1: Overclaiming Novelty, ❌ Trap 2: Oversimplifying the Engineering Effort, ❌ Trap 3: Claiming Causal Explanations, ❌ Trap 4: Overstating Regulatory Certification, ❌ Trap 5: Misrepresenting Project Phase, ❌ Trap 6: Misattributing Sample-Size Invariants
 
-### Community 50 - "BiasAperture — Research Claim Ledger"
+### Community 62 - "Part 5: Q&A Grilling Defense, Hard Questions & Traps [5 Marks Q&A Handling]"
 Cohesion: 0.29
-Nodes (6): 1. Verification Lifecycle, 2. Master Research Claim Register, 3. Invalidated Claims (Research Failures & Refutations), 4. Claim Verification Status Summary, Academic Audit Statement, BiasAperture — Research Claim Ledger
+Nodes (7): 5.1 Defense Philosophy & Panel Psychology, 5.2 The Core Novelty Defense Script, 5.4 "Numbers You Must Know Cold" Reference Card, 5.5 Critical Traps to Avoid During Defense, 5.6 5-Tier Descoping Cut-List (Contingency Architecture), Key Psychological Rules for Presenters, Part 5: Q&A Grilling Defense, Hard Questions & Traps [5 Marks Q&A Handling]
 
-### Community 51 - "Stream B Synthesis — Report Generation (Tracks 05–08)"
+### Community 63 - "Schema Lock — Milestone M1 (WP1)"
+Cohesion: 0.29
+Nodes (7): Change policy, Classifier baseline, Constants locked with the schema, Detection engine output schema (FR-003/FR-004), Internal schema (FR-001), Schema Lock — Milestone M1 (WP1), What this unblocks
+
+### Community 64 - "stratified_sample"
+Cohesion: 0.38
+Nodes (6): Namespace, main(), parse_args(), DataFrame, Sample n rows from df, allocated proportionally across the unique combinations…, stratified_sample()
+
+### Community 65 - "Discrepancy Verification Report Summary"
+Cohesion: 0.29
+Nodes (7): Cluster A - Dataset Scale Verification, Cluster B - Explainability Verification, Cluster C - Architecture Verification, Cluster D - WP Completion Verification, Discrepancy Verification Report Summary, SHAP Explainability & Proxy Detection Synthesis, Surrogate Explainability Strategy
+
+### Community 66 - "Stream B Synthesis — Report Generation (Tracks 05–08)"
 Cohesion: 0.29
 Nodes (6): Architecture (Track 05 — ready to implement), EU AI Act Article 10 mapping (Track 08 — sub-clause level, ready to consume), FairFace Datasheet (Track 07 — Gebru et al. 2018/2021 framework, drafted), Model Cards mapping (Track 06 — Mitchell et al. 2019, 9 sections), Open flags requiring owner decision, Stream B Synthesis — Report Generation (Tracks 05–08)
 
-### Community 52 - "Stream D Synthesis — Explainability (Tracks 15–16)"
+### Community 67 - "Stream D Synthesis — Explainability (Tracks 15–16)"
 Cohesion: 0.29
 Nodes (6): Open flags requiring owner decision, Proxy variable detection methodology (Track 16 — builds on Track 15's SHAP primitives), Real limitations — must be in the report, not just the code (Track 16 §5), SHAP variant selection (Track 15), Stream D Synthesis — Explainability (Tracks 15–16), Trigger point and interface (Track 15)
 
-### Community 53 - "sync.ps1"
-Cohesion: 0.38
-Nodes (3): Initialize-Remotes(), Push-AllRemotes(), Sync-AllOriginBranches()
-
-### Community 54 - "BiasAperture — Monthly Progress & Weekly Reports Index"
+### Community 68 - ".compute_cohort_profile"
 Cohesion: 0.29
-Nodes (6): 1. Executive Summary, 2. Weekly Reports Breakdown, 3. High-Level Monthly Achievements, 4. Master TO DOs & Remaining Roadmap, 5. Related Master Documentation, BiasAperture — Monthly Progress & Weekly Reports Index
+Nodes (6): Demographic cohort distribution across all axes and composite strata., Compute demographic support counts and NFR-003 eligibility across unitary…, SubgroupCohortProfile, Gap fix: has_positive_support / has_negative_support are only True when the…, test_cohort_profile_contingency_support(), test_cohort_profile_insufficient_positive_or_negative_support()
 
-### Community 55 - "AGENT.md — Developer & AI Agent Guidelines"
+### Community 69 - "InProcessInterface"
+Cohesion: 0.19
+Nodes (10): InProcessInterface, ModelInterface, ABC, SubjectRecord, ModelInterface — FR-002 (Dual-Mode Model Interface), WBS 1.2. "The system shall…, Abstract contract both concrete interfaces satisfy (FR-002)., Yield one SubjectRecord per subject, in the locked schema., Direct in-process inference against a supplied PyTorch or TensorFlow model… (+2 more)
+
+### Community 70 - "AGENT.md — Developer & AI Agent Guidelines"
 Cohesion: 0.33
 Nodes (5): 1. Non-Negotiable Project Constraints, 2. Directory Layout & Module Ownership, 3. Build & Test Commands, 4. Git & Branching Strategy, AGENT.md — Developer & AI Agent Guidelines
 
-### Community 56 - "AGENT.md — Developer & AI Agent Guidelines"
+### Community 71 - "AGENT.md — Developer & AI Agent Guidelines"
 Cohesion: 0.33
 Nodes (5): 1. Non-Negotiable Project Constraints, 2. Directory Layout & Module Ownership, 3. Build & Test Commands, 4. Git & Branching Strategy, AGENT.md — Developer & AI Agent Guidelines
 
-### Community 57 - "HIGH_LEVEL_SYNTHESIS.md"
-Cohesion: 0.53
-Nodes (4): HTML Report Generator, EU AI Act, FairFace Dataset, NIST AI RMF
+### Community 72 - "ANTIGRAVITY.md — Google Antigravity & Gemini Coding Guidelines"
+Cohesion: 0.33
+Nodes (5): ANTIGRAVITY.md — Google Antigravity & Gemini Coding Guidelines, Key Context & Metadata, Mission & Purpose, Operating Invariants for Antigravity, Role & Task Ownership Allocation
 
-### Community 58 - "8. Mock Grilling Checklist"
+### Community 73 - "8. Mock Grilling Checklist"
 Cohesion: 0.33
 Nodes (6): 8. Mock Grilling Checklist, Round 1: Foundations & Scope (5 min), Round 2: Technical & Statistical Depth (10 min), Round 3: Novelty & Integration Defense (5 min), Round 4: Feasibility, Risks & Roadmap (5 min), Round 5: Rapid-Fire Metrics & Constants (3 min)
 
-### Community 59 - "pull_request_template.md"
+### Community 74 - "Part 4: Presentation & Defense Strategy [5 Marks Clarity & Structure]"
+Cohesion: 0.33
+Nodes (6): 4.1 Defense Format, Time Budget & Pacing Plan, 4.3 Work Breakdown Structure (WBS) & Sprints (M1 to M5), 4.4 Project Timeline & Milestone Schedule, 4.5 Team Workload Distribution & Ownership Matrix, Collaborative Quality Control Protocol, Part 4: Presentation & Defense Strategy [5 Marks Clarity & Structure]
+
+### Community 75 - "pull_request_template.md"
 Cohesion: 0.33
 Nodes (5): 🛠️ Changes Made, 📋 Checklist, 📌 Purpose, 🔗 Related Issues, 🧪 Testing & Verification
 
-### Community 60 - "Cross-Track Conflict & Discrepancy Log — BiasAperture 20-Track Research Sprint"
+### Community 76 - "Track C — Architecture/Module Structural Claims vs. Actual `src/` Code"
+Cohesion: 0.33
+Nodes (4): Output format, Prompt (task spec), Setup (paste first, before the Prompt section below), Track C — Architecture/Module Structural Claims vs. Actual `src/` Code
+
+### Community 77 - "Gate 3 — Decision-Support Brief (`task_2026-09-04_011`, user10)"
+Cohesion: 0.33
+Nodes (6): Gate 3 — Decision-Support Brief (`task_2026-09-04_011`, user10), Item 1 — WP3 PDF-export claim + WP5 CLI flag claim, Item 2 — WP5 "90%" claim, Item 3 — architecture_highlevel.jpg stale elements, Item 4 — report/generator.py vs report/templates/generator.py, Item 5 — fellowship PDFs: source-file check + §13 precedent
+
+### Community 78 - "Cross-Track Conflict & Discrepancy Log — BiasAperture 20-Track Research Sprint"
 Cohesion: 0.33
 Nodes (5): Blocking — needed before WP4 implementation starts, Cross-Track Conflict & Discrepancy Log — BiasAperture 20-Track Research Sprint, Documentation/data corrections needed (not architectural, but currently wrong in project docs), Needs owner decision — not blocking implementation start, but unresolved, Process notes (not content conflicts — flagging for the record)
 
-### Community 61 - "Stream E Synthesis — Architecture & Testing (Tracks 17–18)"
+### Community 79 - "Stream E Synthesis — Architecture & Testing (Tracks 17–18)"
 Cohesion: 0.33
 Nodes (5): `fairness/base.py` design (Track 17 — code delivered, ready for review), Open flags requiring owner decision, Stream E Synthesis — Architecture & Testing (Tracks 17–18), Test suite architecture (Track 18 — grounded against live repo state), Track/field-name discrepancies Track 17 caught and worked around
 
-### Community 62 - "Track 01: FairFace Dataset Deep-Dive"
+### Community 80 - "00 - Overview and MVP Scope"
+Cohesion: 0.33
+Nodes (6): 00 - Overview and MVP Scope, Authority and status, Change rule, Documents, Phase 1 MVP, Purpose
+
+### Community 81 - "Novelty & Prior-Art Check (July 30, 2026)"
+Cohesion: 0.40
+Nodes (5): Defense Framing (Updated August 20, 2026), Engineering Decisions That Differ from Industry Optimization (August 20, 2026 Reflation), Novelty & Prior-Art Check (July 30, 2026), Prior-Art Search Confirmation, The Friction Problem BiasAperture Solves
+
+### Community 82 - "Track 01: FairFace Dataset Deep-Dive"
 Cohesion: 0.40
 Nodes (4): Track 01: FairFace Dataset Deep-Dive, Stream A Synthesis: Data Pipeline, Instructions, Prompt
 
-### Community 63 - "Stream A Synthesis — Data Pipeline (Tracks 01–04)"
+### Community 83 - "Track D — Milestone/WP Completion % Claims vs. `CLAIM_LEDGER.md`"
+Cohesion: 0.40
+Nodes (4): Output format, Prompt (task spec), Setup (paste first, before the Prompt section below), Track D — Milestone/WP Completion % Claims vs. `CLAIM_LEDGER.md`
+
+### Community 84 - "Gate 0 — Anti-Drift Guard Script (`task_2026-09-04_007`, user6)"
+Cohesion: 0.40
+Nodes (5): 1. `scripts/check_stale_claims.py` (full content), 2. Diff — `.pre-commit-config.yaml`, 3. Diff — `docs/research/VERIFICATION_AND_SCRUTINY_GUIDE.md` (§5), 4. Test matrix (6/6 correct, zero false negatives/positives), Gate 0 — Anti-Drift Guard Script (`task_2026-09-04_007`, user6)
+
+### Community 85 - "B — Explainability: SHAP vs. Actual Demographic-Dummy Surrogate"
+Cohesion: 0.40
+Nodes (5): B — Explainability: SHAP vs. Actual Demographic-Dummy Surrogate, Clean (correctly caveated), HIGH severity (examiner-facing script, zero caveat), Image, MED severity (proposal .tex chapters — 10 hits, no surrogate language anywhere)
+
+### Community 86 - "Stream A Synthesis — Data Pipeline (Tracks 01–04)"
 Cohesion: 0.40
 Nodes (4): Locked findings (verified against primary source, safe to build on), Open flags requiring owner decision (not resolved by any track), Stream A Synthesis — Data Pipeline (Tracks 01–04), Validation architecture (Track 03 — ready to implement against Track 01/04's confirmed column names)
 
-### Community 64 - "Stream F Synthesis — Defense & Regulatory (Tracks 19–20)"
+### Community 87 - "Stream F Synthesis — Defense & Regulatory (Tracks 19–20)"
 Cohesion: 0.40
 Nodes (4): Competitor analysis (Track 20 — 7 tools surveyed, live-verified), NIST AI RMF mapping (Track 19), Open flags requiring owner decision, Stream F Synthesis — Defense & Regulatory (Tracks 19–20)
 
-### Community 65 - ".compute_cohort_profile"
+### Community 88 - "03 - Orchestrator"
 Cohesion: 0.40
-Nodes (4): Demographic cohort distribution across all axes and composite strata., Compute demographic support counts and NFR-003 eligibility across unitary…, SubgroupCohortProfile, test_cohort_profile_contingency_support()
+Nodes (4): 03 - Orchestrator, Failure behavior, Handoff contract, Run flow
 
-### Community 66 - "Data Directory Layout"
+### Community 89 - "04-intake-and-classification.md"
+Cohesion: 0.40
+Nodes (4): 04 - Intake and Audit Classification, Audit target, Supported intake, Validation modes
+
+### Community 90 - "10 - Security and Governance"
+Cohesion: 0.40
+Nodes (4): 10 - Security and Governance, Data governance, Diagnostic boundary, Reproducibility and integrity
+
+### Community 91 - "test_image_column_alias_resolution_other_aliases"
+Cohesion: 0.67
+Nodes (3): parametrize, Gap fix: only the 'file' alias was previously tested, but IMAGE_COL_ALIASES…, test_image_column_alias_resolution_other_aliases()
+
+### Community 92 - "Data Directory Layout"
 Cohesion: 0.50
 Nodes (3): Data Directory Layout, Directory Structure, Sourcing the FairFace Benchmark (FR-001)
 
-### Community 67 - "BiasAperture Literature Review"
+### Community 93 - "BiasAperture Literature Review"
 Cohesion: 0.50
 Nodes (4): AIF Literature Review Guidelines, AIF Project Requirement Templates, BiasAperture Literature Review, BiasAperture User Requirement Document
 
-### Community 68 - "FairFace: Face Attribute Dataset for Balanced Race, Gender, and Age for Bias Measurement and Mitigation"
+### Community 94 - "09 - Verification"
 Cohesion: 0.67
-Nodes (4): Gender Shades: Intersectional Accuracy Disparities in Commercial Gender Classification, FairFace: Face Attribute Dataset for Balanced Race, Gender, and Age for Bias Measurement and Mitigation, FairFace Pretrained ResNet-34, BiasAperture Internal Schema
+Nodes (3): 09 - Verification, Evidence statuses, Required checks
 
-### Community 69 - "Detection Engine Output Schema"
-Cohesion: 0.50
-Nodes (4): Equality of Opportunity in Supervised Learning, The Four-Fifths Rule is Not Disparate Impact: A Woeful Tale of Epistemic Trespassing in Algorithmic Fairness, Schema Constants, Detection Engine Output Schema
-
-### Community 70 - "Track 02 — UTKFace Comparison & Risk Assessment"
-Cohesion: 0.50
-Nodes (3): Instructions, Prompt, Track 02 — UTKFace Comparison & Risk Assessment
-
-### Community 71 - "Track 03 — Pandas Data Validation Patterns"
-Cohesion: 0.50
-Nodes (3): Instructions, Prompt, Track 03 — Pandas Data Validation Patterns
-
-### Community 72 - "Track 04 — FairFace predict.py Source Code Analysis"
-Cohesion: 0.50
-Nodes (3): Instructions, Prompt, Track 04 — FairFace predict.py Source Code Analysis
-
-### Community 73 - "Track 05 — Jinja2 HTML Report Template Patterns"
-Cohesion: 0.50
-Nodes (3): Instructions, Prompt, Track 05 — Jinja2 HTML Report Template Patterns
-
-### Community 74 - "Track 06 — Model Cards Specification Deep-Dive"
-Cohesion: 0.50
-Nodes (3): Instructions, Prompt, Track 06 — Model Cards Specification Deep-Dive
-
-### Community 75 - "track_07_fairface_datasheet.md"
-Cohesion: 0.83
-Nodes (3): Instructions, Prompt, Track 07 — FairFace Datasheet Draft
-
-### Community 76 - "Track 08 — EU AI Act Article 10 Regulatory Mapping"
-Cohesion: 0.50
-Nodes (3): Instructions, Prompt, Track 08 — EU AI Act Article 10 Regulatory Mapping
-
-### Community 77 - "Track 09 — Fairlearn API — MetricFrame & Core Four"
-Cohesion: 0.50
-Nodes (3): Instructions, Prompt, Track 09 — Fairlearn API — MetricFrame & Core Four
-
-### Community 78 - "Track 10 — AIF360 API — BinaryLabelDataset & Cross-Validation"
-Cohesion: 0.50
-Nodes (3): Instructions, Prompt, Track 10 — AIF360 API — BinaryLabelDataset & Cross-Validation
-
-### Community 79 - "Track 11 — Bootstrap Confidence Intervals"
-Cohesion: 0.50
-Nodes (3): Instructions, Prompt, Track 11 — Bootstrap Confidence Intervals
-
-### Community 80 - "Track 12 — Chi-Squared Significance Testing"
-Cohesion: 0.50
-Nodes (3): Instructions, Prompt, Track 12 — Chi-Squared Significance Testing
-
-### Community 81 - "Track 13 — Disparate Impact Ratio — Implementation & Legal Context"
-Cohesion: 0.50
-Nodes (3): Instructions, Prompt, Track 13 — Disparate Impact Ratio — Implementation & Legal Context
-
-### Community 82 - "Track 14 — Equalized Odds & Equal Opportunity — Theory to Code"
-Cohesion: 0.50
-Nodes (3): Instructions, Prompt, Track 14 — Equalized Odds & Equal Opportunity — Theory to Code
-
-### Community 83 - "Track 15 — SHAP for Image Classifiers"
-Cohesion: 0.50
-Nodes (3): Instructions, Prompt, Track 15 — SHAP for Image Classifiers
-
-### Community 84 - "Track 16 — Proxy Variable Detection via SHAP"
-Cohesion: 0.50
-Nodes (3): Instructions, Prompt, Track 16 — Proxy Variable Detection via SHAP
-
-### Community 85 - "Track 17 — Strategy Pattern for Dual Fairness Backends"
-Cohesion: 0.50
-Nodes (3): Instructions, Prompt, Track 17 — Strategy Pattern for Dual Fairness Backends
-
-### Community 86 - "Track 18 — Pytest Testing Patterns for Fairness Metrics"
-Cohesion: 0.50
-Nodes (3): Instructions, Prompt, Track 18 — Pytest Testing Patterns for Fairness Metrics
-
-### Community 87 - "Track 19 — NIST AI RMF Detailed Mapping"
-Cohesion: 0.50
-Nodes (3): Instructions, Prompt, Track 19 — NIST AI RMF Detailed Mapping
-
-### Community 88 - "track_20_competitor_analysis.md"
-Cohesion: 0.83
-Nodes (3): Instructions, Prompt, Track 20 — Competitor Deep Analysis
-
-### Community 89 - "fixture"
+### Community 96 - "fixture"
 Cohesion: 0.50
 Nodes (4): fixture, valid_csv(), valid_dataframe(), valid_json()
 
-### Community 90 - "Mid Level Architecture"
+### Community 97 - "Track 02 — UTKFace Comparison & Risk Assessment"
+Cohesion: 0.50
+Nodes (3): Instructions, Prompt, Track 02 — UTKFace Comparison & Risk Assessment
+
+### Community 98 - "Track 03 — Pandas Data Validation Patterns"
+Cohesion: 0.50
+Nodes (3): Instructions, Prompt, Track 03 — Pandas Data Validation Patterns
+
+### Community 99 - "Track 04 — FairFace predict.py Source Code Analysis"
+Cohesion: 0.50
+Nodes (3): Instructions, Prompt, Track 04 — FairFace predict.py Source Code Analysis
+
+### Community 100 - "Track 05 — Jinja2 HTML Report Template Patterns"
+Cohesion: 0.50
+Nodes (3): Instructions, Prompt, Track 05 — Jinja2 HTML Report Template Patterns
+
+### Community 101 - "Track 06 — Model Cards Specification Deep-Dive"
+Cohesion: 0.50
+Nodes (3): Instructions, Prompt, Track 06 — Model Cards Specification Deep-Dive
+
+### Community 102 - "track_07_fairface_datasheet.md"
+Cohesion: 0.83
+Nodes (3): Instructions, Prompt, Track 07 — FairFace Datasheet Draft
+
+### Community 103 - "Track 08 — EU AI Act Article 10 Regulatory Mapping"
+Cohesion: 0.50
+Nodes (3): Instructions, Prompt, Track 08 — EU AI Act Article 10 Regulatory Mapping
+
+### Community 104 - "Track 09 — Fairlearn API — MetricFrame & Core Four"
+Cohesion: 0.50
+Nodes (3): Instructions, Prompt, Track 09 — Fairlearn API — MetricFrame & Core Four
+
+### Community 105 - "Track 10 — AIF360 API — BinaryLabelDataset & Cross-Validation"
+Cohesion: 0.50
+Nodes (3): Instructions, Prompt, Track 10 — AIF360 API — BinaryLabelDataset & Cross-Validation
+
+### Community 106 - "Track 11 — Bootstrap Confidence Intervals"
+Cohesion: 0.50
+Nodes (3): Instructions, Prompt, Track 11 — Bootstrap Confidence Intervals
+
+### Community 107 - "Track 12 — Chi-Squared Significance Testing"
+Cohesion: 0.50
+Nodes (3): Instructions, Prompt, Track 12 — Chi-Squared Significance Testing
+
+### Community 108 - "Track 13 — Disparate Impact Ratio — Implementation & Legal Context"
+Cohesion: 0.50
+Nodes (3): Instructions, Prompt, Track 13 — Disparate Impact Ratio — Implementation & Legal Context
+
+### Community 109 - "Track 14 — Equalized Odds & Equal Opportunity — Theory to Code"
+Cohesion: 0.50
+Nodes (3): Instructions, Prompt, Track 14 — Equalized Odds & Equal Opportunity — Theory to Code
+
+### Community 110 - "Track 15 — SHAP for Image Classifiers"
+Cohesion: 0.50
+Nodes (3): Instructions, Prompt, Track 15 — SHAP for Image Classifiers
+
+### Community 111 - "Track 16 — Proxy Variable Detection via SHAP"
+Cohesion: 0.50
+Nodes (3): Instructions, Prompt, Track 16 — Proxy Variable Detection via SHAP
+
+### Community 112 - "Track 17 — Strategy Pattern for Dual Fairness Backends"
+Cohesion: 0.50
+Nodes (3): Instructions, Prompt, Track 17 — Strategy Pattern for Dual Fairness Backends
+
+### Community 113 - "Track 18 — Pytest Testing Patterns for Fairness Metrics"
+Cohesion: 0.50
+Nodes (3): Instructions, Prompt, Track 18 — Pytest Testing Patterns for Fairness Metrics
+
+### Community 114 - "Track 19 — NIST AI RMF Detailed Mapping"
+Cohesion: 0.50
+Nodes (3): Instructions, Prompt, Track 19 — NIST AI RMF Detailed Mapping
+
+### Community 115 - "track_20_competitor_analysis.md"
+Cohesion: 0.83
+Nodes (3): Instructions, Prompt, Track 20 — Competitor Deep Analysis
+
+### Community 116 - "06 - Statistics and Confidence"
+Cohesion: 0.50
+Nodes (4): 06 - Statistics and Confidence, Bootstrap, Sample guard, Significance
+
+### Community 117 - "08-report-and-compliance.md"
+Cohesion: 0.50
+Nodes (3): 08 - Report and Compliance, Compliance structure, Output contract
+
+### Community 120 - "Mid Level Architecture"
 Cohesion: 0.67
 Nodes (3): High Level Synthesis, Low Level Specification, Mid Level Architecture
 
-### Community 91 - "Stream F Synthesis (Defense & Regulatory)"
+### Community 121 - "BiasAperture"
+Cohesion: 0.67
+Nodes (3): BiasAperture, FairFace Dataset, ResNet-34 (FairFace variant)
+
+### Community 122 - "Stream F Synthesis (Defense & Regulatory)"
 Cohesion: 0.67
 Nodes (3): NIST AI RMF Detailed Mapping, Competitor Deep Analysis, Stream F Synthesis (Defense & Regulatory)
 
+### Community 144 - "EU AI Act"
+Cohesion: 0.27
+Nodes (8): HTML Report Generator, Weekly Project Report (WK3), BiasAperture — Literature Review Matrix, Research Verification & Scrutiny Guide, EU AI Act, NIST AI RMF, BiasAperture Audit Report (Gender), BiasAperture Audit Report (Race/Gender/SHAP)
+
 ## Knowledge Gaps
-- **493 isolated node(s):** `1. The 4-Tier Scrutiny Framework`, `4. Top 10 Viva / Defense Interrogation Questions (Self-Test)`, `5. Verification Checklist Before Any Milestone Merge`, `Claim 1: EU AI Act Article 10 mandates statistical adequacy and bias detection`, `Claim 1: FairFace ResNet-34 uses an 18-unit linear head (not 3 separate heads)` (+488 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 708 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **44 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **666 isolated node(s):** `bias_aperture`, `Rule`, `graphify`, `📌 Purpose`, `🛠️ Changes Made` (+661 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 902 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **45 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Monthly Progress & Weekly Reports Index (2026-08-31)` connect `Monthly Progress & Weekly Reports Index (2026-08-31)` to `BiasAperture-AT (v6)`, `Session Clarity & Task Prioritization — BiasAperture M5 Integration Phase`?**
-  _High betweenness centrality (0.028) - this node is a cross-community bridge._
-- **Why does `SubjectRecord` connect `SubjectRecord` to `fairness/__init__.py`, `PredictionsFileInterface`, `.compute_cohort_profile`, `OvRTransformer`, `DataIngestionPipeline`, `conftest.py`, `.ingest_records`, `ShapExplainerEngine`, `bias_aperture/schema.py`?**
-  _High betweenness centrality (0.019) - this node is a cross-community bridge._
-- **Why does `BiasAperture — Proposal Defense Preparation Guide` connect `BiasAperture — Proposal Defense Preparation Guide` to `2. Slide Deck Outline (15–20 slides)`, `5. Anticipated Hard Questions & Scripted Answers (32 Questions)`, `3. Slide-by-Slide Script & Talking Points`, `6. Traps to Avoid`, `8. Mock Grilling Checklist`, `Monthly Progress & Weekly Reports Index (2026-08-31)`?**
-  _High betweenness centrality (0.016) - this node is a cross-community bridge._
-- **Are the 2 inferred relationships involving `DataIngestionPipeline` (e.g. with `SubjectRecord` and `test_cohort_profile_contingency_support()`) actually correct?**
-  _`DataIngestionPipeline` has 2 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 22 inferred relationships involving `SubjectRecord` (e.g. with `InProcessInterface` and `ModelInterface`) actually correct?**
-  _`SubjectRecord` has 22 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `1. The 4-Tier Scrutiny Framework`, `4. Top 10 Viva / Defense Interrogation Questions (Self-Test)`, `5. Verification Checklist Before Any Milestone Merge` to the rest of the system?**
-  _493 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `fairness/__init__.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.05230678812812224 - nodes in this community are weakly interconnected._
+- **Why does `BiasAperture-AT (v11)` connect `2026-08-27_WK4_report.md` to `MVP Scope Specification`, `Phase-2 Research Synthesis`, `BiasAperture-AT (v10)`?**
+  _High betweenness centrality (0.041) - this node is a cross-community bridge._
+- **Why does `BiasAperture-AT (v11)` connect `BiasAperture-AT (v11)` to `Novelty & Prior-Art Check (July 30, 2026)`, `PROPOSAL_DEFENSE_MASTER_DOSSIER.md`, `2026-08-27_WK4_report.md`, `BiasAperture — Discrepancy Ledger`?**
+  _High betweenness centrality (0.022) - this node is a cross-community bridge._
+- **Why does `MVP Scope Specification` connect `MVP Scope Specification` to `00 - Overview and MVP Scope`, `08-report-and-compliance.md`, `2026-08-27_WK4_report.md`, `03 - Orchestrator`, `04-intake-and-classification.md`, `10 - Security and Governance`?**
+  _High betweenness centrality (0.020) - this node is a cross-community bridge._
+- **Are the 4 inferred relationships involving `DataIngestionPipeline` (e.g. with `SubjectRecord` and `test_cohort_profile_contingency_support()`) actually correct?**
+  _`DataIngestionPipeline` has 4 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 23 inferred relationships involving `SubjectRecord` (e.g. with `InProcessInterface` and `ModelInterface`) actually correct?**
+  _`SubjectRecord` has 23 INFERRED edges - model-reasoned connections that need verification._
+- **What connects `bias_aperture`, `Rule`, `graphify` to the rest of the system?**
+  _666 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `SubjectRecord` be split into smaller, more focused modules?**
+  _Cohesion score 0.05432595573440644 - nodes in this community are weakly interconnected._

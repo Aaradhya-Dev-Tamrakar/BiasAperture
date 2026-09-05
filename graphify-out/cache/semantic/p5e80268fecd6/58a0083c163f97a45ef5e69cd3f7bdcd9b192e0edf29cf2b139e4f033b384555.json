@@ -1,0 +1,1 @@
+{"nodes": [{"id": "concept_statistical_rigor", "label": "Statistical Rigor Layer", "file_type": "concept", "source_file": "context-summary/low-level-summary.md", "rationale": "Includes Chi-squared tests, Holm-Bonferroni correction, and BCa Bootstrap (B>=1000)."}], "edges": [], "hyperedges": []}
