@@ -86,13 +86,17 @@ flowchart TD
 │   ├── main.pdf                # Compiled proposal (tracked; build artifacts are not)
 │   └── src/                    # Frontmatter, chapters, backmatter, images
 ├── docs/                       # TA/reviewer-facing meta-documentation
-│   ├── BiasAperture-AT.md      # Master project planning and task assignments (v10)
-│   ├── PROPOSAL_DEFENSE_GUIDE.md # Comprehensive Viva defense Q&A guide
-│   ├── PRE_PROPOSAL_READING_GUIDE.md # Reading guide & executive brief
+│   ├── BiasAperture-AT.md      # Master project planning and task assignments (v11)
+│   ├── PROPOSAL_DEFENSE_MASTER_DOSSIER.md # AUTHORITATIVE defense doc — rubric-mapped (Parts 1-5), supersedes the two below for defense prep
+│   ├── PROPOSAL_DEFENSE_GUIDE.md # Earlier Viva Q&A guide — kept for its detailed script/traps content, not the primary reference
+│   ├── PRE_PROPOSAL_READING_GUIDE.md # Earlier study guide/roadmap — kept for conceptual walkthrough, not the primary reference
+│   ├── PRESENTATION_DISCREPANCY_NOTES.md # Slide-deck discrepancy findings vs. repo ground truth
 │   ├── BiasAperture_NOVELTY_INTEGRATION_DEFENSE.md # Novelty & prior-art defense
+│   ├── DATA_GOVERNANCE.md      # Data licensing & privacy protocol
 │   ├── schema-lock-m1.md       # Milestone M1 schema specification
-│   ├── literature-review-matrix.md   # Paper matrix (9 papers, Walden format)
+│   ├── literature-review-matrix.md   # Paper matrix (14 papers, Walden format)
 │   ├── CHANGELOG.md            # Auto-updated by sync.ps1 on each sync
+│   ├── research/                # HIGH/MID/LOW-level syntheses, CLAIM_LEDGER, SHAP theory, data exploration, verification guide
 │   └── fellowship/             # Official AIF guidelines & reference PDFs
 ├── vendor/                     # Offline TeX dependencies
 ├── src/                        # Implementation package:
@@ -119,12 +123,12 @@ flowchart TD
 Overall Progress: [██████████████████░░] 90% (Milestones M1–M4 Completed · Inference Complete · M5 Audit/Report Active)
 ```
 
-| Work Package / Milestone                                    | Stream / Focus            | Status    | Progress Bar                  | Deliverables & Implementation State                                                                                                                                                |
-| ----------------------------------------------------------- | ------------------------- | --------- | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **WP1 / M1: Schema Lock & Baseline**                        | Foundations / Joint       | Completed | `[████████████████████] 100%` | Locked schema (`schema.py`), FairFace ResNet-34 baseline fixed, test fixtures                                                                                                      |
-| **WP2 / M2: Data Ingestion & Test Matrix**                  | Stream A (Tisha)          | Completed | `[████████████████████] 100%` | FairFace ingestion pipeline (`data_ingestion.py`), disk verification (97,698 images), UTKFace cut profiling                                                                        |
-| **WP3 / M3: Compliance Report Generation**                  | Stream B (Tisha/Aaradhya) | Completed | `[████████████████████] 100%` | Offline standalone Jinja2 HTML report (`generator.py`), embedded Base64 charts, EU AI Act & NIST mapping                                                                           |
-| **WP4 / M4: Statistical Detection Engine & Explainability** | WP4 (Aaradhya)            | Completed | `[████████████████████] 100%` | Pure-math metrics, Fairlearn + native AIF360 backends, BCa bootstrap ($B \ge 1,000$), $\chi^2$ significance tests, demographic-dummy surrogate attribution (spatial SHAP deferred) |
+| Work Package / Milestone                                    | Stream / Focus            | Status    | Progress Bar                  | Deliverables & Implementation State                                                                                                                                                                                                                                                    |
+| ----------------------------------------------------------- | ------------------------- | --------- | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **WP1 / M1: Schema Lock & Baseline**                        | Foundations / Joint       | Completed | `[████████████████████] 100%` | Locked schema (`schema.py`), FairFace ResNet-34 baseline fixed, test fixtures                                                                                                                                                                                                          |
+| **WP2 / M2: Data Ingestion & Test Matrix**                  | Stream A (Tisha)          | Completed | `[████████████████████] 100%` | FairFace ingestion pipeline (`data_ingestion.py`), disk verification (97,698 images), UTKFace cut profiling                                                                                                                                                                            |
+| **WP3 / M3: Compliance Report Generation**                  | Stream B (Tisha/Aaradhya) | Completed | `[████████████████████] 100%` | Offline standalone Jinja2 HTML report (`generator.py`), embedded Base64 charts, EU AI Act & NIST mapping                                                                                                                                                                               |
+| **WP4 / M4: Statistical Detection Engine & Explainability** | WP4 (Aaradhya)            | Completed | `[████████████████████] 100%` | Pure-math metrics, Fairlearn + native AIF360 backends, BCa bootstrap ($B \ge 1,000$), $\chi^2$ significance tests, demographic-dummy surrogate attribution (spatial SHAP deferred)                                                                                                     |
 | **WP5 / M5: System Orchestration & Case Study**             | Integration / Joint       | Active    | `[██████████████████░░]  90%` | Benchmark inference complete (`10,954/10,954` processed), CSV schema validated, and validation audit reports generated (`report/audit_report_val_gender.html`, `report/audit_report_val_race_gender_shap.html`); next: finalize LaTeX report empirical tables and defense presentation |
 
 ### Current Status & Next Steps (September 5, 2026)
@@ -162,13 +166,13 @@ Overall Progress: [██████████████████░░]
 
 ## Branching & Workstreams
 
-| Branch                 | Stream / Work Package | Primary Owner                    | Description / Verification Mandate                                                                                                            |
-| ---------------------- | --------------------- | -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `main`                 | Production / Base     | Joint                            | Stable base holding locked schema, verified engine, docs, and report                                                                          |
-| `feat/stream-data`     | Stream A (WP2)        | Tisha (`@tiixsha`)               | FairFace dataset ingestion, `dlib` 5-point landmark alignment & demographic test-matrix construction                                         |
-| `feat/stream-report`   | Stream B (WP3)        | Tisha (`@tiixsha`)               | Jinja2 HTML compliance report scaffolding, zero-network offline rendering, EU AI Act mapping                                                  |
-| `feat/wp4-engine`      | WP4                   | Aaradhya (`@AaradhyaDT`)         | Fairness computation backends (AIF360 + Fairlearn), BCa bootstrap CIs, and $\chi^2$ significance tests                                       |
-| `feat/wp5-integration` | WP5                   | Aaradhya (`@AaradhyaDT`) / Joint | CLI orchestrator, surrogate explainability layer (spatial SHAP deferred), and end-to-end benchmark case studies                               |
+| Branch                 | Stream / Work Package | Primary Owner                    | Description / Verification Mandate                                                                              |
+| ---------------------- | --------------------- | -------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `main`                 | Production / Base     | Joint                            | Stable base holding locked schema, verified engine, docs, and report                                            |
+| `feat/stream-data`     | Stream A (WP2)        | Tisha (`@tiixsha`)               | FairFace dataset ingestion, `dlib` 5-point landmark alignment & demographic test-matrix construction            |
+| `feat/stream-report`   | Stream B (WP3)        | Tisha (`@tiixsha`)               | Jinja2 HTML compliance report scaffolding, zero-network offline rendering, EU AI Act mapping                    |
+| `feat/wp4-engine`      | WP4                   | Aaradhya (`@AaradhyaDT`)         | Fairness computation backends (AIF360 + Fairlearn), BCa bootstrap CIs, and $\chi^2$ significance tests          |
+| `feat/wp5-integration` | WP5                   | Aaradhya (`@AaradhyaDT`) / Joint | CLI orchestrator, surrogate explainability layer (spatial SHAP deferred), and end-to-end benchmark case studies |
 
 ## Research Verification & Viva Defense Allocation
 
