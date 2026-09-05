@@ -1,42 +1,66 @@
 # BiasAperture
 
-- A Diagnostic and Evaluative Framework for Auditing Demographic Bias in Facial Analysis Systems \*
+**A Diagnostic and Evaluative Framework for Auditing Demographic Bias in Facial Analysis Systems**
 
-A fairness and bias audit system proposal report submitted for the Fusemachines AI Fellowship Program, Kathmandu, Nepal.
+A fairness and bias audit system proposal and implementation submitted for the **Fusemachines AI Fellowship Program**, Kathmandu, Nepal.
 
-**Authors:** Aaradhya Dev Tamrakar, Tisha Manandhar
-**Supervisor:** Shreejan Kisee, Teaching Assistant, Fusemachines AI Fellowship
+**Authors:** Aaradhya Dev Tamrakar, Tisha Manandhar  
+**Supervisor:** Shreejan Kisee, Teaching Assistant, Fusemachines AI Fellowship  
+**Status:** Milestones M1–M4 Completed (100%) · M5 System Orchestration & Case Studies Active (90%) · 67/67 Tests Passing  
+
+---
 
 ## Abstract
 
-BiasAperture is a diagnostic and evaluative software platform that computes subgroup and intersectional fairness metrics for a third-party facial-analysis model and reports them in a standardised, regulator-legible format. It is organised into five cooperating modules covering data ingestion, model interfacing, fairness-metric computation, explainability, and report generation. Its analytical core computes four disparity metrics — demographic parity difference, equalized odds difference, equal opportunity difference, and disparate impact ratio — using AIF360 and Fairlearn as independent, cross-validating backends, with every reported disparity accompanied by a chi-squared significance test and a bootstrap confidence interval. The current explainability implementation uses demographic-dummy surrogate attribution; richer spatial SHAP and ITA analysis remain deferred. Findings are traced to their specific basis under Article 10 of the EU AI Act and the corresponding function of the NIST AI Risk Management Framework. The current case study uses FairFace; UTKFace was profiled and cut from the implementation scope. BiasAperture is scoped strictly as diagnostic: it does not mitigate bias, retrain models, or generate synthetic demographic data.
+BiasAperture is a diagnostic and evaluative software platform that computes subgroup and intersectional fairness metrics for third-party computer vision models and outputs standardized, regulator-legible compliance reports. Organised into five modular tiers (data ingestion, model interfacing, dual fairness computation, surrogate explainability, and report generation), the analytical core computes the **Core Four** disparity metrics:
+1. **Demographic Parity Difference (DPD)**
+2. **Disparate Impact Ratio (DIR)**
+3. **Equal Opportunity Difference (EOP)**
+4. **Equalized Odds Difference (EOD)**
+
+To eliminate single-library implementation bias, BiasAperture employs **AIF360** and **Fairlearn** as independent, cross-validating backends with mathematical harmonization (reconciling sign conventions, zero-denominator contracts, and max-of-gaps formulations). Every reported disparity is accompanied by a **Chi-squared ($\chi^2$) significance test**, a **95% BCa Bootstrap Confidence Interval** ($B \ge 1,000$ resamples), and strict sample-size guards ($n < 30$ suppressed).
+
+Flagged disparities are attributed to demographic proxy axes using exact **additive Shapley surrogate attribution** (spatial SHAP and ITA colorimetry deferred). All audit findings are mapped to **Article 10 and Article 13 of the EU AI Act** and **NIST AI RMF 1.0 (Measure 2.11)**. Empirical validation is conducted on the **FairFace benchmark (97,698 images)**; UTKFace was evaluated and formally cut from the runtime scope due to label noise.
+
+---
+
+## Non-Negotiable Diagnostic Scope
+
+In accordance with fellowship research guidelines and architectural invariants:
+- **Strictly Diagnostic & Evaluative**: BiasAperture measures, attributes, and reports demographic disparities. It **does NOT** perform model retraining, in-processing weights debiasing, fine-tuning, or synthetic image generation.
+- **Statistical Integrity**: Subgroups with $n < 30$ samples are never assigned computed metric values; they are marked with `insufficient_sample=True` and `metric_value=None` (enforced by `MetricResult.__post_init__`).
+- **Zero-Network Offline Execution**: The entire pipeline, from tabular intake to standalone Jinja2 HTML report compilation, operates in air-gapped/offline environments with zero external CDN dependencies.
+
+---
 
 ## System Architecture
 
-The platform is coordinated by a **CLI orchestration and configuration layer** that drives two parallel intake paths and a linear downstream analysis pipeline:
+The platform is coordinated by a unified CLI orchestration engine (`src/bias_aperture/cli.py`) that drives dual intake paths and a deterministic downstream auditing pipeline:
 
 ```mermaid
 flowchart TD
     FF[("FairFace dataset<br/>97,698 images")]
     UTK[("UTKFace dataset<br/><b>[CUT]</b> profiled only")]
-    CUT["Research comparison<br/>DEX age noise + race-category collapse"]
-    PT[/"PyTorch / TensorFlow model"/]
-    BB[/"Black-box API / predictions file"/]
+    CUT["Research comparison<br/>DEX age noise + race collapse"]
+    PT[/"PyTorch / TensorFlow Model"/]
+    BB[/"Black-box API / Predictions File (CSV/JSON)"/]
 
-    subgraph BA["BiasAperture Platform"]
+    subgraph BA["BiasAperture Platform Architecture"]
         direction TB
-        ORCH["Orchestration & configuration layer<br/>CLI entry point"]
-        ING["Data ingestion &<br/>preprocessing module"]
-        MIF["Model interface module"]
-        FME["Fairness metrics engine<br/><b>AIF360</b> · <b>Fairlearn</b>"]
-        EXP["Explainability layer<br/><b>Surrogate Attribution</b><br/>(SHAP deferred)"]
-        REP["Report generation module<br/><b>Jinja2 Templates</b> · <b>Model Cards</b>"]
+        ORCH["Orchestration & CLI Layer<br/><code>bias-aperture audit</code>"]
+        ING["Data Ingestion & Preprocessing<br/><code>DataIngestionPipeline</code> · Schema Lock (M1)"]
+        MIF["Model Interface Layer<br/><code>ModelInterface</code> · <code>PredictionsFileInterface</code>"]
+        FME["Dual Fairness Metrics Engine<br/><b>Fairlearn</b> · <b>AIF360</b> (WP4 Harmonized)"]
+        STAT["Statistical Rigour Layer<br/>BCa Bootstrap CIs (B≥1,000) · χ² Tests · n≥30 Guards"]
+        EXP["Explainability Layer<br/>Additive Shapley Surrogate Attribution<br/>(Spatial SHAP deferred)"]
+        REP["Report Generation Engine<br/>Zero-Network Jinja2 Templates · Base64 Visuals"]
 
         ORCH -.-> ING
         ORCH -.-> MIF
         ING --> FME
         MIF --> FME
-        FME --> EXP
+        FME --> STAT
+        STAT --> EXP
         FME --> REP
         EXP --> REP
     end
@@ -46,170 +70,198 @@ flowchart TD
     PT --> MIF
     BB --> MIF
 
-    REP --> COMP["Compliance report (HTML)"]
-    REG["Regulatory traceability:<br/>EU AI Act Annex IV · NIST AI RMF"] --> COMP
+    REP --> COMP["Offline Standalone Compliance Report (HTML)"]
+    REG["Regulatory Traceability Mapping:<br/>EU AI Act Art. 10/13 · NIST AI RMF Measure 2.11"] --> COMP
 
     classDef cut stroke-dasharray: 5 5, fill:#f5f5f5, stroke:#777, color:#555
     class UTK,CUT cut
 ```
 
-- **Data ingestion & preprocessing module** — consumes the released FairFace artifact (97,698 images) and normalises it into the locked M1 schema. UTKFace was evaluated and formally cut from implementation scope per Cut-List #2. Implemented in `src/bias_aperture/schema.py` and the ingestion pipeline under `src/bias_aperture/`.
-- **Model interface module** — abstracts over the subject under audit, accepting either a PyTorch/TensorFlow model, a black-box API, or a static predictions file. Implemented in `src/bias_aperture/model_interface.py` (`ModelInterface` & `PredictionsFileInterface`).
-- **Fairness metrics engine** — computes the Core Four disparity metrics (demographic parity difference, equalized odds difference, equal opportunity difference, disparate impact ratio) using **AIF360** and **Fairlearn** as independent, cross-validating backends, each result paired with a $\chi^2$ significance test and a BCa bootstrap confidence interval. Implemented in `src/bias_aperture/fairness/` (WP4).
-- **Explainability layer** — attributes flagged disparities to input features via demographic-dummy surrogate attribution (richer spatial SHAP deferred).
-- **Report generation module** — renders findings into offline, zero-network **Jinja2**-templated HTML compliance reports with accompanying model cards (PDF export via LaTeX report). Implemented in `src/bias_aperture/report/` (WP3).
-- **Compliance report** — the final artifact, with every finding traced to its specific basis under **EU AI Act Annex IV** and the corresponding **NIST AI RMF** function.
+### Core Architecture Components
+
+1. **Data Ingestion & Invariant Validation (`src/bias_aperture/data_ingestion.py`)**: Validates demographic datasets against the locked M1 schema (`src/bias_aperture/schema.py`), enforces column alias resolution, filters missing labels, profiles cohort supports, and detects intersectional sample starvation ($n < 30$).
+2. **Model Interface (`src/bias_aperture/model_interface.py`)**: Abstract contract (`ModelInterface`) supporting batch predictions files (`PredictionsFileInterface`) and live in-process PyTorch/TensorFlow wrappers (`InProcessInterface`).
+3. **Fairness Metrics Engine (`src/bias_aperture/fairness/`)**: Dual backend strategy pattern (`FairlearnBackend` and `AIF360Backend`) cross-validating the Core Four metrics with OvR multi-class decomposition (`OvRTransformer`).
+4. **Statistical Rigour & Safeguards (`src/bias_aperture/fairness/statistics.py`)**: Computes 95% BCa bootstrap confidence intervals ($B = 1,000$), asymptotic $\chi^2$ independence tests, and divergence alerts across backends ($|\Delta| > 0.01$).
+5. **Targeted Explainability (`src/bias_aperture/explainability.py`)**: Triggers only on statistically flagged disparities to compute additive Shapley feature importances across demographic proxy axes.
+6. **Compliance Report Generator (`src/bias_aperture/report/generator.py`)**: Offline HTML compiler embedding interactive CSS, self-contained SVG/Base64 plots, model card metadata, and regulatory compliance matrices.
+
+---
 
 ## Repository Structure
 
-```BiasAperture/
-├── .github/                    # GitHub configuration & PR templates
+```
+BiasAperture/
+├── .github/                    # GitHub configuration, issue and PR templates
 │   └── pull_request_template.md
-├── .pre-commit-config.yaml     # Pre-commit hooks (Ruff, formatting, file-size guards)
-├── pyproject.toml              # PEP 517/621 package spec & tool configs (Ruff, pytest)
-├── uv.lock                     # Deterministic dependency lockfile
-├── data/                       # Datasets and test matrices (raw/ and processed/ gitignored)
-│   └── README.md               # Dataset sourcing and FairFace setup instructions
-├── dev-logs/                   # Dated developer logs & master audit walkthroughs
+├── .pre-commit-config.yaml     # Pre-commit hooks (Ruff linter, formatter, size guards)
+├── pyproject.toml              # PEP 517/621 package spec, dependencies & tool configs
+├── uv.lock                     # Deterministic dependency lockfile (uv)
+├── data/                       # Dataset storage (raw/ and processed/ gitignored)
+│   ├── README.md               # Dataset download, sourcing, and alignment instructions
+│   └── processed/              # Validation predictions (e.g. fairface_predictions_val.csv)
+├── dev-logs/                   # Dated engineering logs & milestone audit trails
+│   ├── weekly-reports/         # Formal Weekly Reports WK1–WK5 (Markdown & PDF)
+│   └── *_session_*.md          # Developer walkthrough and synchronization sessions
+├── docs/                       # Reviewer-facing meta-documentation & specifications
+│   ├── PROPOSAL_DEFENSE_MASTER_DOSSIER.md # AUTHORITATIVE defense doc — rubric-mapped (Parts 1–5)
+│   ├── PROPOSAL_DEFENSE_GUIDE.md          # Earlier Viva Q&A guide (retained for reference)
+│   ├── PRE_PROPOSAL_READING_GUIDE.md      # Earlier conceptual reading guide (retained for reference)
+│   ├── PRESENTATION_DISCREPANCY_NOTES.md  # Slide-deck discrepancy findings vs. repo ground truth
+│   ├── BiasAperture_NOVELTY_INTEGRATION_DEFENSE.md # Defensible novelty & competitor matrix
+│   ├── DATA_GOVERNANCE.md                 # Data licensing, privacy, and ethics protocol
+│   ├── schema-lock-m1.md                  # Milestone M1 locked schema specification
+│   ├── literature-review-matrix.md        # Academic literature matrix (14 papers, Walden format)
+│   ├── CHANGELOG.md                       # Auto-updated by sync.ps1 on every commit
+│   ├── research/                          # Research syntheses, CLAIM_LEDGER, SHAP theory & audit guide
+│   └── fellowship/                        # Official Fusemachines guidelines & reference rubrics
+├── presentation/               # Proposal Defense Slide Deck (LaTeX Beamer)
+│   ├── main.tex                # 18-slide Beamer presentation entry point
+│   ├── main.pdf                # Compiled defense presentation deck
+│   ├── build.ps1               # Automated PowerShell compile script
+│   ├── beamer_theme_fuse.sty   # Custom Fusemachines corporate/academic theme
+│   ├── speaker_notes.md        # Slide-by-slide script, timing, and talking points
+│   └── slides/                 # Modular slide source files (slide01 to slide18)
+├── report/                     # Comprehensive Proposal LaTeX Report & Generated Audits
+│   ├── main.tex                # Academic proposal entry point
+│   ├── main.pdf                # Compiled LaTeX proposal document
+│   ├── vars.tex                # Document metadata, titles, and team details
+│   ├── at_fuse_aif.cls         # Custom Khwopa/AIF LaTeX document class
+│   ├── references.bib          # BibTeX bibliography
+│   ├── audit_report_val_gender.html             # Generated validation audit report (Gender)
+│   ├── audit_report_val_race_gender_shap.html   # Generated validation audit report (Race x Gender + SHAP)
+│   └── src/                    # Proposal chapters, frontmatter, and architectural figures
 ├── research/                   # 20-Track Parallel Research Sprint
 │   ├── research tracks/        # Track prompts and deliverables (Tracks 01–20)
-│   ├── context feed/           # Context documents feeding research tracks
-│   └── results/                # Stream syntheses (A–F) and cross-track conflict log
-├── scripts/                    # Dataset exploration and verification scripts
-│   ├── explore_fairface.py     # FairFace disk verification & attribute profiling
-│   └── explore_utkface.py      # UTKFace comparison & DEX noise analysis (cut per Cut-List #2)
-├── report/                     # LaTeX report source and compiled proposal
-│   ├── main.tex                # Entry point
-│   ├── vars.tex                # Title, authors, supervisor metadata
-│   ├── at_fuse_aif.cls         # Document class
-│   ├── references.bib
-│   ├── main.pdf                # Compiled proposal (tracked; build artifacts are not)
-│   └── src/                    # Frontmatter, chapters, backmatter, images
-├── docs/                       # TA/reviewer-facing meta-documentation
-│   ├── BiasAperture-AT.md      # Master project planning and task assignments (v11)
-│   ├── PROPOSAL_DEFENSE_MASTER_DOSSIER.md # AUTHORITATIVE defense doc — rubric-mapped (Parts 1-5), supersedes the two below for defense prep
-│   ├── PROPOSAL_DEFENSE_GUIDE.md # Earlier Viva Q&A guide — kept for its detailed script/traps content, not the primary reference
-│   ├── PRE_PROPOSAL_READING_GUIDE.md # Earlier study guide/roadmap — kept for conceptual walkthrough, not the primary reference
-│   ├── PRESENTATION_DISCREPANCY_NOTES.md # Slide-deck discrepancy findings vs. repo ground truth
-│   ├── BiasAperture_NOVELTY_INTEGRATION_DEFENSE.md # Novelty & prior-art defense
-│   ├── DATA_GOVERNANCE.md      # Data licensing & privacy protocol
-│   ├── schema-lock-m1.md       # Milestone M1 schema specification
-│   ├── literature-review-matrix.md   # Paper matrix (14 papers, Walden format)
-│   ├── CHANGELOG.md            # Auto-updated by sync.ps1 on each sync
-│   ├── research/                # HIGH/MID/LOW-level syntheses, CLAIM_LEDGER, SHAP theory, data exploration, verification guide
-│   └── fellowship/             # Official AIF guidelines & reference PDFs
-├── vendor/                     # Offline TeX dependencies
-├── src/                        # Implementation package:
-│   ├── bias_aperture/          # Core package
-│   │   ├── schema.py           # Locked demographic and metric schema (M1)
-│   │   ├── model_interface.py  # ModelInterface & PredictionsFileInterface
-│   │   ├── data_ingestion.py   # FairFace ingestion & validation pipeline
-│   │   ├── explainability.py   # Explainability layer (surrogate attribution; spatial SHAP deferred)
+│   ├── context feed/           # Context feeds and background documentation
+│   └── results/                # Synthesis documents (Streams A–F) and conflict logs
+├── specs/                      # Modular Technical Specifications
+│   ├── 00-overview-and-mvp-scope.md
+│   ├── 01-architecture.md
+│   ├── 02-data-model.md
+│   ├── 03-orchestrator.md
+│   ├── 04-intake-and-classification.md
+│   ├── 05-audit-engine.md
+│   ├── 06-statistics-and-confidence.md
+│   ├── 07-explainability.md
+│   ├── 08-report-and-compliance.md
+│   ├── 09-verification.md
+│   ├── 10-security-and-governance.md
+│   └── 11-requirements-traceability.md
+├── graphify-out/               # Automated Codebase Knowledge Graph & Diagnostics
+│   ├── graph.html              # Interactive browser-based graph visualizer
+│   ├── graph.json              # GraphRAG-ready graph dataset
+│   └── GRAPH_REPORT.md         # Plain-language architecture audit and community report
+├── scripts/                    # Utility, profiling, and verification scripts
+│   ├── explore_fairface.py     # FairFace disk verification and attribute distribution
+│   ├── explore_utkface.py      # UTKFace comparison & DEX noise analysis
+│   └── check_stale_claims.py   # Automated assertion-verification anti-drift script
+├── src/                        # Core Implementation Package
+│   ├── bias_aperture/          # Production library code
+│   │   ├── schema.py           # Locked internal demographic schema & result models (M1)
+│   │   ├── model_interface.py  # Model abstraction (PredictionsFileInterface & InProcessInterface)
+│   │   ├── data_ingestion.py   # Ingestion, validation, and cohort support profiling
+│   │   ├── explainability.py   # Additive Shapley surrogate attribution layer
 │   │   ├── cli.py              # CLI entry point orchestrator (`bias-aperture`)
-│   │   ├── fairness/           # WP4 detection engine package
-│   │   └── report/             # WP3 report generation package
-│   └── tests/                  # Automated pytest unit test suite (conftest.py, tests)
-├── sync.ps1                    # Local git workflow: stage, conventional-commit, pull --rebase, push
-├── LICENSE                     # MIT
+│   │   ├── fairness/           # Detection engine package (WP4)
+│   │   │   ├── backends.py     # Harmonized FairlearnBackend & AIF360Backend
+│   │   │   ├── base.py         # FairnessBackend interface & result types
+│   │   │   ├── metrics.py      # Pure mathematical implementations & OvR decomposition
+│   │   │   └── statistics.py   # Bootstrap CI, Chi-square tests & divergence alerts
+│   │   └── report/             # Compliance report generation package (WP3)
+│   │       ├── generator.py    # Standalone HTML report compiler
+│   │       └── templates/      # Offline Jinja2 report templates (report.html.j2)
+│   └── tests/                  # Pytest test suite (67 unit & integration tests)
+├── sync.ps1                    # Multi-remote synchronization & commit automation script
+├── LICENSE                     # MIT License
 ├── AGENT.md                    # Universal AI agent & developer guidelines
-├── CLAUDE.md                   # Claude assistant instructions
-├── ANTIGRAVITY.md              # Google Antigravity & Gemini instructions
-└── README.md
+├── CLAUDE.md                   # Assistant instructions for Claude
+├── ANTIGRAVITY.md              # Assistant instructions for Antigravity & Gemini
+└── README.md                   # Primary project overview and documentation
 ```
+
+---
 
 ## Project Progress & Roadmap
 
 ```
-Overall Progress: [██████████████████░░] 90% (Milestones M1–M4 Completed · Inference Complete · M5 Audit/Report Active)
+Overall Progress: [██████████████████░░] 90% (Milestones M1–M4 Complete · Inference Complete · M5 Active)
 ```
 
-| Work Package / Milestone                                    | Stream / Focus            | Status    | Progress Bar                  | Deliverables & Implementation State                                                                                                                                                                                                                                                    |
-| ----------------------------------------------------------- | ------------------------- | --------- | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **WP1 / M1: Schema Lock & Baseline**                        | Foundations / Joint       | Completed | `[████████████████████] 100%` | Locked schema (`schema.py`), FairFace ResNet-34 baseline fixed, test fixtures                                                                                                                                                                                                          |
-| **WP2 / M2: Data Ingestion & Test Matrix**                  | Stream A (Tisha)          | Completed | `[████████████████████] 100%` | FairFace ingestion pipeline (`data_ingestion.py`), disk verification (97,698 images), UTKFace cut profiling                                                                                                                                                                            |
-| **WP3 / M3: Compliance Report Generation**                  | Stream B (Tisha/Aaradhya) | Completed | `[████████████████████] 100%` | Offline standalone Jinja2 HTML report (`generator.py`), embedded Base64 charts, EU AI Act & NIST mapping                                                                                                                                                                               |
-| **WP4 / M4: Statistical Detection Engine & Explainability** | WP4 (Aaradhya)            | Completed | `[████████████████████] 100%` | Pure-math metrics, Fairlearn + native AIF360 backends, BCa bootstrap ($B \ge 1,000$), $\chi^2$ significance tests, demographic-dummy surrogate attribution (spatial SHAP deferred)                                                                                                     |
-| **WP5 / M5: System Orchestration & Case Study**             | Integration / Joint       | Active    | `[██████████████████░░]  90%` | Benchmark inference complete (`10,954/10,954` processed), CSV schema validated, and validation audit reports generated (`report/audit_report_val_gender.html`, `report/audit_report_val_race_gender_shap.html`); next: finalize LaTeX report empirical tables and defense presentation |
+| Work Package / Milestone | Stream / Focus | Status | Progress | Deliverables & Implementation State |
+| :--- | :--- | :---: | :---: | :--- |
+| **WP1 / M1: Schema Lock & Baseline** | Foundations / Joint | Completed | `[████████████████████] 100%` | Locked internal schema (`schema.py`), FairFace ResNet-34 classifier baseline fixed, frozen demographic taxonomies, shared test fixtures. |
+| **WP2 / M2: Data Ingestion & Test Matrix** | Stream A (Tisha) | Completed | `[████████████████████] 100%` | Ingestion pipeline (`data_ingestion.py`), alias resolution, 97,698 FairFace images disk verified, UTKFace profiled and cut. |
+| **WP3 / M3: Compliance Report Generation** | Stream B (Tisha/Aaradhya) | Completed | `[████████████████████] 100%` | Zero-network Jinja2 HTML report generator (`generator.py`), embedded SVG charts, EU AI Act Art. 10/13 & NIST AI RMF mapping. |
+| **WP4 / M4: Statistical Detection & Explainability** | WP4 (Aaradhya) | Completed | `[████████████████████] 100%` | Dual backends (Fairlearn + AIF360), $\chi^2$ asymptotic tests, BCa bootstrap ($B \ge 1,000$), $n < 30$ guards, exact additive Shapley surrogate attribution. |
+| **WP5 / M5: System Orchestration & Case Studies** | Integration / Joint | Active | `[██████████████████░░]  90%` | CLI orchestrator (`cli.py`), benchmark inference complete (`10,954/10,954`), validation audit reports generated (`report/*.html`), 18-slide Beamer presentation deck compiled; next: oral defense delivery. |
 
-### Current Status & Next Steps (September 5, 2026)
+---
 
-**Aaradhya**
+## Quickstart & CLI Execution
 
-- [x] Run `bias-aperture` audit on `data/processed/fairface_predictions_val.csv`.
-- [x] Verify standalone HTML reports (`audit_report_val_gender.html`, `audit_report_val_race_gender_shap.html`) include DPD, DIR, EOP, EOD, 95% bootstrap CIs, $\chi^2$ $p$-values, sample sizes, and $n < 30$ guards.
-- [ ] Finalize `report/main.pdf` with empirical tables, confidence intervals, $p$-values, and disparity visualizations.
-- [ ] Seal reproducible empirical claims in `docs/research/CLAIM_LEDGER.md`.
+### 1. Installation & Environment Setup
 
-**Tisha**
-
-- [ ] Confirm defense date, duration, format, and marking breakdown with TA Shreejan Kisee.
-- [ ] Audit the generated Model Card and Datasheet against EU AI Act Articles 10 and 13.
-- [ ] Verify all 126 race × age × gender bins and document sample-size enforcement.
-- [ ] Prepare the dataset and compliance sections for the defense.
-
-**Joint**
-
-- [ ] Confirm timeline and dependencies after the TA responds.
-- [ ] Create the 10–15 minute presentation and rehearse the end-to-end CLI demo.
-- [ ] Practice scrutiny questions on the `n ≥ 30` guard, chi-squared testing, bootstrap CIs, backend differences, and diagnostic-only scope.
-
-### Questions for the TA
-
-- What are the confirmed defense date, duration, and required format?
-- Must both team members present, and how are individual contributions assessed?
-- Are slides, a live demonstration, or both required?
-- Is FairFace alone sufficient, allowing UTKFace to be formally cut from the final scope?
-- Do the CLI and offline HTML report satisfy the deliverable requirements?
-- Are Fairlearn and AIF360 both mandatory, and can explainability (surrogate vs deferred spatial SHAP) be presented as a focused validation component?
-- What is the confirmed final deadline and are there interim milestones?
-- Which evidence is expected: tests, profiling, metric results, generated report, runtime measurements, and end-to-end audit?
-
-## Branching & Workstreams
-
-| Branch                 | Stream / Work Package | Primary Owner                    | Description / Verification Mandate                                                                              |
-| ---------------------- | --------------------- | -------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| `main`                 | Production / Base     | Joint                            | Stable base holding locked schema, verified engine, docs, and report                                            |
-| `feat/stream-data`     | Stream A (WP2)        | Tisha (`@tiixsha`)               | FairFace dataset ingestion, `dlib` 5-point landmark alignment & demographic test-matrix construction            |
-| `feat/stream-report`   | Stream B (WP3)        | Tisha (`@tiixsha`)               | Jinja2 HTML compliance report scaffolding, zero-network offline rendering, EU AI Act mapping                    |
-| `feat/wp4-engine`      | WP4                   | Aaradhya (`@AaradhyaDT`)         | Fairness computation backends (AIF360 + Fairlearn), BCa bootstrap CIs, and $\chi^2$ significance tests          |
-| `feat/wp5-integration` | WP5                   | Aaradhya (`@AaradhyaDT`) / Joint | CLI orchestrator, surrogate explainability layer (spatial SHAP deferred), and end-to-end benchmark case studies |
-
-## Research Verification & Viva Defense Allocation
-
-Empirical claims are verified across independent audit streams as detailed in the [Verification & Scrutiny Guide](docs/research/VERIFICATION_AND_SCRUTINY_GUIDE.md):
-
-- **Tisha Manandhar**: Leads defense on Dataset Integrity (FairFace 97.7k count verification & alignment), Demographic Test Matrix Scaffolding, Regulatory Alignment (EU AI Act Art. 10/13 & NIST AI RMF Measure 2.11), and Standalone Compliance Reporting.
-- **Aaradhya Dev Tamrakar**: Leads defense on Statistical Significance Engine ($\chi^2$ asymptotic tests, BCa Bootstrap Confidence Intervals), Dual-Backend Harmonization (AIF360 vs Fairlearn Equalized Odds max-of-gaps), and Surrogate Feature Attribution (spatial SHAP deferred).
-
-## Python Development, Testing & Code Style
-
-The project follows the [Khwopa / TA Engineering Standards](https://github.com/Khwopa-College-of-Engineering-KHCE/Image-Super-Resolution/tree/standards) for Python code style and testing:
+BiasAperture uses [`uv`](https://github.com/astral-sh/uv) for fast, deterministic dependency management:
 
 ```bash
-# Run unit test suite
-uv run --extra dev pytest
+# Clone the repository
+git clone https://github.com/fuseai-fellowship/BiasAperture-A-Diagnostic-Framework-for-Demographic-Bias-Auditing-in-Facial-Analysis-Models.git
+cd BiasAperture-A-Diagnostic-Framework-for-Demographic-Bias-Auditing-in-Facial-Analysis-Models
 
-# Run linter and auto-formatter
-uv run --extra dev ruff check --fix
-uv run --extra dev ruff format
-
-# Install pre-commit hooks (optional for local commits)
-pre-commit install
+# Synchronize dependencies with uv
+uv sync --extra dev
 ```
 
-## Local Git Workflow & Auto-Sync (`sync.ps1`)
+### 2. Run the Verification Test Suite
+
+Run the full automated pytest suite (67 tests across all 5 modules):
+
+```bash
+uv run --extra dev pytest
+```
+
+Check code style and linting with Ruff:
+
+```bash
+uv run --extra dev ruff check src/
+uv run --extra dev ruff format --check src/
+```
+
+### 3. Run an Audit via CLI (`bias-aperture`)
+
+Perform an end-to-end bias audit on precomputed model predictions and generate a self-contained HTML compliance report:
+
+```bash
+# Audit validation set predictions across race and gender with surrogate explainability
+uv run bias-aperture audit data/processed/fairface_predictions_val.csv \
+  --target-column gender_pred \
+  --ground-truth-column gender \
+  --sensitive-features race gender \
+  --output report/audit_report_val_race_gender_shap.html \
+  --explain \
+  --bootstrap-resamples 1000
+```
+
+Open the resulting file `report/audit_report_val_race_gender_shap.html` in any web browser to view the audit results, disparity cards, statistical significance checks, and regulatory compliance matrix.
+
+---
+
+## Presentation & Report Compilation
+
+### 1. Proposal Defense Slide Deck (LaTeX Beamer)
+
+The presentation deck is located in `presentation/` and uses a custom theme tailored to the Fusemachines AI Fellowship branding:
 
 ```powershell
-.\sync.ps1                                  # stage all, conventional-commit, pull --rebase, push
-.\sync.ps1 -m "feat(scope): detailed summary"  # same, with an explicit commit message
-.\sync.ps1 -PullOnly                        # git pull --autostash only, no commit/push
+cd presentation
+.\build.ps1
 ```
+The compiled output is saved to `presentation/main.pdf`. Speaker notes, slide-by-slide scripts, and anticipated Q&A are detailed in [presentation/speaker_notes.md](presentation/speaker_notes.md).
 
-Every run (except `-PullOnly`) appends a timestamp entry to `docs/CHANGELOG.md` before committing. The project is now synced from the verified inference-completion state, with session notes stored under `dev-logs/` using the dated naming convention.
+### 2. Academic Proposal LaTeX Report
 
-## Building the Report
-
-Requires a full TeX Live distribution (the class pulls in `booktabs`, `array`, `glossaries`, `newtxmath`, `siunitx`, `algorithmicx`, and others).
+The comprehensive proposal document is located in `report/`:
 
 ```bash
 cd report
@@ -219,56 +271,57 @@ bibtex main
 pdflatex -interaction=nonstopmode main.tex
 pdflatex -interaction=nonstopmode main.tex
 ```
+The compiled document is saved to `report/main.pdf`.
 
-The `makeglossaries` step is required — it sorts the raw abbreviation and symbol entries the class writes during the first pass into the `.acr`/`.sls` files the later passes typeset. Skipping it leaves the List of Abbreviations and List of Symbols pages blank. Overleaf runs this automatically; a plain local `pdflatex` invocation does not unless your editor or `latexmkrc` is configured to call it.
+---
 
-If `newtxmath.sty`, `IEEEtran.bst`, or `binhex.tex` are reported missing, install the corresponding package from `vendor/` into your local TeX tree (or via `tlmgr`/your package manager) rather than editing the source.
+## Regulatory Traceability & Standards
 
-Build artifacts (`.aux`, `.bbl`, `.toc`, `.synctex.gz`, etc.) are git-ignored; only the source and the compiled `report/main.pdf` are tracked.
+Every metric and finding produced by BiasAperture is mapped to international legal and engineering standards:
 
-## VS Code Setup
+| Regulatory Standard | Article / Clause / Subcategory | BiasAperture Implementation |
+| :--- | :--- | :--- |
+| **EU AI Act** | **Article 10(2)(f)**: Examination in view of possible biases | Dual-backend Core Four metric suite evaluating statistical disparities across unitary and intersectional subgroups. |
+| **EU AI Act** | **Article 10(3)**: Data governance & statistical representation | Subgroup support contingency profiling (`compute_cohort_profile`), $n < 30$ reporting suppression guards. |
+| **EU AI Act** | **Article 13**: Transparency & provision of information | Standalone zero-network HTML compliance reports containing model cards, evaluation parameters, and audit summaries. |
+| **NIST AI RMF 1.0** | **MEASURE 2.11**: Fairness and bias evaluation | Asymptotic $\chi^2$ independence tests and 95% BCa bootstrap confidence intervals ensuring inferential validity. |
+| **NIST AI RMF 1.0** | **MAP 1.5 & GOVERN 1.2**: Risk assessment & legal accountability | Targeted additive Shapley surrogate attribution uncovering demographic proxy features contributing to disparity flags. |
 
-Recommended extensions for editing/compiling `report/`:
+---
 
-- **[LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop)** (James Yu) — compile, preview, autocomplete, SyncTeX
-- **[LaTeX Utilities](https://marketplace.visualstudio.com/items?itemName=tecosaur.latex-utilities)** (tecosaur) — glossary/word-count add-ons on top of Workshop
+## Branching, Workstreams & Multi-Remote Sync
 
-Skip generic "LaTeX" language-support extensions (e.g. Mathematic Inc's) — redundant with Workshop and can conflict on snippets/keybindings.
+The team operates on distinct feature streams synchronized via `sync.ps1`:
 
-Workshop's default recipes don't run `makeglossaries`, which this build requires (see above). Add a custom recipe in `.vscode/settings.json`:
+| Branch | Stream / Work Package | Owner | Primary Focus & Verification Mandate |
+| :--- | :--- | :--- | :--- |
+| `main` | Production / Baseline | Joint | Clean, validated baseline holding locked schema, verified engine, reports, and presentation. |
+| `feat/stream-data` | Stream A (WP2) | Tisha (`@tiixsha`) | Ingestion pipeline, FairFace landmark alignment, demographic cohort matrix construction. |
+| `feat/stream-report` | Stream B (WP3) | Tisha (`@tiixsha`) | Zero-network HTML compliance report scaffolding, Jinja2 templating, regulatory mapping. |
+| `feat/wp4-engine` | WP4 | Aaradhya (`@AaradhyaDT`) | Fairness backends (AIF360 + Fairlearn), BCa bootstrap CIs ($B \ge 1,000$), $\chi^2$ tests. |
+| `feat/wp5-integration` | WP5 | Aaradhya (`@AaradhyaDT`) / Joint | CLI orchestrator (`cli.py`), surrogate explainability, benchmark validation inference, end-to-end integration. |
 
-```json
-{
-  "latex-workshop.latex.tools": [
-    {
-      "name": "pdflatex",
-      "command": "pdflatex",
-      "args": ["-interaction=nonstopmode", "-synctex=1", "%DOC%"]
-    },
-    {
-      "name": "makeglossaries",
-      "command": "makeglossaries",
-      "args": ["%DOCFILE%"]
-    },
-    {
-      "name": "bibtex",
-      "command": "bibtex",
-      "args": ["%DOCFILE%"]
-    }
-  ],
-  "latex-workshop.latex.recipes": [
-    {
-      "name": "pdflatex ➔ makeglossaries ➔ bibtex ➔ pdflatex ×2",
-      "tools": ["pdflatex", "makeglossaries", "bibtex", "pdflatex", "pdflatex"]
-    }
-  ],
-  "latex-workshop.latex.recipe.default": "lastUsed",
-  "latex-workshop.latex.outDir": "%DIR%"
-}
+### Multi-Remote Synchronization Script (`sync.ps1`)
+
+Automates staging, conventional commit generation, branch rebasing, and pushing across primary, duo, and organization mirrors:
+
+```powershell
+.\sync.ps1 -m "type(scope): summary message"
 ```
 
-Set `report/main.tex` as the root file if Workshop doesn't auto-detect it.
+---
+
+## Defense Ownership & Viva Strategy
+
+Preparation for the defense oral examination is structured across technical domains:
+
+- **Tisha Manandhar**: Leads defense on Data Ingestion & Governance (FairFace 97.7k image curation and alignment), Demographic Test Matrix construction, Regulatory Alignment (EU AI Act Articles 10/13, NIST AI RMF), and Offline Compliance Reporting UX.
+- **Aaradhya Dev Tamrakar**: Leads defense on Statistical Significance Engine ($\chi^2$ asymptotic tests, BCa Bootstrap CIs), Heterogeneous Backend Harmonization (Fairlearn vs. AIF360 max-of-gaps and sign conventions), and Exact Additive Shapley Surrogate Attribution.
+
+For comprehensive defense preparation, refer to the authoritative rubric-aligned [Proposal Defense Master Dossier](docs/PROPOSAL_DEFENSE_MASTER_DOSSIER.md) and [Presentation Speaker Notes](presentation/speaker_notes.md).
+
+---
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
