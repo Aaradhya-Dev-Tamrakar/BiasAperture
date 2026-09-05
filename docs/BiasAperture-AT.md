@@ -428,13 +428,27 @@ Following a comprehensive audit across code artifacts, specifications, and propo
 - **Implementation Reality**: The operational feature explainability engine (`explainability.py`) implements a demographic-dummy surrogate attribution model (linear Shapley value credit assignment over tabular protected groups) triggered on flagged metric disparities (FR-005).
 - **Scope Clarification**: Full spatial / pixel-level SHAP (`shap.PartitionExplainer` on image tensors) is deferred to future work due to compute overhead and adversarial brittleness. In compliance with Bilodeau et al. (2022) and Slack et al. (2020), surrogate attribution outputs are strictly reported as "no proxy reliance identified under the surrogate method", avoiding unwarranted claims of proven fairness.
 
-### 4. Expansion of Literature Review Matrix (Bedrock Foundations)
-The literature review matrix (`docs/literature-review-matrix.md`) is expanded from 9 to 14 papers to ground the formal credit allocation, attribution impossibility, and risk-management foundations:
+### 4. Expansion of Literature Review Matrix (Bedrock Foundations & September 5 Addendum)
+The literature review matrix (`docs/literature-review-matrix.md`) is expanded from 9 to 20 papers across three cohorts:
+
+**Cohort 1 — Original 9 papers** (Buolamwini & Gebru 2018, Grother et al. 2019, Dwork et al. 2012, Hardt et al. 2016, Kärkkäinen & Joo 2021, Bird et al. 2020, Barocas et al. 2019, Mehrabi et al. 2021, Raji & Buolamwini 2019).
+
+**Cohort 2 — 5 foundational / methodological papers** added to ground formal credit allocation, attribution impossibility, and risk-management:
 - **Shapley (1953)**: Axiomatic foundation of cooperative game theory (Efficiency, Symmetry, Dummy, Additivity) establishing the unique fair credit division rule.
 - **Lundberg & Lee (2017)**: Additive feature attribution unifying LIME/DeepLIFT under KernelSHAP with the optimal Shapley kernel weighting $\pi(z')$.
 - **Bilodeau et al. (2022)**: Impossibility theorems proving that no additive feature attribution method can guarantee causal proxy discovery, mandating conservative reporting language.
 - **Slack et al. (2020)**: Adversarial perturbation detection demonstrating that surrogate explainers can be fooled, motivating BiasAperture's predictions-file + in-process dual interface.
 - **NIST AI RMF 1.0 (2023)**: Operationalization of the Measure function (Measure 2.11) as a repeatable bias auditing process mapped alongside EU AI Act Article 10.
+
+**Cohort 3 — 6 September 5, 2026 addendum papers** grounding the three open validity threats (ITA robustness, open-set recognition, domain shift):
+- **Howard et al. (2021)** (Tier 1 Central): ITA-colorimetry illumination control, motivating the ITA skin-tone axis in BiasAperture's intersectional analysis.
+- **Fournier-Montgieux et al. (2024)** (Tier 1 Central Limitation/Validity Threat): Open-set recognition limitations that bound the claimed performance envelope.
+- **Cascone et al. (2021)** (Tier 2 Contextual): Spectral / NIR cross-domain performance degradation framing domain-shift as an out-of-scope limitation.
+- **Nemavhola (2023)** (Tier 2 Contextual): Cardiac-imaging generalizability threat, reinforcing the single-domain (visible-spectrum) scope boundary.
+- **Aslam et al. (2024)** (Tier 2 Contextual): Lightweight model architecture efficiency trade-offs in resource-constrained deployment contexts.
+- **Shilova & Heutte (2019)** (Tier 2 Contextual): HLS-based skin-tone normalization, theoretical complement to the ITA-based colorimetry approach.
+
+All 20 papers are synchronized with `report/src/chapters/literatureReview.tex` (Chapter 2 of the formal thesis).
 
 ---
 
@@ -465,3 +479,5 @@ Project 40%, Assignments 20%, Quizzes 20%, and Exam 20%. Added a question to con
 the internal project assessment breakdown with the TA.
 
 **Revision 11 (September 5, 2026):** Title updated to BiasAperture-AT_v11. Added §21 documenting full discrepancy ledger reconciliation: 97,698 released FairFace images vs. 108,501 pre-discard total, final confirmation of UTKFace cut status (Cut-List #2), and clarification of FR-005 as demographic-dummy surrogate attribution with spatial SHAP deferred. Expanded `docs/literature-review-matrix.md` with 5 foundational papers (Shapley 1953, Lundberg & Lee 2017, Bilodeau et al. 2022, Slack et al. 2020, NIST AI RMF 1.0). Harmonized all legacy unqualified dataset scale claims, cut UTKFace status, and deferred SHAP surrogate attribution mentions across §§1–20 to enforce compliance with the `check_stale_claims.py` pre-commit guard. Removed redundant intermediate revision log block.
+
+**Revision 12 (September 5, 2026):** Title updated to BiasAperture-AT_v12. §4 updated — literature review matrix further expanded from 14 to **20 papers** by adding Cohort 3: six September 5 addendum papers (Howard et al. 2021, Fournier-Montgieux et al. 2024, Cascone et al. 2021, Nemavhola 2023, Aslam et al. 2024, Shilova & Heutte 2019) grounding validity threats for ITA robustness, open-set recognition, and domain shift. `docs/literature-review-matrix.md` re-synchronized with `report/src/chapters/literatureReview.tex` (Chapter 2). Chi-squared description corrected in `README.md` and `docs/BiasAperture-AT.md` to precisely state: Pearson's χ² independence test with Fisher's exact test fallback for sparse 2×2 tables (expected cell count < 5). `report/references.bib` updated with 10 new BibTeX entries. 67/67 tests pass; `latexmk` compilation verified (50 pages, clean exit 0).

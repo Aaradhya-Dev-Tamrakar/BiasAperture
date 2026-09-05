@@ -1,21 +1,21 @@
 # Graph Report - BiasAperture-A-Diagnostic-Framework-for-Demographic-Bias-Auditing-in-Facial-Analysis-Models  (2026-09-05)
 
 ## Corpus Check
-- 161 files · ~156,389 words
+- 151 files · ~146,017 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1440 nodes · 1788 edges · 174 communities (120 shown, 45 thin omitted)
-- Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 101 edges (avg confidence: 0.92)
+- 1317 nodes · 1631 edges · 167 communities (113 shown, 45 thin omitted)
+- Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 67 edges (avg confidence: 0.92)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `36ec49e4`
+- Built from commit: `503d09e9`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- SubjectRecord
+- MetricResult
 - Session Clarity & Task Prioritization — BiasAperture M5 Integration Phase
 - Phase-2 Research Synthesis
 - BiasAperture: Integration as Innovation
@@ -23,7 +23,7 @@
 - BiasAperture-AT (v10)
 - 3. The 12 Master First-Principles Questions
 - cli.py
-- Implementation Order
+- Stream B Synthesis (Report Generation)
 - Research Report: SHAP Explainability Principles & Feature Weighting
 - BiasAperture — Research Sprint: Low-Level Technical Specification
 - 4.2 Complete 18-Slide Presentation Blueprint & Talking Points
@@ -34,25 +34,25 @@
 - .ingest_records
 - 2. Slide Deck Outline (15–20 slides)
 - Data Exploration Report — FairFace & UTKFace
-- BiasAperture-AT (v11)
+- ._evaluate_core_four
 - PredictionsFileInterface
 - 2026-08-27_WK4_report.md
 - 01 - Architecture
 - Part 3: System Architecture, Methodology & Mathematical Formulation
 - MVP Scope Specification
-- ValidationMode
-- InProcessInterface
-- BiasAperture: Integration as Innovation
+- data_ingestion.py
+- SubjectRecord
+- compute_contingency_chi2
 - Quick Start (5 minutes setup)
 - track_A_dataset_scale_utkface.md
 - Discrepancy Ledger — Independent Verification Report
-- CLAUDE.md — Assistant Instructions for BiasAperture
-- ValueError
+- OvRTransformer
+- .evaluate
 - 2. Component Design & Interfacing
 - Report Generator
 - PROPOSAL_DEFENSE_MASTER_DOSSIER.md
 - Part 1: Product Requirements Document (PRD) & Problem Statement [10 Marks]
-- explore_utkface.py
+- ValueError
 - CLAUDE.md — Assistant Instructions for BiasAperture
 - 3. Detailed Accomplishments & Technical Highlights
 - BiasAperture — Weekly Project Report (WK5)
@@ -61,46 +61,44 @@
 - BiasAperture — Weekly Project Report (WK1)
 - BiasAperture — Weekly Project Report (WK3)
 - BiasAperture — Proposal Defense Preparation Guide
-- _verify_offline_html_contract
+- 1.5 System Constraints, Assumptions & Design Guarantees
 - test_backend_harmonization.py
 - BiasAperture — Weekly Project Report (WK2)
-- BiasAperture — System Context (paste this first)
+- 3.4 Statistical Rigour Protocol & Safeguard Guardrails
 - 5.3 Scripted Answers to 32 Anticipated Defense Questions
-- BiasAperture — Discrepancy Ledger
 - BiasAperture — Gate 0–3 Merged Results
+- 1.10 Target Models & Model Interface Architecture
 - BiasAperture — System Context (paste this first)
-- explore_fairface.py
+- 1.2 Project Context, Justification & Application Domains
 - sync.ps1
-- Schema Lock — Milestone M1 (WP1)
+- 1.4 Project Goals & Specific Objectives
 - 5. Anticipated Hard Questions & Scripted Answers (32 Questions)
 - Part 2: Literature Review, Theoretical Framework & Positioning [10 Marks]
 - check_stale_claims.py
 - 3. Slide-by-Slide Script & Talking Points
 - 6. Traps to Avoid
-- Part 5: Q&A Grilling Defense, Hard Questions & Traps [5 Marks Q&A Handling]
+- Stream D Synthesis (Explainability)
 - Schema Lock — Milestone M1 (WP1)
-- stratified_sample
+- Stream E Synthesis (Architecture & Testing)
 - Discrepancy Verification Report Summary
 - Stream B Synthesis — Report Generation (Tracks 05–08)
 - Stream D Synthesis — Explainability (Tracks 15–16)
 - .compute_cohort_profile
-- InProcessInterface
+- Fairlearn Backend Implementation
 - AGENT.md — Developer & AI Agent Guidelines
 - AGENT.md — Developer & AI Agent Guidelines
 - ANTIGRAVITY.md — Google Antigravity & Gemini Coding Guidelines
 - 8. Mock Grilling Checklist
-- Part 4: Presentation & Defense Strategy [5 Marks Clarity & Structure]
+- AIF360 Backend Implementation
 - pull_request_template.md
 - Track C — Architecture/Module Structural Claims vs. Actual `src/` Code
-- Gate 3 — Decision-Support Brief (`task_2026-09-04_011`, user10)
+- Bootstrap Confidence Intervals
 - Cross-Track Conflict & Discrepancy Log — BiasAperture 20-Track Research Sprint
 - Stream E Synthesis — Architecture & Testing (Tracks 17–18)
 - 00 - Overview and MVP Scope
-- Novelty & Prior-Art Check (July 30, 2026)
+- Chi-Squared Significance Testing
 - Track 01: FairFace Dataset Deep-Dive
 - Track D — Milestone/WP Completion % Claims vs. `CLAIM_LEDGER.md`
-- Gate 0 — Anti-Drift Guard Script (`task_2026-09-04_007`, user6)
-- B — Explainability: SHAP vs. Actual Demographic-Dummy Surrogate
 - Stream A Synthesis — Data Pipeline (Tracks 01–04)
 - Stream F Synthesis — Defense & Regulatory (Tracks 19–20)
 - 03 - Orchestrator
@@ -110,7 +108,6 @@
 - Data Directory Layout
 - BiasAperture Literature Review
 - 09 - Verification
-- context feed/literature-review-matrix.md
 - fixture
 - Track 02 — UTKFace Comparison & Risk Assessment
 - Track 03 — Pandas Data Validation Patterns
@@ -134,7 +131,6 @@
 - 06 - Statistics and Confidence
 - 08-report-and-compliance.md
 - Mid Level Architecture
-- BiasAperture
 - Stream F Synthesis (Defense & Regulatory)
 - CHANGELOG.md
 - Schema Constants
@@ -165,9 +161,6 @@
 - Project Gantt Chart
 - Fusemachines Logo
 - System Workflow Flowchart
-- BiasAperture Novelty Defense Memo
-- Parallel Research Runner Guide
-- Schema Lock Milestone M1
 - CONTEXT.md (Research Tracks)
 - Phase 2 Runner Guide
 - Pandas Data Validation
@@ -182,16 +175,16 @@
 - UTKFace Comparison
 
 ## God Nodes (most connected - your core abstractions)
-1. `DataIngestionPipeline` - 39 edges
-2. `IngestionConfig` - 30 edges
-3. `SubjectRecord` - 25 edges
-4. `SubjectRecord` - 21 edges
-5. `MetricResult` - 21 edges
-6. `2. Slide Deck Outline (15–20 slides)` - 21 edges
-7. `BiasAperture-AT (v11)` - 21 edges
-8. `BiasAperture-AT (v10)` - 20 edges
-9. `MetricResult` - 19 edges
-10. `4.2 Complete 18-Slide Presentation Blueprint & Talking Points` - 19 edges
+1. `SubjectRecord` - 43 edges
+2. `DataIngestionPipeline` - 39 edges
+3. `MetricResult` - 36 edges
+4. `IngestionConfig` - 30 edges
+5. `2. Slide Deck Outline (15–20 slides)` - 21 edges
+6. `BiasAperture-AT (v10)` - 20 edges
+7. `4.2 Complete 18-Slide Presentation Blueprint & Talking Points` - 19 edges
+8. `ValidationMode` - 18 edges
+9. `Phase-2 Research Synthesis` - 18 edges
+10. `MVP Scope Specification` - 16 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `HTML Report Generator` --references--> `NIST AI RMF`  [EXTRACTED]
@@ -200,17 +193,16 @@
   report/src/images/architecture_highlevel.jpg → README.md
 - `Cluster B - Explainability Verification` --semantically_similar_to--> `Surrogate Explainability Strategy`  [INFERRED] [semantically similar]
   research/results/discrepancy_verification_report.md → specs/07-explainability.md
-- `test_in_process_interface_not_implemented()` --uses--> `InProcessInterface`  [INFERRED]
-  src/tests/test_model_interface.py → research/context feed/model_interface.py
-- `test_in_process_interface_rejects_bad_framework()` --uses--> `InProcessInterface`  [INFERRED]
-  src/tests/test_model_interface.py → research/context feed/model_interface.py
+- `BiasAperture: Integration as Innovation` --references--> `EU AI Act Article 10`  [EXTRACTED]
+  docs/BiasAperture_NOVELTY_INTEGRATION_DEFENSE.md → AGENT.md
+- `BiasAperture: Integration as Innovation` --references--> `NIST AI RMF`  [EXTRACTED]
+  docs/BiasAperture_NOVELTY_INTEGRATION_DEFENSE.md → AGENT.md
 
 ## Import Cycles
 - None detected.
 
 ## Hyperedges (group relationships)
 - **Regulatory Compliance Framework** — eu_ai_act, nist_ai_rmf [EXTRACTED 0.90]
-- **Regulatory Compliance Mapping** — docs_literature_review_matrix, research_context_feed_biasaperture_at [EXTRACTED 0.90]
 - **Audit Integrity Framework** — specs_02_data_model_subjectrecord, specs_05_audit_engine_core_four, specs_06_statistics_and_confidence_guards [EXTRACTED 0.95]
 - **Regulatory Compliance Framework** — docs_data_governance, docs_biasaperture_novelty_integration_defense_biasaperture_integration_as_innovation, eu_ai_act_article_10, nist_ai_rmf [EXTRACTED 0.95]
 - **Research Audit Tracks** — research_research_tracks_track_a_dataset_scale_utkface, research_research_tracks_track_b_shap_vs_surrogate, research_research_tracks_track_c_architecture_structural, research_research_tracks_track_d_milestone_claims [EXTRACTED 1.00]
@@ -223,11 +215,11 @@
 - **Phase-2 UI/UX Research Stream** — research_research_tracks_track_25_web_dashboard_architecture_evaluation, research_research_tracks_track_26_interactive_drill_down_report_ux, research_research_tracks_track_27_executive_compliance_officer_summary_mode, research_research_tracks_track_28_accessibility_and_internationalization_of_reports [EXTRACTED 1.00]
 - **Regulatory Compliance Framework** — eu_ai_act, nist_ai_rmf, bias_aperture_platform [EXTRACTED 1.00]
 
-## Communities (174 total, 45 thin omitted)
+## Communities (167 total, 45 thin omitted)
 
-### Community 0 - "SubjectRecord"
-Cohesion: 0.05
-Nodes (56): MetricResult, BiasAperture internal schema — LOCKED at WP1 / Milestone M1. Per…, One row of the detection engine's output (FR-003/FR-004), the shape Stream B's…, One row of the common internal schema (FR-001) after ingestion and inference —…, SubjectRecord, OvRTransformer, SubjectRecord, r""" Multi-Class One-vs-Rest (OvR) evaluation helper. Transforms a multi-class… (+48 more)
+### Community 0 - "MetricResult"
+Cohesion: 0.12
+Nodes (21): MetricResult, BiasAperture internal schema — LOCKED at WP1 / Milestone M1. Per…, One row of the detection engine's output (FR-003/FR-004), the shape Stream B's…, mock_core_four_results(), fixture, Shared test fixtures for BiasAperture test suite., Provide a diverse list of SubjectRecords across race and gender categories., Provide a valid mock dictionary of Core Four MetricResults. (+13 more)
 
 ### Community 1 - "Session Clarity & Task Prioritization — BiasAperture M5 Integration Phase"
 Cohesion: 0.04
@@ -242,8 +234,8 @@ Cohesion: 0.09
 Nodes (21): 1. **Schema Bridge**, 2. **Regulatory Mapping**, 3. **Explainability Envelope**, 4. **Repeated Auditability**, BiasAperture: Integration as Innovation, Defense Memo — Why Integrating Existing Tools is Novel Here, How to Defend This to an Examiner, Key Insight from Your Conversation (+13 more)
 
 ### Community 4 - "DataIngestionPipeline"
-Cohesion: 0.12
-Nodes (37): DataIngestionPipeline, IngestionConfig, Configuration options for data ingestion pipeline., Ingests, validates, profiles, and standardizes demographic prediction datasets., Raised when data violates the locked schema or taxonomy in STRICT mode., SchemaValidationError, Gap fix: 'drop_duplicates' silently drops EXACT repeats of an image_id, but a…, Gap fix: under 'keep_all', an EXACT duplicate matches neither the… (+29 more)
+Cohesion: 0.13
+Nodes (39): DataIngestionPipeline, IngestionConfig, Configuration options for data ingestion pipeline., Ingests, validates, profiles, and standardizes demographic prediction datasets., Raised when data violates the locked schema or taxonomy in STRICT mode., Validation behavior policy upon encountering invalid or corrupt data., SchemaValidationError, ValidationMode (+31 more)
 
 ### Community 5 - "BiasAperture-AT (v10)"
 Cohesion: 0.06
@@ -254,12 +246,12 @@ Cohesion: 0.06
 Nodes (29): 10. Passing Audit Semantics, 11. Regulatory Alignment, 12. Scope Boundary, 1. Buolamwini & Gebru (2018) — *Gender Shades: Intersectional Accuracy Disparities in Commercial Gender Classification*, 1. Problem & Intersectional Masking, 1. The Core Reasoning Chain, 2. Fairness Metrics Hierarchy, 2. Kärkkäinen & Joo (2021) — *FairFace: Face Attribute Dataset for Balanced Race, Gender, and Age* (+21 more)
 
 ### Community 7 - "cli.py"
-Cohesion: 0.10
-Nodes (24): ArgumentParser, build_parser(), main(), BiasAperture Command-Line Interface (WP5 / System Orchestration). Wires…, Construct CLI argument parser., HTMLReportGenerator, Any, Path (+16 more)
+Cohesion: 0.08
+Nodes (30): ArgumentParser, build_parser(), main(), BiasAperture Command-Line Interface (WP5 / System Orchestration). Wires…, Construct CLI argument parser., HTMLReportGenerator, Any, Path (+22 more)
 
-### Community 8 - "Implementation Order"
-Cohesion: 0.07
-Nodes (28): After All 20 Complete, Checklist, Implementation Order, 🚀 Parallel Research Runner Guide — 20 Claude Desktop Instances, 🔴 Phase 1 — Critical (read these first), 🟡 Phase 2 — Medium (read these second), 🟢 Phase 3 — Low (read last), Priority Order (if reviewing as they finish) (+20 more)
+### Community 8 - "Stream B Synthesis (Report Generation)"
+Cohesion: 0.40
+Nodes (5): Jinja2 Report Templates, Model Cards Specification, FairFace Datasheet Draft, EU AI Act Regulatory Mapping, Stream B Synthesis (Report Generation)
 
 ### Community 9 - "Research Report: SHAP Explainability Principles & Feature Weighting"
 Cohesion: 0.07
@@ -270,16 +262,16 @@ Cohesion: 0.08
 Nodes (25): 1.0.1. Multi-Class One-vs-Rest (OvR) Evaluation Policy, 1.0. Audited Target Configurations, 1.1. Demographic Parity Difference (DPD), 1.2. Equalized Odds Difference (EOD) — Resolving Definitional Divergence, 1.3. Equal Opportunity Difference (EOP) — Resolving Sign Mismatch, 1.4. Disparate Impact Ratio (DIR) & Edge Cases, 1. Formal Semantics of Audited Targets & Demographic Attributes, 2. Mathematical Fairness Formulations & Backend Harmonization (+17 more)
 
 ### Community 11 - "4.2 Complete 18-Slide Presentation Blueprint & Talking Points"
-Cohesion: 0.11
-Nodes (19): 4.2 Complete 18-Slide Presentation Blueprint & Talking Points, Slide 10: System Architecture & Data Flow, Slide 11: The Core Four Fairness Metrics, Slide 12: Statistical Rigour — Beyond Bare Ratios, Slide 13: Explainability & Proxy Variable Triage, Slide 14: Automated Reporting & Regulatory Crosswalk, Slide 15: Benchmark Dataset & Baseline Model, Slide 16: Project Schedule & Sprint Milestones (+11 more)
+Cohesion: 0.08
+Nodes (25): 4.1 Defense Format, Time Budget & Pacing Plan, 4.2 Complete 18-Slide Presentation Blueprint & Talking Points, 4.3 Work Breakdown Structure (WBS) & Sprints (M1 to M5), 4.4 Project Timeline & Milestone Schedule, 4.5 Team Workload Distribution & Ownership Matrix, Collaborative Quality Control Protocol, Part 4: Presentation & Defense Strategy [5 Marks Clarity & Structure], Slide 10: System Architecture & Data Flow (+17 more)
 
 ### Community 12 - "BiasAperture — Research Sprint: High-Level Executive Synthesis"
 Cohesion: 0.12
 Nodes (16): 1. Executive Summary & Vision, 2. The Five Operating Modules, 3.1. Phase 2: Product Upgrade Sprint (Tracks 21–38), 3. Phase 1: The 20-Track Research Sprint: Key Findings, 4.1. Reproducible Competitive Search Protocol, 4. Defensible Novelty & Competitor Positioning, 5. Regulatory Alignment: EU AI Act & NIST AI RMF, 6. Scope Invariants & Descoping Strategy (Cut-List) (+8 more)
 
 ### Community 13 - "fairness/__init__.py"
-Cohesion: 0.05
-Nodes (65): AIF360Backend, CrossValidationOrchestrator, DivergenceAlert, FairlearnBackend, MetricResult, ndarray, Fairness backends and dual-backend cross-validation orchestrator (WP4).…, AIF360 backend harmonized to compute max-of-gaps EOD and unsigned EOP. Directly… (+57 more)
+Cohesion: 0.11
+Nodes (26): AIF360Backend, CrossValidationOrchestrator, DivergenceAlert, FairlearnBackend, Fairness backends and dual-backend cross-validation orchestrator (WP4).…, AIF360 backend harmonized to compute max-of-gaps EOD and unsigned EOP. Directly…, Fairness backend utilizing Fairlearn-aligned metric definitions., Record of mathematical divergence between backends. (+18 more)
 
 ### Community 14 - "3. Stream-by-Stream Verification Protocols"
 Cohesion: 0.08
@@ -290,8 +282,8 @@ Cohesion: 0.14
 Nodes (20): cnn_face_detection_model_v1, Compose, device, detect_and_align_face(), load_model(), main(), predict_single_image(), ndarray (+12 more)
 
 ### Community 16 - ".ingest_records"
-Cohesion: 0.12
-Nodes (15): Counter, IngestionResult, Any, DataFrame, Path, Structured output returned by the data ingestion pipeline., Ingest records from a CSV or JSON file on disk., Ingest records from a pandas DataFrame. (+7 more)
+Cohesion: 0.15
+Nodes (13): Counter, IngestionResult, Any, DataFrame, Path, Structured output returned by the data ingestion pipeline., Ingest records from a CSV or JSON file on disk., Ingest records from a pandas DataFrame. (+5 more)
 
 ### Community 17 - "2. Slide Deck Outline (15–20 slides)"
 Cohesion: 0.10
@@ -301,13 +293,13 @@ Nodes (21): 2. Slide Deck Outline (15–20 slides), Slide 10: The Core Four Disp
 Cohesion: 0.17
 Nodes (11): 1. FairFace, 2. UTKFace, 3. Data Integrity Decision — RESOLVED, 4. Historical Decision — UTKFace Excluded, Data Exploration Report — FairFace & UTKFace, Distributions (combined view, valid rows), Distributions (valid files), Result — clean, after exclusion (+3 more)
 
-### Community 19 - "BiasAperture-AT (v11)"
-Cohesion: 0.12
-Nodes (16): §16. Coming-Week Task Assignment — Trait-Based Split (August 20, 2026), Acceptance Criteria, Cut-List (if behind schedule — drop in this order), Feasibility Study — Reviewed, Naming History Note, Notes on Split Rationale (Historical), Outstanding Action Items, Problem Statement (+8 more)
+### Community 19 - "._evaluate_core_four"
+Cohesion: 0.14
+Nodes (21): ndarray, Compute Core Four metrics using native AIF360 dataset & metrics., Compute Core Four metrics with statistical confidence bounds., compute_group_rates(), demographic_parity_difference(), equal_opportunity_difference(), equalized_odds_difference(), ndarray (+13 more)
 
 ### Community 20 - "PredictionsFileInterface"
-Cohesion: 0.19
-Nodes (14): PredictionsFileInterface, Path, Batch ingestion of a precomputed predictions file (CSV or JSON). Expects the…, PredictionsFileInterface, Path, Batch ingestion of a precomputed predictions file (CSV or JSON). Expects the…, fixture, test_csv_happy_path() (+6 more)
+Cohesion: 0.12
+Nodes (20): ABC, InProcessInterface, ModelInterface, PredictionsFileInterface, Path, ModelInterface — FR-002 (Dual-Mode Model Interface), WBS 1.2. "The system shall…, Abstract contract both concrete interfaces satisfy (FR-002)., Yield one SubjectRecord per subject, in the locked schema. (+12 more)
 
 ### Community 21 - "2026-08-27_WK4_report.md"
 Cohesion: 0.17
@@ -318,24 +310,24 @@ Cohesion: 0.14
 Nodes (16): 01 - Architecture, Components, Deferred architecture, Design rules, Pipeline, 02 - Data Model, Invariants, MetricResult (+8 more)
 
 ### Community 23 - "Part 3: System Architecture, Methodology & Mathematical Formulation"
-Cohesion: 0.13
-Nodes (15): 1. Chi-Squared ($\chi^2$) Test of Independence (SciPy), 1. Disparate Impact Ratio (DIR) — Independence / Legal Metric, 2. Demographic Parity Difference (DPD) — Independence / Absolute Difference, 2. Stratified Bootstrap Confidence Intervals (95% CI), 3.1 End-to-End System Architecture, 3.2 Object-Oriented Software Design & SOLID Principles, 3.3 The Core Four Disparity Metrics (Formulation & Harmonization), 3.4 Statistical Rigour Protocol & Safeguard Guardrails (+7 more)
+Cohesion: 0.18
+Nodes (11): 1. Disparate Impact Ratio (DIR) — Independence / Legal Metric, 2. Demographic Parity Difference (DPD) — Independence / Absolute Difference, 3.1 End-to-End System Architecture, 3.2 Object-Oriented Software Design & SOLID Principles, 3.3 The Core Four Disparity Metrics (Formulation & Harmonization), 3.5 Explainability Protocol & Surrogate Feature Attribution, 3.6 Statutory Regulatory Traceability Crosswalk, 3. Equalized Odds Difference (EOD) — Separation / Error Parity (+3 more)
 
 ### Community 24 - "MVP Scope Specification"
 Cohesion: 0.29
 Nodes (6): Low-Level Technical Specification, Mid-Level Architectural Design, MVP Scope Specification, 07 - Explainability, 11 - Requirements Traceability, Source requirements
 
-### Community 25 - "ValidationMode"
-Cohesion: 0.27
-Nodes (9): Enum, Data Ingestion & Invariant Validation Engine — WP2 (Stream A). Transforms raw…, Demographic cohort contingency support and eligibility status., Validation behavior policy upon encountering invalid or corrupt data., Severity classification of validation anomalies., SubgroupCellStats, ValidationMode, ValidationSeverity (+1 more)
+### Community 25 - "data_ingestion.py"
+Cohesion: 0.20
+Nodes (9): Enum, Data Ingestion & Invariant Validation Engine — WP2 (Stream A). Transforms raw…, Demographic cohort contingency support and eligibility status., Severity classification of validation anomalies., Aggregated report of data ingestion and validation results., SubgroupCellStats, ValidationSeverity, ValidationSummary (+1 more)
 
-### Community 26 - "InProcessInterface"
-Cohesion: 0.24
-Nodes (8): InProcessInterface, ModelInterface, ABC, SubjectRecord, ModelInterface — FR-002 (Dual-Mode Model Interface), WBS 1.2. "The system shall…, Abstract contract both concrete interfaces satisfy (FR-002)., Yield one SubjectRecord per subject, in the locked schema., Direct in-process inference against a supplied PyTorch or TensorFlow model…
+### Community 26 - "SubjectRecord"
+Cohesion: 0.13
+Nodes (18): compute_ita(), ExplanationResult, Path, Explainability and visual proxy attribution module (WP4/WP5 / Stream D).…, Compute exact additive Shapley attributions over demographic proxy axes. Uses…, Compute Individual Typology Angle (ITA) skin-tone colorimetry in degrees…, Internal explanation artifact container., Targeted explainability engine for flagged demographic disparities. (+10 more)
 
-### Community 27 - "BiasAperture: Integration as Innovation"
-Cohesion: 0.14
-Nodes (13): 1. **Schema Bridge**, 2. **Regulatory Mapping**, 3. **Explainability Envelope**, 4. **Repeated Auditability**, BiasAperture: Integration as Innovation, Defense Memo — Why Integrating Existing Tools is Novel Here, How to Defend This to an Examiner, Key Insight from Your Conversation (+5 more)
+### Community 27 - "compute_contingency_chi2"
+Cohesion: 0.22
+Nodes (12): compute_contingency_chi2(), compute_stratified_bootstrap_ci(), holm_bonferroni_correction(), ndarray, Statistical rigor engine (WP4 / Stream C). Implements statistical hypothesis…, Compute 95% stratified BCa bootstrap confidence interval (R-009). Resampling is…, Compute Pearson's chi-squared test of independence across demographic groups.…, Apply Holm-Bonferroni step-down procedure for FWER control (R-011). Given M… (+4 more)
 
 ### Community 28 - "Quick Start (5 minutes setup)"
 Cohesion: 0.14
@@ -349,29 +341,29 @@ Nodes (8): Output format, Prompt (task spec), Setup (paste first, before the Pro
 Cohesion: 0.20
 Nodes (13): Cluster A — Dataset Scale (108,501 vs 97,698) & UTKFace, Cluster B — Explainability: SHAP vs Surrogate, Cluster C — Architecture/Structural Claims, Cluster D — WP Completion Claims, ✅ Confirmed Discrepancies, Critical Finding: Fix Ledger Error, Discrepancy Ledger — Independent Verification Report, Ground Truth Confirmed (+5 more)
 
-### Community 31 - "CLAUDE.md — Assistant Instructions for BiasAperture"
-Cohesion: 0.18
-Nodes (10): 1. Schema Invariants (M1 Lock — `src/bias_aperture/schema.py`), 2. Statistical & Safety Guards, Active Workstreams & Branch Mapping, Architecture & Locked Contracts, CLAUDE.md — Assistant Instructions for BiasAperture, Coding Standards, Commands & Workflows, Environment & Testing (+2 more)
+### Community 31 - "OvRTransformer"
+Cohesion: 0.36
+Nodes (6): OvRTransformer, r""" Multi-Class One-vs-Rest (OvR) evaluation helper. Transforms a multi-class…, Extract unique classes present across true, predicted, or both labels., Binarize ground truth and predictions against the specified target class., Decompose a multi-class dataset into M distinct binary OvR datasets., test_ovr_transformer()
 
-### Community 32 - "ValueError"
-Cohesion: 0.25
-Nodes (3): Any, Any, ValueError
+### Community 32 - ".evaluate"
+Cohesion: 0.40
+Nodes (3): ndarray, Compute Core Four metrics on pre-screened arrays. Implementations must only…, Run the full evaluation pipeline with NFR-003 screening. Parameters ----------…
 
 ### Community 33 - "2. Component Design & Interfacing"
 Cohesion: 0.15
 Nodes (12): 1. System Topology & Component Overview, 2.1. Module 1: Ingestion & Invariant Validation (`data_ingestion.py`, `model_interface.py`), 2.2. Module 2: Fairness Strategy Engine (`bias_aperture/fairness/`), 2.3. Module 3: Statistical Rigor Engine (`fairness/statistics.py`), 2.4. Module 4: Targeted Explainability & Proxy Detection (`explainability.py`), 2.5. Module 5: Compliance Report Generation (`report/`), 2. Component Design & Interfacing, 3. Comprehensive Testing & Verification Architecture (+4 more)
 
 ### Community 35 - "PROPOSAL_DEFENSE_MASTER_DOSSIER.md"
-Cohesion: 0.17
+Cohesion: 0.15
 Nodes (11): BiasAperture Platform, AI Fellowship Project Evaluation Rubric, 6.1 Phase 1 Submission Checklist, 6.2 Repository Hygiene & Phase 2 Alignment Verification, BiasAperture — Master Proposal Defense Dossier, Complete Phase 1 Documentation, Specification, Literature Review, Architecture, and Defense Preparation Framework, Document Purpose & Fellowship Rubric Mapping, Executive Overview & Defense Identity (+3 more)
 
 ### Community 36 - "Part 1: Product Requirements Document (PRD) & Problem Statement [10 Marks]"
-Cohesion: 0.08
-Nodes (26): 1.10 Target Models & Model Interface Architecture, 1.11 Hardware, Software & Resource Sizing Specifications, 1.1 Problem Statement & The Operational Gap, 1.2 Project Context, Justification & Application Domains, 1.3 Strict Diagnostic Scope: Non-Negotiable Boundaries, 1.4 Project Goals & Specific Objectives, 1.5 System Constraints, Assumptions & Design Guarantees, 1.6 User Personas & Stakeholder Requirements (+18 more)
+Cohesion: 0.15
+Nodes (13): 1.11 Hardware, Software & Resource Sizing Specifications, 1.1 Problem Statement & The Operational Gap, 1.3 Strict Diagnostic Scope: Non-Negotiable Boundaries, 1.6 User Personas & Stakeholder Requirements, 1.7 Functional Requirements (FR-001 to FR-009), 1.8 Non-Functional Requirements (NFR-001 to NFR-008), 1.9 Benchmark Dataset Specification & Data Governance, Ethical Data Governance (+5 more)
 
-### Community 37 - "explore_utkface.py"
-Cohesion: 0.29
-Nodes (10): _age_bucket(), explore_utkface(), main(), parse_utkface_filename(), print_report(), Path, scripts/explore_utkface.py — exploration of the raw UTKFace image set. UTKFace…, Bucket raw UTKFace age into human-readable ranges for reporting only. NOT the… (+2 more)
+### Community 37 - "ValueError"
+Cohesion: 0.09
+Nodes (25): Namespace, explore_split(), main(), _parse_bool(), print_report(), Path, scripts/explore_fairface.py — exploration of the raw FairFace label CSVs…, SplitReport (+17 more)
 
 ### Community 38 - "CLAUDE.md — Assistant Instructions for BiasAperture"
 Cohesion: 0.18
@@ -405,9 +397,9 @@ Nodes (10): 1. Executive Summary & Objectives, 2. Work Packages & Milestone Mapp
 Cohesion: 0.20
 Nodes (10): 1. Defense Format & Strategy, 4. The Novelty Question — Your Most Important Defense, 7. Numbers You Must Know Cold, BiasAperture — Proposal Defense Preparation Guide, Presentation Time Budget, Table of Contents, The 5-Step Defense Framework, What a Proposal Defense Is (+2 more)
 
-### Community 46 - "_verify_offline_html_contract"
-Cohesion: 0.32
-Nodes (7): Offline Compliance Report Contract Verification (R-015). This module validates…, Inspects HTML string for external network dependencies., R-015: Verifies that valid BiasAperture report HTML satisfies the offline…, Verifies that the validator correctly flags external network violations., test_offline_html_contract_catches_violations(), test_offline_html_contract_validation(), _verify_offline_html_contract()
+### Community 46 - "1.5 System Constraints, Assumptions & Design Guarantees"
+Cohesion: 0.50
+Nodes (4): 1.5 System Constraints, Assumptions & Design Guarantees, Assumptions, Constraints, Non-Negotiable Design Guarantees
 
 ### Community 47 - "test_backend_harmonization.py"
 Cohesion: 0.20
@@ -417,37 +409,37 @@ Nodes (9): Backend Harmonization & Edge-Case Mathematical Tests (R-005, R-006, R
 Cohesion: 0.20
 Nodes (9): 1. Executive Summary & Objectives, 2. Work Packages & Milestone Mapping, 3.1 Milestone M1 Schema Contract Formulation (`docs/schema-lock-m1.md`), 3.2 Literature Review Matrix Scaffolding, 3. Detailed Accomplishments & Technical Highlights, 4. Git Commit Provenance (Week 2), 5. Next Steps & Lookahead (Week 3), BiasAperture — Weekly Project Report (WK2) (+1 more)
 
-### Community 49 - "BiasAperture — System Context (paste this first)"
-Cohesion: 0.22
-Nodes (8): BiasAperture — System Context (paste this first), Core Four Disparity Metrics, Dual-Backend Architecture, Locked Schema (DO NOT modify), Output Schema (MetricResult dataclass), Project Scope, Statistical Requirements, Tech Stack
+### Community 49 - "3.4 Statistical Rigour Protocol & Safeguard Guardrails"
+Cohesion: 0.50
+Nodes (4): 1. Chi-Squared ($\chi^2$) Test of Independence (SciPy), 2. Stratified Bootstrap Confidence Intervals (95% CI), 3.4 Statistical Rigour Protocol & Safeguard Guardrails, 3. The Small-Sample Guardrail ($n < 30$)
 
 ### Community 50 - "5.3 Scripted Answers to 32 Anticipated Defense Questions"
-Cohesion: 0.22
-Nodes (9): 5.3 Scripted Answers to 32 Anticipated Defense Questions, Domain 1: Novelty & Contribution, Domain 2: Scope & Diagnostic Boundaries, Domain 3: Mathematics & Metrics, Domain 4: Statistical Validity & Guardrails, Domain 5: Explainability & Attribution, Domain 6: Regulatory & Legal Alignment, Domain 7: Data Governance & Benchmarks (+1 more)
+Cohesion: 0.12
+Nodes (16): 5.1 Defense Philosophy & Panel Psychology, 5.2 The Core Novelty Defense Script, 5.3 Scripted Answers to 32 Anticipated Defense Questions, 5.4 "Numbers You Must Know Cold" Reference Card, 5.5 Critical Traps to Avoid During Defense, 5.6 5-Tier Descoping Cut-List (Contingency Architecture), Domain 1: Novelty & Contribution, Domain 2: Scope & Diagnostic Boundaries (+8 more)
 
-### Community 51 - "BiasAperture — Discrepancy Ledger"
-Cohesion: 0.22
-Nodes (9): Discrepancy Fix Ledger, Discrepancy Ledger, A — Dataset Scale (108,501 vs 97,698) & UTKFace Status, BiasAperture — Discrepancy Ledger, C — Architecture/Structural Claims vs. Actual `src/`, Cross-Cutting Root Causes, D — Milestone/WP Completion Claims vs. CLAIM_LEDGER.md + Test Coverage, Stale dataset-scale figures (still show unqualified 108,501) (+1 more)
+### Community 51 - "BiasAperture — Gate 0–3 Merged Results"
+Cohesion: 0.06
+Nodes (34): Discrepancy Fix Ledger, 1. `scripts/check_stale_claims.py` (full content), 2. Diff — `.pre-commit-config.yaml`, 3. Diff — `docs/research/VERIFICATION_AND_SCRUTINY_GUIDE.md` (§5), 4. Test matrix (6/6 correct, zero false negatives/positives), BiasAperture — Gate 0–3 Merged Results, Cross-check grep results (all 15-item files), Cross-cutting flags (surfaced across checkpoints, not previously in the ledger) (+26 more)
 
-### Community 52 - "BiasAperture — Gate 0–3 Merged Results"
-Cohesion: 0.22
-Nodes (9): BiasAperture — Gate 0–3 Merged Results, Cross-check grep results (all 15-item files), Cross-cutting flags (surfaced across checkpoints, not previously in the ledger), Gate 1 — HIGH-Severity Fixes (`task_2026-09-04_008`, user7), Gate 1b — Design Patterns Table Fix (`task_2026-09-04_009`, user8), Gate 2 — MED-Severity Fixes (`task_2026-09-04_010`, user9), Open decision points (yours, not resolved here), README.md diagram bullets (+1 more)
+### Community 52 - "1.10 Target Models & Model Interface Architecture"
+Cohesion: 0.67
+Nodes (3): 1.10 Target Models & Model Interface Architecture, Supported Integration Modes, Validation Target (Baseline Model)
 
 ### Community 53 - "BiasAperture — System Context (paste this first)"
 Cohesion: 0.22
 Nodes (8): BiasAperture — System Context (paste this first), Core Four Disparity Metrics, Dual-Backend Architecture, Locked Schema (DO NOT modify), Output Schema (MetricResult dataclass), Project Scope, Statistical Requirements, Tech Stack
 
-### Community 54 - "explore_fairface.py"
-Cohesion: 0.39
-Nodes (7): explore_split(), main(), _parse_bool(), print_report(), Path, scripts/explore_fairface.py — exploration of the raw FairFace label CSVs…, SplitReport
+### Community 54 - "1.2 Project Context, Justification & Application Domains"
+Cohesion: 0.67
+Nodes (3): 1.2 Project Context, Justification & Application Domains, Application Domains, Project Justifications
 
 ### Community 55 - "sync.ps1"
 Cohesion: 0.28
 Nodes (3): Initialize-Remotes(), Push-AllRemotes(), Sync-AllOriginBranches()
 
-### Community 56 - "Schema Lock — Milestone M1 (WP1)"
-Cohesion: 0.25
-Nodes (7): Change policy, Classifier baseline, Constants locked with the schema, Detection engine output schema (FR-003/FR-004), Internal schema (FR-001), Schema Lock — Milestone M1 (WP1), What this unblocks
+### Community 56 - "1.4 Project Goals & Specific Objectives"
+Cohesion: 0.67
+Nodes (3): 1.4 Project Goals & Specific Objectives, General Objective, Specific Objectives
 
 ### Community 57 - "5. Anticipated Hard Questions & Scripted Answers (32 Questions)"
 Cohesion: 0.25
@@ -469,17 +461,17 @@ Nodes (7): 3. Slide-by-Slide Script & Talking Points, Architecture (Slide 9) —
 Cohesion: 0.29
 Nodes (7): 6. Traps to Avoid, ❌ Trap 1: Overclaiming Novelty, ❌ Trap 2: Oversimplifying the Engineering Effort, ❌ Trap 3: Claiming Causal Explanations, ❌ Trap 4: Overstating Regulatory Certification, ❌ Trap 5: Misrepresenting Project Phase, ❌ Trap 6: Misattributing Sample-Size Invariants
 
-### Community 62 - "Part 5: Q&A Grilling Defense, Hard Questions & Traps [5 Marks Q&A Handling]"
-Cohesion: 0.29
-Nodes (7): 5.1 Defense Philosophy & Panel Psychology, 5.2 The Core Novelty Defense Script, 5.4 "Numbers You Must Know Cold" Reference Card, 5.5 Critical Traps to Avoid During Defense, 5.6 5-Tier Descoping Cut-List (Contingency Architecture), Key Psychological Rules for Presenters, Part 5: Q&A Grilling Defense, Hard Questions & Traps [5 Marks Q&A Handling]
+### Community 62 - "Stream D Synthesis (Explainability)"
+Cohesion: 0.67
+Nodes (3): SHAP for Image Classifiers, Proxy Variable Detection via SHAP, Stream D Synthesis (Explainability)
 
 ### Community 63 - "Schema Lock — Milestone M1 (WP1)"
 Cohesion: 0.29
 Nodes (7): Change policy, Classifier baseline, Constants locked with the schema, Detection engine output schema (FR-003/FR-004), Internal schema (FR-001), Schema Lock — Milestone M1 (WP1), What this unblocks
 
-### Community 64 - "stratified_sample"
-Cohesion: 0.38
-Nodes (6): Namespace, main(), parse_args(), DataFrame, Sample n rows from df, allocated proportionally across the unique combinations…, stratified_sample()
+### Community 64 - "Stream E Synthesis (Architecture & Testing)"
+Cohesion: 0.67
+Nodes (3): Dual Backend Strategy Pattern, Pytest Testing Patterns, Stream E Synthesis (Architecture & Testing)
 
 ### Community 65 - "Discrepancy Verification Report Summary"
 Cohesion: 0.29
@@ -497,10 +489,6 @@ Nodes (6): Open flags requiring owner decision, Proxy variable detection methodo
 Cohesion: 0.29
 Nodes (6): Demographic cohort distribution across all axes and composite strata., Compute demographic support counts and NFR-003 eligibility across unitary…, SubgroupCohortProfile, Gap fix: has_positive_support / has_negative_support are only True when the…, test_cohort_profile_contingency_support(), test_cohort_profile_insufficient_positive_or_negative_support()
 
-### Community 69 - "InProcessInterface"
-Cohesion: 0.19
-Nodes (10): InProcessInterface, ModelInterface, ABC, SubjectRecord, ModelInterface — FR-002 (Dual-Mode Model Interface), WBS 1.2. "The system shall…, Abstract contract both concrete interfaces satisfy (FR-002)., Yield one SubjectRecord per subject, in the locked schema., Direct in-process inference against a supplied PyTorch or TensorFlow model… (+2 more)
-
 ### Community 70 - "AGENT.md — Developer & AI Agent Guidelines"
 Cohesion: 0.33
 Nodes (5): 1. Non-Negotiable Project Constraints, 2. Directory Layout & Module Ownership, 3. Build & Test Commands, 4. Git & Branching Strategy, AGENT.md — Developer & AI Agent Guidelines
@@ -517,10 +505,6 @@ Nodes (5): ANTIGRAVITY.md — Google Antigravity & Gemini Coding Guidelines, Key
 Cohesion: 0.33
 Nodes (6): 8. Mock Grilling Checklist, Round 1: Foundations & Scope (5 min), Round 2: Technical & Statistical Depth (10 min), Round 3: Novelty & Integration Defense (5 min), Round 4: Feasibility, Risks & Roadmap (5 min), Round 5: Rapid-Fire Metrics & Constants (3 min)
 
-### Community 74 - "Part 4: Presentation & Defense Strategy [5 Marks Clarity & Structure]"
-Cohesion: 0.33
-Nodes (6): 4.1 Defense Format, Time Budget & Pacing Plan, 4.3 Work Breakdown Structure (WBS) & Sprints (M1 to M5), 4.4 Project Timeline & Milestone Schedule, 4.5 Team Workload Distribution & Ownership Matrix, Collaborative Quality Control Protocol, Part 4: Presentation & Defense Strategy [5 Marks Clarity & Structure]
-
 ### Community 75 - "pull_request_template.md"
 Cohesion: 0.33
 Nodes (5): 🛠️ Changes Made, 📋 Checklist, 📌 Purpose, 🔗 Related Issues, 🧪 Testing & Verification
@@ -528,10 +512,6 @@ Nodes (5): 🛠️ Changes Made, 📋 Checklist, 📌 Purpose, 🔗 Related Issu
 ### Community 76 - "Track C — Architecture/Module Structural Claims vs. Actual `src/` Code"
 Cohesion: 0.33
 Nodes (4): Output format, Prompt (task spec), Setup (paste first, before the Prompt section below), Track C — Architecture/Module Structural Claims vs. Actual `src/` Code
-
-### Community 77 - "Gate 3 — Decision-Support Brief (`task_2026-09-04_011`, user10)"
-Cohesion: 0.33
-Nodes (6): Gate 3 — Decision-Support Brief (`task_2026-09-04_011`, user10), Item 1 — WP3 PDF-export claim + WP5 CLI flag claim, Item 2 — WP5 "90%" claim, Item 3 — architecture_highlevel.jpg stale elements, Item 4 — report/generator.py vs report/templates/generator.py, Item 5 — fellowship PDFs: source-file check + §13 precedent
 
 ### Community 78 - "Cross-Track Conflict & Discrepancy Log — BiasAperture 20-Track Research Sprint"
 Cohesion: 0.33
@@ -545,10 +525,6 @@ Nodes (5): `fairness/base.py` design (Track 17 — code delivered, ready for rev
 Cohesion: 0.33
 Nodes (6): 00 - Overview and MVP Scope, Authority and status, Change rule, Documents, Phase 1 MVP, Purpose
 
-### Community 81 - "Novelty & Prior-Art Check (July 30, 2026)"
-Cohesion: 0.40
-Nodes (5): Defense Framing (Updated August 20, 2026), Engineering Decisions That Differ from Industry Optimization (August 20, 2026 Reflation), Novelty & Prior-Art Check (July 30, 2026), Prior-Art Search Confirmation, The Friction Problem BiasAperture Solves
-
 ### Community 82 - "Track 01: FairFace Dataset Deep-Dive"
 Cohesion: 0.40
 Nodes (4): Track 01: FairFace Dataset Deep-Dive, Stream A Synthesis: Data Pipeline, Instructions, Prompt
@@ -556,14 +532,6 @@ Nodes (4): Track 01: FairFace Dataset Deep-Dive, Stream A Synthesis: Data Pipeli
 ### Community 83 - "Track D — Milestone/WP Completion % Claims vs. `CLAIM_LEDGER.md`"
 Cohesion: 0.40
 Nodes (4): Output format, Prompt (task spec), Setup (paste first, before the Prompt section below), Track D — Milestone/WP Completion % Claims vs. `CLAIM_LEDGER.md`
-
-### Community 84 - "Gate 0 — Anti-Drift Guard Script (`task_2026-09-04_007`, user6)"
-Cohesion: 0.40
-Nodes (5): 1. `scripts/check_stale_claims.py` (full content), 2. Diff — `.pre-commit-config.yaml`, 3. Diff — `docs/research/VERIFICATION_AND_SCRUTINY_GUIDE.md` (§5), 4. Test matrix (6/6 correct, zero false negatives/positives), Gate 0 — Anti-Drift Guard Script (`task_2026-09-04_007`, user6)
-
-### Community 85 - "B — Explainability: SHAP vs. Actual Demographic-Dummy Surrogate"
-Cohesion: 0.40
-Nodes (5): B — Explainability: SHAP vs. Actual Demographic-Dummy Surrogate, Clean (correctly caveated), HIGH severity (examiner-facing script, zero caveat), Image, MED severity (proposal .tex chapters — 10 hits, no surrogate language anywhere)
 
 ### Community 86 - "Stream A Synthesis — Data Pipeline (Tracks 01–04)"
 Cohesion: 0.40
@@ -693,37 +661,33 @@ Nodes (3): 08 - Report and Compliance, Compliance structure, Output contract
 Cohesion: 0.67
 Nodes (3): High Level Synthesis, Low Level Specification, Mid Level Architecture
 
-### Community 121 - "BiasAperture"
-Cohesion: 0.67
-Nodes (3): BiasAperture, FairFace Dataset, ResNet-34 (FairFace variant)
-
 ### Community 122 - "Stream F Synthesis (Defense & Regulatory)"
 Cohesion: 0.67
 Nodes (3): NIST AI RMF Detailed Mapping, Competitor Deep Analysis, Stream F Synthesis (Defense & Regulatory)
 
 ### Community 144 - "EU AI Act"
-Cohesion: 0.27
+Cohesion: 0.31
 Nodes (8): HTML Report Generator, Weekly Project Report (WK3), BiasAperture — Literature Review Matrix, Research Verification & Scrutiny Guide, EU AI Act, NIST AI RMF, BiasAperture Audit Report (Gender), BiasAperture Audit Report (Race/Gender/SHAP)
 
 ## Knowledge Gaps
-- **666 isolated node(s):** `bias_aperture`, `Rule`, `graphify`, `📌 Purpose`, `🛠️ Changes Made` (+661 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 902 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **607 isolated node(s):** `bias_aperture`, `Rule`, `graphify`, `📌 Purpose`, `🛠️ Changes Made` (+602 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 824 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **45 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `BiasAperture-AT (v11)` connect `2026-08-27_WK4_report.md` to `MVP Scope Specification`, `Phase-2 Research Synthesis`, `BiasAperture-AT (v10)`?**
-  _High betweenness centrality (0.041) - this node is a cross-community bridge._
-- **Why does `BiasAperture-AT (v11)` connect `BiasAperture-AT (v11)` to `Novelty & Prior-Art Check (July 30, 2026)`, `PROPOSAL_DEFENSE_MASTER_DOSSIER.md`, `2026-08-27_WK4_report.md`, `BiasAperture — Discrepancy Ledger`?**
-  _High betweenness centrality (0.022) - this node is a cross-community bridge._
+  _High betweenness centrality (0.033) - this node is a cross-community bridge._
+- **Why does `SubjectRecord` connect `SubjectRecord` to `.evaluate`, `MetricResult`, `DataIngestionPipeline`, `.compute_cohort_profile`, `ValueError`, `fairness/__init__.py`, `.ingest_records`, `PredictionsFileInterface`, `data_ingestion.py`, `OvRTransformer`?**
+  _High betweenness centrality (0.019) - this node is a cross-community bridge._
 - **Why does `MVP Scope Specification` connect `MVP Scope Specification` to `00 - Overview and MVP Scope`, `08-report-and-compliance.md`, `2026-08-27_WK4_report.md`, `03 - Orchestrator`, `04-intake-and-classification.md`, `10 - Security and Governance`?**
-  _High betweenness centrality (0.020) - this node is a cross-community bridge._
+  _High betweenness centrality (0.015) - this node is a cross-community bridge._
+- **Are the 10 inferred relationships involving `SubjectRecord` (e.g. with `DataIngestionPipeline` and `IngestionResult`) actually correct?**
+  _`SubjectRecord` has 10 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 4 inferred relationships involving `DataIngestionPipeline` (e.g. with `SubjectRecord` and `test_cohort_profile_contingency_support()`) actually correct?**
   _`DataIngestionPipeline` has 4 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 23 inferred relationships involving `SubjectRecord` (e.g. with `InProcessInterface` and `ModelInterface`) actually correct?**
-  _`SubjectRecord` has 23 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 6 inferred relationships involving `MetricResult` (e.g. with `ShapExplainerEngine` and `AIF360Backend`) actually correct?**
+  _`MetricResult` has 6 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `bias_aperture`, `Rule`, `graphify` to the rest of the system?**
-  _666 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `SubjectRecord` be split into smaller, more focused modules?**
-  _Cohesion score 0.05432595573440644 - nodes in this community are weakly interconnected._
+  _607 weakly-connected nodes found - possible documentation gaps or missing edges._

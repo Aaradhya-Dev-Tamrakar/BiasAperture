@@ -2,8 +2,8 @@
 
 **Project:** BiasAperture (Demographic Bias Auditing Platform for Computer Vision)  
 **Document Purpose:** Auditable, reproducible tracking ledger for all scientific, mathematical, architectural, and regulatory claims generated during research and design.  
-**Version:** 1.4.0 (Audit-Grade with Conflict Log Cross-Referencing & Inference Scope)  
-**Last Updated:** September 2, 2026
+**Version:** 1.5.0 (Audit-Grade with Conflict Log Cross-Referencing & Inference Scope)  
+**Last Updated:** September 5, 2026
 
 ---
 
@@ -55,6 +55,7 @@ flowchart LR
 | **R-018** | Stream F (NIST RMF) | BiasAperture instruments the **Measure** core function of the NIST AI Risk Management Framework (NIST AI RMF 1.0, 2023), specifically Measure 2.11, Measure 1.1, and Measure 1.3 (noting Measure 1.3 concerns evaluation participation, while dual-backends provide software cross-checking). | NIST AI Risk Management Framework 1.0 (January 2023) | **VERIFIED** | NIST AI RMF 1.0 (2023) Measure mapping | Subcategory mapping confirms $n < 30$ guard structurally satisfies Measure 1.1 (documenting unmeasurable risks). | `docs/research/HIGH_LEVEL_SYNTHESIS.md` §5 |
 | **R-019** | Stream F (Novelty) | Our comparative review of the selected seven fairness tools (Aequitas, Fairlearn, AIF360, Google WIT, JFAM, FAT Forensics, FairTest) did not identify an existing open-source system integrating all of these capabilities. | Comprehensive 7-tool competitive matrix and feature audit | **VERIFIED** | Reviewed seven-tool set (August 2026) | Feature-by-feature matrix confirms unique integration novelty solving computer vision workflow friction. | `docs/research/HIGH_LEVEL_SYNTHESIS.md` §4 |
 | **R-020** | Stream E (Testing) | An 8-record synthetic classification matrix (4 White + 4 Black subjects) yields exact deterministic ground-truth values: $\text{DPD}=0.500, \text{EOD}=0.500, \text{EOP}=0.500, \text{DIR}=0.333$. | Hand-calculated mathematical proof on minimal contingency table | **REPRODUCIBLE** *(Ground-Truth)* | Minimal 8-record contingency table | Automated pytest suite executes on raw and replicated $\times 8$ ($n=64$) blocks asserting all four exact ground-truth values. | `src/tests/test_known_answer_fairness_metrics.py::test_known_answer_8_record_baseline_math` |
+| **R-021** | Stream A (Validity Threat) | FairFace's published training code has never been successfully reproduced by a third party — an open, unresolved GitHub issue confirms this. Consequently, BiasAperture's demographic ground-truth labels carry an unquantified labelling-accuracy bound whose magnitude is not established in the project scope. This is a formal validity threat (Tier 1 Central Limitation) to all fairness metrics computed over FairFace demographic annotations. | Fournier-Montgieux et al. (2025) arXiv:2510.20482, §4 (reproducibility gap + formal bias/variance bounds Propositions 1–2) | **VERIFIED** *(External dep — open GitHub issue)* | Fournier-Montgieux et al. (2025) reproducibility analysis | Literature-level primary-source claim accepted from a peer-reviewed arXiv preprint with cited open GitHub issue; BiasAperture explicitly discloses this limitation in thesis Chapter 2 and compliance report regulatory section. | `docs/literature-review-matrix.md` Fournier-Montgieux row (Tier 1 Central Limitation/Validity Threat); `report/src/chapters/literatureReview.tex` §Validity Threats |
 
 ---
 
@@ -79,9 +80,9 @@ Preserving refuted hypotheses is an essential research integrity discipline. The
 ## 4. Claim Verification Status Summary
 
 ```
-Total Tracked Research Claims: 20 active + 9 invalidated
-├── REPRODUCIBLE (Codified in Passing Automated Test Suite): 10 claims (50%; 56 tests passing)
-├── VERIFIED (Primary Source / Tensor / Gazette / Script Inspected): 10 claims (50%)
+Total Tracked Research Claims: 21 active + 9 invalidated
+├── REPRODUCIBLE (Codified in Passing Automated Test Suite): 10 claims (47.6%; 67 tests passing)
+├── VERIFIED (Primary Source / Tensor / Gazette / Script Inspected): 11 claims (52.4%)
 ├── ASSERTED (Pending Initial Verification): 0 claims (0%)
 └── INVALIDATED (Formally Refuted & Documented): 9 claims
 ```

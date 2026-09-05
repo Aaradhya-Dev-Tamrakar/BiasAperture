@@ -19,7 +19,7 @@ BiasAperture is a diagnostic and evaluative software platform that computes subg
 3. **Equal Opportunity Difference (EOP)**
 4. **Equalized Odds Difference (EOD)**
 
-To eliminate single-library implementation bias, BiasAperture employs **AIF360** and **Fairlearn** as independent, cross-validating backends with mathematical harmonization (reconciling sign conventions, zero-denominator contracts, and max-of-gaps formulations). Every reported disparity is accompanied by a **Chi-squared ($\chi^2$) significance test**, a **95% BCa Bootstrap Confidence Interval** ($B \ge 1,000$ resamples), and strict sample-size guards ($n < 30$ suppressed).
+To eliminate single-library implementation bias, BiasAperture employs **AIF360** and **Fairlearn** as independent, cross-validating backends with mathematical harmonization (reconciling sign conventions, zero-denominator contracts, and max-of-gaps formulations). Every reported disparity is accompanied by a **Pearson's $\chi^2$ independence test** (with **Fisher's exact test fallback** for sparse $2\times2$ tables when any expected cell count $< 5$), a **95% BCa Bootstrap Confidence Interval** ($B \ge 1,000$ resamples), and strict sample-size guards ($n < 30$ suppressed).
 
 Flagged disparities are attributed to demographic proxy axes using exact **additive Shapley surrogate attribution** (spatial SHAP and ITA colorimetry deferred). All audit findings are mapped to **Article 10 and Article 13 of the EU AI Act** and **NIST AI RMF 1.0 (Measure 2.11)**. Empirical validation is conducted on the **FairFace benchmark (97,698 images)**; UTKFace was evaluated and formally cut from the runtime scope due to label noise.
 
@@ -84,7 +84,7 @@ flowchart TD
 1. **Data Ingestion & Invariant Validation (`src/bias_aperture/data_ingestion.py`)**: Validates demographic datasets against the locked M1 schema (`src/bias_aperture/schema.py`), enforces column alias resolution, filters missing labels, profiles cohort supports, and detects intersectional sample starvation ($n < 30$).
 2. **Model Interface (`src/bias_aperture/model_interface.py`)**: Abstract contract (`ModelInterface`) supporting batch predictions files (`PredictionsFileInterface`) and live in-process PyTorch/TensorFlow wrappers (`InProcessInterface`).
 3. **Fairness Metrics Engine (`src/bias_aperture/fairness/`)**: Dual backend strategy pattern (`FairlearnBackend` and `AIF360Backend`) cross-validating the Core Four metrics with OvR multi-class decomposition (`OvRTransformer`).
-4. **Statistical Rigour & Safeguards (`src/bias_aperture/fairness/statistics.py`)**: Computes 95% BCa bootstrap confidence intervals ($B = 1,000$), asymptotic $\chi^2$ independence tests, and divergence alerts across backends ($|\Delta| > 0.01$).
+4. **Statistical Rigour & Safeguards (`src/bias_aperture/fairness/statistics.py`)**: Computes 95% BCa bootstrap confidence intervals ($B = 1,000$), Pearson's $\chi^2$ independence tests with Fisher's exact test fallback for sparse $2\times2$ tables (expected cell count $< 5$), Holm-Bonferroni FWER adjustment, and divergence alerts across backends ($|\Delta| > 0.01$).
 5. **Targeted Explainability (`src/bias_aperture/explainability.py`)**: Triggers only on statistically flagged disparities to compute additive Shapley feature importances across demographic proxy axes.
 6. **Compliance Report Generator (`src/bias_aperture/report/generator.py`)**: Offline HTML compiler embedding interactive CSS, self-contained SVG/Base64 plots, model card metadata, and regulatory compliance matrices.
 
@@ -113,7 +113,7 @@ BiasAperture/
 │   ├── BiasAperture_NOVELTY_INTEGRATION_DEFENSE.md # Defensible novelty & competitor matrix
 │   ├── DATA_GOVERNANCE.md                 # Data licensing, privacy, and ethics protocol
 │   ├── schema-lock-m1.md                  # Milestone M1 locked schema specification
-│   ├── literature-review-matrix.md        # Academic literature matrix (14 papers, Walden format)
+│   ├── literature-review-matrix.md        # Academic literature matrix (20 papers, Walden format, synchronized with thesis Chapter 2)
 │   ├── CHANGELOG.md                       # Auto-updated by sync.ps1 on every commit
 │   ├── research/                          # Research syntheses, CLAIM_LEDGER, SHAP theory & audit guide
 │   └── fellowship/                        # Official Fusemachines guidelines & reference rubrics
