@@ -1,8 +1,7 @@
 # Graph Report - BiasAperture-A-Diagnostic-Framework-for-Demographic-Bias-Auditing-in-Facial-Analysis-Models  (2026-09-05)
 
 ## Corpus Check
-- 161 files · ~156,389 words
-- Verdict: corpus is large enough that graph structure adds value.
+- cluster-only mode — file stats not available
 
 ## Summary
 - 1440 nodes · 1788 edges · 174 communities (120 shown, 45 thin omitted)
@@ -185,8 +184,8 @@
 1. `DataIngestionPipeline` - 39 edges
 2. `IngestionConfig` - 30 edges
 3. `SubjectRecord` - 25 edges
-4. `SubjectRecord` - 21 edges
-5. `MetricResult` - 21 edges
+4. `MetricResult` - 21 edges
+5. `SubjectRecord` - 21 edges
 6. `2. Slide Deck Outline (15–20 slides)` - 21 edges
 7. `BiasAperture-AT (v11)` - 21 edges
 8. `BiasAperture-AT (v10)` - 20 edges
@@ -200,10 +199,10 @@
   report/src/images/architecture_highlevel.jpg → README.md
 - `Cluster B - Explainability Verification` --semantically_similar_to--> `Surrogate Explainability Strategy`  [INFERRED] [semantically similar]
   research/results/discrepancy_verification_report.md → specs/07-explainability.md
-- `test_in_process_interface_not_implemented()` --uses--> `InProcessInterface`  [INFERRED]
-  src/tests/test_model_interface.py → research/context feed/model_interface.py
-- `test_in_process_interface_rejects_bad_framework()` --uses--> `InProcessInterface`  [INFERRED]
-  src/tests/test_model_interface.py → research/context feed/model_interface.py
+- `AIF360Backend` --uses--> `MetricResult`  [INFERRED]
+  src/bias_aperture/fairness/backends.py → research/context feed/schema.py
+- `CrossValidationOrchestrator` --uses--> `MetricResult`  [INFERRED]
+  src/bias_aperture/fairness/backends.py → research/context feed/schema.py
 
 ## Import Cycles
 - None detected.
@@ -706,7 +705,7 @@ Cohesion: 0.27
 Nodes (8): HTML Report Generator, Weekly Project Report (WK3), BiasAperture — Literature Review Matrix, Research Verification & Scrutiny Guide, EU AI Act, NIST AI RMF, BiasAperture Audit Report (Gender), BiasAperture Audit Report (Race/Gender/SHAP)
 
 ## Knowledge Gaps
-- **666 isolated node(s):** `bias_aperture`, `Rule`, `graphify`, `📌 Purpose`, `🛠️ Changes Made` (+661 more)
+- **666 isolated node(s):** `Rule`, `2. Audit Findings & Resolution Matrix`, `3.1 Native AIF360 Backend (`src/bias_aperture/fairness/backends.py`)`, `3.2 Additive Shapley Surrogate Explainability (`src/bias_aperture/explainability.py`)`, `3.3 CLI Integration (`src/bias_aperture/cli.py`)` (+661 more)
   These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 902 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **45 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -714,16 +713,16 @@ Nodes (8): HTML Report Generator, Weekly Project Report (WK3), BiasAperture — 
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `BiasAperture-AT (v11)` connect `2026-08-27_WK4_report.md` to `MVP Scope Specification`, `Phase-2 Research Synthesis`, `BiasAperture-AT (v10)`?**
-  _High betweenness centrality (0.041) - this node is a cross-community bridge._
+  _High betweenness centrality (0.030) - this node is a cross-community bridge._
 - **Why does `BiasAperture-AT (v11)` connect `BiasAperture-AT (v11)` to `Novelty & Prior-Art Check (July 30, 2026)`, `PROPOSAL_DEFENSE_MASTER_DOSSIER.md`, `2026-08-27_WK4_report.md`, `BiasAperture — Discrepancy Ledger`?**
-  _High betweenness centrality (0.022) - this node is a cross-community bridge._
-- **Why does `MVP Scope Specification` connect `MVP Scope Specification` to `00 - Overview and MVP Scope`, `08-report-and-compliance.md`, `2026-08-27_WK4_report.md`, `03 - Orchestrator`, `04-intake-and-classification.md`, `10 - Security and Governance`?**
   _High betweenness centrality (0.020) - this node is a cross-community bridge._
+- **Why does `Part 1: Product Requirements Document (PRD) & Problem Statement [10 Marks]` connect `Part 1: Product Requirements Document (PRD) & Problem Statement [10 Marks]` to `PROPOSAL_DEFENSE_MASTER_DOSSIER.md`?**
+  _High betweenness centrality (0.015) - this node is a cross-community bridge._
 - **Are the 4 inferred relationships involving `DataIngestionPipeline` (e.g. with `SubjectRecord` and `test_cohort_profile_contingency_support()`) actually correct?**
   _`DataIngestionPipeline` has 4 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 23 inferred relationships involving `SubjectRecord` (e.g. with `InProcessInterface` and `ModelInterface`) actually correct?**
   _`SubjectRecord` has 23 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `bias_aperture`, `Rule`, `graphify` to the rest of the system?**
+- **What connects `Rule`, `2. Audit Findings & Resolution Matrix`, `3.1 Native AIF360 Backend (`src/bias_aperture/fairness/backends.py`)` to the rest of the system?**
   _666 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `SubjectRecord` be split into smaller, more focused modules?**
   _Cohesion score 0.05432595573440644 - nodes in this community are weakly interconnected._
