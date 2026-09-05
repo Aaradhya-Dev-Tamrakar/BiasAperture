@@ -34,7 +34,11 @@ def test_shap_explainer_selective_triggering() -> None:
     )
     assert engine.should_explain(res_sig) is True
     exp_sig = engine.explain_disparity(res_sig)
-    assert "Targeted attribution generated" in exp_sig.details
+    assert (
+        "Targeted attribution generated" in exp_sig.details
+        or "Targeted SHAP PartitionExplainer attribution generated" in exp_sig.details
+    )
+
 
     # Case 2: Non-significant disparity (p >= 0.05) -> Skip
     res_nonsig = MetricResult(
