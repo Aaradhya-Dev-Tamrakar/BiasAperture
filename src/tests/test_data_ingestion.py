@@ -341,9 +341,7 @@ def test_deduplicate_strategy_keep_all(tmp_path):
     assert ids.count("img1.jpg") == 2
     assert result.validation_summary.rejected_records_count == 0
     assert "exact_duplicate" not in result.validation_summary.issue_counts_by_type
-    assert (
-        "conflicting_duplicate" not in result.validation_summary.issue_counts_by_type
-    )
+    assert "conflicting_duplicate" not in result.validation_summary.issue_counts_by_type
 
 
 def test_deduplicate_strategy_keep_all_still_rejects_conflicts(tmp_path):
