@@ -1,4 +1,4 @@
-# BiasAperture-AT (v11)
+# BiasAperture-AT (v13)
 
 Fuse Capstone Project — BiasAperture (Fairness & Bias Audit)
 
@@ -7,7 +7,7 @@ Fuse Capstone Project — BiasAperture (Fairness & Bias Audit)
 **Supervisor:** Shreejan Kisee
 **Program:** Fusemachines AI Fellowship (AIF) 2026
 
-**Status:** Feasibility study reviewed (accurate) · Parallel work structure defined · Named ownership assigned (§16, §17) · Novelty check completed (§12) · Explainability layer documented (§3) · Proposal report (main.pdf) cross-validated against full source set, zero contradictions (§13) · Repo restructured with docs/ + sync.ps1, literature review matrix built (§15) · Packaging & Ruff standards configured · Master Task Division & 4-Week Sprint Roadmap formalised (§18) · Phase-2 Product Upgrade Sprint synthesized (§20) · Discrepancy reconciliation & theoretical foundations audited (§21)
+**Status:** Feasibility study reviewed (accurate) · Parallel work structure defined · Named ownership assigned (§16, §17) · Novelty check completed (§12) · Explainability layer documented (§3) · Proposal report (main.pdf) cross-validated against full source set, zero contradictions (§13) · Repo restructured with docs/ + sync.ps1, literature review matrix expanded to 20 papers and synchronized (§4, §15) · Packaging & Ruff standards configured · Master Task Division & 4-Week Sprint Roadmap updated to 95% completion (§18) · Phase-2 Product Upgrade Sprint synthesized (§20) · Discrepancy reconciliation & theoretical foundations audited (§21)
 
 ---
 
@@ -330,20 +330,20 @@ Following the completion of Milestone M1 and the 20-track research sprint, tasks
 | **Stream D: Explainability & Orchestration** *(WP4/WP5)* | **A** | `feat/wp5-integration` | • Current demographic-dummy surrogate attribution; • Richer spatial SHAP, BiSeNet face parsing, and CIELAB ITA skin-tone proxy analysis deferred; • Master CLI (`bias-aperture audit`) & orchestration pipeline; • FairFace validation inference and audit report review. | Chains Ingestion $\to$ Model $\to$ Fairness $\to$ Stats $\to$ Explainability $\to$ Report |
 | **Stream E: Capstone Paper & Viva Defense** *(Joint)* | **A + T** | `main` | • LaTeX report final synchronization (`report/main.pdf`); • 20-minute defense presentation deck; • Supervisor dry-run & empirical claim grilling via `CLAIM_LEDGER.md`. | Capstone submission & defense |
 
-### 2. Four-Week Sprint Timeline
-
-- **Sprint 1 (Week 1 / Aug 24–30) — M2 Foundation:**
+### 2. Four-Week Sprint Timeline & Execution Status
+ 
+- **Sprint 1 (Week 1 / Aug 24–30) — M2 Foundation [COMPLETED]:**
   - Tisha: Dataset Ingestion (A1) + Jinja2 HTML Scaffold (B1, B2).
   - Aaradhya: Fairness Backend Strategy (C1, C2, C3) + Mock Test Harness.
-- **Sprint 2 (Week 2 / Aug 31–Sep 06) — M3 Core Engines:**
+- **Sprint 2 (Week 2 / Aug 31–Sep 06) — M3 Core Engines [COMPLETED]:**
   - Tisha: Regulatory Mappings (B3) + Demographic Test Matrices (A3, A4).
   - Aaradhya: Vectorized BCa Bootstrap & $\chi^2$ / Holm FWER (C4, C5) + surrogate attribution engine (deferred SHAP, D1, D2).
-- **Sprint 3 (Week 3 / Sep 07–Sep 13) — M4 System Integration:**
+- **Sprint 3 (Week 3 / Sep 07–Sep 13, Accelerated to Sep 02) — M4/M5 System Integration [COMPLETED]:**
   - Tisha: Offline HTML Report Finalization (B4, B5) + Dataset Validation Audit.
-  - Aaradhya: CLI & Pipeline Orchestrator (D3, D4) + End-to-End Pipeline Wiring.
-- **Sprint 4 (Week 4 / Sep 14–Sep 20) — Benchmark & Viva Defense:**
-  - Joint: Full FairFace 97.7k Benchmark Audit (D5) + LaTeX Report Finalization (E1).
-  - Joint: Presentation Slides (E2) + Examiner Scrutiny Mock Defense (E3).
+  - Aaradhya: CLI & Pipeline Orchestrator (D3, D4) + End-to-End Pipeline Wiring (`fairface_predictions_val.csv` 10,954/10,954 inference verified + `audit_report_val_gender.html` & `audit_report_val_race_gender_shap.html` generated).
+- **Sprint 4 (Week 4 / Sep 14–Sep 20, Active as of Sep 05) — Benchmark, Thesis & Viva Defense [IN PROGRESS - 95%]:**
+  - Joint: Full FairFace 97.7k Released Benchmark Alignment (D5) + LaTeX Thesis Chapter 2 expansion (20 papers, 50pp compiled clean) + Research Claim Ledger (v1.5.0, 21 active claims) (E1).
+  - Joint: Presentation Slides (E2, 18-slide Beamer compiled) + Examiner Scrutiny Mock Defense preparation via rubrics and Dossier (E3).
 
 ## §19. Proposal Defense & Final Deadline Check (August 26, 2026)
 
@@ -481,3 +481,5 @@ the internal project assessment breakdown with the TA.
 **Revision 11 (September 5, 2026):** Title updated to BiasAperture-AT_v11. Added §21 documenting full discrepancy ledger reconciliation: 97,698 released FairFace images vs. 108,501 pre-discard total, final confirmation of UTKFace cut status (Cut-List #2), and clarification of FR-005 as demographic-dummy surrogate attribution with spatial SHAP deferred. Expanded `docs/literature-review-matrix.md` with 5 foundational papers (Shapley 1953, Lundberg & Lee 2017, Bilodeau et al. 2022, Slack et al. 2020, NIST AI RMF 1.0). Harmonized all legacy unqualified dataset scale claims, cut UTKFace status, and deferred SHAP surrogate attribution mentions across §§1–20 to enforce compliance with the `check_stale_claims.py` pre-commit guard. Removed redundant intermediate revision log block.
 
 **Revision 12 (September 5, 2026):** Title updated to BiasAperture-AT_v12. §4 updated — literature review matrix further expanded from 14 to **20 papers** by adding Cohort 3: six September 5 addendum papers (Howard et al. 2021, Fournier-Montgieux et al. 2024, Cascone et al. 2021, Nemavhola 2023, Aslam et al. 2024, Shilova & Heutte 2019) grounding validity threats for ITA robustness, open-set recognition, and domain shift. `docs/literature-review-matrix.md` re-synchronized with `report/src/chapters/literatureReview.tex` (Chapter 2). Chi-squared description corrected in `README.md` and `docs/BiasAperture-AT.md` to precisely state: Pearson's χ² independence test with Fisher's exact test fallback for sparse 2×2 tables (expected cell count < 5). `report/references.bib` updated with 10 new BibTeX entries. 67/67 tests pass; `latexmk` compilation verified (50 pages, clean exit 0).
+
+**Revision 13 (September 5, 2026):** Title updated to BiasAperture-AT_v13. Updated Project Progress & Roadmap in `README.md` and §18.2 to 95% completion: Sprints 1, 2, and 3 formally marked COMPLETED (M1–M4 engines, 10,954 validation inference, dual HTML reports, 67/67 automated tests passing). Sprint 4 marked IN PROGRESS (95%) with FairFace 97.7k benchmark alignment, 50-page thesis compilation, 18-slide Beamer presentation deck, and Research Claim Ledger v1.5.0 synchronized.

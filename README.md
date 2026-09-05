@@ -187,7 +187,7 @@ BiasAperture/
 ## Project Progress & Roadmap
 
 ```
-Overall Progress: [██████████████████░░] 90% (Milestones M1–M4 Complete · Inference Complete · M5 Active)
+Overall Progress: [███████████████████░] 95% (Milestones M1–M4 Complete · 67/67 Tests Passing · M5 Active at 95%)
 ```
 
 | Work Package / Milestone                             | Stream / Focus            |  Status   |           Progress            | Deliverables & Implementation State                                                                                                                                                                         |
@@ -195,8 +195,8 @@ Overall Progress: [██████████████████░░]
 | **WP1 / M1: Schema Lock & Baseline**                 | Foundations / Joint       | Completed | `[████████████████████] 100%` | Locked internal schema (`schema.py`), FairFace ResNet-34 classifier baseline fixed, frozen demographic taxonomies, shared test fixtures.                                                                    |
 | **WP2 / M2: Data Ingestion & Test Matrix**           | Stream A (Tisha)          | Completed | `[████████████████████] 100%` | Ingestion pipeline (`data_ingestion.py`), alias resolution, 97,698 FairFace images disk verified, UTKFace profiled and cut.                                                                                 |
 | **WP3 / M3: Compliance Report Generation**           | Stream B (Tisha/Aaradhya) | Completed | `[████████████████████] 100%` | Zero-network Jinja2 HTML report generator (`generator.py`), embedded SVG charts, EU AI Act Art. 10/13 & NIST AI RMF mapping.                                                                                |
-| **WP4 / M4: Statistical Detection & Explainability** | WP4 (Aaradhya)            | Completed | `[████████████████████] 100%` | Dual backends (Fairlearn + AIF360), $\chi^2$ asymptotic tests, BCa bootstrap ($B \ge 1,000$), $n < 30$ guards, exact additive Shapley surrogate attribution.                                                |
-| **WP5 / M5: System Orchestration & Case Studies**    | Integration / Joint       |  Active   | `[██████████████████░░]  90%` | CLI orchestrator (`cli.py`), benchmark inference complete (`10,954/10,954`), validation audit reports generated (`report/*.html`), 18-slide Beamer presentation deck compiled; next: oral defense delivery. |
+| **WP4 / M4: Statistical Detection & Explainability** | WP4 (Aaradhya)            | Completed | `[████████████████████] 100%` | Dual backends (Fairlearn + AIF360), $\chi^2$ asymptotic tests with Fisher's exact test fallback, BCa bootstrap ($B \ge 1,000$), $n < 30$ guards, exact additive Shapley surrogate attribution (SHAP deferred). |
+| **WP5 / M5: System Orchestration & Case Studies**    | Integration / Joint       |  Active   | `[███████████████████░]  95%` | CLI orchestrator (`cli.py`), benchmark inference complete (`10,954/10,954`), validation audit reports generated (`report/*.html`), 20-paper literature review synchronized, 50-page LaTeX report compiled, 18-slide Beamer presentation deck compiled; next: oral defense delivery. |
 
 ---
 
