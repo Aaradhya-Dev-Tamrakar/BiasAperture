@@ -260,3 +260,4 @@ Before defending the capstone, test yourself with these 10 questions:
 - [ ] **Visual Check**: Does the HTML report render offline with 0 network calls?
 - [ ] **Test Check**: Are all tests passing with `uv run --extra dev pytest` and formatted with `ruff`?
 - [ ] **Sync Check**: Are all changes synchronized with conventional commits via `sync.ps1`?
+- [ ] **Claims Check**: Does `scripts/check_stale_claims.py` pass with zero violations on all staged `.md`/`.tex` files?

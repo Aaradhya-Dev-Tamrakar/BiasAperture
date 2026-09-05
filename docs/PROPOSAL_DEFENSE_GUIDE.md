@@ -199,7 +199,7 @@ You have completed an extensive research verification and specification phase:
 
 ### Architecture (Slide 9) — The Pipeline
 
-> "BiasAperture is architected as a modular diagnostic pipeline. Demographic data and model outputs enter through the ingestion module and are validated against our locked schema. Predictions are obtained either from a local PyTorch model or batch-ingested from a standard CSV or JSON predictions file. The core engine calculates four disparity metrics using heterogeneous implementation cross-checking across Fairlearn and AIF360. Where statistically significant disparities occur, targeted SHAP explainability provides visual proxy evidence. Finally, a self-contained offline HTML report is compiled using Model Cards and Datasheets conventions."
+> "BiasAperture is architected as a modular diagnostic pipeline. Demographic data and model outputs enter through the ingestion module and are validated against our locked schema. Predictions are obtained either from a local PyTorch model or batch-ingested from a standard CSV or JSON predictions file. The core engine calculates four disparity metrics using heterogeneous implementation cross-checking across Fairlearn and AIF360. Where statistically significant disparities occur, the current explainability implementation, using demographic-dummy surrogate attribution, provides visual proxy evidence; richer spatial SHAP and ITA analysis remain deferred. Finally, a self-contained offline HTML report is compiled using Model Cards and Datasheets conventions."
 
 ### Harmonization (Slide 11) — Engineering Novelty in Practice
 
@@ -227,7 +227,7 @@ When examiners ask: *"Aren't you just combining existing toolkits like Fairlearn
 ### The 5-Step Defense Framework
 
 1. **Acknowledge the Foundational Tools:**
-   > "Fairlearn, AIF360, and SHAP are established, high-quality libraries. We do not claim to have invented new fairness metrics or new statistical tests."
+   > "Fairlearn and AIF360 are established, high-quality libraries, and the current explainability implementation uses demographic-dummy surrogate attribution, with richer spatial SHAP and ITA analysis remaining deferred. We do not claim to have invented new fairness metrics or new statistical tests."
 
 2. **Identify the Domain Workflow Friction:**
    > "However, existing fairness toolkits are predominantly designed for tabular data with generalized schemas. Facial analysis models operate in computer vision pipelines involving multi-class, intersectional demographic taxonomies (such as FairFace's 7 races, 9 age groups, and 2 genders). Bridging these requires custom schema curation, multi-class One-vs-Rest binarization, and image-specific handling that practitioners currently have to build from scratch."
@@ -285,10 +285,10 @@ When examiners ask: *"Aren't you just combining existing toolkits like Fairlearn
 > "When $\max_a(\text{selection rate}_a) = 0$, meaning no subgroup receives positive predictions, DIR is defined by policy contract as $1.0$ accompanied by an `absolute_selection_warning = True` flag, since no comparative selection disparity exists. When $\min = 0$ and $\max > 0$, DIR is $0.0$. These boundary contracts are codified in our automated tests."
 
 **Q12: "Why choose SHAP over other explainability methods like LIME?"**
-> "We selected SHAP because it provides a theoretically grounded additive attribution framework and supports the black-box explanation path required by our prediction-file interface. The choice is architectural, not a claim that SHAP produces causal explanations."
+> "The current explainability implementation uses demographic-dummy surrogate attribution; richer spatial SHAP and ITA analysis remain deferred. We selected SHAP because it provides a theoretically grounded additive attribution framework and supports the black-box explanation path required by our prediction-file interface. The choice is architectural, not a claim that SHAP produces causal explanations."
 
 **Q13: "Can SHAP feature attributions prove that a model is biased due to facial features?"**
-> "No, and we explicitly document this limitation. In accordance with Bilodeau et al. (2022) impossibility theorems, additive feature attribution methods cannot guarantee distinguishing spurious correlations from causal features in neural networks. Our explainability layer provides exploratory proxy evidence, not causal proof."
+> "No, and we explicitly document this limitation. In accordance with Bilodeau et al. (2022) impossibility theorems, additive feature attribution methods cannot guarantee distinguishing spurious correlations from causal features in neural networks. The current explainability implementation uses demographic-dummy surrogate attribution and provides exploratory proxy evidence, not causal proof; richer spatial SHAP and ITA analysis remain deferred."
 
 ---
 
@@ -340,7 +340,7 @@ When examiners ask: *"Aren't you just combining existing toolkits like Fairlearn
 ### Category F: Feasibility, Reliability & Risk
 
 **Q25: "What is the primary technical risk in the upcoming implementation phase?"**
-> "The primary technical risk is handling computational runtime for full-dataset bootstrap resampling and explainability. We mitigate this through vectorized bootstrap implementations, stratified development subsets ($n=5,000$), and conditional triggering of SHAP attribution only on flagged disparities."
+> "The primary technical risk is handling computational runtime for full-dataset bootstrap resampling and explainability. We mitigate this through vectorized bootstrap implementations, stratified development subsets ($n=5,000$), and conditional triggering of attribution only on flagged disparities; the current explainability implementation uses demographic-dummy surrogate attribution, with richer spatial SHAP and ITA analysis remaining deferred."
 
 **Q26: "How do you guarantee that future library updates will not break metric calculations?"**
 > "All dependencies are pinned via deterministic lockfiles (`uv.lock`), and all metric implementations are continuously validated against our deterministic 8-record known-answer test fixtures."
@@ -384,7 +384,7 @@ When examiners ask: *"Aren't you just combining existing toolkits like Fairlearn
 ### ❌ Trap 3: Claiming Causal Explanations
 
 - **Don't say:** *"SHAP explains why the model is biased."*
-- **Do say:** *"SHAP provides feature attributions that highlight visual proxy correlations associated with detected disparities, subject to known non-causal theoretical bounds."*
+- **Do say:** *"The current explainability implementation uses demographic-dummy surrogate attribution, which provides feature attributions that highlight visual proxy correlations associated with detected disparities, subject to known non-causal theoretical bounds; richer spatial SHAP and ITA analysis remain deferred."*
 
 ### ❌ Trap 4: Overstating Regulatory Certification
 

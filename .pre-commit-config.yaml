@@ -14,3 +14,11 @@ repos:
       - id: check-yaml
       - id: check-added-large-files
         args: ['--maxkb=1000']
+
+  - repo: local
+    hooks:
+      - id: check-stale-claims
+        name: Check for stale/overstated claims (dataset scale, UTKFace, SHAP)
+        entry: python scripts/check_stale_claims.py
+        language: system
+        files: \.(md|tex)$
