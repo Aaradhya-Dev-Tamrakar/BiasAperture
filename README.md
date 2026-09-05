@@ -133,7 +133,7 @@ BiasAperture/
 │   ├── audit_report_val_gender.html             # Generated validation audit report (Gender)
 │   ├── audit_report_val_race_gender_shap.html   # Generated validation audit report (Race x Gender + SHAP)
 │   └── src/                    # Proposal chapters, frontmatter, and architectural figures
-├── research/                   # 20-Track Parallel Research Sprint
+├── research/                   # 20-Track Parallel Research Sprint & NotebookLM Context
 │   ├── research tracks/        # Track prompts and deliverables (Tracks 01–20)
 │   ├── context feed/           # Context feeds and background documentation
 │   └── results/                # Synthesis documents (Streams A–F) and conflict logs
@@ -323,6 +323,18 @@ Preparation for the defense oral examination is structured across technical doma
 - **Aaradhya Dev Tamrakar**: Leads defense on Statistical Significance Engine ($\chi^2$ asymptotic tests, BCa Bootstrap CIs), Heterogeneous Backend Harmonization (Fairlearn vs. AIF360 max-of-gaps and sign conventions), and Exact Additive Shapley Surrogate Attribution.
 
 For comprehensive defense preparation, refer to the authoritative rubric-aligned [Proposal Defense Master Dossier](docs/PROPOSAL_DEFENSE_MASTER_DOSSIER.md) and [Presentation Speaker Notes](presentation/speaker_notes.md).
+
+---
+
+## NotebookLM Knowledge Bases
+
+The research, architectural specifications, synthesis artifacts, and defense dossiers are systematically indexed across three Google NotebookLM workspaces to support source-grounded querying, literature cross-examination, and oral defense preparation:
+
+| Notebook Workspace | Notebook ID & Direct Link | Scope, Source Count & Purpose |
+| :--- | :--- | :--- |
+| **BiasAperture — Source And Specs** | [`928b5ed7-1353-4cb3-a1ce-b215e80b7db4`](https://notebook.google.com/notebook/928b5ed7-1353-4cb3-a1ce-b215e80b7db4) | **50/50 sources (Full)** · **Ground-truth layer**: Specifications (`specs/00`–`11`), core production source code (`src/bias_aperture/`), test suites (`src/tests/`), and empirical research sprint results (`research/results/`). |
+| **BiasAperture** | [`99bee3c6-07ed-4ff0-8ac8-0027b18ad06a`](https://notebook.google.com/notebook/99bee3c6-07ed-4ff0-8ac8-0027b18ad06a) | **General BiasAperture NLM notebook**: Master conceptual workspace housing the primary research corpus, foundational literature, fellowship requirements, and overarching system design notes. |
+| **BiasAperture — Repo State** | [`6e9505f0-2d5c-4655-8bc7-9f97cf9620b9`](https://notebook.google.com/notebook/6e9505f0-2d5c-4655-8bc7-9f97cf9620b9) | **39 sources** · **Synthesis & defense layer**: Developer logs (`dev-logs/`), formal weekly reports (`WK1`–`WK5`), Proposal Defense Master Dossiers, discrepancy/claim ledgers, and GitHub documentation pages. |
 
 ---
 
