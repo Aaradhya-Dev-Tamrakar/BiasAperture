@@ -10,7 +10,7 @@
 
 ## Prompt
 
-Current validated runtime target (BiasAperture-AT.md §9): full FairFace (108,501 img) <=4hr GPU; stratified dev subset (n=5,000) <=30min CPU. Actual verified run processed 10,954 validation images successfully.
+Current validated runtime target (BiasAperture-AT.md §9): full FairFace (97,698 released images; 108,501 pre-discard) <=4hr GPU; stratified dev subset (n=5,000) <=30min CPU. Actual verified run processed 10,954 validation images successfully.
 
 Research what changes at 10x-100x scale (a client dataset in the millions of images) beyond the current FairFace-sized benchmark.
 

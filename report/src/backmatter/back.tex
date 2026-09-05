@@ -15,9 +15,9 @@ BiasAperture is a pure-software diagnostic platform with no bill of materials or
         \toprule
         \textbf{Service} & \textbf{Description} & \textbf{Cost} \\
         \midrule
-        Open-source software & Python, PyTorch/TensorFlow, AIF360, Fairlearn, scikit-learn, SciPy, OpenCV, SHAP, Jinja2 & Free \\
+        Open-source software & Python, PyTorch/TensorFlow, AIF360, Fairlearn, scikit-learn, SciPy, OpenCV, SHAP (surrogate fallback), Jinja2 & Free \\
         Cloud GPU compute (NFR-004 target) & Google Colab, free-tier T4-class GPU for full-dataset evaluation runs & Free \\
-        Cloud GPU compute (contingency) & Google Colab Pro, if free-tier quota is exhausted during the full 108{,}501-image FairFace evaluation (NFR-004) & \$10/month \\
+        Cloud GPU compute (contingency) & Google Colab Pro, if free-tier quota is exhausted during the full 97{,}698-image FairFace evaluation (NFR-004) & \$10/month \\
         Cloud storage & Google Drive, dataset and checkpoint storage during development & Free (existing quota) \\
         \midrule
         \multicolumn{2}{r}{\textbf{Subtotal}} & \textbf{\$0--\$10/month} \\
@@ -115,7 +115,7 @@ The project is executed over the eight-week schedule specified in \cref{sec:sche
         \toprule
         \textbf{Risk} & \textbf{Likelihood} & \textbf{Impact} & \textbf{Mitigation} \\
         \midrule
-        Demographic label noise, particularly UTKFace's model-estimated age labels & Medium & Medium & Report subgroup \gls{symb:n} and 95\% confidence intervals alongside every metric; cross-validate against FairFace's manually annotated labels; document the limitation explicitly \\
+        Demographic label noise, particularly UTKFace's model-estimated age labels & Medium & Medium & Formally cut UTKFace per Cut-List \#2; report subgroup \gls{symb:n} and 95\% confidence intervals alongside every metric; cross-validate against FairFace's manually annotated labels; document the limitation explicitly \\
         Model interface incompatibility with non-standard prediction formats & Medium & Medium & Provide the documented \gls{csv} / \gls{json} predictions-file ingestion path as a fallback to direct in-process inference \\
         Misinterpretation of metrics by non-specialist stakeholders & Medium & High & Plain-language explanation for every metric, with explicit caveats on statistical significance and sample size, in the generated report \\
         Scope creep toward mitigation or model retraining & Medium & High & Written scope document reviewed with the supervisor; report generation restricted to diagnostic, non-prescriptive output only \\
