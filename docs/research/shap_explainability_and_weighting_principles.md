@@ -24,7 +24,7 @@ In summary:
      $$\pi_x(z') = \frac{M - 1}{\binom{M}{|z'|} \cdot |z'| \cdot (M - |z'|)}$$
      This forms a **U-shaped weighting curve** that heavily prioritizes single-feature main effects ($|z'|=1$) and total interactive effects ($|z'|=M-1$), while down-weighting intermediate coalitions.
 3. **What "Values" Mean:** Feature values are quantified through their marginal contribution to the prediction relative to a background baseline expectation $\mathbb{E}[f(X)]$. In linear surrogate models, this reduces to $\phi_i = w_i \cdot (x_i - \mathbb{E}[x_i])$, directly matching BiasAperture's surrogate explainer implementation.
-4. **Diagnostic Application to BiasAperture:** For facial analysis models (ResNet-34 on FairFace), pixel-level SHAP is computationally intractable ($50,176$ features). BiasAperture structures explainability by partitioning faces into semantic anatomical regions (skin tone, hair, facial geometry, background) to detect **proxy variable entanglement** (Kurian et al. 2024; EU AI Act Article 13/15) when demographic disparities are statistically flagged ($p < 0.05, n \ge 30$).
+4. **Diagnostic Application to BiasAperture:** For facial analysis models (ResNet-34 on FairFace), pixel-level SHAP is computationally intractable ($50,176$ features). BiasAperture structures explainability by partitioning faces into semantic anatomical regions (skin tone, hair, facial geometry, background) to detect **proxy variable entanglement** (Stanley et al. 2025; EU AI Act Article 13/15) when demographic disparities are statistically flagged ($p < 0.05, n \ge 30$).
 
 ---
 
@@ -293,9 +293,9 @@ BiasAperture resolves this through a two-tiered strategy:
 
 ---
 
-### 4.2 Detecting Demographic Proxy Variables (Kurian et al. 2024 & FR-005)
+### 4.2 Detecting Demographic Proxy Variables (Stanley et al. 2025 & FR-005)
 
-Kurian et al. (2024) demonstrated that convolutional networks can inadvertently encode protected demographic attributes (e.g., race) through correlated visual proxies (e.g., lighting, background artifacts, skin reflectance), even when protected labels are omitted during training.
+Stanley et al. (2025) demonstrated that convolutional networks can inadvertently encode protected demographic attributes (e.g., race) through correlated visual proxies (e.g., lighting, background artifacts, skin reflectance), even when protected labels are omitted during training.
 
 To detect this, BiasAperture defines **Attribution Mass Ratio**:
 $$\text{Attribution Mass}(R) = \frac{\sum_{(u,v) \in R} |\phi_{(u,v)}|}{\sum_{(u,v) \in \text{Image}} |\phi_{(u,v)}|}$$

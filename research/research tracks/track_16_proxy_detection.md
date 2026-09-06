@@ -9,7 +9,7 @@
 
 ## Prompt
 
-Research proxy variable detection in facial analysis systems using SHAP attribution. This relates to Kurian et al. 2024 (eBioMedicine) finding that CNNs encode demographic info via unrelated visual features.
+Research proxy variable detection in facial analysis systems using SHAP attribution. This relates to Stanley et al. 2025 (eBioMedicine) finding that CNNs encode demographic info via unrelated visual features.
 
 1. **The proxy problem:** A face classifier might use skin darkness, hair texture, or facial structure as proxies for race — even when race is not a training label. How does SHAP surface this?
 2. **Aggregate SHAP analysis:** For a subgroup flagged with significant disparity, how to:

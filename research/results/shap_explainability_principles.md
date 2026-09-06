@@ -25,7 +25,7 @@
      $$\phi_i = w_i \cdot (x_i - \mathbb{E}[x_i])$$
      where $w_i$ is the surrogate model weight and $(x_i - \mathbb{E}[x_i])$ is the centered demographic feature value.
 
-4. **Facial Analysis & Proxy Detection (FR-005 / Kurian et al. 2024):**
+4. **Facial Analysis & Proxy Detection (FR-005 / Stanley et al. 2025):**
    * Pixel-level SHAP ($50,176$ pixels) is intractable; use `shap.PartitionExplainer` or face semantic region masks (skin, hair, eyes/nose/mouth, background).
    * Flagged disparities ($p < 0.05, n \ge 30$) trigger attribution mass analysis across regions.
    * Corroborate skin-tone attribution shifts with Individual Typology Angle (ITA) colorimetry.
