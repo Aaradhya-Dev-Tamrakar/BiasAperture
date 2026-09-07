@@ -1,6 +1,6 @@
 # 11 - Requirements Traceability
 
-**Status:** Authoritative traceability baseline synchronized with `report/src/chapters/requirements.tex` and fellowship PRD (`docs/fellowship/BiasAperture_User_Requirement_Document.pdf`) — covering FR-001–FR-011 and NFR-001–NFR-010 with legacy UTKFace scope cleanly excised.
+**Status:** Authoritative traceability baseline synchronized with `report/src/chapters/requirements.tex` and fellowship PRD (`docs/fellowship/BiasAperture_User_Requirement_Document.pdf`) — covering FR-001–FR-011 and NFR-001–NFR-010 with legacy UTKFace (formally cut per Cut-List #2) cleanly excised.
 
 ---
 
