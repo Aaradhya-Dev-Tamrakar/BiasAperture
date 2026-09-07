@@ -1,0 +1,37 @@
+% Slide 11: Targeted Explainability & Proxy Evidence Bounds
+\begin{frame}
+  \frametitle{Targeted Explainability \& Proxy Attribution}
+  \framesubtitle{Interpretability Bounds \textbar\ Lead Presenter: Tisha}
+
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{card}{Targeted Trigger Architecture}
+        \small In high-throughput auditing, generating feature explanations for all images is computationally prohibitive.
+        \vspace{0.15cm}
+        \begin{itemize}\footnotesize
+          \item \textbf{Trigger Policy:} Attribution is computed \textbf{only} for demographic intersections flagged with \hlcoral{statistically significant disparities ($p < 0.05$ and $n \ge 30$)}.
+          \item \textbf{Implementation:} Demographic surrogate attribution model quantifying feature sensitivity across demographic slices.
+          \item \textbf{Skin Tone Colorimetry:} Individual Typology Angle ($\text{ITA}$):
+          $$\text{ITA} = \arctan\left(\frac{L^* - 50}{b^*}\right) \times \frac{180}{\pi}$$
+          Evaluates objective luminance and melanin pigmentation without racial proxy assumptions.
+        \end{itemize}
+      \end{card}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \begin{alertcard}{Theoretical Bounds: Bilodeau et al. (2022)}
+        \small \textbf{Impossibility Theorems for Feature Attribution:}
+        \vspace{0.1cm}
+        \begin{itemize}\footnotesize
+          \item Feature attribution provides \hlcoral{exploratory proxy evidence}, \textbf{never causal proof} of algorithmic discrimination.
+          \item Attribution maps reflect model sensitivity to correlated visual features (lighting, pose, facial geometry), which may or may not mediate disparate outcomes.
+        \end{itemize}
+      \end{alertcard}
+
+      \vspace{0.15cm}
+      \begin{statcard}{Audit Integrity Position}
+        \footnotesize \textit{"BiasAperture reports explainability as supplementary diagnostic clues for model developers, explicitly demarcating correlation from causation."}
+      \end{statcard}
+    \end{column}
+  \end{columns}
+\end{frame}

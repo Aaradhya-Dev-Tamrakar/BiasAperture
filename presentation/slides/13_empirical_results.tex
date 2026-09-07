@@ -1,0 +1,54 @@
+% Slide 13: Empirical Benchmark Results
+\begin{frame}
+  \frametitle{Empirical Benchmark Findings on 10,954 Images}
+  \framesubtitle{Experimental Results \textbar\ Lead Presenter: Aaradhya}
+
+  \begin{columns}[T]
+    \begin{column}{0.54\textwidth}
+      \begin{card}{Audited Model: FairFace ResNet-34 ($N=10,954$)}
+        \fontsize{6.5pt}{8pt}\selectfont
+        \renewcommand{\arraystretch}{1.15}
+        \begin{tabular}{p{2.5cm}ccc}
+          \toprule
+          \textbf{Disparity Metric} & \textbf{Point Est.} & \textbf{95\% BCa CI} & \textbf{Significance} \\
+          \midrule
+          \textbf{Demographic Parity Diff} & \hlcoral{0.923} & $[0.915, 0.930]$ & $p = 0.000$ (\hlcoral{Fail}) \\
+          \textbf{Disparate Impact Ratio}  & \hlcoral{0.070} & $[0.063, 0.078]$ & $p = 0.000$ (\hlcoral{Fail}) \\
+          \textbf{Equalized Odds Diff}     & \multicolumn{3}{c}{\textit{Flagged: Guarded on sparse cell ($n_+ < 5$)}} \\
+          \textbf{Equal Opportunity Diff}  & \multicolumn{3}{c}{\textit{Flagged: Guarded on sparse cell ($n_+ < 5$)}} \\
+          \bottomrule
+        \end{tabular}
+      \end{card}
+
+      \vspace{0.1cm}
+      \begin{statcard}{Empirical Observations}
+        \scriptsize
+        \begin{itemize}\scriptsize
+          \item \textbf{Severe Selection Disparity:} DIR of $0.070$ breaches the $0.80$ four-fifths benchmark.
+          \item \textbf{Narrow Confidence Bands:} High sample size ($N=10,954$) yields tight BCa bounds, demonstrating that disparity is not sampling noise.
+        \end{itemize}
+      \end{statcard}
+    \end{column}
+
+    \begin{column}{0.44\textwidth}
+      \begin{alertcard}{Support Guards in Action}
+        \scriptsize
+        \begin{itemize}\scriptsize
+          \item When conditioning on $Y=1$, sparse cells trigger the \hlcoral{Tier 1 Support Guard}.
+          \item Rather than publishing wild numbers, BiasAperture marks them as \textbf{N/A (Guarded)}.
+          \item Prevents misleading regulatory filings.
+        \end{itemize}
+      \end{alertcard}
+
+      \vspace{0.1cm}
+      \begin{successcard}{Regulatory Traceability}
+        \scriptsize
+        Every metric row links directly to:
+        \begin{itemize}\tiny
+          \item \textbf{EU AI Act:} Art. 10(2)(f) / 10(2)(g)
+          \item \textbf{NIST AI RMF:} Measure 2.11 / 1.1
+        \end{itemize}
+      \end{successcard}
+    \end{column}
+  \end{columns}
+\end{frame}

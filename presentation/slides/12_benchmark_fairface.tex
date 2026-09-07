@@ -1,0 +1,46 @@
+% Slide 12: Empirical Validation Benchmark - FairFace
+\begin{frame}
+  \frametitle{Empirical Validation Benchmark: FairFace}
+  \framesubtitle{Data Grounding \textbar\ Lead Presenter: Tisha}
+
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{card}{FairFace Dataset (K\"arkk\"ainen \& Joo, 2021)}
+        \scriptsize
+        Balanced benchmark explicitly constructed to mitigate racial and demographic skew of prior datasets:
+        \vspace{0.1cm}
+        \begin{itemize}\scriptsize
+          \item \textbf{Dataset Scale on Disk:} \hlteal{97,698 total labeled images} (86,744 training, 10,954 validation).
+          \item \textbf{Demographic Taxonomy:}
+            \begin{itemize}\tiny
+              \item \textbf{7 Races:} White, Black, Indian, East Asian, Southeast Asian, Middle Eastern, Latino.
+              \item \textbf{9 Age Groups:} 0--2, 3--9, 10--19, 20--29, 30--39, 40--49, 50--59, 60--69, 70+.
+              \item \textbf{2 Genders:} Male, Female.
+            \end{itemize}
+          \item \textbf{Intersectional Slices:} $7 \times 9 \times 2 = 126$ potential demographic cells.
+        \end{itemize}
+      \end{card}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \begin{statcard}{Validation Target Model}
+        \scriptsize
+        \begin{itemize}\scriptsize
+          \item \textbf{Architecture:} ResNet-34 multi-task classifier.
+          \item \textbf{Pre-processing:} \texttt{dlib} 5-point alignment, $300 \times 300$ chips, $0.25$ padding.
+          \item \textbf{Validation Run:} Full inference executed over all \textbf{10,954 validation images} (\texttt{fairface\_predictions\_val.csv}).
+        \end{itemize}
+      \end{statcard}
+
+      \vspace{0.15cm}
+      \begin{alertcard}{Formally Descoping UTKFace (Cut \#2)}
+        \scriptsize
+        \begin{itemize}\scriptsize
+          \item Initial proposal evaluated UTKFace as secondary benchmark.
+          \item Falsified during data audit: UTKFace suffers severe \hlcoral{3-of-7 race collapse} and \hlcoral{noisy model-estimated age labels}.
+          \item Descoping formally executed to protect audit integrity.
+        \end{itemize}
+      \end{alertcard}
+    \end{column}
+  \end{columns}
+\end{frame}

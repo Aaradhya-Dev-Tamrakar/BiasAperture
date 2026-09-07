@@ -1,0 +1,56 @@
+\frametitle{Single-Command Auditing Workflow}
+  \framesubtitle{CLI Orchestration \textbar\ Lead Presenter: Aaradhya}
+
+  \begin{columns}[T]
+    \begin{column}{0.54\textwidth}
+      \begin{card}{End-to-End CLI Invocation}
+        \fontsize{5.5pt}{6.5pt}\selectfont
+\begin{verbatim}
+# Run complete audit with proxy explainability:
+uv run bias-aperture audit \
+  --predictions data/processed/fairface_predictions_val.csv \
+  --target-col service_test \
+  --protected-axes race gender \
+  --backend fairlearn --cross-validate \
+  --explain \
+  --output report/audit_report_val.html
+\end{verbatim}
+      \end{card}
+
+      \vspace{0.1cm}
+      \begin{statcard}{Execution Pipeline Stages}
+        \scriptsize
+        \begin{enumerate}\scriptsize
+          \item \textbf{Schema Validation:} Ingests and verifies 10,954 rows.
+          \item \textbf{Dual Compute:} Runs Fairlearn + AIF360 strategies.
+          \item \textbf{Inference Engine:} Computes $\chi^2$ and $B=1,000$ BCa CIs.
+          \item \textbf{Explainability:} Evaluates surrogate attribution on disparities.
+          \item \textbf{Report Assembly:} Inlines SVG charts into offline HTML.
+        \end{enumerate}
+      \end{statcard}
+    \end{column}
+
+    \begin{column}{0.44\textwidth}
+      \begin{card}{Terminal Output Telemetry}
+        \fontsize{5.5pt}{6.5pt}\selectfont
+\begin{verbatim}
+[INFO] Loaded 10,954 records from CSV.
+[INFO] Slicing across ['race', 'gender']...
+[INFO] Total demographic strata: 14.
+[WARN] 0 strata flagged n < 30.
+[INFO] Computing DPD, DIR, EOP, EOD...
+[INFO] Cross-checking against AIF360Backend...
+[SUCCESS] Dual-backend parity verified.
+[INFO] Resampling B=1000 BCa bootstrap CIs...
+[INFO] Significant disparity in 'Female' (p=0.000).
+[INFO] Triggering surrogate attribution...
+[SUCCESS] Report written -> audit_report_val.html
+\end{verbatim}
+      \end{card}
+
+      \vspace{0.1cm}
+      \begin{successcard}{Production Ready}
+        \scriptsize Direct drop-in integration into ML regression testing and CI/CD pipelines.
+      \end{successcard}
+    \end{column}
+  \end{columns}

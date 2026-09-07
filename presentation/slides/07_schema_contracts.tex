@@ -1,0 +1,45 @@
+% Slide 7: Design by Contract & Milestone M1 Schema
+\begin{frame}
+  \frametitle{Design by Contract: The Locked Schema}
+  \framesubtitle{Interface Invariance \textbar\ Lead Presenter: Tisha}
+
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{card}{Milestone M1 Contract Invariance}
+        \scriptsize
+        To enable concurrent multi-stream development without integration drag, data contracts were formally locked at Milestone M1:
+        \vspace{0.1cm}
+        \begin{itemize}\scriptsize
+          \item \textbf{\texttt{SubjectRecord}:} Primary datum holding normalized demographics and predictions:
+          \begin{itemize}\tiny
+            \item \texttt{image\_id: str}
+            \item \texttt{subgroup\_race: RaceCategory} (7 categories)
+            \item \texttt{subgroup\_gender: GenderCategory} (2 categories)
+            \item \texttt{subgroup\_age: AgeCategory} (9 categories)
+            \item \texttt{true\_label: int}, \texttt{predicted\_label: int}
+          \end{itemize}
+          \item \textbf{\texttt{MetricResult}:} Immutable metric payload with statistical confidence and governance tags.
+        \end{itemize}
+      \end{card}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \begin{alertcard}{The $n < 30$ Integrity Invariant}
+        \scriptsize
+        Central limit theorems and asymptotic normality fail for small sample sizes ($n < 30$):
+        \vspace{0.1cm}
+        \begin{itemize}\scriptsize
+          \item Any demographic slice with \hlcoral{$n < 30$} is strictly forbidden from publishing point estimates.
+          \item \textbf{Enforced by \texttt{MetricResult.\_\_post\_init\_\_}:}
+          $$\text{if } n < 30 \implies \begin{cases} \texttt{insufficient\_sample} = \text{True} \\ \texttt{metric\_value} = \text{None} \end{cases}$$
+          \item Eliminates spurious, noisy conclusions in sparse intersectional cells (e.g., specific age $\times$ race intersections).
+        \end{itemize}
+      \end{alertcard}
+
+      \vspace{0.1cm}
+      \begin{statcard}{Audit Integrity Rule}
+        \scriptsize \textit{"Unreliable data must be explicitly flagged, never estimated unstably."}
+      \end{statcard}
+    \end{column}
+  \end{columns}
+\end{frame}

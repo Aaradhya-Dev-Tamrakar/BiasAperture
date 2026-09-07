@@ -1,0 +1,52 @@
+% Slide 1: Title Slide
+{
+\setbeamertemplate{footline}{} % No footline on title slide
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    % Subtle top bar
+    \fill[FuseBlue] (current page.north west) rectangle ([yshift=-4pt]current page.north east);
+  \end{tikzpicture}
+  
+  \vspace{0.3cm}
+  \begin{columns}[T]
+    \begin{column}{0.80\textwidth}
+      {\fontsize{10pt}{12pt}\selectfont\color{FuseBlue}\textbf{CAPSTONE PROJECT PROPOSAL DEFENSE}}\\[0.2cm]
+      {\fontsize{17pt}{21pt}\selectfont\bfseries\color{FuseDarkNavy}BiasAperture: A Diagnostic Framework for Demographic Bias Auditing in Facial Analysis Systems}\\[0.25cm]
+      {\fontsize{9.5pt}{12pt}\selectfont\color{FuseTextMuted}Bridging Fairness Research and Regulatory Governance via Reproducible, Standards-Aligned Auditing}
+    \end{column}
+    \begin{column}{0.18\textwidth}
+      \raggedleft
+      \IfFileExists{../report/src/images/logo.png}{%
+        \includegraphics[width=1.6cm]{../report/src/images/logo.png}%
+      }{%
+        \vspace{1cm}
+      }
+    \end{column}
+  \end{columns}
+
+  \vspace{0.6cm}
+  \begin{tikzpicture}[remember picture,overlay]
+    \draw[FuseCardBorder, line width=0.75pt] (0.8, 0) -- (\paperwidth-0.8cm, 0);
+  \end{tikzpicture}
+  \vspace{0.2cm}
+
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{card}{Presenters}
+        \textbf{Aaradhya Dev Tamrakar} \\
+        \small Department of Electronics \& Computer Engg., Thapathali Campus, IOE \\[0.2cm]
+        \textbf{Tisha Manandhar} \\
+        \small Department of Electronics \& Computer Engg., Thapathali Campus, IOE
+      \end{card}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{card}{Institutional Context \& Supervision}
+        \textbf{Supervisor:} Shreejan Kisee \\
+        \small Teaching Assistant, Fusemachines AI Fellowship \\[0.2cm]
+        \textbf{Program:} Fusemachines AI Fellowship (AIF) 2026 \\
+        \small Kathmandu, Nepal \hfill \textbar\ \today
+      \end{card}
+    \end{column}
+  \end{columns}
+\end{frame}
+}

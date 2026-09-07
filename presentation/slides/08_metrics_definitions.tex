@@ -1,0 +1,54 @@
+% Slide 8: The Core Four Fairness Metrics
+\begin{frame}
+  \frametitle{The Core Four Disparity Metrics}
+  \framesubtitle{Fairness Mathematics \textbar\ Lead Presenter: Aaradhya}
+
+  \begin{center}
+    \fontsize{7pt}{8.5pt}\selectfont
+    \renewcommand{\arraystretch}{1.15}
+    \begin{tabular}{p{3.4cm}p{6.6cm}cc}
+      \toprule
+      \textbf{Metric} & \textbf{Mathematical Formulation} & \textbf{Fair Value} & \textbf{Parity Type} \\
+      \midrule
+      \textbf{Demographic Parity Diff (DPD)} & 
+      $\max_a P(\hat{Y}=1 \mid A=a) - \min_a P(\hat{Y}=1 \mid A=a)$ & 
+      $0.0$ & Selection \\
+      
+      \textbf{Disparate Impact Ratio (DIR)} & 
+      $\min_a P(\hat{Y}=1 \mid A=a) \,/\, \max_a P(\hat{Y}=1 \mid A=a)$ & 
+      $1.0$ & Selection \\
+      
+      \textbf{Equal Opportunity Diff (EOP)} & 
+      $\max_a \text{TPR}_a - \min_a \text{TPR}_a$ \quad (conditioned on $Y=1$) & 
+      $0.0$ & Error Rate \\
+      
+      \textbf{Equalized Odds Diff (EOD)} & 
+      $\max\left(\max_a \text{TPR}_a - \min_a \text{TPR}_a, \; \max_a \text{FPR}_a - \min_a \text{FPR}_a\right)$ & 
+      $0.0$ & Joint Error \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+
+  \vspace{0.1cm}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{card}{Selection vs. Error-Rate Parity}
+        \scriptsize
+        \begin{itemize}
+          \item \textbf{DPD \& DIR} measure independence: $\hat{Y} \perp A$.
+          \item \textbf{EOP \& EOD} measure separation: $\hat{Y} \perp A \mid Y$ (Hardt et al., 2016).
+        \end{itemize}
+      \end{card}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \begin{card}{Multi-Class Policy: Macro-OvR Binarization}
+        \scriptsize
+        \begin{itemize}
+          \item Facial tasks involve multi-class targets (e.g. 9 age categories).
+          \item We apply \textbf{Macro One-vs-Rest (OvR)} binarization for DPD, EOD, and EOP; DIR is evaluated per-class.
+        \end{itemize}
+      \end{card}
+    \end{column}
+  \end{columns}
+\end{frame}

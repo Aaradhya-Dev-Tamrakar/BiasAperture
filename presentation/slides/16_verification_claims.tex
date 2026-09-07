@@ -1,0 +1,46 @@
+% Slide 16: Verification, Contract Testing & Claim Ledger
+\begin{frame}
+  \frametitle{Verification, Contract Testing \& Claim Ledger}
+  \framesubtitle{Research Integrity \textbar\ Lead Presenter: Aaradhya}
+
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{card}{55/55 Passing Pytest Suite}
+        \scriptsize
+        Strict test-driven verification across all core layers:
+        \vspace{0.05cm}
+        \begin{itemize}\scriptsize
+          \item \textbf{Unit Tests:} Schema typing, boundary invariant $n < 30$, CSV data loading.
+          \item \textbf{Harmonization Tests:} Verifying Fairlearn vs. AIF360 parity on identical inputs.
+          \item \textbf{Statistical Tests:} Validating $\chi^2$, BCa resampling reproducibility, and fallbacks.
+          \item \textbf{Reporting Tests:} Ensuring zero CDN dependencies and valid HTML formatting.
+        \end{itemize}
+      \end{card}
+
+      \vspace{0.1cm}
+      \begin{statcard}{Known-Answer Test (KAT)}
+        \scriptsize 8-record ground-truth test suite verifies exact scalar calculations:
+        $$\text{DPD}=0.500, \; \text{EOD}=0.500, \; \text{DIR}=0.3333$$
+      \end{statcard}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \begin{successcard}{The Auditable Claim Ledger}
+        \scriptsize
+        Documented ledger tracking foundational assumptions:
+        \vspace{0.05cm}
+        \begin{itemize}\scriptsize
+          \item \textbf{20 Active Research Claims:} Sourced from literature and verified in code.
+          \item \textbf{5 Formally Falsified Hypotheses:}
+            \begin{enumerate}\tiny
+              \item UTKFace secondary dataset viability $\to$ \hlcoral{Falsified} (label noise \& race collapse).
+              \item AIF360 native EOD agreement $\to$ \hlcoral{Falsified} (mean vs max divergence).
+              \item Uniform intersectional sampling $\to$ \hlcoral{Falsified} (sparsity in extreme age bins).
+              \item Global SHAP compute feasibility $\to$ \hlcoral{Falsified} (pivoted to targeted surrogate).
+              \item Normal approximation for DIR CIs $\to$ \hlcoral{Falsified} (boundary violation near 0).
+            \end{enumerate}
+        \end{itemize}
+      \end{successcard}
+    \end{column}
+  \end{columns}
+\end{frame}

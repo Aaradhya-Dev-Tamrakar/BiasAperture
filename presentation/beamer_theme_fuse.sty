@@ -1,0 +1,131 @@
+\ProvidesPackage{beamer_theme_fuse}[2026/09/05 Custom Sleek Theme for Fusemachines AI Fellowship Presentations]
+
+\RequirePackage{xcolor}
+\RequirePackage{tikz}
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+% ==============================================================================
+% Color Palette: Slate, Electric Blue, Cyan, Coral, Amber
+% ==============================================================================
+\definecolor{FuseDarkNavy}{HTML}{0F172A}   % #0F172A
+\definecolor{FuseNavy}{HTML}{1E293B}       % #1E293B
+\definecolor{FuseBlue}{HTML}{2563EB}       % #2563EB
+\definecolor{FuseLightBlue}{HTML}{38BDF8}  % #38BDF8
+\definecolor{FuseTeal}{HTML}{0D9488}       % #0D9488
+\definecolor{FuseCoral}{HTML}{E11D48}      % #E11D48
+\definecolor{FuseAmber}{HTML}{D97706}      % #D97706
+\definecolor{FuseCardBg}{HTML}{F8FAFC}     % #F8FAFC
+\definecolor{FuseCardBorder}{HTML}{E2E8F0} % #E2E8F0
+\definecolor{FuseTextDark}{HTML}{0F172A}   % #0F172A
+\definecolor{FuseTextMuted}{HTML}{64748B}  % #64748B
+
+% Set Beamer Colors
+\setbeamercolor{normal text}{fg=FuseTextDark,bg=white}
+\setbeamercolor{structure}{fg=FuseBlue}
+\setbeamercolor{frametitle}{fg=FuseDarkNavy,bg=white}
+\setbeamercolor{title}{fg=FuseDarkNavy}
+\setbeamercolor{subtitle}{fg=FuseBlue}
+\setbeamercolor{author}{fg=FuseTextDark}
+\setbeamercolor{institute}{fg=FuseTextMuted}
+\setbeamercolor{date}{fg=FuseTextMuted}
+
+% Navigation symbols off
+\setbeamertemplate{navigation symbols}{}
+
+% Frame Title Styling
+\setbeamertemplate{frametitle}{%
+  \vspace{0.15cm}%
+  \begin{beamercolorbox}[wd=\paperwidth,leftskip=0.6cm,rightskip=0.6cm]{frametitle}
+    \ifx\insertframesubtitle\@empty%
+      {\fontsize{11.5pt}{13pt}\selectfont\bfseries\color{FuseDarkNavy}\insertframetitle}%
+    \else%
+      {\fontsize{7.5pt}{9pt}\selectfont\bfseries\color{FuseBlue}\MakeUppercase{\insertframesubtitle}}\\[0.05cm]%
+      {\fontsize{11.5pt}{13pt}\selectfont\bfseries\color{FuseDarkNavy}\insertframetitle}%
+    \fi%
+  \end{beamercolorbox}%
+  \vspace{-0.25cm}%
+  \begin{tikzpicture}[remember picture,overlay]
+    \draw[FuseCardBorder, line width=0.5pt] (0.6, 0) -- (\paperwidth-0.6cm, 0);
+  \end{tikzpicture}%
+  \vspace{-0.1cm}%
+}
+
+% Footline / Slide Numbers
+\setbeamertemplate{footline}{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=2.2ex,dp=0.8ex,leftskip=0.6cm,rightskip=0.6cm]{footline}
+    \color{FuseTextMuted}\fontsize{6.5pt}{7.5pt}\selectfont
+    \textbf{BiasAperture} \textbar\ Fusemachines AI Fellowship 2026 \hfill
+    Aaradhya Dev Tamrakar \& Tisha Manandhar \hfill
+    \insertframenumber{} / \inserttotalframenumber
+  \end{beamercolorbox}%
+  \vspace{0.1cm}%
+}
+
+% Itemize Item Styling
+\setbeamertemplate{itemize item}{\color{FuseBlue}\raisebox{0.2ex}{\tiny$\blacksquare$}}
+\setbeamertemplate{itemize subitem}{\color{FuseTeal}\raisebox{0.2ex}{\tiny$\blacktriangleright$}}
+\setbeamertemplate{itemize subsubitem}{\color{FuseTextMuted}\textendash}
+
+% Itemize Spacing
+\setlength{\leftmargini}{1.0em}
+\setlength{\leftmarginii}{1.0em}
+
+% Custom Styled tcolorbox Cards
+\newtcolorbox{card}[2][]{%
+  enhanced,
+  colback=FuseCardBg,
+  colframe=FuseCardBorder,
+  coltitle=FuseDarkNavy,
+  fonttitle=\bfseries\scriptsize,
+  title={#2},
+  boxrule=0.6pt,
+  arc=2.5pt,
+  left=4pt,right=4pt,top=3pt,bottom=3pt,
+  #1
+}
+
+\newtcolorbox{statcard}[2][]{%
+  enhanced,
+  colback=FuseCardBg,
+  colframe=FuseBlue,
+  coltitle=FuseBlue,
+  fonttitle=\bfseries\scriptsize,
+  title={#2},
+  boxrule=0.8pt,
+  arc=2.5pt,
+  left=4pt,right=4pt,top=3pt,bottom=3pt,
+  #1
+}
+
+\newtcolorbox{alertcard}[2][]{%
+  enhanced,
+  colback=white,
+  colframe=FuseCoral,
+  coltitle=FuseCoral,
+  fonttitle=\bfseries\scriptsize,
+  title={#2},
+  boxrule=0.8pt,
+  arc=2.5pt,
+  left=4pt,right=4pt,top=3pt,bottom=3pt,
+  #1
+}
+
+\newtcolorbox{successcard}[2][]{%
+  enhanced,
+  colback=white,
+  colframe=FuseTeal,
+  coltitle=FuseTeal,
+  fonttitle=\bfseries\scriptsize,
+  title={#2},
+  boxrule=0.8pt,
+  arc=2.5pt,
+  left=4pt,right=4pt,top=3pt,bottom=3pt,
+  #1
+}
+
+% Highlight macros
+\newcommand{\hlblue}[1]{\textcolor{FuseBlue}{\textbf{#1}}}
+\newcommand{\hlcoral}[1]{\textcolor{FuseCoral}{\textbf{#1}}}
+\newcommand{\hlteal}[1]{\textcolor{FuseTeal}{\textbf{#1}}}
+\newcommand{\hlamber}[1]{\textcolor{FuseAmber}{\textbf{#1}}}

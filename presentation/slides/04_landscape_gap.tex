@@ -1,0 +1,30 @@
+% Slide 4: Comparative Landscape Audit & The Engineering Gap
+\begin{frame}
+  \frametitle{Comparative Landscape Audit: The Workflow Gap}
+  \framesubtitle{State of the Art \textbar\ Lead Presenter: Aaradhya}
+
+  \begin{center}
+    \fontsize{6.5pt}{8pt}\selectfont
+    \renewcommand{\arraystretch}{1.1}
+    \begin{tabular}{lcccccc}
+      \toprule
+      \textbf{Auditing Tool} & \textbf{CV Vision} & \textbf{Dual Backend} & \textbf{Support Guard} & \textbf{Proxy SHAP} & \textbf{Reg. Map} & \textbf{Offline Report} \\
+      \midrule
+      Fairlearn (Microsoft)    & Tabular           & Single                & Partial               & No                 & No                & Partial \\
+      AIF360 (IBM)             & Tabular           & Single                & No                    & No                 & No                & No \\
+      Aequitas (Chicago)       & Tabular           & Single                & Partial               & No                 & No                & Web/PDF \\
+      Google What-If Tool      & Ad-hoc            & Single                & No                    & TensorBoard        & No                & Web-only \\
+      JFAM (Alvi et al.)       & Vision            & None                  & No                    & No                 & No                & No \\
+      FAT Forensics            & Tabular           & Single                & No                    & LIME/Kernel        & No                & Notebook \\
+      FairTest (Tram\`er et al.) & Tabular         & Single                & Association tests     & No                 & No                & Text \\
+      \midrule
+      \textbf{BiasAperture (Ours)} & \hlteal{\textbf{Vision}} & \hlteal{\textbf{Dual (FL+AIF)}} & \hlteal{\textbf{$n \ge 30$ + BCa}} & \hlteal{\textbf{Targeted}} & \hlteal{\textbf{Art. 10+RMF}} & \hlteal{\textbf{Zero-Net HTML}} \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+
+  \vspace{0.1cm}
+  \begin{alertcard}{The Formal Gap Statement}
+    \scriptsize \textit{"There is an engineering gap between a mature body of fairness metrics and the availability of a reusable, standards-aligned software platform that operationalises this research into a repeatable auditing workflow for facial analysis systems."}
+  \end{alertcard}
+\end{frame}

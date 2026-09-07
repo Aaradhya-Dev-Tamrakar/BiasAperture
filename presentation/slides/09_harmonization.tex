@@ -1,0 +1,48 @@
+% Slide 9: Heterogeneous Backend Harmonization
+\begin{frame}
+  \frametitle{Heterogeneous Backend Harmonization}
+  \framesubtitle{Engineering Novelty \textbar\ Lead Presenter: Aaradhya}
+
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{alertcard}{Vendor Mathematical Conflicts}
+        \scriptsize
+        Reusing toolkits like Fairlearn and AIF360 out-of-the-box introduces hidden numerical divergence:
+        \vspace{0.05cm}
+        \begin{enumerate}\scriptsize
+          \item \textbf{EOD Divergence:}
+          \begin{itemize}\tiny
+            \item Fairlearn computes \hlcoral{worst-case max gap}:
+            $$\max(\Delta\text{TPR}, \Delta\text{FPR})$$
+            \item Native AIF360 computes \hlcoral{arithmetic mean}:
+            $$\frac{1}{2}(\Delta\text{TPR} + \Delta\text{FPR})$$
+          \end{itemize}
+          \item \textbf{EOP Sign Mismatch:}
+          \begin{itemize}\tiny
+            \item Fairlearn returns unsigned scalar $\ge 0$.
+            \item AIF360 returns signed difference $\in [-1, 1]$ relative to privileged group.
+          \end{itemize}
+        \end{enumerate}
+      \end{alertcard}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \begin{successcard}{The BiasAperture Harmonization Layer}
+        \scriptsize
+        Adapter abstraction guaranteeing cross-backend mathematical consistency:
+        \vspace{0.05cm}
+        \begin{itemize}\scriptsize
+          \item \textbf{EOD Harmonization:} Standardized to the \hlteal{worst-case max gap} (Hardt et al., 2016) in both backends.
+          \item \textbf{EOP Harmonization:} Normalized via absolute difference adapter ($|\text{EOP}| \ge 0$).
+          \item \textbf{Symmetric Bounded DIR:} Enforces symmetric bounded ratio:
+          $$\text{DIR} = \min_a \text{rate}_a \,/\, \max_a \text{rate}_a \in [0, 1]$$
+        \end{itemize}
+      \end{successcard}
+
+      \vspace{0.1cm}
+      \begin{card}{Why This Matters}
+        \scriptsize Independent backends cross-validate each other: any divergence flags an implementation defect, not true disparity.
+      \end{card}
+    \end{column}
+  \end{columns}
+\end{frame}

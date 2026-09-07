@@ -1,0 +1,60 @@
+% Slide 10: Statistical Safeguards - Three-Tier Inferential Defense
+\begin{frame}
+  \frametitle{Three-Tier Statistical Inferential Defense}
+  \framesubtitle{Statistical Rigor \textbar\ Lead Presenter: Aaradhya}
+
+  \begin{columns}[T]
+    \begin{column}{0.32\textwidth}
+      \begin{statcard}{Tier 1: Support Guards}
+        \footnotesize
+        \textbf{Sample-Size Invariants:}
+        \begin{itemize}\scriptsize
+          \item Minimum global check: $n_a \ge 30$.
+          \item Metric-specific cell counts:
+            \begin{itemize}\tiny
+              \item \textbf{EOP:} $n_{Y=1, a} \ge 5$ (true positive support).
+              \item \textbf{EOD:} $n_{Y=1, a} \ge 5$ and $n_{Y=0, a} \ge 5$ (both positive and negative support).
+            \end{itemize}
+          \item Fails trigger automatic:
+          \texttt{insufficient\_sample=True}
+        \end{itemize}
+      \end{statcard}
+    \end{column}
+
+    \begin{column}{0.34\textwidth}
+      \begin{card}{Tier 2: Hypothesis Testing}
+        \footnotesize
+        \textbf{Contingency Testing \& FWER:}
+        \begin{itemize}\scriptsize
+          \item $\chi^2$ test of independence against demographic distributions.
+          \item \textbf{Fisher's Exact Test} fallback whenever expected cell frequency $E_{ij} < 5$.
+          \item \textbf{Holm-Bonferroni Correction:} Controls Family-Wise Error Rate (FWER) across multi-group and intersectional hypothesis slices:
+          $$p_{(k)} \le \frac{\alpha}{m - k + 1}$$
+        \end{itemize}
+      \end{card}
+    \end{column}
+
+    \begin{column}{0.32\textwidth}
+      \begin{successcard}{Tier 3: BCa Bootstrap}
+        \footnotesize
+        \textbf{Confidence Intervals:}
+        \begin{itemize}\scriptsize
+          \item \textbf{Bias-Corrected and Accelerated (BCa)} bootstrap ($B \ge 1,000$ resamples).
+          \item Stratified within-subgroup resampling to hold observed $n_a$ fixed.
+          \item \textbf{Percentile Fallback Policy:}
+            \begin{itemize}\tiny
+              \item Extreme acceleration $|a| > 0.5$.
+              \item Degenerate bias correction $z_0$.
+              \item Non-monotonic bounds.
+            \end{itemize}
+          \item Replicate validity $\ge 90\%$.
+        \end{itemize}
+      \end{successcard}
+    \end{column}
+  \end{columns}
+
+  \vspace{0.2cm}
+  \begin{alertcard}{The Watkins et al. (2022) Principle}
+    \footnotesize \textit{"Disparity ratios and differences are effect sizes, not standalone proof of bias. They must always be contextualized by sample size, hypothesis testing, and rigorous confidence intervals."}
+  \end{alertcard}
+\end{frame}

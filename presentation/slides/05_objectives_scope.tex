@@ -1,0 +1,50 @@
+% Slide 5: General & Specific Objectives + Scope Boundary
+\begin{frame}
+  \frametitle{Objectives \& The Strict Diagnostic Boundary}
+  \framesubtitle{Project Scope \textbar\ Lead Presenter: Tisha}
+
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{card}{General Objective}
+        \scriptsize Design and build \textbf{BiasAperture}, a modular diagnostic software platform systematically identifying demographic accuracy disparities in facial analysis models and compiling regulator-legible reports.
+      \end{card}
+      
+      \vspace{0.1cm}
+      \begin{card}{5 Specific Objectives}
+        \scriptsize
+        \begin{enumerate}\scriptsize
+          \item \textbf{Modular Ingestion:} Ingest datasets (FairFace) and prediction files (FR-001, FR-002).
+          \item \textbf{Dual-Backend Verification:} Cross-check Fairlearn \& AIF360 with $\chi^2$ and BCa bootstrap (FR-003, FR-004).
+          \item \textbf{Explainability Layer:} Provide targeted proxy attribution on flagged disparities ($p < 0.05$) (FR-005).
+          \item \textbf{Offline Report:} Generate zero-network HTML reports via Model Cards \& Datasheets (FR-006).
+          \item \textbf{Regulatory Mapping:} Map metrics to EU AI Act Art. 10 and NIST AI RMF (FR-007).
+        \end{enumerate}
+      \end{card}
+    \end{column}
+
+    \begin{column}{0.46\textwidth}
+      \begin{alertcard}{Strict Diagnostic Boundary}
+        \scriptsize Diagnostic integrity requires \textbf{separation of concerns}:
+        \vspace{0.05cm}
+        \begin{itemize}\scriptsize
+          \item \hlteal{\textbf{IN SCOPE:}}
+            \begin{itemize}\tiny
+              \item Data validation \& profiling
+              \item Prediction file \& model ingestion
+              \item Disparity metrics \& statistical tests
+              \item Targeted proxy attribution
+              \item Compliance documentation
+            \end{itemize}
+          \item \hlcoral{\textbf{EXPLICITLY OUT OF SCOPE:}}
+            \begin{itemize}\tiny
+              \item Model retraining / fine-tuning
+              \item Loss function weight debiasing
+              \item Synthetic face image generation
+            \end{itemize}
+        \end{itemize}
+        \vspace{0.05cm}
+        \textit{Auditors must remain independent evaluators, never participants in model retraining.}
+      \end{alertcard}
+    \end{column}
+  \end{columns}
+\end{frame}

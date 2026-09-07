@@ -1,0 +1,109 @@
+% Slide 20: Backup Defense Slides
+\begin{frame}
+  \frametitle{Backup Slide: The Novelty Defense}
+  \framesubtitle{Examiner Scrutiny \textbar\ Tooling vs. Algorithmic Novelty}
+
+  \begin{alertcard}{The Panel Question}
+    \scriptsize \textit{"Fairlearn and AIF360 already exist. Aren't you just writing a wrapper around existing open-source libraries?"}
+  \end{alertcard}
+
+  \vspace{0.05cm}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{card}{The Tooling Analogy}
+        \scriptsize Docker did not invent cgroups or namespaces; Git did not invent diff algorithms. Their contribution was eliminating workflow friction, unifying disparate interfaces, and making capabilities reliably reusable.
+      \end{card}
+
+      \vspace{0.05cm}
+      \begin{card}{Computer Vision Friction}
+        \scriptsize Existing tools are tabular-first. Auditing computer vision models requires multi-class OvR binarization, face alignment, intersectional slicing, and image proxy attribution.
+      \end{card}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \begin{statcard}{The Mathematical Gap}
+        \scriptsize Toolkits natively disagree:
+        \begin{itemize}\tiny
+          \item Native Fairlearn \& AIF360 calculate \hlcoral{divergent Equalized Odds} on identical data.
+          \item Sign conventions for EOP conflict.
+          \item Neither library provides $n < 30$ support guards, FWER-controlled $\chi^2$ testing, or offline regulatory crosswalks.
+        \end{itemize}
+      \end{statcard}
+
+      \vspace{0.05cm}
+      \begin{successcard}{Our Contribution}
+        \scriptsize Packaging these verified decisions into an auditable, reproducible workflow.
+      \end{successcard}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Backup Slide: Why Diagnostic-Only?}
+  \framesubtitle{Examiner Scrutiny \textbar\ Auditing vs. Remediation}
+
+  \begin{alertcard}{The Panel Question}
+    \scriptsize \textit{"Why didn't you build model debiasing or retraining algorithms into BiasAperture?"}
+  \end{alertcard}
+
+  \vspace{0.05cm}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{card}{1. Ethical Separation of Concerns}
+        \scriptsize A diagnostic auditor must remain an independent evaluator. Folding mitigation or retraining into an auditing tool introduces an inherent \textbf{conflict of interest}:
+        \vspace{0.05cm}
+        \begin{itemize}\scriptsize
+          \item If an auditor automatically modifies weights to pass its own tests, the tests cease to be objective evaluations (Goodhart's Law).
+        \end{itemize}
+      \end{card}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \begin{card}{2. Literature Precedent (Dehdashtian et al.)}
+        \scriptsize Dehdashtian, Wang, \& Boddeti (2024) formally partition fairness research into two distinct domains:
+        \vspace{0.05cm}
+        \begin{itemize}\scriptsize
+          \item \textbf{Diagnostic Auditing:} Measuring disparities, validating statistical confidence, documenting compliance.
+          \item \textbf{Mitigation:} Pre-processing, in-processing adversarial training, post-processing threshold adjustments.
+        \end{itemize}
+      \end{card}
+
+      \vspace{0.05cm}
+      \begin{statcard}{Production Modularity}
+        \scriptsize Downstream teams use BiasAperture reports to inform their own domain-specific mitigation strategies.
+      \end{statcard}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Backup Slide: Why BCa Bootstrap over Normal Approx.?}
+  \framesubtitle{Examiner Scrutiny \textbar\ Statistical Methodology}
+
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{card}{Failure of Standard Wald / Normal Approx.}
+        \scriptsize Standard normal confidence intervals assume asymptotic symmetry:
+        $$\hat{\theta} \pm 1.96 \cdot \text{SE}(\hat{\theta})$$
+        \textbf{Why this fails for fairness auditing:}
+        \begin{itemize}\scriptsize
+          \item \textbf{Ratio Metrics (DIR):} Ratio distributions $\min/\max$ are heavily skewed with positive excess kurtosis.
+          \item \textbf{Boundary Compression:} DPD, EOD, and EOP are bounded near $[0, 1]$. Normal approximation frequently leaks outside bounds ($< 0$ or $> 1$).
+        \end{itemize}
+      \end{card}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \begin{successcard}{Advantages of Vectorized BCa (Efron, 1987)}
+        \scriptsize The Bias-Corrected and Accelerated bootstrap adjusts for:
+        \vspace{0.05cm}
+        \begin{enumerate}\scriptsize
+          \item \textbf{Bias Correction ($z_0$):} Adjusts for median bias between bootstrap replicates and empirical estimate:
+          $$z_0 = \Phi^{-1}\left(\frac{1}{B}\sum_{b=1}^B \mathbb{I}(\hat{\theta}^*_b < \hat{\theta})\right)$$
+          \item \textbf{Acceleration Parameter ($a$):} Corrects for rate of change of standard error via jackknife residuals.
+          \item \textbf{Transformation Invariance:} Respects theoretical bounds without artificial clipping.
+        \end{enumerate}
+      \end{successcard}
+    \end{column}
+  \end{columns}
+\end{frame}

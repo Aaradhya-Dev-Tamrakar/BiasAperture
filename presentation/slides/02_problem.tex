@@ -1,0 +1,49 @@
+% Slide 2: The Problem - Distributional Masking
+\begin{frame}
+  \frametitle{High Aggregate Accuracy Masks Severe Subgroup Failure}
+  \framesubtitle{Problem Motivation \textbar\ Lead Presenter: Aaradhya}
+
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{alertcard}{The Gender Shades Benchmark Disparity}
+        \scriptsize
+        \textbf{Buolamwini \& Gebru (2018):} Leading commercial gender-classification services exhibited high overall accuracy ($>90\%$), but severe intersectional disparities:
+        \vspace{0.05cm}
+        \begin{itemize}\scriptsize
+          \item \textbf{Lighter Males:} \hlteal{0.8\% error rate}
+          \item \textbf{Darker Females:} \hlcoral{34.7\% error rate}
+          \item \textbf{Disparity Gap:} Up to \hlcoral{43:1 error-rate ratio}
+        \end{itemize}
+      \end{alertcard}
+      
+      \vspace{0.1cm}
+      \begin{card}{Distributional Masking}
+        \scriptsize
+        Standard empirical risk minimization (ERM) optimizes global sample loss:
+        $$\mathcal{R}(\theta) = \sum_a P(A=a)\,\mathcal{R}_a(\theta)$$
+        High aggregate metrics systematically conceal catastrophic failure modes in protected demographic slices.
+      \end{card}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \begin{statcard}{High-Stakes Real-World Harm}
+        \scriptsize
+        Facial analysis models are deployed in sensitive domains:
+        \begin{itemize}\scriptsize
+          \item \textbf{Biometric Access \& Border Control:} Asymmetric false rejection rates causing wrongful profiling.
+          \item \textbf{Identity Verification \& KYC:} Demographic drop-off in automated banking onboarding.
+          \item \textbf{Surveillance Systems:} Disproportionate false-positive matches for protected groups.
+        \end{itemize}
+      \end{statcard}
+
+      \vspace{0.1cm}
+      \begin{card}{The Industry Practice Failure}
+        \scriptsize
+        \begin{itemize}\scriptsize
+          \item Most audits remain \textbf{one-off, manual academic exercises}.
+          \item Engineers lack a \textbf{reusable, vision-native software framework} for continuous bias regression testing.
+        \end{itemize}
+      \end{card}
+    \end{column}
+  \end{columns}
+\end{frame}
