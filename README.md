@@ -6,7 +6,7 @@ A fairness and bias audit system proposal and implementation submitted for the *
 
 **Authors:** Aaradhya Dev Tamrakar, Tisha Manandhar  
 **Supervisor:** Shreejan Kisee, Teaching Assistant, Fusemachines AI Fellowship  
-**Status:** Milestones M1–M4 Completed (100%) · M5 System Orchestration & Case Studies Active (90%) · Proposal Defense Completed · 67/67 Tests Passing
+**Status:** Milestones M1–M4 Completed (100%) · M5 System Orchestration & Case Studies Active (95%) · Proposal Defense Completed · 78/78 Tests Passing
 
 ---
 
@@ -132,6 +132,7 @@ BiasAperture/
 │   ├── references.bib          # BibTeX bibliography
 │   ├── audit_report_val_gender.html             # Generated validation audit report (Gender)
 │   ├── audit_report_val_race_gender_shap.html   # Generated validation audit report (Race x Gender + surrogate SHAP fallback)
+│   ├── audit_val_race_verified.html             # Verified 10,954-record dual-backend validation audit report
 │   └── src/                    # Proposal chapters, frontmatter, and architectural figures
 ├── research/                   # 20-Track Parallel Research Sprint & NotebookLM Context
 │   ├── research tracks/        # Track prompts and deliverables (Tracks 01–20)
@@ -157,7 +158,8 @@ BiasAperture/
 ├── scripts/                    # Utility, profiling, and verification scripts
 │   ├── explore_fairface.py     # FairFace disk verification and attribute distribution
 │   ├── explore_utkface.py      # Cut UTKFace comparison & DEX noise analysis
-│   └── check_stale_claims.py   # Automated assertion-verification anti-drift script
+│   ├── check_stale_claims.py   # Automated assertion-verification anti-drift script
+│   └── generate_architecture_diagram.py # Architecture high-level figure generator
 ├── src/                        # Core Implementation Package
 │   ├── bias_aperture/          # Production library code
 │   │   ├── schema.py           # Locked internal demographic schema & result models (M1)
@@ -173,7 +175,7 @@ BiasAperture/
 │   │   └── report/             # Compliance report generation package (WP3)
 │   │       ├── generator.py    # Standalone HTML report compiler
 │   │       └── templates/      # Offline Jinja2 report templates (report.html.j2)
-│   └── tests/                  # Pytest test suite (67 unit & integration tests)
+│   └── tests/                  # Pytest test suite (78 unit & integration tests)
 ├── sync.ps1                    # Multi-remote synchronization & commit automation script
 ├── LICENSE                     # MIT License
 ├── AGENT.md                    # Universal AI agent & developer guidelines
@@ -187,7 +189,7 @@ BiasAperture/
 ## Project Progress & Roadmap
 
 ```
-Overall Progress: [███████████████████░] 95% (Milestones M1–M4 Complete · 67/67 Tests Passing · M5 Active at 95%)
+Overall Progress: [███████████████████░] 95% (Milestones M1–M4 Complete · 78/78 Tests Passing · M5 Active at 95%)
 ```
 
 | Work Package / Milestone                             | Stream / Focus            |  Status   |           Progress            | Deliverables & Implementation State                                                                                                                                                                         |
@@ -217,7 +219,7 @@ uv sync --extra dev
 
 ### 2. Run the Verification Test Suite
 
-Run the full automated pytest suite (67 tests across all 5 modules):
+Run the full automated pytest suite (78 tests across all 5 modules):
 
 ```bash
 uv run --extra dev pytest
@@ -235,17 +237,21 @@ uv run --extra dev ruff format --check src/
 Perform an end-to-end bias audit on precomputed model predictions and generate a self-contained HTML compliance report:
 
 ```bash
-# Audit validation set predictions across race and gender with surrogate explainability
-uv run bias-aperture audit data/processed/fairface_predictions_val.csv \
-  --target-column gender_pred \
-  --ground-truth-column gender \
-  --sensitive-features race gender \
-  --output report/audit_report_val_race_gender_shap.html \
-  --explain \
-  --bootstrap-resamples 1000
+# Audit validation set predictions across race demographic axis with dual backends
+uv run bias-aperture audit \
+  -i data/processed/fairface_predictions_val.csv \
+  -a race \
+  --true-label-col true_gender \
+  --predicted-label-col predicted_gender \
+  --race-col subgroup_race \
+  --gender-col subgroup_gender \
+  --age-col subgroup_age \
+  -o report/audit_val_race_verified.html \
+  --backend dual \
+  --bca-resamples 1000
 ```
 
-Open the resulting file `report/audit_report_val_race_gender_shap.html` in any web browser to view the audit results, disparity cards, statistical significance checks, and regulatory compliance matrix.
+Open the resulting file `report/audit_val_race_verified.html` in any web browser to view the audit results, disparity cards, statistical significance checks, and regulatory compliance matrix.
 
 ---
 

@@ -245,6 +245,9 @@ __marimo__/
 *.sls
 *.sta
 *.xdy
+*.nav
+*.snm
+*.vrb
 
 # Git bare repository artifacts
 *.git/

@@ -8,14 +8,16 @@
       \begin{card}{End-to-End CLI Invocation}
         \fontsize{5.5pt}{6.5pt}\selectfont
 \begin{verbatim}
-# Run complete audit with proxy explainability:
+# Run complete audit across demographic strata:
 uv run bias-aperture audit \
-  --predictions data/processed/fairface_predictions_val.csv \
-  --target-col service_test \
-  --protected-axes race gender \
-  --backend fairlearn --cross-validate \
-  --explain \
-  --output report/audit_report_val.html
+  -i data/processed/fairface_predictions_val.csv \
+  -a race \
+  --true-label-col true_gender \
+  --predicted-label-col predicted_gender \
+  --race-col subgroup_race \
+  --backend dual \
+  --bca-resamples 1000 \
+  -o report/audit_val_race_verified.html
 \end{verbatim}
       \end{card}
 
