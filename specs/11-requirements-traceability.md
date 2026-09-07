@@ -18,7 +18,7 @@
 | **FR-008: Orchestration & Configuration** | [03](03-orchestrator.md) | `src/bias_aperture/cli.py` | `tests/test_cli.py`, end-to-end CLI runs | Implemented / Tested |
 | **FR-009: Licensing Acknowledgement** | [10](10-security-and-governance.md) | `src/bias_aperture/cli.py` | `tests/test_cli.py` (interactive prompt & `--acknowledge-licence`) | Implemented / Tested |
 | **FR-010: Regulatory Evidence Traceability** | [03](03-orchestrator.md), [08](08-report-and-compliance.md), [10](10-security-and-governance.md) | `src/bias_aperture/report/generator.py`, `cli.py` | Run metadata validation, `manifest.json` export contracts | Implemented / Tested |
-| **FR-011: Calibration & Threshold Audits** | [05](05-audit-engine.md) | WP4 analytical extensions / Phase 2 track | Analytical evaluation profiles & calibration specifications | Partially implemented |
+| **FR-011: Calibration & Threshold Audits** | [05](05-audit-engine.md) | WP4 analytical extensions / Phase 2 track | Analytical evaluation profiles & calibration specifications | **Deferred to Phase 2** — Core Four metrics and statistical testing cover the primary audit scope; calibration curve assessment and threshold sensitivity analysis are planned as Phase 2 analytical extensions once the baseline case study is finalized. |
 
 ---
 
@@ -35,7 +35,7 @@
 | **NFR-007: Portability** | [00](00-overview-and-mvp-scope.md) | Pure Python stack across Linux, macOS, and Windows | Multi-OS CI workflows & path-agnostic test suites | Implemented / Tested |
 | **NFR-008: Explainability Performance** | [07](07-explainability.md) | `src/bias_aperture/explainability.py` | Attribution restricted to flagged disparity cohorts | Implemented / Tested |
 | **NFR-009: Reproducibility & Report Integrity** | [08](08-report-and-compliance.md), [10](10-security-and-governance.md) | `src/bias_aperture/report/`, `cli.py` | SHA-256 report bundle verification and manifest integrity | Implemented / Tested |
-| **NFR-010: Statistical Power Guidance** | [06](06-statistics-and-confidence.md) | Fairness statistics layer / power analysis track | Statistical sample size sensitivity & power calculation specs | Needs confirmation |
+| **NFR-010: Statistical Power Guidance** | [06](06-statistics-and-confidence.md) | Fairness statistics layer / power analysis track | Statistical sample size sensitivity & power calculation specs | **Deferred to Phase 2** — The NFR-003 guard ($n < 30$ suppression) and BCa bootstrap CIs provide baseline sample-size awareness; formal a priori power analysis (effect size → required $n$) is planned as a Phase 2 extension. |
 
 ---
 
