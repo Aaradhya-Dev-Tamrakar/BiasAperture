@@ -345,11 +345,12 @@ Following the completion of Milestone M1 and the 20-track research sprint, tasks
   - Joint: Full FairFace 97.7k Released Benchmark Alignment (D5) + LaTeX Thesis Chapter 2 expansion (20 papers, 50pp compiled clean) + Research Claim Ledger (v1.5.0, 21 active claims) (E1).
   - Joint: Presentation Slides (E2, 18-slide Beamer compiled) + Examiner Scrutiny Mock Defense preparation via rubrics and Dossier (E3).
 
-## §19. Proposal Defense & Final Deadline Check (August 26, 2026)
+## §19. Proposal Defense Outcome & Final Deadline Check (September 7, 2026)
 
-The proposal defense has not yet been conducted. The existing Sprint 4 plan includes
-presentation slides and a mock defense, but the actual proposal-defense date and
-requirements remain to be confirmed with the TA.
+The proposal defense has been completed. The presentation deck, speaker notes,
+defense dossier, and supporting implementation evidence were used for the completed
+defense. Remaining work is post-defense finalization and any follow-up revisions
+requested by the TA or evaluation panel.
 
 The team currently believes that the project deadline may be in November 2026, but
 this is unconfirmed and must not be treated as final until checked against the official

@@ -6,7 +6,7 @@ A fairness and bias audit system proposal and implementation submitted for the *
 
 **Authors:** Aaradhya Dev Tamrakar, Tisha Manandhar  
 **Supervisor:** Shreejan Kisee, Teaching Assistant, Fusemachines AI Fellowship  
-**Status:** Milestones M1–M4 Completed (100%) · M5 System Orchestration & Case Studies Active (90%) · 67/67 Tests Passing
+**Status:** Milestones M1–M4 Completed (100%) · M5 System Orchestration & Case Studies Active (90%) · Proposal Defense Completed · 67/67 Tests Passing
 
 ---
 
@@ -196,7 +196,7 @@ Overall Progress: [███████████████████░]
 | **WP2 / M2: Data Ingestion & Test Matrix**           | Stream A (Tisha)          | Completed | `[████████████████████] 100%` | Ingestion pipeline (`data_ingestion.py`), alias resolution, 97,698 FairFace images disk verified, UTKFace profiled and cut.                                                                                 |
 | **WP3 / M3: Compliance Report Generation**           | Stream B (Tisha/Aaradhya) | Completed | `[████████████████████] 100%` | Zero-network Jinja2 HTML report generator (`generator.py`), embedded SVG charts, EU AI Act Art. 10/13 & NIST AI RMF mapping.                                                                                |
 | **WP4 / M4: Statistical Detection & Explainability** | WP4 (Aaradhya)            | Completed | `[████████████████████] 100%` | Dual backends (Fairlearn + AIF360), $\chi^2$ asymptotic tests with Fisher's exact test fallback, BCa bootstrap ($B \ge 1,000$), $n < 30$ guards, exact additive Shapley surrogate attribution (SHAP deferred). |
-| **WP5 / M5: System Orchestration & Case Studies**    | Integration / Joint       |  Active   | `[███████████████████░]  95%` | CLI orchestrator (`cli.py`), benchmark inference complete (`10,954/10,954`), validation audit reports generated (`report/*.html`), 20-paper literature review synchronized, 50-page LaTeX report compiled, 18-slide Beamer presentation deck compiled; next: oral defense delivery. |
+| **WP5 / M5: System Orchestration & Case Studies**    | Integration / Joint       |  Active   | `[███████████████████░]  95%` | CLI orchestrator (`cli.py`), benchmark inference complete (`10,954/10,954`), validation audit reports generated (`report/*.html`), 20-paper literature review synchronized, 50-page LaTeX report compiled, 18-slide Beamer presentation deck compiled, and proposal defense completed; next: post-defense finalization. |
 
 ---
 
@@ -322,7 +322,7 @@ Preparation for the defense oral examination is structured across technical doma
 - **Tisha Manandhar**: Leads defense on Data Ingestion & Governance (FairFace 97.7k image curation and alignment), Demographic Test Matrix construction, Regulatory Alignment (EU AI Act Articles 10/13, NIST AI RMF), and Offline Compliance Reporting UX.
 - **Aaradhya Dev Tamrakar**: Leads defense on Statistical Significance Engine ($\chi^2$ asymptotic tests, BCa Bootstrap CIs), Heterogeneous Backend Harmonization (Fairlearn vs. AIF360 max-of-gaps and sign conventions), and Exact Additive Shapley Surrogate Attribution.
 
-For comprehensive defense preparation, refer to the authoritative rubric-aligned [Proposal Defense Master Dossier](docs/PROPOSAL_DEFENSE_MASTER_DOSSIER.md) and [Presentation Speaker Notes](presentation/speaker_notes.md).
+For the completed defense materials and presentation record, refer to the authoritative rubric-aligned [Proposal Defense Master Dossier](docs/PROPOSAL_DEFENSE_MASTER_DOSSIER.md) and [Presentation Speaker Notes](presentation/speaker_notes.md).
 
 ---
 
