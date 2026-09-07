@@ -278,7 +278,7 @@ FR-009  | COULD    | Licensing Transparency: The system shall present and requir
   - **9 Age Brackets:** 0–2, 3–9, 10–19, 20–29, 30–39, 40–49, 50–59, 60–69, 70+.
 - **Intersectional Slices:** $7 \times 2 = 14$ primary race-gender intersectional subgroups; $7 \times 2 \times 9 = 126$ full intersectional cohorts.
 
-### Scope Descoping Decision: Profiling & Removal of UTKFace
+### Scope Descoping Decision: Profiling, Cut, and Exclusion of UTKFace
 
 During preliminary exploratory data analysis, **UTKFace** was profiled and formally removed from the project scope (Cut-List Tier #2).  
 _Rationale:_ UTKFace’s age labels were generated using an unverified automated model rather than human consensus, introducing severe ground-truth label noise that contaminates fairness audits.
@@ -437,7 +437,8 @@ Ref # | Citation                          | Core Finding / Contribution         
       | "Impossibility Theorems..."       | reliably establish causal drivers           | associative, never causal proof
 ------|-----------------------------------|---------------------------------------------|---------------------------------
 13    | Slack et al. (2020)               | Adversarial models can fool post-hoc        | Justifies dual-mode interface
-      | "Fooling LIME and SHAP"           | explainers via perturbation detection       | and bounded explainer trust
+      | "Fooling LIME and SHAP"           | surrogate/deferred explainers via           | and bounded surrogate trust
+      | [surrogate attribution]           | perturbation detection                      |
 ------|-----------------------------------|---------------------------------------------|---------------------------------
 14    | NIST AI RMF 1.0 (2023)            | AI Risk Management Framework: Govern,       | Second regulatory compliance
       | "NIST AI 100-1"                   | Map, Measure (2.11), Manage functions       | spine alongside EU AI Act
@@ -1060,7 +1061,7 @@ EU AI Act Art. 10 Deadline    | August 2, 2026      | Binding enforcement date f
   _Never say:_ "In the future, we will train the model to be fair."  
   _Correction:_ "BiasAperture is strictly diagnostic metrology. We evaluate and report disparities objectively; remediation belongs to model developers."
 - **Trap 2: Claiming Causal Proof from Explainability.**  
-  _Never say:_ "SHAP proves the model is biased because of skin tone."  
+  _Never say:_ "Surrogate/deferred SHAP attribution proves the model is biased because of skin tone."  
   _Correction:_ "Following Bilodeau et al. (2022), surrogate attribution identifies associative proxy correlations; it cannot establish legal causality."
 - **Trap 3: Endorsing the Bare 80% Rule.**  
   _Never say:_ "If DIR is above 0.80, the model is fair."  

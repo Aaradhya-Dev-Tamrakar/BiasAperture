@@ -421,7 +421,7 @@ Following a comprehensive audit across code artifacts, specifications, and propo
 - **Empirical Ground Truth**: FairFace contains exactly 97,698 released image files on disk across splits (86,744 training images + 10,954 validation images).
 - **Resolution**: The historical 108,501 figure represents the pre-discard / pre-annotation raw scraped total reported in Karkkainen & Joo (2021). All specification files, throughput targets (NFR-004), and reporting chapters are harmonized to distinguish the 97,698 released benchmark total from the 108,501 pre-discard total.
 
-### 2. Benchmark Scope Lock (UTKFace Formal Exclusion)
+### 2. Benchmark Scope Lock (UTKFace Formal Cut and Exclusion)
 
 - **Status**: UTKFace is confirmed as definitively **cut** per Cut-List #2 (due to severe DEX label-noise and misaligned racial taxonomies).
 - **Resolution**: Legacy references framing UTKFace as an active secondary benchmark are resolved by cutting it; the cut UTKFace dataset was utilized solely for preliminary ingestion profiling; FairFace serves as the single authoritative benchmark dataset for all audit and case study evaluations.

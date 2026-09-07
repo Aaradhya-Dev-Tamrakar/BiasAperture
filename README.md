@@ -115,7 +115,7 @@ BiasAperture/
 │   ├── schema-lock-m1.md                  # Milestone M1 locked schema specification
 │   ├── literature-review-matrix.md        # Academic literature matrix (20 papers, Walden format, synchronized with thesis Chapter 2)
 │   ├── CHANGELOG.md                       # Auto-updated by sync.ps1 on every commit
-│   ├── research/                          # Research syntheses, CLAIM_LEDGER, SHAP theory & audit guide
+│   ├── research/                          # Research syntheses, CLAIM_LEDGER, surrogate SHAP theory (deferred) & audit guide
 │   └── fellowship/                        # Official Fusemachines guidelines & reference rubrics
 ├── presentation/               # Proposal Defense Slide Deck (LaTeX Beamer)
 │   ├── main.tex                # 18-slide Beamer presentation entry point
@@ -131,7 +131,7 @@ BiasAperture/
 │   ├── at_fuse_aif.cls         # Custom Khwopa/AIF LaTeX document class
 │   ├── references.bib          # BibTeX bibliography
 │   ├── audit_report_val_gender.html             # Generated validation audit report (Gender)
-│   ├── audit_report_val_race_gender_shap.html   # Generated validation audit report (Race x Gender + SHAP)
+│   ├── audit_report_val_race_gender_shap.html   # Generated validation audit report (Race x Gender + surrogate SHAP fallback)
 │   └── src/                    # Proposal chapters, frontmatter, and architectural figures
 ├── research/                   # 20-Track Parallel Research Sprint & NotebookLM Context
 │   ├── research tracks/        # Track prompts and deliverables (Tracks 01–20)
@@ -156,7 +156,7 @@ BiasAperture/
 │   └── GRAPH_REPORT.md         # Plain-language architecture audit and community report
 ├── scripts/                    # Utility, profiling, and verification scripts
 │   ├── explore_fairface.py     # FairFace disk verification and attribute distribution
-│   ├── explore_utkface.py      # UTKFace comparison & DEX noise analysis
+│   ├── explore_utkface.py      # Cut UTKFace comparison & DEX noise analysis
 │   └── check_stale_claims.py   # Automated assertion-verification anti-drift script
 ├── src/                        # Core Implementation Package
 │   ├── bias_aperture/          # Production library code
@@ -332,7 +332,7 @@ The research, architectural specifications, literature corpora, synthesis artifa
 
 | Notebook Workspace | Notebook ID & Direct Link | Scope, Source Count & Purpose |
 | :--- | :--- | :--- |
-| **BiasAperture — References** | [`bbac9235-404b-4c39-a2a4-1f30069af30b`](https://notebook.google.com/notebook/bbac9235-404b-4c39-a2a4-1f30069af30b) | **21 sources** · **Literature review & academic foundation layer**: Full-text PDF papers, peer-reviewed surveys, and legal-technical frameworks corresponding to `report/references.bib` and `docs/literature-review-matrix.md` (including Buolamwini & Gebru 2018 *Gender Shades*, Kärkkäinen & Joo 2021 *FairFace*, Mitchell et al. 2019 *Model Cards*, Gebru et al. 2018 *Datasheets*, Hardt et al. 2016 *Equality of Opportunity*, Watkins et al. 2022 *Four-Fifths Rule*, Stanley et al. 2025 *eBioMedicine*, Dehdashtian et al. 2024, Lundberg & Lee 2017 *SHAP*, Slack et al. 2020 *Adversarial SHAP*, Bilodeau et al. 2022 *Impossibility Theorems*, Cascone et al. 2026, Nemavhola et al. 2026, Aslam et al. 2026 *CIFA*, Fournier-Montgieux et al. 2025, Shilova et al. 2025, and EU AI Act Technical Verification) for grounded citation checking and thesis literature defense. |
+| **BiasAperture — References** | [`bbac9235-404b-4c39-a2a4-1f30069af30b`](https://notebook.google.com/notebook/bbac9235-404b-4c39-a2a4-1f30069af30b) | **21 sources** · **Literature review & academic foundation layer**: Full-text PDF papers, peer-reviewed surveys, and legal-technical frameworks corresponding to `report/references.bib` and `docs/literature-review-matrix.md` (including Buolamwini & Gebru 2018 *Gender Shades*, Kärkkäinen & Joo 2021 *FairFace*, Mitchell et al. 2019 *Model Cards*, Gebru et al. 2018 *Datasheets*, Hardt et al. 2016 *Equality of Opportunity*, Watkins et al. 2022 *Four-Fifths Rule*, Stanley et al. 2025 *eBioMedicine*, Dehdashtian et al. 2024, Lundberg & Lee 2017 *SHAP* [theoretical basis for surrogate attribution and deferred spatial explainers], Slack et al. 2020 *Adversarial SHAP* [fooling post hoc explainers], Bilodeau et al. 2022 *Impossibility Theorems*, Cascone et al. 2026, Nemavhola et al. 2026, Aslam et al. 2026 *CIFA*, Fournier-Montgieux et al. 2025, Shilova et al. 2025, and EU AI Act Technical Verification) for grounded citation checking and thesis literature defense. |
 | **BiasAperture — Source And Specs** | [`928b5ed7-1353-4cb3-a1ce-b215e80b7db4`](https://notebook.google.com/notebook/928b5ed7-1353-4cb3-a1ce-b215e80b7db4) | **50/50 sources (Full)** · **Ground-truth layer**: Specifications (`specs/00`–`11`), core production source code (`src/bias_aperture/`), test suites (`src/tests/`), and empirical research sprint results (`research/results/`). |
 | **BiasAperture — Repo State** | [`6e9505f0-2d5c-4655-8bc7-9f97cf9620b9`](https://notebook.google.com/notebook/6e9505f0-2d5c-4655-8bc7-9f97cf9620b9) | **39 sources** · **Synthesis & defense layer**: Developer logs (`dev-logs/`), formal weekly reports (`WK1`–`WK5`), Proposal Defense Master Dossiers, discrepancy/claim ledgers, and GitHub documentation pages. |
 | **BiasAperture — Strategy & Foundations** | [`99bee3c6-07ed-4ff0-8ac8-0027b18ad06a`](https://notebook.google.com/notebook/99bee3c6-07ed-4ff0-8ac8-0027b18ad06a) | **37 sources** · **Master conceptual workspace**: Primary research corpus, foundational fellowship requirements, architectural strategy, research sprint tracks (Tracks 01–20), and overarching system design notes. |
