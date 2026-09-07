@@ -6,7 +6,7 @@
 
 ---
 
-## 1. Dataset Scale — FairFace 108,501 vs. 97,698
+## 1. Dataset Scale — FairFace 108,501 (pre-annotation-discard total) vs. 97,698 (released)
 
 **Slide:** System Architecture (diagram, both instances)
 **Current text:** "FairFace dataset — 108,501 images"
@@ -16,10 +16,10 @@
 
 ---
 
-## 2. UTKFace Shown as Live Secondary Benchmark
+## 2. UTKFace (cut, Cut-List #2) Shown as Live Secondary Benchmark
 
 **Slides:** System Architecture (diagram), Objectives ("Benchmark Validation" bullet)
-**Current text:** "UTKFace dataset — 20,000+ images" (diagram, parallel intake box, undifferentiated from FairFace); "Validate using FairFace and UTKFace with a FairFace-trained CNN baseline" (Objectives)
+**Current text (stale — UTKFace was formally cut and excluded, Cut-List #2):** "UTKFace dataset — 20,000+ images" (diagram, parallel intake box, undifferentiated from FairFace); "Validate using FairFace and UTKFace [cut] with a FairFace-trained CNN baseline" (Objectives)
 **Corrected text:** Diagram — relabel box "UTKFace — [CUT, Cut-List #2] profiled only, not ingested"; Objectives bullet — "Benchmark Validation: Validate using FairFace (97,698 images) with a FairFace-trained CNN baseline. UTKFace was evaluated and formally cut from implementation scope (Cut-List #2)."
 
 **Why it matters:** UTKFace is confirmed **cut** — DEX label-noise and misaligned racial taxonomy, documented in `BiasAperture-AT.md` §8 Cut-List #2 and §21. It was profiled only, never scored. This is Discrepancy Ledger item A (HIGH) — the same framing error already present in `abstract.tex`, `intro.tex`, and `conclusion.tex`. Showing it as a parallel, equally-weighted data source directly contradicts the scope-discipline argument the team is using as a defense strength ("explicit scope cuts, not silent drops" — see prior rubric gap-check, "Scope Achievement" row). If an examiner asks "is UTKFace actually used," the honest answer (no) will visibly contradict this slide.
@@ -76,8 +76,8 @@
 
 ## 8. SHAP Explainability — No Surrogate Caveat
 
-**Slide:** Expected Output ("SHAP Explainability — Visualizations of SHAP feature attribution maps for each flagged disparity")
-**Current text:** States SHAP flatly as the delivered mechanism.
+**Slide:** Expected Output ("SHAP/Surrogate Explainability — Visualizations of surrogate/deferred SHAP feature attribution maps for each flagged disparity")
+**Current text (stale — surrogate attribution, SHAP deferred):** States surrogate SHAP flatly as the delivered mechanism.
 **Status:** **Flagged, not corrected here** — genuinely ambiguous whether this slide is describing current implementation or forward-looking proposal scope (the deck is proposal-stage). Not silently resolving per standing instruction.
 
 **Why it matters:** Actual `explainability.py` implements demographic-dummy surrogate attribution; SHAP is attempted first but falls back on failure, and full spatial/pixel-level SHAP is deferred to future work (Discrepancy Ledger item B — this is the single highest-risk cluster repo-wide, with `docs/PROPOSAL_DEFENSE_GUIDE.md` containing a verbatim uncaveated script line for this exact question). If this slide is meant as current-state, it needs the same caveat: "Surrogate feature attribution (SHAP deferred)." If meant as proposed/target scope, no change needed — confirm which before editing.
