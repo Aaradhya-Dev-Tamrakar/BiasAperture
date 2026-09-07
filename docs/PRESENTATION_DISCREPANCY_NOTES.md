@@ -1,8 +1,7 @@
 # BiasAperture — Presentation Discrepancy Notes
 
 **File audited:** `BiasAperture_Proposal_Presentation.pptx` (Tisha's slides, 7 September 2026)
-**Audited against:** `main` @ `eb1f33e`, `research/results/DISCREPANCY_LEDGER.md` (2026-09-04 audit), `docs/research/CLAIM_LEDGER.md` v1.4.0
-**Status:** Not yet applied — flagged for Tisha's review, no slide content has been edited.
+**Status:** RESOLVED (2026-09-07) — Slides are maintained in canonical LaTeX Beamer (`presentation/main.pdf` and `presentation/slides/`), architecture image regenerated (`report/src/images/architecture_highlevel.jpg`), and speaker notes aligned.
 
 ---
 

@@ -56,6 +56,7 @@ class FairlearnBackend(FairnessBackend):
         y_pred: np.ndarray,
         sensitive: np.ndarray,
         eligibility: dict[str, EligibilityReport],
+        n_bootstrap_resamples: int = 1000,
     ) -> list[MetricResult]:
         """Compute Core Four metrics with statistical confidence bounds."""
         results: list[MetricResult] = []
@@ -136,7 +137,7 @@ class FairlearnBackend(FairnessBackend):
             sub_rates = {g: float(group_rates[g]["selection_rate"]) for g in dpd_groups}
             dpd_val = demographic_parity_difference(sub_rates)
             ci_low, ci_high = compute_stratified_bootstrap_ci(
-                y_true, y_pred, sensitive, dpd_fn
+                y_true, y_pred, sensitive, dpd_fn, n_resamples=n_bootstrap_resamples
             )
             results.append(
                 MetricResult(
@@ -179,7 +180,7 @@ class FairlearnBackend(FairnessBackend):
             if len(tpr_map) >= 2 and len(fpr_map) >= 2:
                 eod_val = equalized_odds_difference(tpr_map, fpr_map)
                 ci_low, ci_high = compute_stratified_bootstrap_ci(
-                    y_true, y_pred, sensitive, eod_fn
+                    y_true, y_pred, sensitive, eod_fn, n_resamples=n_bootstrap_resamples
                 )
                 results.append(
                     MetricResult(
@@ -230,7 +231,7 @@ class FairlearnBackend(FairnessBackend):
             if len(tpr_map) >= 2:
                 eop_val = equal_opportunity_difference(tpr_map)
                 ci_low, ci_high = compute_stratified_bootstrap_ci(
-                    y_true, y_pred, sensitive, eop_fn
+                    y_true, y_pred, sensitive, eop_fn, n_resamples=n_bootstrap_resamples
                 )
                 results.append(
                     MetricResult(
@@ -276,7 +277,7 @@ class FairlearnBackend(FairnessBackend):
             sub_rates = {g: float(group_rates[g]["selection_rate"]) for g in dir_groups}
             dir_val, _ = symmetric_disparate_impact_ratio(sub_rates)
             ci_low, ci_high = compute_stratified_bootstrap_ci(
-                y_true, y_pred, sensitive, dir_fn
+                y_true, y_pred, sensitive, dir_fn, n_resamples=n_bootstrap_resamples
             )
             results.append(
                 MetricResult(
@@ -472,6 +473,7 @@ class AIF360Backend(FairnessBackend):
         y_pred: np.ndarray,
         sensitive: np.ndarray,
         eligibility: dict[str, EligibilityReport],
+        n_bootstrap_resamples: int = 1000,
     ) -> list[MetricResult]:
         """Compute Core Four metrics using native AIF360 dataset & metrics."""
         try:
@@ -499,54 +501,44 @@ class AIF360Backend(FairnessBackend):
                 unfavorable_label=0,
             )
 
-            # Compute rates per group using AIF360 ClassificationMetric
-            group_rates: dict[str, dict[str, float | int | None]] = {}
+            # Extract per-group selection rate, TPR, and FPR using ClassificationMetric
+            group_rates: dict[str, dict[str, float | None]] = {}
             for g_code, g_name in enumerate(unique_groups):
+                # Unprivileged: current group; Privileged: all other groups
+                unprivileged = [{"prot_attr": g_code}]
+                privileged = [
+                    {"prot_attr": c} for c in range(len(unique_groups)) if c != g_code
+                ]
+
+                # If only 1 group exists, privileged cannot be formed
+                if not privileged:
+                    privileged = unprivileged
+
                 cm = ClassificationMetric(
                     bld_true,
                     bld_pred,
-                    unprivileged_groups=[{"prot_attr": g_code}],
-                    privileged_groups=[
-                        {"prot_attr": c}
-                        for c in range(len(unique_groups))
-                        if c != g_code
-                    ]
-                    or [{"prot_attr": g_code}],
+                    unprivileged_groups=unprivileged,
+                    privileged_groups=privileged,
                 )
 
-                mask = sensitive == g_name
-                n_grp = int(mask.sum())
-                pos_mask = (y_true == 1) & mask
-                neg_mask = (y_true == 0) & mask
-                n_pos = int(pos_mask.sum())
-                n_neg = int(neg_mask.sum())
-
-                # Extract TPR / FPR / Selection Rate from AIF360 metric
+                sel_rate = float(cm.selection_rate(privileged=False))
                 try:
-                    tpr_val = float(cm.true_positive_rate(privileged=False))
+                    raw_tpr = cm.true_positive_rate(privileged=False)
+                    tpr_val: float | None = float(raw_tpr)
                     if np.isnan(tpr_val):
                         tpr_val = None
                 except Exception:
                     tpr_val = None
 
                 try:
-                    fpr_val = float(cm.false_positive_rate(privileged=False))
+                    raw_fpr = cm.false_positive_rate(privileged=False)
+                    fpr_val: float | None = float(raw_fpr)
                     if np.isnan(fpr_val):
                         fpr_val = None
                 except Exception:
                     fpr_val = None
 
-                try:
-                    sel_rate = float(cm.selection_rate(privileged=False))
-                    if np.isnan(sel_rate):
-                        sel_rate = 0.0
-                except Exception:
-                    sel_rate = 0.0
-
                 group_rates[str(g_name)] = {
-                    "n": n_grp,
-                    "n_pos": n_pos,
-                    "n_neg": n_neg,
                     "selection_rate": sel_rate,
                     "tpr": tpr_val,
                     "fpr": fpr_val,
@@ -559,7 +551,13 @@ class AIF360Backend(FairnessBackend):
                 exc,
             )
             adapter = FairlearnBackend()
-            return adapter._evaluate_core_four(y_true, y_pred, sensitive, eligibility)
+            return adapter._evaluate_core_four(
+                y_true,
+                y_pred,
+                sensitive,
+                eligibility,
+                n_bootstrap_resamples=n_bootstrap_resamples,
+            )
 
         # Build MetricResult objects using AIF360 extracted rates
         results: list[MetricResult] = []
@@ -633,7 +631,7 @@ class AIF360Backend(FairnessBackend):
             sub_rates = {g: float(group_rates[g]["selection_rate"]) for g in dpd_groups}
             dpd_val = demographic_parity_difference(sub_rates)
             ci_low, ci_high = compute_stratified_bootstrap_ci(
-                y_true, y_pred, sensitive, dpd_fn
+                y_true, y_pred, sensitive, dpd_fn, n_resamples=n_bootstrap_resamples
             )
             results.append(
                 MetricResult(
@@ -676,7 +674,7 @@ class AIF360Backend(FairnessBackend):
             if len(tpr_map) >= 2 and len(fpr_map) >= 2:
                 eod_val = equalized_odds_difference(tpr_map, fpr_map)
                 ci_low, ci_high = compute_stratified_bootstrap_ci(
-                    y_true, y_pred, sensitive, eod_fn
+                    y_true, y_pred, sensitive, eod_fn, n_resamples=n_bootstrap_resamples
                 )
                 results.append(
                     MetricResult(
@@ -727,7 +725,7 @@ class AIF360Backend(FairnessBackend):
             if len(tpr_map) >= 2:
                 eop_val = equal_opportunity_difference(tpr_map)
                 ci_low, ci_high = compute_stratified_bootstrap_ci(
-                    y_true, y_pred, sensitive, eop_fn
+                    y_true, y_pred, sensitive, eop_fn, n_resamples=n_bootstrap_resamples
                 )
                 results.append(
                     MetricResult(
@@ -773,7 +771,7 @@ class AIF360Backend(FairnessBackend):
             sub_rates = {g: float(group_rates[g]["selection_rate"]) for g in dir_groups}
             dir_val, _ = symmetric_disparate_impact_ratio(sub_rates)
             ci_low, ci_high = compute_stratified_bootstrap_ci(
-                y_true, y_pred, sensitive, dir_fn
+                y_true, y_pred, sensitive, dir_fn, n_resamples=n_bootstrap_resamples
             )
             results.append(
                 MetricResult(
@@ -985,6 +983,7 @@ class CrossValidationOrchestrator:
         self,
         records: Sequence,
         protected_attr: str,
+        n_bootstrap_resamples: int = 1000,
     ) -> tuple[list[MetricResult], list[DivergenceAlert]]:
         """Execute all backends, verify consensus, and return harmonized results.
 
@@ -994,6 +993,8 @@ class CrossValidationOrchestrator:
             Validated subject records.
         protected_attr : str
             Demographic axis.
+        n_bootstrap_resamples : int
+            Number of bootstrap iterations (B >= 1000, NFR-002).
 
         Returns
         -------
@@ -1005,7 +1006,11 @@ class CrossValidationOrchestrator:
 
         backend_results: dict[str, list[MetricResult]] = {}
         for b in self.backends:
-            backend_results[b.name] = b.evaluate(records, protected_attr)
+            backend_results[b.name] = b.evaluate(
+                records,
+                protected_attr,
+                n_bootstrap_resamples=n_bootstrap_resamples,
+            )
 
         canonical_backend = self.backends[0].name
         canonical_results = backend_results[canonical_backend]

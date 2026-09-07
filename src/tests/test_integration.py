@@ -86,9 +86,12 @@ class TestMultiGroupRaceAudit:
         out = tmp_path / "report.html"
         rc = main(
             [
-                "-i", str(multi_race_csv),
-                "-a", "race",
-                "-o", str(out),
+                "-i",
+                str(multi_race_csv),
+                "-a",
+                "race",
+                "-o",
+                str(out),
             ]
         )
         assert rc == 0
@@ -138,13 +141,9 @@ class TestGenderAxisAudit:
         pd.DataFrame(rows).to_csv(csv, index=False)
         return csv
 
-    def test_gender_audit_succeeds(
-        self, gender_csv: Path, tmp_path: Path
-    ) -> None:
+    def test_gender_audit_succeeds(self, gender_csv: Path, tmp_path: Path) -> None:
         out = tmp_path / "report.html"
-        rc = main(
-            ["-i", str(gender_csv), "-a", "gender", "-o", str(out)]
-        )
+        rc = main(["-i", str(gender_csv), "-a", "gender", "-o", str(out)])
         assert rc == 0
         html = out.read_text(encoding="utf-8")
         assert "Male" in html or "Female" in html
@@ -190,8 +189,10 @@ class TestCLIErrorPaths:
     def test_missing_file_returns_nonzero(self, tmp_path: Path) -> None:
         rc = main(
             [
-                "-i", str(tmp_path / "does_not_exist.csv"),
-                "-o", str(tmp_path / "out.html"),
+                "-i",
+                str(tmp_path / "does_not_exist.csv"),
+                "-o",
+                str(tmp_path / "out.html"),
             ]
         )
         assert rc == 1
@@ -202,12 +203,18 @@ class TestCLIErrorPaths:
         parser = build_parser()
         args = parser.parse_args(
             [
-                "-i", "f.csv",
-                "--true-label-col", "gt",
-                "--predicted-label-col", "pred",
-                "--race-col", "ethnicity",
-                "--gender-col", "sex",
-                "--age-col", "age_group",
+                "-i",
+                "f.csv",
+                "--true-label-col",
+                "gt",
+                "--predicted-label-col",
+                "pred",
+                "--race-col",
+                "ethnicity",
+                "--gender-col",
+                "sex",
+                "--age-col",
+                "age_group",
             ]
         )
         assert args.true_label_col == "gt"

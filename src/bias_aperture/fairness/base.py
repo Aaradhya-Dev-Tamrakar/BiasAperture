@@ -222,6 +222,7 @@ class FairnessBackend(abc.ABC):
         y_pred: np.ndarray,
         sensitive: np.ndarray,
         eligibility: dict[str, EligibilityReport],
+        n_bootstrap_resamples: int = 1000,
     ) -> list[MetricResult]:
         """Compute Core Four metrics on pre-screened arrays.
 
@@ -238,6 +239,8 @@ class FairnessBackend(abc.ABC):
             Sensitive attribute labels, shape (n,).
         eligibility : dict[str, EligibilityReport]
             Per-group eligibility from ``screen_numeric_groups``.
+        n_bootstrap_resamples : int
+            Number of bootstrap iterations (B >= 1000, NFR-002).
 
         Returns
         -------
@@ -251,6 +254,7 @@ class FairnessBackend(abc.ABC):
         protected_attr: str,
         true_label_col: str = "true_label",
         pred_label_col: str = "predicted_label",
+        n_bootstrap_resamples: int = 1000,
     ) -> list[MetricResult]:
         """Run the full evaluation pipeline with NFR-003 screening.
 
@@ -300,4 +304,10 @@ class FairnessBackend(abc.ABC):
         # NFR-003 screening
         eligibility = screen_numeric_groups(y_true_bin, y_pred_bin, sensitive)
 
-        return self._evaluate_core_four(y_true_bin, y_pred_bin, sensitive, eligibility)
+        return self._evaluate_core_four(
+            y_true_bin,
+            y_pred_bin,
+            sensitive,
+            eligibility,
+            n_bootstrap_resamples=n_bootstrap_resamples,
+        )

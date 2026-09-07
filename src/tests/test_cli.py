@@ -69,3 +69,59 @@ def test_cli_end_to_end_execution(tmp_path: Path) -> None:
     content = out_report.read_text(encoding="utf-8")
     assert "Headline Fairness Metrics" in content
     assert "0.500" in content  # Known answer for DPD / EOD / EOP
+
+
+def test_cli_subcommand_and_backend_flags(tmp_path: Path) -> None:
+    single_block = [
+        ("White", "Female", "20-29", "1", "1"),
+        ("White", "Female", "20-29", "1", "1"),
+        ("White", "Female", "20-29", "0", "1"),
+        ("White", "Female", "20-29", "0", "0"),
+        ("Black", "Female", "20-29", "1", "0"),
+        ("Black", "Female", "20-29", "1", "1"),
+        ("Black", "Female", "20-29", "0", "0"),
+        ("Black", "Female", "20-29", "0", "0"),
+    ]
+    rows = []
+    for b in range(8):
+        for idx, (race, gender, age, true_lbl, pred_lbl) in enumerate(single_block):
+            rows.append(
+                {
+                    "face_name_align": f"img_{b}_{idx}.jpg",
+                    "race": race,
+                    "gender": gender,
+                    "age": age,
+                    "true_label": true_lbl,
+                    "predicted_label": pred_lbl,
+                }
+            )
+
+    df = pd.DataFrame(rows)
+    pred_csv = tmp_path / "pred.csv"
+    df.to_csv(pred_csv, index=False)
+
+    out_audit = tmp_path / "audit_subcommand.html"
+    rc_audit = main(
+        [
+            "audit",
+            "-i",
+            str(pred_csv),
+            "-a",
+            "race",
+            "--backend",
+            "fairlearn",
+            "--bca-resamples",
+            "1000",
+            "-o",
+            str(out_audit),
+        ]
+    )
+    assert rc_audit == 0
+    assert out_audit.exists()
+
+
+def test_cli_bca_resamples_rejection(tmp_path: Path) -> None:
+    pred_csv = tmp_path / "dummy.csv"
+    pred_csv.write_text("image_id,true_label,predicted_label,race,gender,age\n")
+    rc = main(["-i", str(pred_csv), "--bca-resamples", "500"])
+    assert rc == 1

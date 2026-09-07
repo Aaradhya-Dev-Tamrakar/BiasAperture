@@ -128,4 +128,12 @@ Verified via full `grep -rn "^class " src/bias_aperture/`, `cli.py` read, YAML d
 
 ---
 
-*Track 2 (fixes) is gated behind per-item sign-off — nothing above has been applied. EU AI Act deadline framing intentionally excluded per scope.*
+## Resolution Status (Updated 2026-09-07)
+
+All five discrepancy clusters identified in this ledger have been resolved and verified:
+1. **Cluster A (Dataset scale & UTKFace cut status):** Synced across report backmatter, frontmatter, chapters, slides, and scripts. FairFace correctly cited as 97,698 released images; UTKFace explicitly documented as cut under Cut-List #2 (profiled only, not ingested).
+2. **Cluster B (Explainability scope):** Surrogate linear feature attribution properly caveated across all proposal chapters, defense scripts (`docs/PROPOSAL_DEFENSE_GUIDE.md`), and presentation slides; spatial SHAP explicitly noted as deferred.
+3. **Cluster C (Architecture & Design Patterns):** Architecture diagram (`report/src/images/architecture_highlevel.jpg`) regenerated with 100% empirical fidelity (removing YAML config, marking UTKFace cut, qualifying surrogate explainability, and specifying HTML compliance report). Design patterns table accurately maps to actual codebase classes (`ModelInterface`, `DataIngestionPipeline`, `CrossValidationOrchestrator`, `HTMLReportGenerator`).
+4. **Cluster D (CLI contracts & WP claims):** `src/bias_aperture/cli.py` and `src/bias_aperture/fairness/` updated and tested to support both subcommand (`audit`) and flat invocation, `--backend [dual|fairlearn|aif360]`, and `--bca-resamples`/`--bca-bootstrap`. Real benchmark audit run verified over all 10,954 validation records (`report/audit_val_race_verified.html`).
+5. **Anti-Drift Guard:** Pre-commit hook script `scripts/check_stale_claims.py` passes cleanly across all LaTeX report chapters and key markdown documentation. All 78 tests pass in CI.
+

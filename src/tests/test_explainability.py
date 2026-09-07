@@ -39,7 +39,6 @@ def test_shap_explainer_selective_triggering() -> None:
         or "Targeted SHAP PartitionExplainer attribution generated" in exp_sig.details
     )
 
-
     # Case 2: Non-significant disparity (p >= 0.05) -> Skip
     res_nonsig = MetricResult(
         metric_name="demographic_parity_difference",
