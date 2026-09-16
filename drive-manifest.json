@@ -7,19 +7,19 @@
       "drive_file_id": "1SDLnUS6xZjwBaw1LpsUJusCUdoAVAQEUA9Q7hTSuw9o",
       "drive_file_name": "biasaperture_README.md",
       "description": "BiasAperture Intersectional Fairness Audit Engine",
-      "sha256": "636671ae90947b6f"
+      "sha256": "f26266be324dc526"
     },
     "docs/BiasAperture-AT.md": {
       "drive_file_id": "1rfsINdKrDTunxXgrtD3NH7r2UzRkUilwPybyX6xWYBo",
       "drive_file_name": "BiasAperture-AT.md",
       "description": "BiasAperture Architectural Specification & Defense Protocol",
-      "sha256": "e4b33c82cb0a05c3"
+      "sha256": "f6480d43b9d6482b"
     },
     "docs/CHANGELOG.md": {
       "drive_file_id": "183RuNfyQDuWMBZj1_iZIi4_cWxk3rcGUnI1JQWZ5Psc",
       "drive_file_name": "biasaperture_CHANGELOG.md",
       "description": "BiasAperture Version & Sprint Changelog",
-      "sha256": "7b404f638197fd19"
+      "sha256": "34ba39186c00e5bf"
     },
     "docs/schema-lock-m1.md": {
       "drive_file_id": "1qn_wvH6_kM6_-O7W3mDhEwEejHlJ_6RPMb6yqxLv0c8",
