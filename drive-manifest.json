@@ -1,0 +1,31 @@
+{
+  "folder_id": "1CgyzZ-FdW5wp8D7gWU2rnsy_Cpn4D6oa",
+  "folder_url": "https://drive.google.com/drive/folders/1CgyzZ-FdW5wp8D7gWU2rnsy_Cpn4D6oa",
+  "notebook_id": "95a79d26-2f87-42cd-8cb9-8361a1e56059",
+  "files": {
+    "README.md": {
+      "drive_file_id": "1SDLnUS6xZjwBaw1LpsUJusCUdoAVAQEUA9Q7hTSuw9o",
+      "drive_file_name": "biasaperture_README.md",
+      "description": "BiasAperture Intersectional Fairness Audit Engine",
+      "sha256": "636671ae90947b6f"
+    },
+    "docs/BiasAperture-AT.md": {
+      "drive_file_id": "1rfsINdKrDTunxXgrtD3NH7r2UzRkUilwPybyX6xWYBo",
+      "drive_file_name": "BiasAperture-AT.md",
+      "description": "BiasAperture Architectural Specification & Defense Protocol",
+      "sha256": "e4b33c82cb0a05c3"
+    },
+    "docs/CHANGELOG.md": {
+      "drive_file_id": "183RuNfyQDuWMBZj1_iZIi4_cWxk3rcGUnI1JQWZ5Psc",
+      "drive_file_name": "biasaperture_CHANGELOG.md",
+      "description": "BiasAperture Version & Sprint Changelog",
+      "sha256": "7b404f638197fd19"
+    },
+    "docs/schema-lock-m1.md": {
+      "drive_file_id": "1qn_wvH6_kM6_-O7W3mDhEwEejHlJ_6RPMb6yqxLv0c8",
+      "drive_file_name": "biasaperture_schema-lock-m1.md",
+      "description": "BiasAperture Milestone 1 Locked Schema Specification",
+      "sha256": "e305b265223514c7"
+    }
+  }
+}
