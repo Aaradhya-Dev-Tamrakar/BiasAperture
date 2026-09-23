@@ -13,7 +13,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Comprehensive end-to-end integration test suite (`test_integration.py`):
   multi-group race audits, gender-axis switching, insufficient-sample guards,
   CLI error paths, and module entrypoint verification.
-- Semantic changelog replacing sync-only timestamps.
+- Backend integrity test suite (`test_backend_integrity.py`) verifying backend
+  failure isolation and divergence alerting without silent fallback.
+- Metric-specific hypothesis tests (`compute_metric_specific_test`) tailoring
+  contingency tests to each metric's definition: conditional TPR for EOP, joint
+  TPR/FPR for EOD, and selection rate for DPD/DIR.
+- Subgroup bootstrap percentile confidence intervals (`compute_subgroup_bootstrap_ci`)
+  evaluating stratified empirical confidence bounds.
+- Intersectional compound protected attribute axis (`--protected-attr race_gender`).
+- FWER Holm–Bonferroni step-down correction wired directly into `MetricResult` records.
+
+### Fixed
+
+- Removed silent `AIF360Backend` fallback to `FairlearnBackend`, preventing masked
+  backend failures and properly emitting `DivergenceAlert`s.
+- Replaced heuristic `±0.05` subgroup confidence intervals with stratified bootstrap CIs.
+- Refined BCa delete-$d$ block jackknife approximation ($n > 300$) and empirical percentile
+  fallback for degraded resample support.
+- Corrected AIF360 `equalized_odds_difference` vs `average_odds_difference` distinction
+  in `CLAIM_LEDGER.md`.
+- Scoped explainability module honestly as surrogate tabular attribution (image-native
+  spatial SHAP deferred).
+- Synchronized broken file paths in `specs/11-requirements-traceability.md`.
 
 ## [0.1.0] — 2026-09-05
 
