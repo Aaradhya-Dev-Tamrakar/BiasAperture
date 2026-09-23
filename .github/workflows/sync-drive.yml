@@ -41,6 +41,10 @@ jobs:
           GDRIVE_REFRESH_TOKEN: ${{ secrets.GDRIVE_REFRESH_TOKEN }}
           GDRIVE_CLIENT_SECRET_JSON: ${{ secrets.GDRIVE_CLIENT_SECRET_JSON }}
         run: |
+          if [ -z "$GDRIVE_REFRESH_TOKEN" ] && [ -z "$GDRIVE_CLIENT_SECRET_JSON" ]; then
+            echo "Google Drive OAuth secrets not configured in this repository. Skipping Drive sync."
+            exit 0
+          fi
           python scripts/sync_drive.py
 
       - name: Commit Manifest Updates If Modified
