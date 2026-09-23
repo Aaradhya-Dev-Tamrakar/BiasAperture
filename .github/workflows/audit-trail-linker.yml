@@ -1,0 +1,122 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# audit-trail-linker.yml
+# Automatically links commits to referenced GitHub Issues via structured
+# audit-trail comments. Runs server-side — committer-independent.
+#
+# Trigger: every push to main (direct or via merged PR).
+# For each new commit, parses the message for #<issue_number> references,
+# then posts a formatted SHA-1 audit entry as a comment on that issue.
+# Idempotent: skips if a comment with the same SHA already exists.
+# ──────────────────────────────────────────────────────────────────────────────
+
+name: Audit Trail Linker
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  link-commits-to-issues:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history so we can inspect all pushed commits
+
+      - name: Link commits to referenced issues
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          REPO="${{ github.repository }}"
+
+          # ── Determine the commit range for this push ──────────────────────
+          BEFORE="${{ github.event.before }}"
+          AFTER="${{ github.event.after }}"
+
+          # On the very first push (repo init), before is all-zeros
+          if echo "$BEFORE" | grep -qE '^0+$'; then
+            COMMITS="$AFTER"
+          else
+            COMMITS=$(git rev-list "$BEFORE".."$AFTER" 2>/dev/null || echo "$AFTER")
+          fi
+
+          if [ -z "$COMMITS" ]; then
+            echo "No new commits in this push."
+            exit 0
+          fi
+
+          echo "Processing $(echo "$COMMITS" | wc -w) commit(s)..."
+
+          for SHA in $COMMITS; do
+            # Full 40-char SHA
+            FULL_SHA=$(git rev-parse "$SHA")
+            SHORT_SHA=$(git rev-parse --short=7 "$SHA")
+
+            # Commit metadata
+            SUBJECT=$(git log -1 --format='%s' "$SHA")
+            AUTHOR=$(git log -1 --format='%an' "$SHA")
+            DATE=$(git log -1 --format='%aI' "$SHA")
+            COMMIT_URL="https://github.com/${REPO}/commit/${FULL_SHA}"
+
+            # Extract all #<number> issue references from commit message (subject + body)
+            FULL_MSG=$(git log -1 --format='%B' "$SHA")
+            ISSUE_NUMBERS=$(echo "$FULL_MSG" | grep -oE '#[0-9]+' | tr -d '#' | sort -un)
+
+            if [ -z "$ISSUE_NUMBERS" ]; then
+              echo "  [$SHORT_SHA] No issue references found — skipping."
+              continue
+            fi
+
+            for ISSUE in $ISSUE_NUMBERS; do
+              echo "  [$SHORT_SHA] → Issue #${ISSUE}"
+
+              # ── Idempotency check: skip if this SHA is already commented ──
+              EXISTING=$(gh api "repos/${REPO}/issues/${ISSUE}/comments" \
+                --jq ".[].body" 2>/dev/null | grep -c "$FULL_SHA" || true)
+
+              if [ "$EXISTING" -gt 0 ]; then
+                echo "    Already linked — skipping."
+                continue
+              fi
+
+              # ── Verify issue exists and is not a PR ──────────────────────
+              ISSUE_STATE=$(gh api "repos/${REPO}/issues/${ISSUE}" \
+                --jq '.pull_request // empty' 2>/dev/null || true)
+
+              if [ -n "$ISSUE_STATE" ]; then
+                echo "    #${ISSUE} is a Pull Request — skipping."
+                continue
+              fi
+
+              # ── Post audit-trail comment ─────────────────────────────────
+              COMMENT_BODY=$(cat <<EOF
+          #### 🔗 Commit Linked via CI
+
+          | Field | Value |
+          |---|---|
+          | **SHA-1** | [\`${FULL_SHA}\`](${COMMIT_URL}) |
+          | **Summary** | ${SUBJECT} |
+          | **Author** | ${AUTHOR} |
+          | **Date** | ${DATE} |
+
+          <sub>🤖 Posted automatically by <a href="https://github.com/${REPO}/actions/workflows/audit-trail-linker.yml">audit-trail-linker</a></sub>
+          EOF
+              )
+
+              gh api "repos/${REPO}/issues/${ISSUE}/comments" \
+                --method POST \
+                --field "body=${COMMENT_BODY}" \
+                --silent
+
+              echo "    ✅ Comment posted."
+            done
+          done
+
+          echo "Done."
