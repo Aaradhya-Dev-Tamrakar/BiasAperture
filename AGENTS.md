@@ -48,7 +48,7 @@ BiasAperture/
 - **Run all tests**: `uv run --extra dev pytest`
 - **Lint code**: `uv run --extra dev ruff check src/`
 - **Format code**: `uv run --extra dev ruff format src/`
-- **Sync remotes**: `pwsh -File .\sync.ps1 -m "type(scope): summary"`
+- **Sync remotes**: `pwsh -File .\sync.ps1 -m "type(scope): summary (#issue)"`
 
 ---
 
@@ -64,4 +64,5 @@ BiasAperture/
   - `update-literature-review`: PR #1 matrix & literature expansion (merged into `main`).
     _(Note: These branches are intentionally preserved as milestone snapshots across remotes; new work should branch from or target `main` directly)._
 
-Always write conventional commit messages: `feat:`, `fix:`, `docs:`, `chore:`, `test:`, `refactor:`.
+Always write conventional commit messages: `feat:`, `fix:`, `docs:`, `chore:`, `test:`, `refactor:`. Include issue references (e.g., `(#22)` or `#22`) so that the `.github/workflows/audit-trail-linker.yml` CI workflow automatically attaches verified SHA-1 audit comments directly to the relevant GitHub issue.
+

@@ -44,10 +44,14 @@ schema and diagnostic-only scope.
      uv run --extra dev pytest
      uv run --extra dev ruff check src/
      uv run --extra dev ruff format src/
-     ```   - Sync remotes across configured endpoints (`origin` and `duo` compulsory, `org` optional mirror) via `pwsh`:
-     ```powershell
-     pwsh -File .\sync.ps1 -m "feat(module): description"
      ```
+   - Sync remotes across configured endpoints (`origin` and `duo` compulsory, `org` optional mirror) via `pwsh`:
+     ```powershell
+     pwsh -File .\sync.ps1 -m "feat(scope): detailed summary (#<issue_number>)"
+     ```
+   - **Issue Linking & Audit Trail Convention**:
+     - Always tag relevant issue numbers `(#<issue_number>)` in commit messages.
+     - GitHub Actions (`.github/workflows/audit-trail-linker.yml`) will automatically detect `#<number>` references on push to `main` and append a verified 40-character SHA-1 audit trail comment on the issue.
 
 2. **Schema Protection**:
    - Never alter `SubjectRecord` or `MetricResult` field signatures in `src/bias_aperture/schema.py` without explicit multi-stream synchronization.

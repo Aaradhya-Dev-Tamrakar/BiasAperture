@@ -33,11 +33,11 @@ uv run --extra dev ruff format src/
 
 ### Git & Sync Workflow
 
-Never push directly without running the sync script or adhering to conventional commits.
+Never push directly without running the sync script or adhering to conventional commits. Always include issue references (`(#<issue_number>)`) in commit messages to trigger automated SHA-1 audit comments on GitHub Issues via `.github/workflows/audit-trail-linker.yml`.
 
 ```powershell
 # Auto-sync to configured remotes (origin & duo compulsory, org mirror)
-.\sync.ps1 -m "feat(scope): your descriptive message"
+.\sync.ps1 -m "feat(scope): your descriptive message (#<issue_number>)"
 
 # Pull only with autostash
 .\sync.ps1 -PullOnly

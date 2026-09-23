@@ -4,6 +4,9 @@ param(
     [string]$m,
 
     [Parameter(ParameterSetName = 'Sync')]
+    [string]$Issue,
+
+    [Parameter(ParameterSetName = 'Sync')]
     [string]$Branch,
 
     [Parameter(ParameterSetName = 'Sync')]
@@ -367,6 +370,13 @@ if ($staged) {
     if (-not $m) {
         $m = Get-ConventionalCommitMessage
         if (-not $m) { $m = "chore(repo): sync" }
+    }
+
+    if ($Issue) {
+        $cleanIssue = $Issue.TrimStart('#')
+        if ($m -notmatch "#$cleanIssue\b") {
+            $m = "$m (#$cleanIssue)"
+        }
     }
 
     git commit -m "$m"
