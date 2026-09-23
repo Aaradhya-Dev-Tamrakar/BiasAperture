@@ -52,13 +52,15 @@ class ModelInterface(ABC):
 
 class InProcessInterface(ModelInterface):
     """
-    Architectural placeholder for future direct in-process inference against
-    a supplied PyTorch or TensorFlow model object (v2 roadmap).
+    Direct in-process inference against a supplied PyTorch or TensorFlow
+    model object.
 
-    The canonical operational path for BiasAperture v1.0 is PredictionsFileInterface,
-    which ingests standardized predictions files (CSV/JSON) decoupled from live model
-    weights. This design ensures framework-agnostic auditing without imposing heavy
-    runtime deep-learning dependencies on the auditing environment.
+    Not implemented at M1 — WBS 1.2 scopes "predictions-file ingestion
+    path" as the WP1 deliverable; the in-process adapter is Stream A
+    (WP2) work once the FairFace classifier's actual weights file is
+    available in the working environment. Concrete subclasses
+    (e.g. TorchModelInterface) should be added under this class rather
+    than modifying the schema or PredictionsFileInterface.
     """
 
     def __init__(self, model: Any, *, framework: str) -> None:
@@ -71,9 +73,10 @@ class InProcessInterface(ModelInterface):
 
     def get_predictions(self) -> Iterator[SubjectRecord]:
         raise NotImplementedError(
-            "InProcessInterface is an architectural placeholder for future direct-model "
-            "inference (v2 roadmap). The current operational path is PredictionsFileInterface. "
-            "See docs/research/HIGH_LEVEL_SYNTHESIS.md for the descoping rationale."
+            "InProcessInterface is an architectural placeholder for future "
+            "direct-model inference (v2 roadmap). The current operational path "
+            "is PredictionsFileInterface. See docs/research/HIGH_LEVEL_SYNTHESIS.md "
+            "for the descoping rationale."
         )
 
 

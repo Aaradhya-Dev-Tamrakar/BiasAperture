@@ -92,7 +92,7 @@ def test_unsupported_extension_rejected(tmp_path):
 
 def test_in_process_interface_not_implemented():
     iface = InProcessInterface(model=object(), framework="pytorch")
-    with pytest.raises(NotImplementedError, match="see WP2"):
+    with pytest.raises(NotImplementedError, match="architectural placeholder"):
         list(iface.get_predictions())
 
 

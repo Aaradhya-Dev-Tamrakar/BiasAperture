@@ -82,10 +82,10 @@ flowchart TD
 ### Core Architecture Components
 
 1. **Data Ingestion & Invariant Validation (`src/bias_aperture/data_ingestion.py`)**: Validates demographic datasets against the locked M1 schema (`src/bias_aperture/schema.py`), enforces column alias resolution, filters missing labels, profiles cohort supports, and detects intersectional sample starvation ($n < 30$).
-2. **Model Interface (`src/bias_aperture/model_interface.py`)**: Abstract contract (`ModelInterface`) supporting batch predictions files (`PredictionsFileInterface`) and live in-process PyTorch/TensorFlow wrappers (`InProcessInterface`).
+2. **Model Interface (`src/bias_aperture/model_interface.py`)**: Abstract contract (`ModelInterface`) with `PredictionsFileInterface` as the operational core for framework-agnostic CSV/JSON batch ingestion, and `InProcessInterface` as an architectural placeholder for future direct in-process inference (v2 roadmap).
 3. **Fairness Metrics Engine (`src/bias_aperture/fairness/`)**: Dual backend strategy pattern (`FairlearnBackend` and `AIF360Backend`) cross-validating the Core Four metrics with OvR multi-class decomposition (`OvRTransformer`).
-4. **Statistical Rigour & Safeguards (`src/bias_aperture/fairness/statistics.py`)**: Computes 95% BCa bootstrap confidence intervals ($B = 1,000$), Pearson's $\chi^2$ independence tests with Fisher's exact test fallback for sparse $2\times2$ tables (expected cell count $< 5$), Holm-Bonferroni FWER adjustment, and divergence alerts across backends ($|\Delta| > 0.01$).
-5. **Targeted Explainability (`src/bias_aperture/explainability.py`)**: Triggers only on statistically flagged disparities to compute additive Shapley feature importances across demographic proxy axes.
+4. **Statistical Rigour & Safeguards (`src/bias_aperture/fairness/statistics.py`)**: Computes 95% BCa bootstrap confidence intervals ($B = 1,000$), metric-specific $\chi^2$ independence tests (selection rate for DPD/DIR, conditional TPR for EOP, joint TPR/FPR for EOD) with Fisher's exact test fallback for sparse $2\times2$ tables (expected cell count $< 5$), Holm-Bonferroni FWER adjustment, and divergence alerts across backends ($|\Delta| > 0.01$).
+5. **Targeted Explainability (`src/bias_aperture/explainability.py`)**: Triggers only on statistically flagged disparities to compute surrogate tabular feature attributions across demographic proxy axes (image-native spatial SHAP deferred).
 6. **Compliance Report Generator (`src/bias_aperture/report/generator.py`)**: Offline HTML compiler embedding interactive CSS, self-contained SVG/Base64 plots, model card metadata, and regulatory compliance matrices.
 
 ---
@@ -249,9 +249,22 @@ uv run bias-aperture audit \
   -o report/audit_val_race_verified.html \
   --backend dual \
   --bca-resamples 1000
+
+# Audit intersectional compound axis (race x gender)
+uv run bias-aperture audit \
+  -i data/processed/fairface_predictions_val.csv \
+  -a race_gender \
+  --true-label-col true_gender \
+  --predicted-label-col predicted_gender \
+  --race-col subgroup_race \
+  --gender-col subgroup_gender \
+  --age-col subgroup_age \
+  -o report/audit_val_race_gender_verified.html \
+  --backend dual \
+  --bca-resamples 1000
 ```
 
-Open the resulting file `report/audit_val_race_verified.html` in any web browser to view the audit results, disparity cards, statistical significance checks, and regulatory compliance matrix.
+Open the resulting HTML files in any web browser to view the audit results, disparity cards, statistical significance checks, and regulatory compliance matrix.
 
 ---
 

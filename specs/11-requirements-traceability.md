@@ -10,8 +10,8 @@
 | --- | --- | --- | --- | --- |
 | **FR-001: Data Ingestion & Alignment** | [02](02-data-model.md), [04](04-intake-and-classification.md) | `src/bias_aperture/data_ingestion.py`, `schema.py` | `tests/test_data_ingestion.py`, `tests/test_schema.py` | Implemented / Tested |
 | **FR-002: Dual-Mode Model Interface** | [03](03-orchestrator.md), [04](04-intake-and-classification.md) | `src/bias_aperture/model_interface.py` | `tests/test_model_interface.py` | Implemented / Tested |
-| **FR-003: Core Four Metric Computation** | [05](05-audit-engine.md) | `src/bias_aperture/fairness/backends.py`, `engine.py` | `tests/test_fairness_backends.py`, `tests/test_fairness_engine.py` | Implemented / Tested |
-| **FR-004: Statistical Significance Testing** | [06](06-statistics-and-confidence.md) | `src/bias_aperture/fairness/statistics.py` | `tests/test_statistics.py` | Implemented / Tested |
+| **FR-003: Core Four Metric Computation** | [05](05-audit-engine.md) | `src/bias_aperture/fairness/backends.py`, `base.py` | `tests/test_fairness_backends.py`, `tests/test_backend_integrity.py` | Implemented / Tested |
+| **FR-004: Statistical Significance Testing** | [06](06-statistics-and-confidence.md) | `src/bias_aperture/fairness/statistics.py` | `tests/test_fairness_statistics.py` | Implemented / Tested |
 | **FR-005: Explainability** | [07](07-explainability.md) | `src/bias_aperture/explainability.py` | `tests/test_explainability.py` (surrogate fallback verified) | Implemented / Tested |
 | **FR-006: Report Generation** | [08](08-report-and-compliance.md) | `src/bias_aperture/report/generator.py` | `tests/test_report_generator.py` | Implemented / Tested |
 | **FR-007: Regulatory Traceability** | [08](08-report-and-compliance.md) | `src/bias_aperture/report/generator.py` | Report inspection & regulatory mapping assertions | Implemented / Tested |
@@ -26,7 +26,7 @@
 
 | Requirement ID & Title | Specification | Implementation Anchor | Evidence & Test Anchor | Status |
 | --- | --- | --- | --- | --- |
-| **NFR-001: Statistical Rigour ($\alpha = 0.05$)** | [06](06-statistics-and-confidence.md) | `src/bias_aperture/fairness/statistics.py`, `schema.py` | Exact $p$-value assertions in `tests/test_statistics.py` | Implemented / Tested |
+| **NFR-001: Statistical Rigour ($\alpha = 0.05$)** | [06](06-statistics-and-confidence.md) | `src/bias_aperture/fairness/statistics.py`, `schema.py` | Exact $p$-value assertions in `tests/test_fairness_statistics.py` | Implemented / Tested |
 | **NFR-002: Uncertainty Quantification ($B \ge 1{,}000$)** | [06](06-statistics-and-confidence.md) | `src/bias_aperture/fairness/statistics.py` | Bootstrap percentile CI tests & metadata verification | Implemented / Tested |
 | **NFR-003: Data-Integrity Guard ($n < 30$)** | [02](02-data-model.md), [06](06-statistics-and-confidence.md) | `src/bias_aperture/schema.py` (`MetricResult.__post_init__`) | Boundary schema tests (`insufficient_sample=True`) | Implemented / Tested |
 | **NFR-004: Performance** | [00](00-overview-and-mvp-scope.md), [09](09-verification.md) | Orchestrator & batch pipeline | Runtime profiling on dev subset & validation split | Implemented / Tested |
