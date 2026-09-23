@@ -18,7 +18,7 @@ concurrency:
 jobs:
   sync-to-drive:
     name: Sync Markdown to Google Drive
-    if: github.repository != 'fuseai-fellowship/BiasAperture-A-Diagnostic-Framework-for-Demographic-Bias-Auditing-in-Facial-Analysis-Models' && secrets.GDRIVE_REFRESH_TOKEN != ''
+    if: github.repository != 'fuseai-fellowship/BiasAperture-A-Diagnostic-Framework-for-Demographic-Bias-Auditing-in-Facial-Analysis-Models'
     runs-on: ubuntu-latest
     permissions:
       contents: write

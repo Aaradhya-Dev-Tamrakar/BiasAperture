@@ -67,7 +67,7 @@ jobs:
 
             # Extract all #<number> issue references from commit message (subject + body)
             FULL_MSG=$(git log -1 --format='%B' "$SHA")
-            ISSUE_NUMBERS=$(echo "$FULL_MSG" | grep -oE '#[0-9]+' | tr -d '#' | sort -un)
+            ISSUE_NUMBERS=$(echo "$FULL_MSG" | grep -oE '#[0-9]+' | tr -d '#' | sort -un || true)
 
             if [ -z "$ISSUE_NUMBERS" ]; then
               echo "  [$SHORT_SHA] No issue references found — skipping."
