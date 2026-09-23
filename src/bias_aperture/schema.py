@@ -135,6 +135,10 @@ class MetricResult:
     ci_upper: float | None
     p_value: float | None
     insufficient_sample: bool = field(default=False)
+    raw_p_value: float | None = field(default=None)
+    adjusted_p_value: float | None = field(default=None)
+    hypothesis_family: str | None = field(default=None)
+    adjustment_method: str | None = field(default=None)
 
     def __post_init__(self) -> None:
         if self.subgroup_sample_size < MIN_SUBGROUP_SAMPLE_SIZE:

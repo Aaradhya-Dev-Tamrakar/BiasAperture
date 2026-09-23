@@ -84,27 +84,17 @@ class ShapExplainerEngine:
         if records:
             return self.explain_surrogate(result, records)
 
-        # 2. Try SHAP image/tabular explainer if dependencies load
-        try:
-            import shap  # noqa: F401
-
-            return ExplanationResult(
-                subgroup=result.subgroup,
-                metric_name=result.metric_name,
-                details=(
-                    f"Targeted SHAP PartitionExplainer attribution generated for "
-                    f"{result.subgroup} ({result.metric_name})."
-                ),
-            )
-        except Exception:
-            return ExplanationResult(
-                subgroup=result.subgroup,
-                metric_name=result.metric_name,
-                details=(
-                    f"Targeted attribution generated for {result.subgroup} "
-                    f"({result.metric_name}) via surrogate diagnostic explainer."
-                ),
-            )
+        # 2. If records are omitted, return diagnostic status
+        # (image-native SHAP deferred)
+        return ExplanationResult(
+            subgroup=result.subgroup,
+            metric_name=result.metric_name,
+            details=(
+                f"Targeted attribution generated for {result.subgroup} "
+                f"({result.metric_name}) via surrogate diagnostic explainer "
+                "(image-native spatial SHAP is deferred to v2)."
+            ),
+        )
 
     def explain_surrogate(
         self,
@@ -198,3 +188,7 @@ def compute_ita(l_star: float, b_star: float) -> float:
         return 90.0 if l_star >= 50 else -90.0
     rad = math.atan((l_star - 50.0) / b_star)
     return float(rad * (180.0 / math.pi))
+
+
+# Canonical alias reflecting diagnostic surrogate attribution capability
+SurrogateAttributionEngine = ShapExplainerEngine

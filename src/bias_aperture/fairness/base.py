@@ -275,7 +275,17 @@ class FairnessBackend(abc.ABC):
         # Extract aligned arrays
         y_true = np.array([getattr(r, true_label_col) for r in records])
         y_pred = np.array([getattr(r, pred_label_col) for r in records])
-        sensitive = np.array([getattr(r, protected_attr) for r in records])
+        if (
+            len(records) > 0
+            and not hasattr(records[0], protected_attr)
+            and "_" in protected_attr
+        ):
+            parts = protected_attr.split("_")
+            sensitive = np.array(
+                ["_".join(str(getattr(r, p)) for p in parts) for r in records]
+            )
+        else:
+            sensitive = np.array([getattr(r, protected_attr) for r in records])
 
         # For binary evaluation, encode string labels to 0/1 integers
         unique_labels = sorted(set(y_true) | set(y_pred))

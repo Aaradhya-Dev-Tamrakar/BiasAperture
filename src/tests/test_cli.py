@@ -125,3 +125,54 @@ def test_cli_bca_resamples_rejection(tmp_path: Path) -> None:
     pred_csv.write_text("image_id,true_label,predicted_label,race,gender,age\n")
     rc = main(["-i", str(pred_csv), "--bca-resamples", "500"])
     assert rc == 1
+
+
+def test_cli_intersectional_race_gender_audit(tmp_path: Path) -> None:
+    # 64 records across White_Female and Black_Female
+    rows = []
+    for i in range(35):
+        rows.append(
+            {
+                "image_id": f"wf_{i}",
+                "race": "White",
+                "gender": "Female",
+                "age": "20-29",
+                "true_label": "1" if i % 2 == 0 else "0",
+                "predicted_label": "1" if i % 3 == 0 else "0",
+            }
+        )
+    for i in range(35):
+        rows.append(
+            {
+                "image_id": f"bm_{i}",
+                "race": "Black",
+                "gender": "Male",
+                "age": "20-29",
+                "true_label": "1" if i % 2 == 0 else "0",
+                "predicted_label": "1" if i % 4 == 0 else "0",
+            }
+        )
+    df = pd.DataFrame(rows)
+    pred_csv = tmp_path / "intersectional_pred.csv"
+    df.to_csv(pred_csv, index=False)
+
+    out_report = tmp_path / "intersectional_report.html"
+    rc = main(
+        [
+            "-i",
+            str(pred_csv),
+            "-a",
+            "race_gender",
+            "--backend",
+            "fairlearn",
+            "--bca-resamples",
+            "1000",
+            "-o",
+            str(out_report),
+        ]
+    )
+    assert rc == 0
+    assert out_report.exists()
+    content = out_report.read_text(encoding="utf-8")
+    assert "White_Female" in content
+    assert "Black_Male" in content

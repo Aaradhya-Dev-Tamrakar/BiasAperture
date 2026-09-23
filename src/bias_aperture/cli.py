@@ -68,8 +68,11 @@ def _add_audit_arguments(parser: argparse.ArgumentParser) -> None:
         "-a",
         type=str,
         default="race",
-        choices=["race", "gender", "age"],
-        help="Demographic protected axis (default: race).",
+        choices=["race", "gender", "age", "race_gender"],
+        help=(
+            "Demographic protected axis (default: race, "
+            "supports intersectional: race_gender)."
+        ),
     )
     parser.add_argument(
         "--backend",
