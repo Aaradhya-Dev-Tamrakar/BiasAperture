@@ -88,3 +88,55 @@ def test_subgroup_sample_size_guard_in_backend() -> None:
     for r in black_rows:
         assert r.insufficient_sample is True
         assert r.metric_value is None
+
+
+def test_per_subgroup_bootstrap_ci_not_hardcoded() -> None:
+    # 8-record block replicated x8 (n=64, 32 White, 32 Black)
+    single_block = [
+        ("White", "1", "1"),
+        ("White", "1", "1"),
+        ("White", "0", "1"),
+        ("White", "0", "0"),
+        ("Black", "1", "0"),
+        ("Black", "1", "1"),
+        ("Black", "0", "0"),
+        ("Black", "0", "0"),
+    ]
+
+    records: list[SubjectRecord] = []
+    for block_idx in range(8):
+        for rec_idx, (race, true_lbl, pred_lbl) in enumerate(single_block):
+            records.append(
+                SubjectRecord(
+                    image_id=f"img_{block_idx}_{rec_idx}",
+                    race=race,  # type: ignore[arg-type]
+                    gender="Female",
+                    age="20-29",
+                    true_label=true_lbl,
+                    predicted_label=pred_lbl,
+                )
+            )
+
+    for backend_cls in (FairlearnBackend, AIF360Backend):
+        backend = backend_cls()
+        results = backend.evaluate(records, protected_attr="race")
+
+        # Check per-subgroup results (excluding 'ALL')
+        subgroup_results = [r for r in results if r.subgroup != "ALL"]
+        assert len(subgroup_results) > 0
+
+        for r in subgroup_results:
+            assert r.insufficient_sample is False
+            assert r.metric_value is not None
+            assert r.ci_lower is not None
+            assert r.ci_upper is not None
+            assert 0.0 <= r.ci_lower <= r.ci_upper <= 1.0
+
+            # The old buggy placeholder was exactly metric_value ± 0.05
+            old_dummy_lower = max(0.0, r.metric_value - 0.05)
+            old_dummy_upper = min(1.0, r.metric_value + 0.05)
+            assert not (
+                r.ci_lower == pytest.approx(old_dummy_lower, abs=1e-6)
+                and r.ci_upper == pytest.approx(old_dummy_upper, abs=1e-6)
+            )
+

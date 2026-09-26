@@ -335,20 +335,35 @@ class FairlearnBackend(FairnessBackend):
                 global_sel_rate = float(y_pred.mean()) if total_n > 0 else 0.0
                 grp_dpd = abs(sel_rate - global_sel_rate)
 
-                # Subgroup specific p-value vs rest
+                # Subgroup-specific p-value and one-vs-rest sensitive array
+                # (used for all per-subgroup BCa bootstrap CIs, R-009 / NFR-002)
                 rest_sensitive = np.where(sensitive == g, g, "REST")
                 _, grp_chi2_p, _ = compute_contingency_chi2(
                     y_true, y_pred, rest_sensitive
                 )
 
+                # BCa bootstrap for DPD (group vs global)
+                def _grp_dpd_fn(
+                    yt: np.ndarray, yp: np.ndarray, s: np.ndarray
+                ) -> float:
+                    grp_mask = s == g
+                    if not np.any(grp_mask) or len(yp) == 0:
+                        return 0.0
+                    g_rate = float(yp[grp_mask].mean())
+                    glob_rate = float(yp.mean())
+                    return abs(g_rate - glob_rate)
+
+                dpd_ci_low, dpd_ci_high = compute_stratified_bootstrap_ci(
+                    y_true, y_pred, rest_sensitive, _grp_dpd_fn
+                )
                 results.append(
                     MetricResult(
                         metric_name="demographic_parity_difference",
                         subgroup=g,
                         subgroup_sample_size=n_grp,
                         metric_value=grp_dpd,
-                        ci_lower=max(0.0, grp_dpd - 0.05),
-                        ci_upper=min(1.0, grp_dpd + 0.05),
+                        ci_lower=dpd_ci_low,
+                        ci_upper=dpd_ci_high,
                         p_value=grp_chi2_p,
                         insufficient_sample=False,
                     )
@@ -362,14 +377,31 @@ class FairlearnBackend(FairnessBackend):
                         float(y_pred[y_true == 1].mean()) if pos_total > 0 else 0.0
                     )
                     grp_eop = abs(float(tpr) - global_tpr)
+
+                    def _grp_eop_fn(
+                        yt: np.ndarray, yp: np.ndarray, s: np.ndarray
+                    ) -> float:
+                        pos_mask = yt == 1
+                        if not np.any(pos_mask):
+                            return 0.0
+                        glob_tpr = float(yp[pos_mask].mean())
+                        grp_pos_mask = (s == g) & pos_mask
+                        if not np.any(grp_pos_mask):
+                            return 0.0
+                        g_tpr = float(yp[grp_pos_mask].mean())
+                        return abs(g_tpr - glob_tpr)
+
+                    eop_ci_low, eop_ci_high = compute_stratified_bootstrap_ci(
+                        y_true, y_pred, rest_sensitive, _grp_eop_fn
+                    )
                     results.append(
                         MetricResult(
                             metric_name="equal_opportunity_difference",
                             subgroup=g,
                             subgroup_sample_size=n_grp,
                             metric_value=grp_eop,
-                            ci_lower=max(0.0, grp_eop - 0.05),
-                            ci_upper=min(1.0, grp_eop + 0.05),
+                            ci_lower=eop_ci_low,
+                            ci_upper=eop_ci_high,
                             p_value=grp_chi2_p,
                             insufficient_sample=False,
                         )
@@ -402,14 +434,35 @@ class FairlearnBackend(FairnessBackend):
                     grp_eod = max(
                         abs(float(tpr) - global_tpr), abs(float(fpr) - global_fpr)
                     )
+
+                    def _grp_eod_fn(
+                        yt: np.ndarray, yp: np.ndarray, s: np.ndarray
+                    ) -> float:
+                        pos_mask = yt == 1
+                        neg_mask = yt == 0
+                        if not np.any(pos_mask) or not np.any(neg_mask):
+                            return 0.0
+                        glob_tpr = float(yp[pos_mask].mean())
+                        glob_fpr = float(yp[neg_mask].mean())
+                        grp_pos = (s == g) & pos_mask
+                        grp_neg = (s == g) & neg_mask
+                        if not np.any(grp_pos) or not np.any(grp_neg):
+                            return 0.0
+                        g_tpr = float(yp[grp_pos].mean())
+                        g_fpr = float(yp[grp_neg].mean())
+                        return max(abs(g_tpr - glob_tpr), abs(g_fpr - glob_fpr))
+
+                    eod_ci_low, eod_ci_high = compute_stratified_bootstrap_ci(
+                        y_true, y_pred, rest_sensitive, _grp_eod_fn
+                    )
                     results.append(
                         MetricResult(
                             metric_name="equalized_odds_difference",
                             subgroup=g,
                             subgroup_sample_size=n_grp,
                             metric_value=grp_eod,
-                            ci_lower=max(0.0, grp_eod - 0.05),
-                            ci_upper=min(1.0, grp_eod + 0.05),
+                            ci_lower=eod_ci_low,
+                            ci_upper=eod_ci_high,
                             p_value=grp_chi2_p,
                             insufficient_sample=False,
                         )
@@ -428,21 +481,40 @@ class FairlearnBackend(FairnessBackend):
                         )
                     )
 
-                # Individual DIR
+                # Individual DIR (BCa bootstrap, R-009)
                 if global_sel_rate > 0:
                     grp_dir = min(sel_rate, global_sel_rate) / max(
                         sel_rate, global_sel_rate
                     )
                 else:
                     grp_dir = 1.0
+
+                def _grp_dir_fn(
+                    yt: np.ndarray, yp: np.ndarray, s: np.ndarray
+                ) -> float:
+                    if len(yp) == 0:
+                        return 1.0
+                    glob_sel = float(yp.mean())
+                    grp_mask = s == g
+                    if not np.any(grp_mask):
+                        return 1.0
+                    g_sel = float(yp[grp_mask].mean())
+                    denom = max(g_sel, glob_sel)
+                    if denom == 0.0:
+                        return 1.0
+                    return float(np.clip(min(g_sel, glob_sel) / denom, 0.0, 1.0))
+
+                dir_ci_low, dir_ci_high = compute_stratified_bootstrap_ci(
+                    y_true, y_pred, rest_sensitive, _grp_dir_fn
+                )
                 results.append(
                     MetricResult(
                         metric_name="disparate_impact_ratio",
                         subgroup=g,
                         subgroup_sample_size=n_grp,
                         metric_value=grp_dir,
-                        ci_lower=max(0.0, grp_dir - 0.05),
-                        ci_upper=min(1.0, grp_dir + 0.05),
+                        ci_lower=dir_ci_low,
+                        ci_upper=dir_ci_high,
                         p_value=grp_chi2_p,
                         insufficient_sample=False,
                     )
@@ -830,19 +902,35 @@ class AIF360Backend(FairnessBackend):
                 global_sel_rate = float(y_pred.mean()) if total_n > 0 else 0.0
                 grp_dpd = abs(sel_rate - global_sel_rate)
 
+                # Subgroup-specific p-value and one-vs-rest sensitive array
+                # (used for all per-subgroup BCa bootstrap CIs, R-009 / NFR-002)
                 rest_sensitive = np.where(sensitive == g, g, "REST")
                 _, grp_chi2_p, _ = compute_contingency_chi2(
                     y_true, y_pred, rest_sensitive
                 )
 
+                # BCa bootstrap for DPD (group vs global)
+                def _grp_dpd_fn(
+                    yt: np.ndarray, yp: np.ndarray, s: np.ndarray
+                ) -> float:
+                    grp_mask = s == g
+                    if not np.any(grp_mask) or len(yp) == 0:
+                        return 0.0
+                    g_rate = float(yp[grp_mask].mean())
+                    glob_rate = float(yp.mean())
+                    return abs(g_rate - glob_rate)
+
+                dpd_ci_low, dpd_ci_high = compute_stratified_bootstrap_ci(
+                    y_true, y_pred, rest_sensitive, _grp_dpd_fn
+                )
                 results.append(
                     MetricResult(
                         metric_name="demographic_parity_difference",
                         subgroup=g,
                         subgroup_sample_size=n_grp,
                         metric_value=grp_dpd,
-                        ci_lower=max(0.0, grp_dpd - 0.05),
-                        ci_upper=min(1.0, grp_dpd + 0.05),
+                        ci_lower=dpd_ci_low,
+                        ci_upper=dpd_ci_high,
                         p_value=grp_chi2_p,
                         insufficient_sample=False,
                     )
@@ -856,14 +944,31 @@ class AIF360Backend(FairnessBackend):
                         float(y_pred[y_true == 1].mean()) if pos_total > 0 else 0.0
                     )
                     grp_eop = abs(float(tpr) - global_tpr)
+
+                    def _grp_eop_fn(
+                        yt: np.ndarray, yp: np.ndarray, s: np.ndarray
+                    ) -> float:
+                        pos_mask = yt == 1
+                        if not np.any(pos_mask):
+                            return 0.0
+                        glob_tpr = float(yp[pos_mask].mean())
+                        grp_pos_mask = (s == g) & pos_mask
+                        if not np.any(grp_pos_mask):
+                            return 0.0
+                        g_tpr = float(yp[grp_pos_mask].mean())
+                        return abs(g_tpr - glob_tpr)
+
+                    eop_ci_low, eop_ci_high = compute_stratified_bootstrap_ci(
+                        y_true, y_pred, rest_sensitive, _grp_eop_fn
+                    )
                     results.append(
                         MetricResult(
                             metric_name="equal_opportunity_difference",
                             subgroup=g,
                             subgroup_sample_size=n_grp,
                             metric_value=grp_eop,
-                            ci_lower=max(0.0, grp_eop - 0.05),
-                            ci_upper=min(1.0, grp_eop + 0.05),
+                            ci_lower=eop_ci_low,
+                            ci_upper=eop_ci_high,
                             p_value=grp_chi2_p,
                             insufficient_sample=False,
                         )
@@ -896,14 +1001,35 @@ class AIF360Backend(FairnessBackend):
                     grp_eod = max(
                         abs(float(tpr) - global_tpr), abs(float(fpr) - global_fpr)
                     )
+
+                    def _grp_eod_fn(
+                        yt: np.ndarray, yp: np.ndarray, s: np.ndarray
+                    ) -> float:
+                        pos_mask = yt == 1
+                        neg_mask = yt == 0
+                        if not np.any(pos_mask) or not np.any(neg_mask):
+                            return 0.0
+                        glob_tpr = float(yp[pos_mask].mean())
+                        glob_fpr = float(yp[neg_mask].mean())
+                        grp_pos = (s == g) & pos_mask
+                        grp_neg = (s == g) & neg_mask
+                        if not np.any(grp_pos) or not np.any(grp_neg):
+                            return 0.0
+                        g_tpr = float(yp[grp_pos].mean())
+                        g_fpr = float(yp[grp_neg].mean())
+                        return max(abs(g_tpr - glob_tpr), abs(g_fpr - glob_fpr))
+
+                    eod_ci_low, eod_ci_high = compute_stratified_bootstrap_ci(
+                        y_true, y_pred, rest_sensitive, _grp_eod_fn
+                    )
                     results.append(
                         MetricResult(
                             metric_name="equalized_odds_difference",
                             subgroup=g,
                             subgroup_sample_size=n_grp,
                             metric_value=grp_eod,
-                            ci_lower=max(0.0, grp_eod - 0.05),
-                            ci_upper=min(1.0, grp_eod + 0.05),
+                            ci_lower=eod_ci_low,
+                            ci_upper=eod_ci_high,
                             p_value=grp_chi2_p,
                             insufficient_sample=False,
                         )
@@ -922,21 +1048,40 @@ class AIF360Backend(FairnessBackend):
                         )
                     )
 
-                # Individual DIR
+                # Individual DIR (BCa bootstrap, R-009)
                 if global_sel_rate > 0:
                     grp_dir = min(sel_rate, global_sel_rate) / max(
                         sel_rate, global_sel_rate
                     )
                 else:
                     grp_dir = 1.0
+
+                def _grp_dir_fn(
+                    yt: np.ndarray, yp: np.ndarray, s: np.ndarray
+                ) -> float:
+                    if len(yp) == 0:
+                        return 1.0
+                    glob_sel = float(yp.mean())
+                    grp_mask = s == g
+                    if not np.any(grp_mask):
+                        return 1.0
+                    g_sel = float(yp[grp_mask].mean())
+                    denom = max(g_sel, glob_sel)
+                    if denom == 0.0:
+                        return 1.0
+                    return float(np.clip(min(g_sel, glob_sel) / denom, 0.0, 1.0))
+
+                dir_ci_low, dir_ci_high = compute_stratified_bootstrap_ci(
+                    y_true, y_pred, rest_sensitive, _grp_dir_fn
+                )
                 results.append(
                     MetricResult(
                         metric_name="disparate_impact_ratio",
                         subgroup=g,
                         subgroup_sample_size=n_grp,
                         metric_value=grp_dir,
-                        ci_lower=max(0.0, grp_dir - 0.05),
-                        ci_upper=min(1.0, grp_dir + 0.05),
+                        ci_lower=dir_ci_low,
+                        ci_upper=dir_ci_high,
                         p_value=grp_chi2_p,
                         insufficient_sample=False,
                     )
