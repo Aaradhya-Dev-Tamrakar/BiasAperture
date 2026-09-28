@@ -468,9 +468,80 @@
             {% endif %}
         </div>
 
-        <!-- 3. Model Card & Dataset Datasheet (Mitchell / Gebru) -->
+        {% if has_attributions %}
+        <!-- 3. Targeted Disparity Explainability & Proxy Attributions -->
         <div class="section-card">
-            <h2>3. Governance Documentation & Intended Use</h2>
+            <h2>3. Targeted Disparity Explainability &amp; Proxy Attributions</h2>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">
+                Surrogate additive Shapley attributions computed for statistically flagged disparities
+                (p&nbsp;&lt;&nbsp;0.05, n&nbsp;≥&nbsp;30). Bar lengths represent mean absolute Shapley
+                attribution magnitude across the evaluation cohort. Only the top proxy features are shown.
+            </p>
+            <div class="regulatory-box" style="background:#fefce8; border-left-color:#ca8a04;">
+                <strong>⚠ Non-Causal Disclaimer (Bilodeau et al., 2022):</strong>
+                Attributions identify empirical associations between demographic proxy features and model
+                predictions. They do <em>not</em> establish causal relationships or prescribe remediation.
+                This is a diagnostic tool only — no model retraining or weight modification is performed.
+            </div>
+            {% macro shap_bar_svg(attributions_dict) %}
+                {# Inline SVG attribution bar chart — zero external assets (offline contract). #}
+                {% set items = attributions_dict.items() | list %}
+                {% set max_val = items | map(attribute=1) | max %}
+                {% set bar_h = 14 %}
+                {% set gap = 5 %}
+                {% set label_w = 140 %}
+                {% set track_w = 160 %}
+                {% set total_h = items | length * (bar_h + gap) %}
+                <svg class="inline-chart" width="{{ label_w + track_w + 16 }}" height="{{ total_h }}"
+                     viewBox="0 0 {{ label_w + track_w + 16 }} {{ total_h }}"
+                     role="img" aria-label="Feature attribution bars">
+                    {% for feat, val in items %}
+                        {% set y = loop.index0 * (bar_h + gap) %}
+                        {% set frac = (val / max_val) if max_val > 0 else 0 %}
+                        {% set bar_len = frac * track_w %}
+                        <text x="{{ label_w - 4 }}" y="{{ y + bar_h - 2 }}"
+                              font-size="9" fill="#475569" text-anchor="end">{{ feat[:22] }}</text>
+                        <rect x="{{ label_w }}" y="{{ y }}" width="{{ track_w }}"
+                              height="{{ bar_h }}" fill="#f1f5f9" rx="2"/>
+                        <rect x="{{ label_w }}" y="{{ y }}" width="{{ bar_len }}"
+                              height="{{ bar_h }}" fill="#7c3aed" rx="2"/>
+                        <text x="{{ label_w + bar_len + 4 }}" y="{{ y + bar_h - 2 }}"
+                              font-size="8" fill="#64748b">{{ "%.3f"|format(val) }}</text>
+                    {% endfor %}
+                </svg>
+            {% endmacro %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subgroup</th>
+                        <th>Metric</th>
+                        <th>Top Proxy Feature Drivers (mean |Shapley|)</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, attr in attribution_map.items() %}
+                    <tr>
+                        <td><strong>{{ attr.subgroup }}</strong></td>
+                        <td><span class="badge badge-fail">{{ attr.metric_name | replace('_', ' ') | title }}</span></td>
+                        <td>
+                            {% if attr.feature_attributions %}
+                                {{ shap_bar_svg(attr.feature_attributions) }}
+                            {% else %}
+                                <span style="color:var(--text-muted);">No proxy features identified.</span>
+                            {% endif %}
+                        </td>
+                        <td style="font-size:0.8rem; color:var(--text-muted);">{{ attr.details }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+
+        <!-- 4. Model Card & Dataset Datasheet (Mitchell / Gebru) -->
+        <div class="section-card">
+            <h2>4. Governance Documentation &amp; Intended Use</h2>
             <div class="regulatory-box">
                 <strong>EU AI Act (Regulation EU 2024/1689) Article 10 / Annex IV Alignment:</strong>
                 This audit dossier provides verifiable diagnostic documentation of demographic performance disparities. It does not perform model retraining or in-situ weight modifications.

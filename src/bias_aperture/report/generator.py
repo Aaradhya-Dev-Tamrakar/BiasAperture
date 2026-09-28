@@ -17,6 +17,7 @@ from typing import Any
 
 from jinja2 import Environment, FileSystemLoader
 
+from bias_aperture.explainability import ExplanationResult
 from bias_aperture.schema import MetricResult
 
 # Static regulatory mapping table (Claim Ledger R-017, R-018)
@@ -30,7 +31,13 @@ REGULATORY_MAPPING: dict[str, str] = {
 
 @dataclass(frozen=True, slots=True)
 class ReportContext:
-    """Aggregated context data model for report generation."""
+    """Aggregated context data model for report generation.
+
+    The optional ``attributions`` field carries ``ExplanationResult`` instances
+    produced by ``ShapExplainerEngine`` for statistically flagged disparities.
+    It defaults to an empty tuple so all existing call-sites remain unmodified
+    (backward-compatible, schema-invariant — MetricResult / SubjectRecord untouched).
+    """
 
     metrics: Sequence[MetricResult]
     model_name: str = "FairFace ResNet-34 Multi-Task Classifier"
@@ -49,6 +56,9 @@ class ReportContext:
     regulatory_map: dict[str, str] = field(
         default_factory=lambda: dict(REGULATORY_MAPPING)
     )
+    # Optional SHAP / surrogate attribution results (Spec 07, ref: #24).
+    # Only populated for flagged disparities (p < 0.05, n >= 30).
+    attributions: Sequence[ExplanationResult] = field(default_factory=tuple)
 
 
 class HTMLReportGenerator:
@@ -177,12 +187,22 @@ class HTMLReportGenerator:
             else None,
         }
 
+        # Build a lookup: (subgroup, metric_name) -> ExplanationResult
+        # for efficient O(1) rendering in the template.
+        attribution_map: dict[tuple[str, str], ExplanationResult] = {
+            (a.subgroup, a.metric_name): a
+            for a in context.attributions
+            if a.feature_attributions  # only include non-empty attributions
+        }
+
         return {
             "context": context,
             "summary_metrics": summary_metrics,
             "subgroup_matrix": subgroup_matrix,
             "insufficient_groups": insufficient_groups,
             "exec_summary": exec_summary,
+            "attribution_map": attribution_map,
+            "has_attributions": bool(attribution_map),
         }
 
     def generate(self, context: ReportContext) -> str:
