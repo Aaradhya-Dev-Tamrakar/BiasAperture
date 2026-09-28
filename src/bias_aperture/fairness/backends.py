@@ -344,9 +344,9 @@ class FairlearnBackend(FairnessBackend):
 
                 # BCa bootstrap for DPD (group vs global)
                 def _grp_dpd_fn(
-                    yt: np.ndarray, yp: np.ndarray, s: np.ndarray
+                    yt: np.ndarray, yp: np.ndarray, s: np.ndarray, target_g: str = g
                 ) -> float:
-                    grp_mask = s == g
+                    grp_mask = s == target_g
                     if not np.any(grp_mask) or len(yp) == 0:
                         return 0.0
                     g_rate = float(yp[grp_mask].mean())
@@ -379,13 +379,13 @@ class FairlearnBackend(FairnessBackend):
                     grp_eop = abs(float(tpr) - global_tpr)
 
                     def _grp_eop_fn(
-                        yt: np.ndarray, yp: np.ndarray, s: np.ndarray
+                        yt: np.ndarray, yp: np.ndarray, s: np.ndarray, target_g: str = g
                     ) -> float:
                         pos_mask = yt == 1
                         if not np.any(pos_mask):
                             return 0.0
                         glob_tpr = float(yp[pos_mask].mean())
-                        grp_pos_mask = (s == g) & pos_mask
+                        grp_pos_mask = (s == target_g) & pos_mask
                         if not np.any(grp_pos_mask):
                             return 0.0
                         g_tpr = float(yp[grp_pos_mask].mean())
@@ -436,7 +436,7 @@ class FairlearnBackend(FairnessBackend):
                     )
 
                     def _grp_eod_fn(
-                        yt: np.ndarray, yp: np.ndarray, s: np.ndarray
+                        yt: np.ndarray, yp: np.ndarray, s: np.ndarray, target_g: str = g
                     ) -> float:
                         pos_mask = yt == 1
                         neg_mask = yt == 0
@@ -444,8 +444,8 @@ class FairlearnBackend(FairnessBackend):
                             return 0.0
                         glob_tpr = float(yp[pos_mask].mean())
                         glob_fpr = float(yp[neg_mask].mean())
-                        grp_pos = (s == g) & pos_mask
-                        grp_neg = (s == g) & neg_mask
+                        grp_pos = (s == target_g) & pos_mask
+                        grp_neg = (s == target_g) & neg_mask
                         if not np.any(grp_pos) or not np.any(grp_neg):
                             return 0.0
                         g_tpr = float(yp[grp_pos].mean())
@@ -490,12 +490,12 @@ class FairlearnBackend(FairnessBackend):
                     grp_dir = 1.0
 
                 def _grp_dir_fn(
-                    yt: np.ndarray, yp: np.ndarray, s: np.ndarray
+                    yt: np.ndarray, yp: np.ndarray, s: np.ndarray, target_g: str = g
                 ) -> float:
                     if len(yp) == 0:
                         return 1.0
                     glob_sel = float(yp.mean())
-                    grp_mask = s == g
+                    grp_mask = s == target_g
                     if not np.any(grp_mask):
                         return 1.0
                     g_sel = float(yp[grp_mask].mean())
@@ -911,9 +911,9 @@ class AIF360Backend(FairnessBackend):
 
                 # BCa bootstrap for DPD (group vs global)
                 def _grp_dpd_fn(
-                    yt: np.ndarray, yp: np.ndarray, s: np.ndarray
+                    yt: np.ndarray, yp: np.ndarray, s: np.ndarray, target_g: str = g
                 ) -> float:
-                    grp_mask = s == g
+                    grp_mask = s == target_g
                     if not np.any(grp_mask) or len(yp) == 0:
                         return 0.0
                     g_rate = float(yp[grp_mask].mean())
@@ -946,13 +946,13 @@ class AIF360Backend(FairnessBackend):
                     grp_eop = abs(float(tpr) - global_tpr)
 
                     def _grp_eop_fn(
-                        yt: np.ndarray, yp: np.ndarray, s: np.ndarray
+                        yt: np.ndarray, yp: np.ndarray, s: np.ndarray, target_g: str = g
                     ) -> float:
                         pos_mask = yt == 1
                         if not np.any(pos_mask):
                             return 0.0
                         glob_tpr = float(yp[pos_mask].mean())
-                        grp_pos_mask = (s == g) & pos_mask
+                        grp_pos_mask = (s == target_g) & pos_mask
                         if not np.any(grp_pos_mask):
                             return 0.0
                         g_tpr = float(yp[grp_pos_mask].mean())
@@ -1003,7 +1003,7 @@ class AIF360Backend(FairnessBackend):
                     )
 
                     def _grp_eod_fn(
-                        yt: np.ndarray, yp: np.ndarray, s: np.ndarray
+                        yt: np.ndarray, yp: np.ndarray, s: np.ndarray, target_g: str = g
                     ) -> float:
                         pos_mask = yt == 1
                         neg_mask = yt == 0
@@ -1011,8 +1011,8 @@ class AIF360Backend(FairnessBackend):
                             return 0.0
                         glob_tpr = float(yp[pos_mask].mean())
                         glob_fpr = float(yp[neg_mask].mean())
-                        grp_pos = (s == g) & pos_mask
-                        grp_neg = (s == g) & neg_mask
+                        grp_pos = (s == target_g) & pos_mask
+                        grp_neg = (s == target_g) & neg_mask
                         if not np.any(grp_pos) or not np.any(grp_neg):
                             return 0.0
                         g_tpr = float(yp[grp_pos].mean())
@@ -1057,12 +1057,12 @@ class AIF360Backend(FairnessBackend):
                     grp_dir = 1.0
 
                 def _grp_dir_fn(
-                    yt: np.ndarray, yp: np.ndarray, s: np.ndarray
+                    yt: np.ndarray, yp: np.ndarray, s: np.ndarray, target_g: str = g
                 ) -> float:
                     if len(yp) == 0:
                         return 1.0
                     glob_sel = float(yp.mean())
-                    grp_mask = s == g
+                    grp_mask = s == target_g
                     if not np.any(grp_mask):
                         return 1.0
                     g_sel = float(yp[grp_mask].mean())
