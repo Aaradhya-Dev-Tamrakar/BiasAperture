@@ -95,7 +95,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--explain",
-        action="store_true",
+        action=argparse.BooleanOptionalAction,
         default=True,
         help=(
             "Enable conditional SHAP / surrogate explainability on flagged "
@@ -153,6 +153,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"[!] Warning: {len(divergences)} cross-backend divergences detected.")
 
     # 3. Conditional Explainability Engine (SHAP / Proxy Attribution)
+    attributions = []
     if args.explain:
         print(
             "[*] Running conditional SHAP explainability engine on "
@@ -163,6 +164,7 @@ def main(argv: list[str] | None = None) -> int:
         for m in metrics:
             if explainer.should_explain(m):
                 exp_res = explainer.explain_disparity(m, records=records)
+                attributions.append(exp_res)
                 explained_count += 1
                 if exp_res.feature_attributions:
                     top_feat = list(exp_res.feature_attributions.items())[0]
@@ -183,6 +185,7 @@ def main(argv: list[str] | None = None) -> int:
         dataset_name=args.dataset_name,
         protected_axis=args.protected_attr,
         total_subjects=len(records),
+        attributions=attributions,
     )
     generator = HTMLReportGenerator()
     saved_path = generator.save(context, args.output_report)
@@ -192,5 +195,6 @@ def main(argv: list[str] | None = None) -> int:
     return 0
 
 
+
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(main())
