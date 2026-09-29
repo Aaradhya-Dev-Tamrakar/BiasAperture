@@ -137,6 +137,37 @@ class SubgroupCohortProfile:
     age_counts: dict[str, SubgroupCellStats]
     intersectional_counts: dict[str, SubgroupCellStats]
     insufficient_subgroups: list[str]
+    intersectional_126_counts: dict[str, SubgroupCellStats] = field(
+        default_factory=dict
+    )
+
+    @property
+    def eligible_126_cells(self) -> dict[str, SubgroupCellStats]:
+        """Return all 126 intersectional cells meeting NFR-003 sample size (n >= 30)."""
+        return {
+            k: v
+            for k, v in self.intersectional_126_counts.items()
+            if v.is_nfr003_eligible
+        }
+
+    @property
+    def insufficient_126_cells(self) -> dict[str, SubgroupCellStats]:
+        """Return all 126 intersectional cells failing NFR-003 sample size (n < 30)."""
+        return {
+            k: v
+            for k, v in self.intersectional_126_counts.items()
+            if v.insufficient_sample_at_ingestion
+        }
+
+    @property
+    def eligible_126_count(self) -> int:
+        """Count of 126 intersectional cells with n >= 30."""
+        return len(self.eligible_126_cells)
+
+    @property
+    def insufficient_126_count(self) -> int:
+        """Count of 126 intersectional cells with n < 30."""
+        return len(self.insufficient_126_cells)
 
 
 @dataclass(frozen=True, slots=True)
@@ -572,6 +603,10 @@ class DataIngestionPipeline:
         }
         inter_counts = {k: _build_stats(k, v) for k, v in intersectional_groups.items()}
 
+        inter_126_counts = cls.compute_126_intersectional_matrix(
+            records, task_positive_label=task_positive_label
+        )
+
         insufficient_keys: list[str] = [
             k
             for d in (race_counts, gender_counts, age_counts, inter_counts)
@@ -586,7 +621,71 @@ class DataIngestionPipeline:
             age_counts=age_counts,
             intersectional_counts=inter_counts,
             insufficient_subgroups=insufficient_keys,
+            intersectional_126_counts=inter_126_counts,
         )
+
+    @classmethod
+    def compute_126_intersectional_matrix(
+        cls,
+        records: Sequence[SubjectRecord],
+        *,
+        task_positive_label: str | None = None,
+    ) -> dict[str, SubgroupCellStats]:
+        """Compute the full 7 x 9 x 2 = 126 intersectional grid (FR-002, NFR-003).
+
+        Systematically enumerates all 126 intersectional demographic cells defined
+        by the locked FairFace taxonomies (RACE_LABELS, AGE_LABELS, GENDER_LABELS).
+        Guarantees that every cell is represented, calculating exact sample sizes
+        and flagging whether n >= 30 (eligible) or n < 30 (insufficient / sparse).
+        """
+        cell_records: dict[tuple[str, str, str], list[SubjectRecord]] = {
+            (r, a, g): []
+            for r in RACE_LABELS
+            for a in AGE_LABELS
+            for g in GENDER_LABELS
+        }
+
+        for rec in records:
+            key = (rec.race, rec.age, rec.gender)
+            if key in cell_records:
+                cell_records[key].append(rec)
+
+        stats_map: dict[str, SubgroupCellStats] = {}
+        for (r, a, g), sub_records in cell_records.items():
+            cell_key = f"race={r}&age={a}&gender={g}"
+            n_sub = len(sub_records)
+            pos_n: int | None = None
+            neg_n: int | None = None
+
+            if task_positive_label is not None:
+                pos_n = sum(
+                    1
+                    for rec in sub_records
+                    if str(rec.true_label) == str(task_positive_label)
+                )
+                neg_n = n_sub - pos_n
+                has_pos = pos_n >= 5
+                has_neg = neg_n >= 5
+            else:
+                has_pos = True
+                has_neg = True
+
+            is_eligible = n_sub >= MIN_SUBGROUP_SAMPLE_SIZE
+            is_insufficient = n_sub < MIN_SUBGROUP_SAMPLE_SIZE
+
+            stats_map[cell_key] = SubgroupCellStats(
+                subgroup_key=cell_key,
+                total_n=n_sub,
+                positive_n=pos_n,
+                negative_n=neg_n,
+                is_nfr003_eligible=is_eligible,
+                has_positive_support=has_pos,
+                has_negative_support=has_neg,
+                insufficient_sample_at_ingestion=is_insufficient,
+            )
+
+        return stats_map
+
 
 
 class OvRTransformer:

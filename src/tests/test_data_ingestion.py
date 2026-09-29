@@ -659,3 +659,86 @@ def test_ovr_transformer():
     assert len(ovr_dict) == 5
     assert "Black" in ovr_dict
     assert ovr_dict["Black"][1].true_label == "1"
+
+
+def test_compute_126_intersectional_matrix() -> None:
+    """Verify that compute_126_intersectional_matrix enumerates all 126 cells."""
+    # Create 35 records in one cell (White, 20-29, Female)
+    # and 5 in another (Black, 30-39, Male)
+    records = [
+        SubjectRecord(
+            image_id=f"w_{i}",
+            race="White",
+            gender="Female",
+            age="20-29",
+            true_label="1",
+            predicted_label="1",
+        )
+        for i in range(35)
+    ] + [
+        SubjectRecord(
+            image_id=f"b_{i}",
+            race="Black",
+            gender="Male",
+            age="30-39",
+            true_label="1",
+            predicted_label="0",
+        )
+        for i in range(5)
+    ]
+
+    matrix = DataIngestionPipeline.compute_126_intersectional_matrix(
+        records, task_positive_label="1"
+    )
+
+    # 1. Total cell count must be exactly 7 * 9 * 2 = 126
+    assert len(matrix) == 126
+
+    # 2. Sum of counts across all 126 cells must equal total subjects
+    assert sum(c.total_n for c in matrix.values()) == 40
+
+    # 3. Cell with 35 samples must be eligible
+    w_cell = matrix["race=White&age=20-29&gender=Female"]
+    assert w_cell.total_n == 35
+    assert w_cell.positive_n == 35
+    assert w_cell.negative_n == 0
+    assert w_cell.is_nfr003_eligible is True
+    assert w_cell.insufficient_sample_at_ingestion is False
+
+    # 4. Cell with 5 samples must be sparse (n < 30)
+    b_cell = matrix["race=Black&age=30-39&gender=Male"]
+    assert b_cell.total_n == 5
+    assert b_cell.positive_n == 5
+    assert b_cell.negative_n == 0
+    assert b_cell.is_nfr003_eligible is False
+    assert b_cell.insufficient_sample_at_ingestion is True
+
+    # 5. Empty cell must have 0 count and be flagged insufficient
+    empty_cell = matrix["race=East Asian&age=0-2&gender=Male"]
+    assert empty_cell.total_n == 0
+    assert empty_cell.is_nfr003_eligible is False
+    assert empty_cell.insufficient_sample_at_ingestion is True
+
+
+def test_subgroup_cohort_profile_126_properties() -> None:
+    """Verify that SubgroupCohortProfile exposes 126 intersectional properties."""
+    records = [
+        SubjectRecord(
+            image_id=f"img_{i}",
+            race="White",
+            gender="Female",
+            age="20-29",
+            true_label="1",
+            predicted_label="1",
+        )
+        for i in range(40)
+    ]
+
+    profile = DataIngestionPipeline.compute_cohort_profile(records)
+
+    assert len(profile.intersectional_126_counts) == 126
+    assert profile.eligible_126_count == 1
+    assert profile.insufficient_126_count == 125
+    assert "race=White&age=20-29&gender=Female" in profile.eligible_126_cells
+    assert "race=Indian&age=70+&gender=Male" in profile.insufficient_126_cells
+
