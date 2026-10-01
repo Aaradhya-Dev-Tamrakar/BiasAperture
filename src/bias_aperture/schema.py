@@ -78,6 +78,25 @@ ALPHA: float = 0.05
 # any reported 95% confidence interval.
 MIN_BOOTSTRAP_RESAMPLES: int = 1_000
 
+# NFR-003 — Minimum positive/negative support for rate-based metrics
+# (EOP requires ≥ MIN_POSITIVE_SUPPORT positives; EOD requires both).
+# Centralised here so fairness/base.py and data_ingestion.py share
+# the same constant rather than maintaining separate copies.
+MIN_POSITIVE_SUPPORT: int = 5
+
+
+def format_intersectional_key(**axes: str) -> str:
+    """Build a canonical composite subgroup key from demographic axes.
+
+    >>> format_intersectional_key(race="Black", gender="Female")
+    'race=Black&gender=Female'
+
+    All callers that construct intersectional keys (data_ingestion,
+    fairness backends) must use this function to guarantee a single
+    canonical format across the codebase.
+    """
+    return "&".join(f"{k}={v}" for k, v in sorted(axes.items()))
+
 
 @dataclass(frozen=True, slots=True)
 class SubjectRecord:

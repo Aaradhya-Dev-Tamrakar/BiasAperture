@@ -66,3 +66,7 @@ BiasAperture/
 
 Always write conventional commit messages: `feat:`, `fix:`, `docs:`, `chore:`, `test:`, `refactor:`. Include issue references (e.g., `(#22)` or `#22`) so that the `.github/workflows/audit-trail-linker.yml` CI workflow automatically attaches verified SHA-1 audit comments directly to the relevant GitHub issue.
 
+- **Peer Review Protocol**:
+  - When Aaradhya opens a PR: assign `AaradhyaDT` and request review from `tiixsha` (`gh pr create --assignee AaradhyaDT --reviewer tiixsha`).
+  - When Tisha (`tiixsha`) opens a PR: assign `tiixsha` and request review from `AaradhyaDT` (`gh pr create --assignee tiixsha --reviewer AaradhyaDT`).
+

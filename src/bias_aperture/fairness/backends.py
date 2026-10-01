@@ -6,12 +6,19 @@ Implements:
    and unsigned EOP
 3. ``CrossValidationOrchestrator``: Strategy pattern orchestrator verifying
    multi-backend consensus
+
+Helper decomposition (R1 modularity):
+- ``_make_insufficient_result``: Factory for NFR-003 flagged rows
+- ``_make_*_fn``: Bootstrap metric-function closure factories
+- ``_build_summary_row``: Single global summary MetricResult builder
+- ``_build_subgroup_rows``: Per-demographic-group MetricResult builder
+- ``_build_core_metric_results``: Thin orchestrator wiring helpers together
 """
 
 from __future__ import annotations
 
 import logging
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 
 import numpy as np
@@ -20,6 +27,7 @@ from bias_aperture.fairness.base import (
     EligibilityReport,
     FairnessBackend,
     eligible_groups,
+    encode_binary_labels,
 )
 from bias_aperture.fairness.metrics import (
     compute_group_rates,
@@ -42,26 +50,45 @@ from bias_aperture.schema import (
 logger = logging.getLogger(__name__)
 
 
-def _build_core_metric_results(
-    y_true: np.ndarray,
-    y_pred: np.ndarray,
-    sensitive: np.ndarray,
-    group_rates: dict[str, dict[str, float | None]],
-    eligibility: dict[str, EligibilityReport],
-    n_bootstrap_resamples: int = 1000,
-) -> list[MetricResult]:
-    """Assemble canonical MetricResult list from group rate matrices."""
-    results: list[MetricResult] = []
-    all_groups = sorted(eligibility.keys())
-    total_n = len(y_true)
+# ── MetricResult Factory Helpers ──────────────────────────────────────
 
-    # 1. Eligible groups per metric
-    dpd_groups = eligible_groups(eligibility, "demographic_parity_difference")
-    eod_groups = eligible_groups(eligibility, "equalized_odds_difference")
-    eop_groups = eligible_groups(eligibility, "equal_opportunity_difference")
-    dir_groups = eligible_groups(eligibility, "disparate_impact_ratio")
 
-    # Helper metric functions for bootstrap CI
+def _make_insufficient_result(
+    metric_name: str,
+    subgroup: str,
+    sample_size: int,
+    **kwargs: object,
+) -> MetricResult:
+    """Factory for MetricResult rows flagged as insufficient under NFR-003.
+
+    Centralises the pattern of setting metric_value/ci/p_value to None
+    with insufficient_sample=True, eliminating duplicated construction blocks.
+    """
+    return MetricResult(
+        metric_name=metric_name,  # type: ignore[arg-type]
+        subgroup=subgroup,
+        subgroup_sample_size=sample_size,
+        metric_value=None,
+        ci_lower=None,
+        ci_upper=None,
+        p_value=None,
+        raw_p_value=None,
+        insufficient_sample=True,
+        **kwargs,  # type: ignore[arg-type]
+    )
+
+
+# ── Bootstrap Metric-Function Closure Factories ───────────────────────
+# Each factory returns a closure that captures a specific eligible-group
+# list so the bootstrap resampler only evaluates groups that passed
+# NFR-003 screening.
+
+
+def _make_dpd_fn(
+    dpd_groups: list[str],
+) -> Callable[[np.ndarray, np.ndarray, np.ndarray], float]:
+    """Return a bootstrap-compatible DPD metric function."""
+
     def dpd_fn(yt: np.ndarray, yp: np.ndarray, s: np.ndarray) -> float:
         rates = compute_group_rates(yt, yp, s)
         sub_rates = {
@@ -70,6 +97,14 @@ def _build_core_metric_results(
         if len(sub_rates) < 2:
             return 0.0
         return demographic_parity_difference(sub_rates)
+
+    return dpd_fn
+
+
+def _make_eod_fn(
+    eod_groups: list[str],
+) -> Callable[[np.ndarray, np.ndarray, np.ndarray], float]:
+    """Return a bootstrap-compatible EOD metric function."""
 
     def eod_fn(yt: np.ndarray, yp: np.ndarray, s: np.ndarray) -> float:
         rates = compute_group_rates(yt, yp, s)
@@ -87,6 +122,14 @@ def _build_core_metric_results(
             return 0.0
         return equalized_odds_difference(tpr_map, fpr_map)
 
+    return eod_fn
+
+
+def _make_eop_fn(
+    eop_groups: list[str],
+) -> Callable[[np.ndarray, np.ndarray, np.ndarray], float]:
+    """Return a bootstrap-compatible EOP metric function."""
+
     def eop_fn(yt: np.ndarray, yp: np.ndarray, s: np.ndarray) -> float:
         rates = compute_group_rates(yt, yp, s)
         tpr_map = {
@@ -98,6 +141,14 @@ def _build_core_metric_results(
             return 0.0
         return equal_opportunity_difference(tpr_map)
 
+    return eop_fn
+
+
+def _make_dir_fn(
+    dir_groups: list[str],
+) -> Callable[[np.ndarray, np.ndarray, np.ndarray], float]:
+    """Return a bootstrap-compatible DIR metric function."""
+
     def dir_fn(yt: np.ndarray, yp: np.ndarray, s: np.ndarray) -> float:
         rates = compute_group_rates(yt, yp, s)
         sub_rates = {
@@ -108,224 +159,77 @@ def _build_core_metric_results(
         val, _ = symmetric_disparate_impact_ratio(sub_rates)
         return val
 
-    # ── Global / Cross-Group Summary Rows ─────────────────────────
+    return dir_fn
 
-    # 1. DPD Summary
-    if len(dpd_groups) >= 2:
-        eligible_mask = np.isin(sensitive, dpd_groups)
-        dpd_test = compute_metric_specific_test(
-            "demographic_parity_difference",
-            y_true[eligible_mask],
-            y_pred[eligible_mask],
-            sensitive[eligible_mask],
-        )
-        sub_rates = {g: float(group_rates[g]["selection_rate"]) for g in dpd_groups}
-        dpd_val = demographic_parity_difference(sub_rates)
-        ci_low, ci_high = compute_stratified_bootstrap_ci(
-            y_true, y_pred, sensitive, dpd_fn, n_resamples=n_bootstrap_resamples
-        )
-        results.append(
-            MetricResult(
-                metric_name="demographic_parity_difference",
-                subgroup="ALL",
-                subgroup_sample_size=total_n,
-                metric_value=dpd_val,
-                ci_lower=ci_low,
-                ci_upper=ci_high,
-                p_value=dpd_test.raw_p,
-                raw_p_value=dpd_test.raw_p,
-                hypothesis_family=dpd_test.hypothesis_family,
-                insufficient_sample=False,
-            )
-        )
-    else:
-        results.append(
-            MetricResult(
-                metric_name="demographic_parity_difference",
-                subgroup="ALL",
-                subgroup_sample_size=total_n,
-                metric_value=None,
-                ci_lower=None,
-                ci_upper=None,
-                p_value=None,
-                raw_p_value=None,
-                insufficient_sample=True,
-            )
-        )
 
-    # 2. EOD Summary
-    if len(eod_groups) >= 2:
-        eligible_mask = np.isin(sensitive, eod_groups)
-        eod_test = compute_metric_specific_test(
-            "equalized_odds_difference",
-            y_true[eligible_mask],
-            y_pred[eligible_mask],
-            sensitive[eligible_mask],
-        )
-        tpr_map = {
-            g: float(group_rates[g]["tpr"])
-            for g in eod_groups
-            if group_rates[g]["tpr"] is not None
-        }
-        fpr_map = {
-            g: float(group_rates[g]["fpr"])
-            for g in eod_groups
-            if group_rates[g]["fpr"] is not None
-        }
-        if len(tpr_map) >= 2 and len(fpr_map) >= 2:
-            eod_val = equalized_odds_difference(tpr_map, fpr_map)
-            ci_low, ci_high = compute_stratified_bootstrap_ci(
-                y_true, y_pred, sensitive, eod_fn, n_resamples=n_bootstrap_resamples
-            )
-            results.append(
-                MetricResult(
-                    metric_name="equalized_odds_difference",
-                    subgroup="ALL",
-                    subgroup_sample_size=total_n,
-                    metric_value=eod_val,
-                    ci_lower=ci_low,
-                    ci_upper=ci_high,
-                    p_value=eod_test.raw_p,
-                    raw_p_value=eod_test.raw_p,
-                    hypothesis_family=eod_test.hypothesis_family,
-                    insufficient_sample=False,
-                )
-            )
-        else:
-            results.append(
-                MetricResult(
-                    metric_name="equalized_odds_difference",
-                    subgroup="ALL",
-                    subgroup_sample_size=total_n,
-                    metric_value=None,
-                    ci_lower=None,
-                    ci_upper=None,
-                    p_value=None,
-                    raw_p_value=None,
-                    insufficient_sample=True,
-                )
-            )
-    else:
-        results.append(
-            MetricResult(
-                metric_name="equalized_odds_difference",
-                subgroup="ALL",
-                subgroup_sample_size=total_n,
-                metric_value=None,
-                ci_lower=None,
-                ci_upper=None,
-                p_value=None,
-                raw_p_value=None,
-                insufficient_sample=True,
-            )
-        )
+# ── Summary Row Builder ───────────────────────────────────────────────
 
-    # 3. EOP Summary
-    if len(eop_groups) >= 2:
-        eligible_mask = np.isin(sensitive, eop_groups)
-        eop_test = compute_metric_specific_test(
-            "equal_opportunity_difference",
-            y_true[eligible_mask],
-            y_pred[eligible_mask],
-            sensitive[eligible_mask],
-        )
-        tpr_map = {
-            g: float(group_rates[g]["tpr"])
-            for g in eop_groups
-            if group_rates[g]["tpr"] is not None
-        }
-        if len(tpr_map) >= 2:
-            eop_val = equal_opportunity_difference(tpr_map)
-            ci_low, ci_high = compute_stratified_bootstrap_ci(
-                y_true, y_pred, sensitive, eop_fn, n_resamples=n_bootstrap_resamples
-            )
-            results.append(
-                MetricResult(
-                    metric_name="equal_opportunity_difference",
-                    subgroup="ALL",
-                    subgroup_sample_size=total_n,
-                    metric_value=eop_val,
-                    ci_lower=ci_low,
-                    ci_upper=ci_high,
-                    p_value=eop_test.raw_p,
-                    raw_p_value=eop_test.raw_p,
-                    hypothesis_family=eop_test.hypothesis_family,
-                    insufficient_sample=False,
-                )
-            )
-        else:
-            results.append(
-                MetricResult(
-                    metric_name="equal_opportunity_difference",
-                    subgroup="ALL",
-                    subgroup_sample_size=total_n,
-                    metric_value=None,
-                    ci_lower=None,
-                    ci_upper=None,
-                    p_value=None,
-                    raw_p_value=None,
-                    insufficient_sample=True,
-                )
-            )
-    else:
-        results.append(
-            MetricResult(
-                metric_name="equal_opportunity_difference",
-                subgroup="ALL",
-                subgroup_sample_size=total_n,
-                metric_value=None,
-                ci_lower=None,
-                ci_upper=None,
-                p_value=None,
-                raw_p_value=None,
-                insufficient_sample=True,
-            )
-        )
 
-    # 4. DIR Summary
-    if len(dir_groups) >= 2:
-        eligible_mask = np.isin(sensitive, dir_groups)
-        dir_test = compute_metric_specific_test(
-            "disparate_impact_ratio",
-            y_true[eligible_mask],
-            y_pred[eligible_mask],
-            sensitive[eligible_mask],
-        )
-        sub_rates = {g: float(group_rates[g]["selection_rate"]) for g in dir_groups}
-        dir_val, _ = symmetric_disparate_impact_ratio(sub_rates)
-        ci_low, ci_high = compute_stratified_bootstrap_ci(
-            y_true, y_pred, sensitive, dir_fn, n_resamples=n_bootstrap_resamples
-        )
-        results.append(
-            MetricResult(
-                metric_name="disparate_impact_ratio",
-                subgroup="ALL",
-                subgroup_sample_size=total_n,
-                metric_value=dir_val,
-                ci_lower=ci_low,
-                ci_upper=ci_high,
-                p_value=dir_test.raw_p,
-                raw_p_value=dir_test.raw_p,
-                hypothesis_family=dir_test.hypothesis_family,
-                insufficient_sample=False,
-            )
-        )
-    else:
-        results.append(
-            MetricResult(
-                metric_name="disparate_impact_ratio",
-                subgroup="ALL",
-                subgroup_sample_size=total_n,
-                metric_value=None,
-                ci_lower=None,
-                ci_upper=None,
-                p_value=None,
-                raw_p_value=None,
-                insufficient_sample=True,
-            )
-        )
+def _build_summary_row(
+    metric_name: str,
+    eligible_grps: list[str],
+    y_true: np.ndarray,
+    y_pred: np.ndarray,
+    sensitive: np.ndarray,
+    group_rates: dict[str, dict[str, float | None]],
+    metric_fn: Callable[[np.ndarray, np.ndarray, np.ndarray], float],
+    compute_value_fn: Callable[[dict[str, dict[str, float | None]], list[str]], float],
+    n_bootstrap_resamples: int,
+    total_n: int,
+) -> MetricResult:
+    """Build a single global summary MetricResult row for one Core Four metric.
 
-    # ── Per-subgroup individual metric rows ────────────────────────
+    Handles eligibility gating, hypothesis testing, bootstrap CI, and
+    point-estimate computation for the cross-group (subgroup='ALL') row.
+    """
+    if len(eligible_grps) < 2:
+        return _make_insufficient_result(metric_name, "ALL", total_n)
+
+    eligible_mask = np.isin(sensitive, eligible_grps)
+    test = compute_metric_specific_test(
+        metric_name,
+        y_true[eligible_mask],
+        y_pred[eligible_mask],
+        sensitive[eligible_mask],
+    )
+    metric_value = compute_value_fn(group_rates, eligible_grps)
+    ci_low, ci_high = compute_stratified_bootstrap_ci(
+        y_true, y_pred, sensitive, metric_fn, n_resamples=n_bootstrap_resamples
+    )
+    return MetricResult(
+        metric_name=metric_name,  # type: ignore[arg-type]
+        subgroup="ALL",
+        subgroup_sample_size=total_n,
+        metric_value=metric_value,
+        ci_lower=ci_low,
+        ci_upper=ci_high,
+        p_value=test.raw_p,
+        raw_p_value=test.raw_p,
+        hypothesis_family=test.hypothesis_family,
+        insufficient_sample=False,
+    )
+
+
+# ── Per-Subgroup Row Builder ──────────────────────────────────────────
+
+
+def _build_subgroup_rows(
+    y_true: np.ndarray,
+    y_pred: np.ndarray,
+    sensitive: np.ndarray,
+    group_rates: dict[str, dict[str, float | None]],
+    eligibility: dict[str, EligibilityReport],
+    total_n: int,
+) -> list[MetricResult]:
+    """Build per-subgroup MetricResult rows for all Core Four metrics.
+
+    For each demographic group, computes the group-vs-global disparity
+    for DPD, EOP, EOD, and DIR (where eligible), and returns the
+    corresponding MetricResult rows with hypothesis tests and bootstrap CIs.
+    """
+    results: list[MetricResult] = []
+    all_groups = sorted(eligibility.keys())
+
     for g in all_groups:
         rep = eligibility[g]
         n_grp = rep.n
@@ -337,169 +241,226 @@ def _build_core_metric_results(
                 "equal_opportunity_difference",
                 "disparate_impact_ratio",
             ):
-                results.append(
-                    MetricResult(
-                        metric_name=m_name,  # type: ignore[arg-type]
-                        subgroup=g,
-                        subgroup_sample_size=n_grp,
-                        metric_value=None,
-                        ci_lower=None,
-                        ci_upper=None,
-                        p_value=None,
-                        raw_p_value=None,
-                        insufficient_sample=True,
-                    )
+                results.append(_make_insufficient_result(m_name, g, n_grp))
+            continue
+
+        rest_sensitive = np.where(sensitive == g, g, "REST")
+        sel_rate = float(group_rates[g]["selection_rate"])
+        global_sel_rate = float(y_pred.mean()) if total_n > 0 else 0.0
+
+        # Subgroup DPD
+        grp_dpd = abs(sel_rate - global_sel_rate)
+        grp_dpd_test = compute_metric_specific_test(
+            "demographic_parity_difference", y_true, y_pred, rest_sensitive
+        )
+        grp_dpd_ci = compute_subgroup_bootstrap_ci(
+            y_true, y_pred, sensitive, g, "demographic_parity_difference"
+        )
+        results.append(
+            MetricResult(
+                metric_name="demographic_parity_difference",
+                subgroup=g,
+                subgroup_sample_size=n_grp,
+                metric_value=grp_dpd,
+                ci_lower=grp_dpd_ci[0],
+                ci_upper=grp_dpd_ci[1],
+                p_value=grp_dpd_test.raw_p,
+                raw_p_value=grp_dpd_test.raw_p,
+                hypothesis_family=grp_dpd_test.hypothesis_family,
+                insufficient_sample=False,
+            )
+        )
+
+        # Subgroup EOP
+        tpr = group_rates[g]["tpr"]
+        if rep.eligible_eop and tpr is not None:
+            pos_total = (y_true == 1).sum()
+            global_tpr = float(y_pred[y_true == 1].mean()) if pos_total > 0 else 0.0
+            grp_eop = abs(float(tpr) - global_tpr)
+            grp_eop_test = compute_metric_specific_test(
+                "equal_opportunity_difference", y_true, y_pred, rest_sensitive
+            )
+            grp_eop_ci = compute_subgroup_bootstrap_ci(
+                y_true, y_pred, sensitive, g, "equal_opportunity_difference"
+            )
+            results.append(
+                MetricResult(
+                    metric_name="equal_opportunity_difference",
+                    subgroup=g,
+                    subgroup_sample_size=n_grp,
+                    metric_value=grp_eop,
+                    ci_lower=grp_eop_ci[0],
+                    ci_upper=grp_eop_ci[1],
+                    p_value=grp_eop_test.raw_p,
+                    raw_p_value=grp_eop_test.raw_p,
+                    hypothesis_family=grp_eop_test.hypothesis_family,
+                    insufficient_sample=False,
                 )
+            )
         else:
-            rest_sensitive = np.where(sensitive == g, g, "REST")
-            sel_rate = float(group_rates[g]["selection_rate"])
-            global_sel_rate = float(y_pred.mean()) if total_n > 0 else 0.0
-
-            # Subgroup DPD
-            grp_dpd = abs(sel_rate - global_sel_rate)
-            grp_dpd_test = compute_metric_specific_test(
-                "demographic_parity_difference", y_true, y_pred, rest_sensitive
+            results.append(
+                _make_insufficient_result("equal_opportunity_difference", g, n_grp)
             )
-            grp_dpd_ci = compute_subgroup_bootstrap_ci(
-                y_true, y_pred, sensitive, g, "demographic_parity_difference"
+
+        # Subgroup EOD
+        fpr = group_rates[g]["fpr"]
+        if rep.eligible_eod and tpr is not None and fpr is not None:
+            pos_total = (y_true == 1).sum()
+            neg_total = (y_true == 0).sum()
+            global_tpr = float(y_pred[y_true == 1].mean()) if pos_total > 0 else 0.0
+            global_fpr = float(y_pred[y_true == 0].mean()) if neg_total > 0 else 0.0
+            grp_eod = max(abs(float(tpr) - global_tpr), abs(float(fpr) - global_fpr))
+            grp_eod_test = compute_metric_specific_test(
+                "equalized_odds_difference", y_true, y_pred, rest_sensitive
+            )
+            grp_eod_ci = compute_subgroup_bootstrap_ci(
+                y_true, y_pred, sensitive, g, "equalized_odds_difference"
             )
             results.append(
                 MetricResult(
-                    metric_name="demographic_parity_difference",
+                    metric_name="equalized_odds_difference",
                     subgroup=g,
                     subgroup_sample_size=n_grp,
-                    metric_value=grp_dpd,
-                    ci_lower=grp_dpd_ci[0],
-                    ci_upper=grp_dpd_ci[1],
-                    p_value=grp_dpd_test.raw_p,
-                    raw_p_value=grp_dpd_test.raw_p,
-                    hypothesis_family=grp_dpd_test.hypothesis_family,
+                    metric_value=grp_eod,
+                    ci_lower=grp_eod_ci[0],
+                    ci_upper=grp_eod_ci[1],
+                    p_value=grp_eod_test.raw_p,
+                    raw_p_value=grp_eod_test.raw_p,
+                    hypothesis_family=grp_eod_test.hypothesis_family,
                     insufficient_sample=False,
                 )
             )
-
-            # Subgroup EOP
-            tpr = group_rates[g]["tpr"]
-            if rep.eligible_eop and tpr is not None:
-                pos_total = (y_true == 1).sum()
-                global_tpr = float(y_pred[y_true == 1].mean()) if pos_total > 0 else 0.0
-                grp_eop = abs(float(tpr) - global_tpr)
-                grp_eop_test = compute_metric_specific_test(
-                    "equal_opportunity_difference", y_true, y_pred, rest_sensitive
-                )
-                grp_eop_ci = compute_subgroup_bootstrap_ci(
-                    y_true, y_pred, sensitive, g, "equal_opportunity_difference"
-                )
-                results.append(
-                    MetricResult(
-                        metric_name="equal_opportunity_difference",
-                        subgroup=g,
-                        subgroup_sample_size=n_grp,
-                        metric_value=grp_eop,
-                        ci_lower=grp_eop_ci[0],
-                        ci_upper=grp_eop_ci[1],
-                        p_value=grp_eop_test.raw_p,
-                        raw_p_value=grp_eop_test.raw_p,
-                        hypothesis_family=grp_eop_test.hypothesis_family,
-                        insufficient_sample=False,
-                    )
-                )
-            else:
-                results.append(
-                    MetricResult(
-                        metric_name="equal_opportunity_difference",
-                        subgroup=g,
-                        subgroup_sample_size=n_grp,
-                        metric_value=None,
-                        ci_lower=None,
-                        ci_upper=None,
-                        p_value=None,
-                        raw_p_value=None,
-                        insufficient_sample=True,
-                    )
-                )
-
-            # Subgroup EOD
-            fpr = group_rates[g]["fpr"]
-            if rep.eligible_eod and tpr is not None and fpr is not None:
-                pos_total = (y_true == 1).sum()
-                neg_total = (y_true == 0).sum()
-                global_tpr = float(y_pred[y_true == 1].mean()) if pos_total > 0 else 0.0
-                global_fpr = float(y_pred[y_true == 0].mean()) if neg_total > 0 else 0.0
-                grp_eod = max(
-                    abs(float(tpr) - global_tpr), abs(float(fpr) - global_fpr)
-                )
-                grp_eod_test = compute_metric_specific_test(
-                    "equalized_odds_difference", y_true, y_pred, rest_sensitive
-                )
-                grp_eod_ci = compute_subgroup_bootstrap_ci(
-                    y_true, y_pred, sensitive, g, "equalized_odds_difference"
-                )
-                results.append(
-                    MetricResult(
-                        metric_name="equalized_odds_difference",
-                        subgroup=g,
-                        subgroup_sample_size=n_grp,
-                        metric_value=grp_eod,
-                        ci_lower=grp_eod_ci[0],
-                        ci_upper=grp_eod_ci[1],
-                        p_value=grp_eod_test.raw_p,
-                        raw_p_value=grp_eod_test.raw_p,
-                        hypothesis_family=grp_eod_test.hypothesis_family,
-                        insufficient_sample=False,
-                    )
-                )
-            else:
-                results.append(
-                    MetricResult(
-                        metric_name="equalized_odds_difference",
-                        subgroup=g,
-                        subgroup_sample_size=n_grp,
-                        metric_value=None,
-                        ci_lower=None,
-                        ci_upper=None,
-                        p_value=None,
-                        raw_p_value=None,
-                        insufficient_sample=True,
-                    )
-                )
-
-            # Subgroup DIR
-            if global_sel_rate > 0:
-                grp_dir = min(sel_rate, global_sel_rate) / max(
-                    sel_rate, global_sel_rate
-                )
-            else:
-                grp_dir = 1.0
-            grp_dir_test = compute_metric_specific_test(
-                "disparate_impact_ratio", y_true, y_pred, rest_sensitive
-            )
-            grp_dir_ci = compute_subgroup_bootstrap_ci(
-                y_true, y_pred, sensitive, g, "disparate_impact_ratio"
-            )
+        else:
             results.append(
-                MetricResult(
-                    metric_name="disparate_impact_ratio",
-                    subgroup=g,
-                    subgroup_sample_size=n_grp,
-                    metric_value=grp_dir,
-                    ci_lower=grp_dir_ci[0],
-                    ci_upper=grp_dir_ci[1],
-                    p_value=grp_dir_test.raw_p,
-                    raw_p_value=grp_dir_test.raw_p,
-                    hypothesis_family=grp_dir_test.hypothesis_family,
-                    insufficient_sample=False,
-                )
+                _make_insufficient_result("equalized_odds_difference", g, n_grp)
             )
+
+        # Subgroup DIR
+        if global_sel_rate > 0:
+            grp_dir = min(sel_rate, global_sel_rate) / max(sel_rate, global_sel_rate)
+        else:
+            grp_dir = 1.0
+        grp_dir_test = compute_metric_specific_test(
+            "disparate_impact_ratio", y_true, y_pred, rest_sensitive
+        )
+        grp_dir_ci = compute_subgroup_bootstrap_ci(
+            y_true, y_pred, sensitive, g, "disparate_impact_ratio"
+        )
+        results.append(
+            MetricResult(
+                metric_name="disparate_impact_ratio",
+                subgroup=g,
+                subgroup_sample_size=n_grp,
+                metric_value=grp_dir,
+                ci_lower=grp_dir_ci[0],
+                ci_upper=grp_dir_ci[1],
+                p_value=grp_dir_test.raw_p,
+                raw_p_value=grp_dir_test.raw_p,
+                hypothesis_family=grp_dir_test.hypothesis_family,
+                insufficient_sample=False,
+            )
+        )
+
+    return results
+
+
+# ── Core Metric Results Orchestrator ──────────────────────────────────
+
+
+def _build_core_metric_results(
+    y_true: np.ndarray,
+    y_pred: np.ndarray,
+    sensitive: np.ndarray,
+    group_rates: dict[str, dict[str, float | None]],
+    eligibility: dict[str, EligibilityReport],
+    n_bootstrap_resamples: int = 1000,
+) -> list[MetricResult]:
+    """Assemble canonical MetricResult list from group rate matrices.
+
+    Orchestrates _build_summary_row (global rows) and
+    _build_subgroup_rows (per-group rows), then applies Holm-Bonferroni
+    FWER p-value adjustment across hypothesis families.
+    """
+    total_n = len(y_true)
+
+    # Eligible groups per metric
+    dpd_groups = eligible_groups(eligibility, "demographic_parity_difference")
+    eod_groups = eligible_groups(eligibility, "equalized_odds_difference")
+    eop_groups = eligible_groups(eligibility, "equal_opportunity_difference")
+    dir_groups = eligible_groups(eligibility, "disparate_impact_ratio")
+
+    # Bootstrap metric-function closures
+    dpd_fn = _make_dpd_fn(dpd_groups)
+    eod_fn = _make_eod_fn(eod_groups)
+    eop_fn = _make_eop_fn(eop_groups)
+    dir_fn = _make_dir_fn(dir_groups)
+
+    # Point-estimate computation functions for summary rows
+    def _dpd_val(gr: dict[str, dict[str, float | None]], grps: list[str]) -> float:
+        return demographic_parity_difference(
+            {g: float(gr[g]["selection_rate"]) for g in grps}
+        )
+
+    def _eod_val(gr: dict[str, dict[str, float | None]], grps: list[str]) -> float:
+        tpr_map = {g: float(gr[g]["tpr"]) for g in grps if gr[g]["tpr"] is not None}
+        fpr_map = {g: float(gr[g]["fpr"]) for g in grps if gr[g]["fpr"] is not None}
+        if len(tpr_map) < 2 or len(fpr_map) < 2:
+            return 0.0
+        return equalized_odds_difference(tpr_map, fpr_map)
+
+    def _eop_val(gr: dict[str, dict[str, float | None]], grps: list[str]) -> float:
+        tpr_map = {g: float(gr[g]["tpr"]) for g in grps if gr[g]["tpr"] is not None}
+        if len(tpr_map) < 2:
+            return 0.0
+        return equal_opportunity_difference(tpr_map)
+
+    def _dir_val(gr: dict[str, dict[str, float | None]], grps: list[str]) -> float:
+        val, _ = symmetric_disparate_impact_ratio(
+            {g: float(gr[g]["selection_rate"]) for g in grps}
+        )
+        return val
+
+    # ── Global Summary Rows ────────────────────────────────────────
+    results: list[MetricResult] = []
+
+    summary_specs: list[tuple[str, list[str], Callable, Callable]] = [
+        ("demographic_parity_difference", dpd_groups, dpd_fn, _dpd_val),
+        ("equalized_odds_difference", eod_groups, eod_fn, _eod_val),
+        ("equal_opportunity_difference", eop_groups, eop_fn, _eop_val),
+        ("disparate_impact_ratio", dir_groups, dir_fn, _dir_val),
+    ]
+
+    for metric_name, grps, boot_fn, val_fn in summary_specs:
+        results.append(
+            _build_summary_row(
+                metric_name,
+                grps,
+                y_true,
+                y_pred,
+                sensitive,
+                group_rates,
+                boot_fn,
+                val_fn,
+                n_bootstrap_resamples,
+                total_n,
+            )
+        )
+
+    # ── Per-Subgroup Rows ──────────────────────────────────────────
+    results.extend(
+        _build_subgroup_rows(
+            y_true, y_pred, sensitive, group_rates, eligibility, total_n
+        )
+    )
 
     return adjust_family_pvalues(results)
 
 
-# ── Native Pure-Math / Fairlearn Backend ──────────────────────────────
+# ── Native Fairlearn Backend ─────────────────────────────────────────
 
 
 class FairlearnBackend(FairnessBackend):
-    """Fairness backend utilizing Fairlearn-aligned metric definitions."""
+    """Native Fairlearn group rates with shared statistics and row assembly."""
 
     @property
     def name(self) -> str:
@@ -514,7 +475,39 @@ class FairlearnBackend(FairnessBackend):
         n_bootstrap_resamples: int = 1000,
     ) -> list[MetricResult]:
         """Compute Core Four metrics with statistical confidence bounds."""
-        group_rates = compute_group_rates(y_true, y_pred, sensitive)
+        try:
+            from fairlearn.metrics import (
+                MetricFrame,
+                false_positive_rate,
+                selection_rate,
+                true_positive_rate,
+            )
+        except ImportError as exc:
+            raise RuntimeError(
+                "Fairlearn is unavailable. Install bias_aperture[fairness] "
+                "or use uv run --extra fairness."
+            ) from exc
+
+        frame = MetricFrame(
+            metrics={
+                "selection_rate": selection_rate,
+                "tpr": true_positive_rate,
+                "fpr": false_positive_rate,
+            },
+            y_true=y_true,
+            y_pred=y_pred,
+            sensitive_features=sensitive,
+        )
+        group_rates = {
+            str(g): {
+                "selection_rate": float(row["selection_rate"]),
+                # Fairlearn returns zero for absent conditional support;
+                # the canonical adapter contract represents it as unavailable.
+                "tpr": float(row["tpr"]) if eligibility[str(g)].n_pos else None,
+                "fpr": float(row["fpr"]) if eligibility[str(g)].n_neg else None,
+            }
+            for g, row in frame.by_group.iterrows()
+        }
         return _build_core_metric_results(
             y_true,
             y_pred,
@@ -648,32 +641,20 @@ class AIF360Backend(FairnessBackend):
         ):
             # Global row
             results.append(
-                MetricResult(
-                    metric_name=m_name,  # type: ignore[arg-type]
-                    subgroup="ALL",
-                    subgroup_sample_size=total_n,
-                    metric_value=None,
-                    ci_lower=None,
-                    ci_upper=None,
-                    p_value=None,
-                    raw_p_value=None,
-                    insufficient_sample=True,
+                _make_insufficient_result(
+                    m_name,
+                    "ALL",
+                    total_n,
                     adjustment_method=f"aif360_unavailable: {reason}",
                 )
             )
             # Subgroup rows
             for g in all_groups:
                 results.append(
-                    MetricResult(
-                        metric_name=m_name,  # type: ignore[arg-type]
-                        subgroup=g,
-                        subgroup_sample_size=0,
-                        metric_value=None,
-                        ci_lower=None,
-                        ci_upper=None,
-                        p_value=None,
-                        raw_p_value=None,
-                        insufficient_sample=True,
+                    _make_insufficient_result(
+                        m_name,
+                        g,
+                        0,
                         adjustment_method=f"aif360_unavailable: {reason}",
                     )
                 )
@@ -715,6 +696,7 @@ class CrossValidationOrchestrator:
             self.backends = list(backends)
         self.tolerance_difference = tolerance_difference
         self.tolerance_ratio = tolerance_ratio
+        self.backend_failures: dict[str, str] = {}
 
     def run(
         self,
@@ -738,8 +720,15 @@ class CrossValidationOrchestrator:
         tuple[list[MetricResult], list[DivergenceAlert]]
             (canonical_results, divergence_alerts).
         """
+        self.backend_failures = {}
         if not self.backends:
             return [], []
+
+        # Validate outside backend failure isolation: invalid task input must
+        # propagate to the caller rather than become an empty success report.
+        encode_binary_labels(
+            [r.true_label for r in records], [r.predicted_label for r in records]
+        )
 
         backend_results: dict[str, list[MetricResult]] = {}
         for b in self.backends:
@@ -749,16 +738,44 @@ class CrossValidationOrchestrator:
                     protected_attr,
                     n_bootstrap_resamples=n_bootstrap_resamples,
                 )
+                unavailable = [
+                    r.adjustment_method
+                    for r in backend_results[b.name]
+                    if "unavailable" in (r.adjustment_method or "")
+                ]
+                if unavailable:
+                    self.backend_failures[b.name] = str(unavailable[0])
             except Exception as exc:
                 logger.error("Backend %s failed during evaluation: %s", b.name, exc)
+                self.backend_failures[b.name] = str(exc)
                 backend_results[b.name] = []
 
         canonical_backend = self.backends[0].name
         canonical_results = backend_results.get(canonical_backend, [])
-        divergences: list[DivergenceAlert] = []
+        if not canonical_results or any(
+            "unavailable" in (r.adjustment_method or "") for r in canonical_results
+        ):
+            raise RuntimeError(
+                f"Canonical backend {canonical_backend} is unavailable; "
+                "no audit report can be produced. Check dependencies and backend logs."
+            )
+        divergences: list[DivergenceAlert] = self._detect_divergences(backend_results)
 
-        # Compare backends pairwise
+        return canonical_results, divergences
+
+    def _detect_divergences(
+        self,
+        backend_results: dict[str, list[MetricResult]],
+    ) -> list[DivergenceAlert]:
+        """Compare backend results pairwise and flag mathematical divergences.
+
+        Extracted from `run()` so the divergence-detection logic is
+        independently testable and the orchestrator's `run()` reads as
+        a linear pipeline.
+        """
+        divergences: list[DivergenceAlert] = []
         backend_names = list(backend_results.keys())
+
         for i in range(len(backend_names)):
             for j in range(i + 1, len(backend_names)):
                 name_a, name_b = backend_names[i], backend_names[j]
@@ -819,4 +836,4 @@ class CrossValidationOrchestrator:
                             )
                         )
 
-        return canonical_results, divergences
+        return divergences

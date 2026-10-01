@@ -17,6 +17,7 @@ Features:
 from __future__ import annotations
 
 import json
+import logging
 from collections import Counter
 from collections.abc import Iterable, Sequence
 from dataclasses import dataclass, field
@@ -29,10 +30,14 @@ import pandas as pd
 from bias_aperture.schema import (
     AGE_LABELS,
     GENDER_LABELS,
+    MIN_POSITIVE_SUPPORT,
     MIN_SUBGROUP_SAMPLE_SIZE,
     RACE_LABELS,
     SubjectRecord,
+    format_intersectional_key,
 )
+
+logger = logging.getLogger(__name__)
 
 # Canonical FairFace column names
 DEFAULT_IMAGE_COL = "face_name_align"
@@ -236,53 +241,21 @@ class DataIngestionPipeline:
                 cohort_profile=profile,
             )
 
-        # Check required columns presence in sample row
+        # Stage 1: Column presence validation
         first_row = resolved_rows[0]
         actual_image_col = self._resolve_image_col(first_row)
+        col_result = self._validate_columns(first_row, total_count)
+        if col_result is not None:
+            return col_result
 
-        required_cols = [
-            self.config.race_col,
-            self.config.gender_col,
-            self.config.age_col,
-            self.config.true_label_col,
-            self.config.predicted_label_col,
-        ]
-
-        missing_cols = [col for col in required_cols if col not in first_row]
-        if missing_cols:
-            msg = f"Missing required column(s) in input data: {missing_cols}"
-            if self.config.validation_mode == ValidationMode.STRICT:
-                raise SchemaValidationError(msg)
-            else:
-                summary = ValidationSummary(
-                    total_records_processed=total_count,
-                    valid_records_passed=0,
-                    rejected_records_count=total_count,
-                    issues=[
-                        ValidationIssue(
-                            row_index=None,
-                            image_id=None,
-                            field_name=col,
-                            value=None,
-                            issue_type="missing_column",
-                            message=f"Column {col!r} is missing from dataset",
-                        )
-                        for col in missing_cols
-                    ],
-                    issue_counts_by_type={"missing_column": len(missing_cols)},
-                )
-                return IngestionResult(
-                    records=[],
-                    validation_summary=summary,
-                    cohort_profile=None,
-                )
-
+        # Stage 2: Per-row validation, taxonomy normalisation, dedup
         valid_records: list[SubjectRecord] = []
         issues: list[ValidationIssue] = []
         seen_images: dict[str, tuple[Any, Any, Any, Any, Any]] = {}
         issue_counter: Counter[str] = Counter()
 
         for idx, row in enumerate(resolved_rows):
+            # 2a: Image ID extraction
             row_image_id = row.get(actual_image_col)
             if pd.isna(row_image_id) or str(row_image_id).strip() == "":
                 issue = ValidationIssue(
@@ -298,157 +271,27 @@ class DataIngestionPipeline:
 
             image_id_str = str(row_image_id)
 
-            # Demographic fields extraction
-            raw_race = row.get(self.config.race_col)
-            raw_gender = row.get(self.config.gender_col)
-            raw_age = row.get(self.config.age_col)
-            raw_true = row.get(self.config.true_label_col)
-            raw_pred = row.get(self.config.predicted_label_col)
-
-            # Check for NaN / null values
-            null_fields: list[tuple[str, Any]] = []
-            for fname, fval in [
-                (self.config.race_col, raw_race),
-                (self.config.gender_col, raw_gender),
-                (self.config.age_col, raw_age),
-                (self.config.true_label_col, raw_true),
-                (self.config.predicted_label_col, raw_pred),
-            ]:
-                if pd.isna(fval) or fval is None:
-                    null_fields.append((fname, fval))
-
-            if null_fields:
-                for fn, fv in null_fields:
-                    issue = ValidationIssue(
-                        row_index=idx,
-                        image_id=image_id_str,
-                        field_name=fn,
-                        value=fv,
-                        issue_type="null_value",
-                        message=(
-                            f"Field {fn!r} has null/NaN value for "
-                            f"image {image_id_str!r}"
-                        ),
-                    )
-                    self._handle_issue(issue, issues, issue_counter)
-                continue
-
-            # Check label vocabularies
-            race_str = str(raw_race).strip()
-            gender_str = str(raw_gender).strip()
-            raw_age_str = str(raw_age).strip()
-            age_str = RAW_AGE_LABEL_ALIASES.get(raw_age_str, raw_age_str)
-
-            taxonomy_invalid = False
-            if race_str not in RACE_LABELS:
-                issue = ValidationIssue(
-                    row_index=idx,
-                    image_id=image_id_str,
-                    field_name=self.config.race_col,
-                    value=raw_race,
-                    issue_type="invalid_race_label",
-                    message=(
-                        f"unrecognised race label {raw_race!r} for {image_id_str} — "
-                        f"expected one of {RACE_LABELS} (schema locked at M1)"
-                    ),
-                )
-                self._handle_issue(issue, issues, issue_counter)
-                taxonomy_invalid = True
-
-            if gender_str not in GENDER_LABELS:
-                issue = ValidationIssue(
-                    row_index=idx,
-                    image_id=image_id_str,
-                    field_name=self.config.gender_col,
-                    value=raw_gender,
-                    issue_type="invalid_gender_label",
-                    message=(
-                        f"unrecognised gender label {raw_gender!r} for "
-                        f"{image_id_str} — expected one of {GENDER_LABELS} "
-                        "(schema locked at M1)"
-                    ),
-                )
-                self._handle_issue(issue, issues, issue_counter)
-                taxonomy_invalid = True
-
-            if age_str not in AGE_LABELS:
-                issue = ValidationIssue(
-                    row_index=idx,
-                    image_id=image_id_str,
-                    field_name=self.config.age_col,
-                    value=raw_age,
-                    issue_type="invalid_age_label",
-                    message=(
-                        f"unrecognised age label {raw_age!r} for {image_id_str} — "
-                        f"expected one of {AGE_LABELS} (schema locked at M1)"
-                    ),
-                )
-                self._handle_issue(issue, issues, issue_counter)
-                taxonomy_invalid = True
-
-            if taxonomy_invalid:
-                continue
-
-            # Duplicate image_id check & conflict resolution
-            row_signature = (
-                race_str,
-                gender_str,
-                age_str,
-                str(raw_true),
-                str(raw_pred),
+            # 2b: Per-row field validation and taxonomy normalisation
+            record = self._validate_and_convert_row(
+                idx, row, image_id_str, issues, issue_counter
             )
-            if image_id_str in seen_images:
-                prev_sig = seen_images[image_id_str]
-                if prev_sig == row_signature:
-                    if (
-                        self.config.deduplicate_strategy
-                        == "drop_exact_or_raise_conflicts"
-                    ):
-                        issue = ValidationIssue(
-                            row_index=idx,
-                            image_id=image_id_str,
-                            field_name="image_id",
-                            value=image_id_str,
-                            issue_type="exact_duplicate",
-                            message=(
-                                f"Duplicate record for image_id {image_id_str!r} "
-                                "dropped"
-                            ),
-                            severity=ValidationSeverity.WARNING,
-                        )
-                        issues.append(issue)
-                        issue_counter["exact_duplicate"] += 1
-                        continue
-                    elif self.config.deduplicate_strategy == "drop_duplicates":
-                        continue
-                else:
-                    # Conflicting duplicate
-                    issue = ValidationIssue(
-                        row_index=idx,
-                        image_id=image_id_str,
-                        field_name="image_id",
-                        value=image_id_str,
-                        issue_type="conflicting_duplicate",
-                        message=(
-                            f"Conflicting duplicate records found for "
-                            f"image_id {image_id_str!r}: "
-                            f"original={prev_sig}, duplicate={row_signature}"
-                        ),
-                    )
-                    self._handle_issue(issue, issues, issue_counter)
-                    continue
+            if record is None:
+                continue
+
+            # 2c: Duplicate detection and conflict resolution
+            row_signature = (
+                record.race,
+                record.gender,
+                record.age,
+                record.true_label,
+                record.predicted_label,
+            )
+            if self._check_duplicate(
+                idx, image_id_str, row_signature, seen_images, issues, issue_counter
+            ):
+                continue
 
             seen_images[image_id_str] = row_signature
-
-            # Record is valid
-            record = SubjectRecord(
-                image_id=image_id_str,
-                race=race_str,  # type: ignore[arg-type]
-                gender=gender_str,  # type: ignore[arg-type]
-                age=age_str,  # type: ignore[arg-type]
-                true_label=str(raw_true),
-                predicted_label=str(raw_pred),
-            )
             valid_records.append(record)
 
         summary = ValidationSummary(
@@ -468,6 +311,221 @@ class DataIngestionPipeline:
             validation_summary=summary,
             cohort_profile=profile,
         )
+
+    def _validate_columns(
+        self,
+        first_row: dict[str, Any],
+        total_count: int,
+    ) -> IngestionResult | None:
+        """Validate that all required columns are present in the input data.
+
+        Returns None if columns are valid, or a terminal IngestionResult
+        with the missing-column errors if not.
+        """
+        required_cols = [
+            self.config.race_col,
+            self.config.gender_col,
+            self.config.age_col,
+            self.config.true_label_col,
+            self.config.predicted_label_col,
+        ]
+
+        missing_cols = [col for col in required_cols if col not in first_row]
+        if not missing_cols:
+            return None
+
+        msg = f"Missing required column(s) in input data: {missing_cols}"
+        if self.config.validation_mode == ValidationMode.STRICT:
+            raise SchemaValidationError(msg)
+
+        logger.warning(msg)
+        summary = ValidationSummary(
+            total_records_processed=total_count,
+            valid_records_passed=0,
+            rejected_records_count=total_count,
+            issues=[
+                ValidationIssue(
+                    row_index=None,
+                    image_id=None,
+                    field_name=col,
+                    value=None,
+                    issue_type="missing_column",
+                    message=f"Column {col!r} is missing from dataset",
+                )
+                for col in missing_cols
+            ],
+            issue_counts_by_type={"missing_column": len(missing_cols)},
+        )
+        return IngestionResult(
+            records=[],
+            validation_summary=summary,
+            cohort_profile=None,
+        )
+
+    def _validate_and_convert_row(
+        self,
+        idx: int,
+        row: dict[str, Any],
+        image_id_str: str,
+        issues: list[ValidationIssue],
+        issue_counter: Counter[str],
+    ) -> SubjectRecord | None:
+        """Validate a single row's fields and convert to SubjectRecord.
+
+        Returns None if the row fails validation (null fields or
+        unrecognised taxonomy labels), recording all issues found.
+        """
+        # Extract raw fields
+        raw_race = row.get(self.config.race_col)
+        raw_gender = row.get(self.config.gender_col)
+        raw_age = row.get(self.config.age_col)
+        raw_true = row.get(self.config.true_label_col)
+        raw_pred = row.get(self.config.predicted_label_col)
+
+        # Null / NaN check
+        null_fields: list[tuple[str, Any]] = []
+        for fname, fval in [
+            (self.config.race_col, raw_race),
+            (self.config.gender_col, raw_gender),
+            (self.config.age_col, raw_age),
+            (self.config.true_label_col, raw_true),
+            (self.config.predicted_label_col, raw_pred),
+        ]:
+            if pd.isna(fval) or fval is None:
+                null_fields.append((fname, fval))
+
+        if null_fields:
+            for fn, fv in null_fields:
+                issue = ValidationIssue(
+                    row_index=idx,
+                    image_id=image_id_str,
+                    field_name=fn,
+                    value=fv,
+                    issue_type="null_value",
+                    message=(
+                        f"Field {fn!r} has null/NaN value for image {image_id_str!r}"
+                    ),
+                )
+                self._handle_issue(issue, issues, issue_counter)
+            return None
+
+        # Taxonomy normalisation and validation
+        race_str = str(raw_race).strip()
+        gender_str = str(raw_gender).strip()
+        raw_age_str = str(raw_age).strip()
+        age_str = RAW_AGE_LABEL_ALIASES.get(raw_age_str, raw_age_str)
+
+        taxonomy_invalid = False
+        if race_str not in RACE_LABELS:
+            issue = ValidationIssue(
+                row_index=idx,
+                image_id=image_id_str,
+                field_name=self.config.race_col,
+                value=raw_race,
+                issue_type="invalid_race_label",
+                message=(
+                    f"unrecognised race label {raw_race!r} for {image_id_str} — "
+                    f"expected one of {RACE_LABELS} (schema locked at M1)"
+                ),
+            )
+            self._handle_issue(issue, issues, issue_counter)
+            taxonomy_invalid = True
+
+        if gender_str not in GENDER_LABELS:
+            issue = ValidationIssue(
+                row_index=idx,
+                image_id=image_id_str,
+                field_name=self.config.gender_col,
+                value=raw_gender,
+                issue_type="invalid_gender_label",
+                message=(
+                    f"unrecognised gender label {raw_gender!r} for "
+                    f"{image_id_str} — expected one of {GENDER_LABELS} "
+                    "(schema locked at M1)"
+                ),
+            )
+            self._handle_issue(issue, issues, issue_counter)
+            taxonomy_invalid = True
+
+        if age_str not in AGE_LABELS:
+            issue = ValidationIssue(
+                row_index=idx,
+                image_id=image_id_str,
+                field_name=self.config.age_col,
+                value=raw_age,
+                issue_type="invalid_age_label",
+                message=(
+                    f"unrecognised age label {raw_age!r} for {image_id_str} — "
+                    f"expected one of {AGE_LABELS} (schema locked at M1)"
+                ),
+            )
+            self._handle_issue(issue, issues, issue_counter)
+            taxonomy_invalid = True
+
+        if taxonomy_invalid:
+            return None
+
+        return SubjectRecord(
+            image_id=image_id_str,
+            race=race_str,  # type: ignore[arg-type]
+            gender=gender_str,  # type: ignore[arg-type]
+            age=age_str,  # type: ignore[arg-type]
+            true_label=str(raw_true),
+            predicted_label=str(raw_pred),
+        )
+
+    def _check_duplicate(
+        self,
+        idx: int,
+        image_id_str: str,
+        row_signature: tuple[Any, ...],
+        seen_images: dict[str, tuple[Any, ...]],
+        issues: list[ValidationIssue],
+        issue_counter: Counter[str],
+    ) -> bool:
+        """Check whether a row is a duplicate and handle dedup strategy.
+
+        Returns True if the row should be skipped (exact or conflicting
+        duplicate), False if it should be kept.
+        """
+        if image_id_str not in seen_images:
+            return False
+
+        prev_sig = seen_images[image_id_str]
+        if prev_sig == row_signature:
+            if self.config.deduplicate_strategy == "drop_exact_or_raise_conflicts":
+                issue = ValidationIssue(
+                    row_index=idx,
+                    image_id=image_id_str,
+                    field_name="image_id",
+                    value=image_id_str,
+                    issue_type="exact_duplicate",
+                    message=(f"Duplicate record for image_id {image_id_str!r} dropped"),
+                    severity=ValidationSeverity.WARNING,
+                )
+                issues.append(issue)
+                issue_counter["exact_duplicate"] += 1
+                return True
+            elif self.config.deduplicate_strategy == "drop_duplicates":
+                return True
+        else:
+            # Conflicting duplicate
+            issue = ValidationIssue(
+                row_index=idx,
+                image_id=image_id_str,
+                field_name="image_id",
+                value=image_id_str,
+                issue_type="conflicting_duplicate",
+                message=(
+                    f"Conflicting duplicate records found for "
+                    f"image_id {image_id_str!r}: "
+                    f"original={prev_sig}, duplicate={row_signature}"
+                ),
+            )
+            self._handle_issue(issue, issues, issue_counter)
+            return True
+
+        return False
 
     def _resolve_image_col(self, sample_row: dict[str, Any]) -> str:
         """Resolve image identifier column with alias fallback."""
@@ -523,7 +581,7 @@ class DataIngestionPipeline:
             if rec.age in age_groups:
                 age_groups[rec.age].append(rec)
 
-            inter_key = f"race={rec.race}&gender={rec.gender}"
+            inter_key = format_intersectional_key(race=rec.race, gender=rec.gender)
             intersectional_groups.setdefault(inter_key, []).append(rec)
 
         def _build_stats(
@@ -540,8 +598,8 @@ class DataIngestionPipeline:
                     if str(r.true_label) == str(task_positive_label)
                 )
                 neg_n = n_sub - pos_n
-                has_pos = pos_n >= 5
-                has_neg = neg_n >= 5
+                has_pos = pos_n >= MIN_POSITIVE_SUPPORT
+                has_neg = neg_n >= MIN_POSITIVE_SUPPORT
             else:
                 has_pos = True
                 has_neg = True

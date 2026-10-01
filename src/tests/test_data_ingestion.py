@@ -586,7 +586,7 @@ def test_cohort_profile_contingency_support():
     assert white_stats.has_negative_support is True
     assert white_stats.insufficient_sample_at_ingestion is False
 
-    inter_stats = profile.intersectional_counts["race=White&gender=Female"]
+    inter_stats = profile.intersectional_counts["gender=Female&race=White"]
     assert inter_stats.total_n == 40
     assert inter_stats.is_nfr003_eligible is True
 

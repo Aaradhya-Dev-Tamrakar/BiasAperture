@@ -24,6 +24,7 @@ from pathlib import Path
 
 import numpy as np
 
+from bias_aperture.fairness.base import encode_binary_labels
 from bias_aperture.schema import (
     ALPHA,
     MIN_SUBGROUP_SAMPLE_SIZE,
@@ -59,7 +60,7 @@ class ShapExplainerEngine:
             return False
         if result.subgroup_sample_size < MIN_SUBGROUP_SAMPLE_SIZE:
             return False
-        if result.p_value is not None and result.p_value >= ALPHA:
+        if result.p_value is None or result.p_value >= ALPHA:
             return False
         return True
 
@@ -90,9 +91,8 @@ class ShapExplainerEngine:
             subgroup=result.subgroup,
             metric_name=result.metric_name,
             details=(
-                f"Targeted attribution generated for {result.subgroup} "
-                f"({result.metric_name}) via surrogate diagnostic explainer "
-                "(image-native spatial SHAP is deferred to v2)."
+                "Surrogate explanation unavailable: subject records were not supplied. "
+                "Image-native spatial SHAP is deferred to v2."
             ),
         )
 
@@ -114,7 +114,9 @@ class ShapExplainerEngine:
             r_list = [r.race for r in records]
             g_list = [r.gender for r in records]
             a_list = [r.age for r in records]
-            y_pred = np.array([1 if r.predicted_label == "1" else 0 for r in records])
+            _, y_pred = encode_binary_labels(
+                [r.true_label for r in records], [r.predicted_label for r in records]
+            )
 
             df = pd.DataFrame({"race": r_list, "gender": g_list, "age": a_list})
             df_dummies = pd.get_dummies(df, drop_first=False)
@@ -155,7 +157,9 @@ class ShapExplainerEngine:
                 feature_attributions=sorted_attr,
                 details=(
                     f"Surrogate Shapley attribution computed across {len(records)} "
-                    f"subjects for {result.subgroup}."
+                    f"subjects for {result.subgroup}. These demographic surrogate "
+                    "associations summarize prediction log-odds across the full audit; "
+                    "they do not explain images, causation, or the disparity itself."
                 ),
             )
         except Exception as exc:
@@ -163,7 +167,7 @@ class ShapExplainerEngine:
             return ExplanationResult(
                 subgroup=result.subgroup,
                 metric_name=result.metric_name,
-                details=f"Targeted attribution generated for {result.subgroup}.",
+                details=f"Surrogate explanation unavailable: {exc}",
             )
 
 
