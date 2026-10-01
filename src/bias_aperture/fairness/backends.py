@@ -27,6 +27,7 @@ from bias_aperture.fairness.base import (
     EligibilityReport,
     FairnessBackend,
     eligible_groups,
+    encode_binary_labels,
 )
 from bias_aperture.fairness.metrics import (
     compute_group_rates,
@@ -455,11 +456,11 @@ def _build_core_metric_results(
     return adjust_family_pvalues(results)
 
 
-# ── Native Pure-Math / Fairlearn Backend ──────────────────────────────
+# ── Native Fairlearn Backend ─────────────────────────────────────────
 
 
 class FairlearnBackend(FairnessBackend):
-    """Fairness backend utilizing Fairlearn-aligned metric definitions."""
+    """Native Fairlearn group rates with shared statistics and row assembly."""
 
     @property
     def name(self) -> str:
@@ -474,7 +475,39 @@ class FairlearnBackend(FairnessBackend):
         n_bootstrap_resamples: int = 1000,
     ) -> list[MetricResult]:
         """Compute Core Four metrics with statistical confidence bounds."""
-        group_rates = compute_group_rates(y_true, y_pred, sensitive)
+        try:
+            from fairlearn.metrics import (
+                MetricFrame,
+                false_positive_rate,
+                selection_rate,
+                true_positive_rate,
+            )
+        except ImportError as exc:
+            raise RuntimeError(
+                "Fairlearn is unavailable. Install bias_aperture[fairness] "
+                "or use uv run --extra fairness."
+            ) from exc
+
+        frame = MetricFrame(
+            metrics={
+                "selection_rate": selection_rate,
+                "tpr": true_positive_rate,
+                "fpr": false_positive_rate,
+            },
+            y_true=y_true,
+            y_pred=y_pred,
+            sensitive_features=sensitive,
+        )
+        group_rates = {
+            str(g): {
+                "selection_rate": float(row["selection_rate"]),
+                # Fairlearn returns zero for absent conditional support;
+                # the canonical adapter contract represents it as unavailable.
+                "tpr": float(row["tpr"]) if eligibility[str(g)].n_pos else None,
+                "fpr": float(row["fpr"]) if eligibility[str(g)].n_neg else None,
+            }
+            for g, row in frame.by_group.iterrows()
+        }
         return _build_core_metric_results(
             y_true,
             y_pred,
@@ -663,6 +696,7 @@ class CrossValidationOrchestrator:
             self.backends = list(backends)
         self.tolerance_difference = tolerance_difference
         self.tolerance_ratio = tolerance_ratio
+        self.backend_failures: dict[str, str] = {}
 
     def run(
         self,
@@ -686,8 +720,15 @@ class CrossValidationOrchestrator:
         tuple[list[MetricResult], list[DivergenceAlert]]
             (canonical_results, divergence_alerts).
         """
+        self.backend_failures = {}
         if not self.backends:
             return [], []
+
+        # Validate outside backend failure isolation: invalid task input must
+        # propagate to the caller rather than become an empty success report.
+        encode_binary_labels(
+            [r.true_label for r in records], [r.predicted_label for r in records]
+        )
 
         backend_results: dict[str, list[MetricResult]] = {}
         for b in self.backends:
@@ -697,12 +738,27 @@ class CrossValidationOrchestrator:
                     protected_attr,
                     n_bootstrap_resamples=n_bootstrap_resamples,
                 )
+                unavailable = [
+                    r.adjustment_method
+                    for r in backend_results[b.name]
+                    if "unavailable" in (r.adjustment_method or "")
+                ]
+                if unavailable:
+                    self.backend_failures[b.name] = str(unavailable[0])
             except Exception as exc:
                 logger.error("Backend %s failed during evaluation: %s", b.name, exc)
+                self.backend_failures[b.name] = str(exc)
                 backend_results[b.name] = []
 
         canonical_backend = self.backends[0].name
         canonical_results = backend_results.get(canonical_backend, [])
+        if not canonical_results or any(
+            "unavailable" in (r.adjustment_method or "") for r in canonical_results
+        ):
+            raise RuntimeError(
+                f"Canonical backend {canonical_backend} is unavailable; "
+                "no audit report can be produced. Check dependencies and backend logs."
+            )
         divergences: list[DivergenceAlert] = self._detect_divergences(backend_results)
 
         return canonical_results, divergences

@@ -25,7 +25,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from bias_aperture.data_ingestion import DataIngestionPipeline, IngestionConfig
-from bias_aperture.explainability import ShapExplainerEngine
+from bias_aperture.explainability import ExplanationResult, ShapExplainerEngine
 from bias_aperture.fairness import (
     AIF360Backend,
     CrossValidationOrchestrator,
@@ -129,9 +129,10 @@ class AuditPipeline:
             logger.warning("%d cross-backend divergences detected.", len(divergences))
 
         # 3. Conditional Explainability
-        explained_count = 0
+        explanations: list[ExplanationResult] = []
         if explain:
-            explained_count = self._run_explainability(metrics, records)
+            explanations = self._run_explainability(metrics, records)
+        explained_count = sum(bool(e.feature_attributions) for e in explanations)
 
         # 4. Report Generation
         saved_path: Path | None = None
@@ -143,6 +144,19 @@ class AuditPipeline:
                 model_name,
                 dataset_name,
                 protected_attr,
+                explanations,
+                backend,
+                (
+                    "Cross-library validation incomplete. Unavailable backend(s): "
+                    + ", ".join(orchestrator.backend_failures)
+                    if orchestrator.backend_failures
+                    else (
+                        f"Both backend executions completed; {len(divergences)} "
+                        "point-estimate discrepancies detected."
+                        if backend == "dual"
+                        else "Single backend execution; no cross-library validation."
+                    )
+                ),
             )
 
         return AuditResult(
@@ -167,17 +181,17 @@ class AuditPipeline:
     def _run_explainability(
         metrics: list[MetricResult],
         records: list,
-    ) -> int:
-        """Run conditional SHAP explainability on flagged disparities."""
+    ) -> list[ExplanationResult]:
+        """Retain surrogate associations and unavailable statuses for reporting."""
         logger.info(
-            "Running conditional SHAP explainability engine on flagged disparities..."
+            "Running demographic surrogate attribution on flagged disparities..."
         )
         explainer = ShapExplainerEngine()
-        explained_count = 0
+        explanations = []
         for m in metrics:
             if explainer.should_explain(m):
                 exp_res = explainer.explain_disparity(m, records=records)
-                explained_count += 1
+                explanations.append(exp_res)
                 if exp_res.feature_attributions:
                     top_feat = list(exp_res.feature_attributions.items())[0]
                     logger.info(
@@ -187,11 +201,12 @@ class AuditPipeline:
                         top_feat[0],
                         top_feat[1],
                     )
+        explained_count = sum(bool(e.feature_attributions) for e in explanations)
         logger.info(
             "Generated targeted attributions for %d statistically flagged disparities.",
             explained_count,
         )
-        return explained_count
+        return explanations
 
     @staticmethod
     def _generate_report(
@@ -201,6 +216,9 @@ class AuditPipeline:
         model_name: str,
         dataset_name: str,
         protected_attr: str,
+        explanations: list[ExplanationResult],
+        backend: str,
+        backend_status: str,
     ) -> Path:
         """Compile and save the offline compliance report."""
         logger.info("Compiling offline compliance report to: %s...", output_report)
@@ -210,6 +228,9 @@ class AuditPipeline:
             dataset_name=dataset_name,
             protected_axis=protected_attr,
             total_subjects=len(records),
+            explanations=explanations,
+            backend=backend,
+            backend_status=backend_status,
         )
         generator = HTMLReportGenerator()
         saved_path = generator.save(context, output_report)
@@ -309,10 +330,10 @@ def _add_audit_arguments(parser: argparse.ArgumentParser) -> None:
     )
     parser.add_argument(
         "--explain",
-        action="store_true",
+        action=argparse.BooleanOptionalAction,
         default=True,
         help=(
-            "Enable conditional SHAP / surrogate explainability on flagged "
+            "Enable demographic surrogate attribution on flagged "
             "disparities (default: True)."
         ),
     )
@@ -380,21 +401,25 @@ def main(argv: list[str] | None = None) -> int:
     logger.info("=" * 60)
 
     pipeline = AuditPipeline()
-    result = pipeline.run(
-        predictions_file=pred_file,
-        true_label_col=args.true_label_col,
-        predicted_label_col=args.predicted_label_col,
-        race_col=args.race_col,
-        gender_col=args.gender_col,
-        age_col=args.age_col,
-        protected_attr=args.protected_attr,
-        backend=args.backend,
-        bca_resamples=args.bca_resamples,
-        output_report=args.output_report,
-        model_name=args.model_name,
-        dataset_name=args.dataset_name,
-        explain=args.explain,
-    )
+    try:
+        result = pipeline.run(
+            predictions_file=pred_file,
+            true_label_col=args.true_label_col,
+            predicted_label_col=args.predicted_label_col,
+            race_col=args.race_col,
+            gender_col=args.gender_col,
+            age_col=args.age_col,
+            protected_attr=args.protected_attr,
+            backend=args.backend,
+            bca_resamples=args.bca_resamples,
+            output_report=args.output_report,
+            model_name=args.model_name,
+            dataset_name=args.dataset_name,
+            explain=args.explain,
+        )
+    except (ValueError, RuntimeError) as exc:
+        logger.error("Audit failed: %s", exc)
+        return 1
 
     if result.records_ingested == 0:
         return 1

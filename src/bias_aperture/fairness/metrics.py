@@ -171,8 +171,10 @@ def compute_group_rates(
         TPR/FPR are ``None`` when the denominator is zero (no
         positive or negative ground-truth samples in that group).
     """
-    y_true = np.asarray(y_true, dtype=int)
-    y_pred = np.asarray(y_pred, dtype=int)
+    y_true = np.asarray(y_true)
+    y_pred = np.asarray(y_pred)
+    if not np.isin(y_true, [0, 1]).all() or not np.isin(y_pred, [0, 1]).all():
+        raise ValueError("Group rates require encoded binary labels (0 or 1).")
     sensitive = np.asarray(sensitive)
 
     groups: dict[str, dict[str, float | int]] = {}

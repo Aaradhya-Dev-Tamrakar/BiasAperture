@@ -65,6 +65,37 @@ class EligibilityReport:
 _MIN_SUPPORT: int = MIN_POSITIVE_SUPPORT
 
 
+def encode_binary_labels(
+    y_true: Sequence,
+    y_pred: Sequence,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Encode the shared task vocabulary, rejecting unsupported multiclass tasks.
+
+    Preserve the historical default: the sorted second label is positive
+    (therefore 1 for 0/1, Male for Female/Male). A sole 1/True label is
+    positive; any other sole label is negative. Inspect truth AND predictions
+    so an unexpected prediction cannot silently enter a binary calculation.
+    """
+    truth, predictions = np.asarray(y_true), np.asarray(y_pred)
+    labels = sorted(set(truth) | set(predictions))
+    if len(labels) > 2:
+        raise ValueError(
+            f"Binary audits support at most two task labels; found {len(labels)}. "
+            "General multiclass One-vs-Rest auditing is not implemented. "
+            "Provide a binary task with matching truth and prediction labels."
+        )
+    if len(labels) == 2:
+        mapping = {labels[0]: 0, labels[1]: 1}
+    elif labels:
+        mapping = {labels[0]: int(labels[0] in ("1", 1, True, "True", "true"))}
+    else:
+        mapping = {}
+    return (
+        np.array([mapping[v] for v in truth], dtype=int),
+        np.array([mapping[v] for v in predictions], dtype=int),
+    )
+
+
 def screen_subgroups(
     records: Sequence[SubjectRecord],
     protected_attr: str,
@@ -288,29 +319,7 @@ class FairnessBackend(abc.ABC):
         else:
             sensitive = np.array([getattr(r, protected_attr) for r in records])
 
-        # For binary evaluation, encode string labels to 0/1 integers
-        unique_labels = sorted(set(y_true) | set(y_pred))
-        if len(unique_labels) == 1:
-            val = unique_labels[0]
-            # If label is already "1" or "0"
-            int_val = 1 if val in ("1", 1, True, "True", "true") else 0
-            y_true_bin = np.full(len(y_true), int_val, dtype=int)
-            y_pred_bin = np.full(len(y_pred), int_val, dtype=int)
-        elif len(unique_labels) == 2:
-            label_map = {unique_labels[0]: 0, unique_labels[1]: 1}
-            # Special case if labels are {"0", "1"}
-            if set(unique_labels) == {"0", "1"}:
-                label_map = {"0": 0, "1": 1}
-            y_true_bin = np.array([label_map[v] for v in y_true], dtype=int)
-            y_pred_bin = np.array([label_map[v] for v in y_pred], dtype=int)
-        else:
-            # Multi-class string labels
-            try:
-                y_true_bin = np.array(y_true, dtype=int)
-                y_pred_bin = np.array(y_pred, dtype=int)
-            except (ValueError, TypeError):
-                y_true_bin = y_true
-                y_pred_bin = y_pred
+        y_true_bin, y_pred_bin = encode_binary_labels(y_true, y_pred)
 
         # NFR-003 screening
         eligibility = screen_numeric_groups(y_true_bin, y_pred_bin, sensitive)

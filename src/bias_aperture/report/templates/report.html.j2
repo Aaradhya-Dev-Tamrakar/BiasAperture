@@ -468,6 +468,27 @@
             {% endif %}
         </div>
 
+        {% if context.explanations %}
+        <div class="section-card">
+            <h2>Demographic Surrogate Associations</h2>
+            <p>These associations describe a surrogate fitted to predictions across the full audit. They do not establish causation or explain individual images or disparity metrics. Image-native SHAP is deferred.</p>
+            {% for explanation in context.explanations %}
+            <h3>{{ explanation.subgroup }} — {{ explanation.metric_name }}</h3>
+            <p>{{ explanation.details }}</p>
+            {% if explanation.feature_attributions %}
+            <table>
+                <thead><tr><th>Demographic feature</th><th>Mean absolute contribution to surrogate log-odds</th></tr></thead>
+                <tbody>
+                {% for feature, value in explanation.feature_attributions.items() %}
+                <tr><td>{{ feature }}</td><td>{{ "%.4f" | format(value) }}</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+
         <!-- 3. Model Card & Dataset Datasheet (Mitchell / Gebru) -->
         <div class="section-card">
             <h2>3. Governance Documentation & Intended Use</h2>
@@ -476,7 +497,8 @@
                 This audit dossier provides verifiable diagnostic documentation of demographic performance disparities. It does not perform model retraining or in-situ weight modifications.
             </div>
             <p><strong>Model Description:</strong> {{ context.model_description }}</p>
-            <p><strong>Evaluation Protocol:</strong> Standalone offline evaluation using dual-backend cross-validation (Fairlearn + AIF360) and 1,000-resample stratified BCa bootstrap estimation.</p>
+            <p><strong>Backend configuration:</strong> {{ context.backend }}. {{ context.backend_status }}</p>
+            <p>Cross-backend agreement checks point estimates only; bootstrap, hypothesis tests, and reporting share implementation. Consult execution logs for backend failures and divergences.</p>
         </div>
 
         <footer>

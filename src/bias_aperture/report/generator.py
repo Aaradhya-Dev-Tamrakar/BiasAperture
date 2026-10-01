@@ -17,6 +17,7 @@ from typing import Any
 
 from jinja2 import Environment, FileSystemLoader
 
+from bias_aperture.explainability import ExplanationResult
 from bias_aperture.schema import ALPHA, MetricResult
 
 # Static regulatory mapping table (Claim Ledger R-017, R-018)
@@ -49,6 +50,9 @@ class ReportContext:
     regulatory_map: dict[str, str] = field(
         default_factory=lambda: dict(REGULATORY_MAPPING)
     )
+    explanations: Sequence[ExplanationResult] = field(default_factory=list)
+    backend: str = "unspecified"
+    backend_status: str = "Execution status was not supplied."
 
 
 # ── Report Analytical Helpers (R12) ──────────────────────────────────

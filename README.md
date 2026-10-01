@@ -16,7 +16,7 @@ Facial analysis systems deployed in commercial and public domains frequently exh
 
 BiasAperture addresses these challenges through a non-invasive, diagnostic pipeline:
 
-- **Dual-Backend Verification**: Evaluates foundational fairness metrics across two independent libraries—**Fairlearn** and **AIF360**—reconciling differences in sign conventions, boundary handling, and multi-class formulations to eliminate single-library implementation bias.
+- **Dual-Backend Verification**: Obtains binary group-rate primitives from **Fairlearn** and **AIF360** and compares canonical unsigned disparities. Agreement checks point estimates; bootstrap, hypothesis tests, and report code are shared and are not independently cross-validated.
 - **Statistical Inference & Safeguards**: Couples every disparity metric with a 95% BCa Bootstrap Confidence Interval ($B \ge 1,000$), Pearson's $\chi^2$ test of independence (with Fisher's exact test fallback for sparse contingency tables), and automated suppression guards for underrepresented cohorts ($n < 30$).
 - **Surrogate Attribution**: Pinpoints key demographic attributes and potential proxy features that contribute to statistically flagged performance gaps.
 - **Offline Compliance Reporting**: Compiles comprehensive, standalone HTML audit reports with inline vector visualizations and metadata cards, fully compatible with air-gapped evaluation environments.
@@ -74,7 +74,7 @@ flowchart TD
 | **Schema & Contracts** | `src/bias_aperture/schema.py` | Locked data models, demographic taxonomies, and metric container definitions. |
 | **Data Ingestion** | `src/bias_aperture/data_ingestion.py` | Column alias mapping, demographic validation, missing value handling, and cohort support profiling. |
 | **Model Interface** | `src/bias_aperture/model_interface.py` | Prediction ingestion contracts supporting batch CSV/JSON formats and extensible model abstractions. |
-| **Fairness Metrics** | `src/bias_aperture/fairness/` | Dual-backend strategy pattern cross-validating Core Four metrics with One-vs-Rest multi-class decomposition. |
+| **Fairness Metrics** | `src/bias_aperture/fairness/` | Dual-backend strategy pattern cross-validating binary Core Four metrics; general multiclass auditing is deferred. |
 | **Statistical Analysis** | `src/bias_aperture/fairness/statistics.py` | BCa bootstrap confidence intervals, chi-square and Fisher's exact tests, and backend divergence checks. |
 | **Explainability** | `src/bias_aperture/explainability.py` | Surrogate feature attribution on statistically flagged disparities to identify influential demographic axes. |
 | **Report Generation** | `src/bias_aperture/report/` | Offline Jinja2 HTML report generator embedding interactive CSS, vector charts, and regulatory matrices. |
@@ -127,12 +127,29 @@ uv run --extra dev ruff format --check src/
 
 The framework is driven by the `bias-aperture` command-line utility.
 
+Install the fairness extra for either backend (`uv sync --extra fairness` or
+`pip install '.[fairness]'`). The examples explicitly select that extra.
+The task vocabulary is the union of truth and prediction labels and must contain
+at most two distinct values. The sorted second label is positive: `1` for `0/1`
+and `Male` for `Female/Male`. For a single observed label, `1`/`True` is positive;
+other sole labels are negative. General multiclass One-vs-Rest is not implemented
+and fails before a report is produced. Protected groups can still have many labels.
+
+Demographic surrogate associations run by default for significant, eligible
+disparities. Use `--no-explain` to skip them (`--explain` enables them explicitly).
+Generated reports retain attribution values and unavailable statuses. These
+full-audit associations concern surrogate prediction log-odds, not causal drivers
+of the disparity or image-level explanations; image-native SHAP remains deferred.
+If the canonical backend fails, the CLI exits unsuccessfully and writes no report.
+A secondary-backend failure is flagged in both logs and the report as incomplete
+cross-library validation.
+
 ### Running a Single-Axis Bias Audit
 
 Audit model predictions across a single demographic axis (e.g., race) with dual-backend validation and 1,000 bootstrap resamples:
 
 ```bash
-uv run bias-aperture audit \
+uv run --extra fairness bias-aperture audit \
   -i data/processed/fairface_predictions_val.csv \
   -a race \
   --true-label-col true_gender \
@@ -150,7 +167,7 @@ uv run bias-aperture audit \
 Audit compound demographic intersections (e.g., race $\times$ gender) to uncover compounding bias patterns:
 
 ```bash
-uv run bias-aperture audit \
+uv run --extra fairness bias-aperture audit \
   -i data/processed/fairface_predictions_val.csv \
   -a race_gender \
   --true-label-col true_gender \
