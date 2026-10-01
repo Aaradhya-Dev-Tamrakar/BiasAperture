@@ -1,9 +1,9 @@
-# Claude Instructions — BiasAperture
+# Gemini Instructions — BiasAperture
 
 Please strictly follow the universal project context defined in:
 @AGENTS.md
 
-## Claude-Specific Rules & Directives
+## Gemini-Specific Rules & Directives
 - **CRITICAL**: You must read and strictly adhere to the universal core guidelines located in `./AGENTS.md` before processing any tasks.
 - All architecture specifications, locked M1 schema taxonomies, NumPy docstring standards, and testing workflows defined in `@AGENTS.md` are authoritative.
 - **Testing & Verification**: Always run the complete test suite via `uv run --extra dev pytest` and linting via `uv run --extra dev ruff check src/`.
