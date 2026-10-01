@@ -268,4 +268,35 @@ research/results/exploration_report.txt
 research/exploration_reports/
 *.dat
 
+# Knowledge graph and dev logs
+graphify-out/
+dev-logs/
+
+# OS-generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Editor & IDE swap/temporary files
+*.swp
+*.swo
+*~
+*.tmp
+*.bak
+
+# Local AI agent sessions & scratch directories
+.agents/
+.claude/
+.cursor/
+.codex/
+scratch/
+temp/
+tmp/
+
+
 
