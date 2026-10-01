@@ -1,33 +1,44 @@
-# Data Directory Layout
+# Dataset Management & Setup
 
-This directory manages datasets and precomputed test matrices for BiasAperture.
+This directory contains instructions and metadata for datasets and precomputed test matrices used by BiasAperture.
 
-> **Note**: Actual image datasets, zip archives, and large prediction files are gitignored and must not be committed to version control.
+> **Note**: Raw image archives and large inference files are excluded from version control via `.gitignore`. Follow the instructions below to download and place datasets locally.
 
 ---
 
-## Directory Structure
+## Directory Layout
 
 ```
 data/
-├── fairface-img-margin025-trainval/  # FairFace images and official label CSVs
-│   ├── data/             # fairface_label_{train,val}.csv
-│   └── faces/            # margin025 train/val images
-└── processed/           # Schema-aligned test matrices and stratified subsets
-    ├── fairface_predictions_val.csv    # ✅ Verified validation inference output (10,954 records)
-    └── fairface_dev_5000.csv           # Stratified development subset (n=5,000)
+├── fairface-img-margin025-trainval/  # FairFace benchmark images and official annotations
+│   ├── data/                         # fairface_label_{train,val}.csv
+│   └── faces/                        # margin025 train and val image crops
+└── processed/                        # Precomputed prediction matrices and test splits
+    ├── fairface_predictions_val.csv  # Validation inference baseline (10,954 records)
+    └── fairface_dev_5000.csv         # Stratified development subset (n=5,000)
 ```
 
 ---
 
-## Sourcing the FairFace Benchmark (FR-001)
+## FairFace Benchmark Setup
 
-1. **Images & Labels**: Sourced from the official repository [`joojs/fairface`](https://github.com/joojs/fairface) (also `dchen236/FairFace`).
-   - Dataset count: 97,698 released images on disk (86,744 train, 10,954 val; 108,501 was the pre-annotation discard total).
-   - Padding/Margin: `0.25` (`margin025` aligned crop variant).
-   - Preprocessing: `dlib` CNN face detector + 5-point landmark alignment (`get_face_chips(size=300, padding=0.25)`), resized to 224×224 and normalized with ImageNet mean/std.
-   - Label taxonomy: 7 races (`White`, `Black`, `Latino_Hispanic`, `East Asian`, `Southeast Asian`, `Indian`, `Middle Eastern`), 2 genders (`Male`, `Female`), 9 age groups (`0-2`, `3-9`, `10-19`, `20-29`, `30-39`, `40-49`, `50-59`, `60-69`, `70+`).
-2. **Classifier Baseline Weights (WBS 1.2)**:
-   - Default Checkpoint: `fairface_alldata_20191111.pt` (ResNet-34, 18-unit head, 7-race multi-task; loaded by default in `predict.py`).
-   - Alternative Checkpoint: `res34_fair_align_multi_7_20190809.pt` (older variant).
-   - Inference script: `scripts/run_fairface_inference.py`.
+BiasAperture uses the **FairFace** benchmark (Kärkkäinen & Joo, 2021) as its primary evaluation dataset for auditing demographic bias in facial analysis models.
+
+### 1. Sourcing Images & Annotations
+
+- **Official Repository**: [FairFace on GitHub](https://github.com/joojs/fairface) (also available via `dchen236/FairFace`)
+- **Dataset Size**: 97,698 released images (86,744 training images, 10,954 validation images)
+- **Crop Variant**: `margin025` (0.25 padding around facial bounding box)
+- **Preprocessing Pipeline**: `dlib` 5-point facial landmark alignment (`get_face_chips(size=300, padding=0.25)`), resized to 224×224 pixels and normalized with ImageNet statistics (mean `[0.485, 0.456, 0.406]`, std `[0.229, 0.224, 0.225]`).
+
+### 2. Demographic Taxonomies
+
+- **Race (7 categories)**: `White`, `Black`, `Latino_Hispanic`, `East Asian`, `Southeast Asian`, `Indian`, `Middle Eastern`
+- **Gender (2 categories)**: `Male`, `Female`
+- **Age (9 intervals)**: `0-2`, `3-9`, `10-19`, `20-29`, `30-39`, `40-49`, `50-59`, `60-69`, `70+`
+
+### 3. Baseline Classifier Weights
+
+For generating baseline prediction matrices:
+- **Default Checkpoint**: `fairface_alldata_20191111.pt` (ResNet-34 multi-task architecture with an 18-unit output head for race, gender, and age classification).
+- **Inference Script**: Run `scripts/run_fairface_inference.py` to produce model prediction CSVs for input into `bias-aperture audit`.

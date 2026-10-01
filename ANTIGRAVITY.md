@@ -12,6 +12,7 @@ This file provides specialized context and execution instructions for **Google D
 - **Primary References**:
   - `docs/BiasAperture-AT.md` (Master planning and trait-based task breakdown)
   - `docs/schema-lock-m1.md` (Locked M1 schema reference)
+  - `docs/NOTEBOOKS.md` (Google NotebookLM & Gemini research workspaces)
   - `docs/literature-review-matrix.md` (9 foundational research papers)
   - `docs/research/` (`HIGH_LEVEL_SYNTHESIS.md`, `MID_LEVEL_ARCHITECTURE.md`, `LOW_LEVEL_SPECIFICATION.md`)
   - `report/src/chapters/systemArchitectureAndMethodology.tex` (Architecture, WBS, and Cut-List)

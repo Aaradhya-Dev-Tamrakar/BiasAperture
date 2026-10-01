@@ -386,9 +386,12 @@ else {
 }
 
 $branch = git rev-parse --abbrev-ref HEAD
-& git.exe pull --autostash --rebase $originRemote $branch
-if ($LASTEXITCODE -ne 0) {
-    throw "Failed to pull and rebase [$branch] from [$originRemote]. Resolve the pull conflict or remote error before pushing."
+$remoteRefExists = git ls-remote --heads $originRemote $branch
+if ($remoteRefExists) {
+    & git.exe pull --autostash --rebase $originRemote $branch
+    if ($LASTEXITCODE -ne 0) {
+        throw "Failed to pull and rebase [$branch] from [$originRemote]. Resolve the pull conflict or remote error before pushing."
+    }
 }
 Push-AllRemotes -Branch $branch
 Sync-AllOriginBranches
