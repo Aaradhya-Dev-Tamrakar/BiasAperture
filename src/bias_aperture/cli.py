@@ -25,7 +25,13 @@ from bias_aperture.report import HTMLReportGenerator, ReportContext
 
 
 def _add_audit_arguments(parser: argparse.ArgumentParser) -> None:
-    """Configure arguments for the audit command."""
+    """Configure arguments for the audit command.
+
+    Parameters
+    ----------
+    parser : argparse.ArgumentParser
+        Target argument parser instance to populate with CLI flags.
+    """
     parser.add_argument(
         "--predictions-file",
         "-i",
@@ -123,7 +129,13 @@ def _add_audit_arguments(parser: argparse.ArgumentParser) -> None:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    """Construct CLI argument parser supporting both flat and subcommand invocation."""
+    """Construct CLI argument parser supporting both flat and subcommand invocation.
+
+    Returns
+    -------
+    argparse.ArgumentParser
+        Configured argument parser instance with audit subparser attached.
+    """
     parser = argparse.ArgumentParser(
         prog="bias-aperture",
         description=(
@@ -143,7 +155,18 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
-    """Main CLI entrypoint."""
+    """Main CLI entrypoint for BiasAperture diagnostic audits.
+
+    Parameters
+    ----------
+    argv : list[str] or None, default=None
+        Command-line arguments. If None, defaults to ``sys.argv[1:]``.
+
+    Returns
+    -------
+    int
+        Process exit code (0 for success, non-zero for audit or validation error).
+    """
     if argv is None:
         argv = sys.argv[1:]
 

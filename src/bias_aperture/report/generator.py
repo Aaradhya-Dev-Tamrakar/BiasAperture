@@ -30,7 +30,27 @@ REGULATORY_MAPPING: dict[str, str] = {
 
 @dataclass(frozen=True, slots=True)
 class ReportContext:
-    """Aggregated context data model for report generation."""
+    """Aggregated context data model for report generation.
+
+    Attributes
+    ----------
+    metrics : Sequence[MetricResult]
+        Collection of disparity metric results produced by the detection engine.
+    model_name : str, default="FairFace ResNet-34 Multi-Task Classifier"
+        Audited model display name.
+    dataset_name : str, default="FairFace Benchmark (7-Race)"
+        Audited benchmark dataset identifier.
+    protected_axis : str, default="race"
+        Primary protected demographic axis evaluated.
+    total_subjects : int, default=0
+        Total sample count in the audited cohort.
+    model_description : str
+        Summary of model architecture and inference heads.
+    timestamp : str
+        UTC execution timestamp string.
+    regulatory_map : dict[str, str]
+        Mapping from metric names to corresponding legal/regulatory articles.
+    """
 
     metrics: Sequence[MetricResult]
     model_name: str = "FairFace ResNet-34 Multi-Task Classifier"
@@ -52,7 +72,14 @@ class ReportContext:
 
 
 class HTMLReportGenerator:
-    """Standalone HTML compliance report compiler."""
+    """Standalone HTML compliance report compiler.
+
+    Parameters
+    ----------
+    template_dir : Path or None, default=None
+        Filesystem path to Jinja2 report templates directory. If None, resolves
+        to the bundled ``templates`` package directory.
+    """
 
     def __init__(self, template_dir: Path | None = None) -> None:
         if template_dir is None:
@@ -64,7 +91,19 @@ class HTMLReportGenerator:
         )
 
     def _prepare_template_context(self, context: ReportContext) -> dict[str, Any]:
-        """Format metrics into structured presentation dictionaries."""
+        """Format metrics into structured presentation dictionaries.
+
+        Parameters
+        ----------
+        context : ReportContext
+            Audit configuration and evaluated metric results.
+
+        Returns
+        -------
+        dict[str, Any]
+            Processed template context dictionary containing summary cards,
+            subgroup matrices, and executive statistics.
+        """
         summary_metrics = [m for m in context.metrics if m.subgroup == "ALL"]
         subgroup_metrics = [m for m in context.metrics if m.subgroup != "ALL"]
 

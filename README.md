@@ -175,12 +175,14 @@ BiasAperture/
 │   │   └── report/             # Compliance report generation package (WP3)
 │   │       ├── generator.py    # Standalone HTML report compiler
 │   │       └── templates/      # Offline Jinja2 report templates (report.html.j2)
-│   └── tests/                  # Pytest test suite (78 unit & integration tests)
+│   └── tests/                  # Pytest test suite (85 unit & integration tests)
 ├── sync.ps1                    # Multi-remote synchronization & commit automation script
+├── sync.bat                    # Windows companion wrapper for friction-free execution
 ├── LICENSE                     # MIT License
-├── AGENT.md                    # Universal AI agent & developer guidelines
-├── CLAUDE.md                   # Assistant instructions for Claude
-├── ANTIGRAVITY.md              # Assistant instructions for Antigravity & Gemini
+├── AGENTS.md                   # Universal developer & AI agent guidelines (canonical)
+├── AGENT.md                    # Compatibility pointer to AGENTS.md
+├── CLAUDE.md                   # Assistant pointer to AGENTS.md
+├── ANTIGRAVITY.md              # Assistant pointer to AGENTS.md
 └── README.md                   # Primary project overview and documentation
 ```
 
@@ -189,7 +191,7 @@ BiasAperture/
 ## Project Progress & Roadmap
 
 ```
-Overall Progress: [███████████████████░] 95% (Milestones M1–M4 Complete · 78/78 Tests Passing · M5 Active at 95%)
+Overall Progress: [███████████████████░] 95% (Milestones M1–M4 Complete · 85/85 Tests Passing · M5 Active at 95%)
 ```
 
 | Work Package / Milestone                             | Stream / Focus            |  Status   |           Progress            | Deliverables & Implementation State                                                                                                                                                                         |

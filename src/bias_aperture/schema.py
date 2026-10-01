@@ -81,20 +81,25 @@ MIN_BOOTSTRAP_RESAMPLES: int = 1_000
 
 @dataclass(frozen=True, slots=True)
 class SubjectRecord:
-    """
-    One row of the common internal schema (FR-001) after ingestion and
-    inference — one face image, its demographic annotation, and the
-    audited model's prediction for it.
+    """One row of the common internal schema (FR-001) after ingestion and inference.
 
-    Field set locked at M1:
-        image_id, race, gender, age  — demographic annotation, aligned
-            into this schema regardless of source dataset (FairFace or
-            UTKFace) or custom-dataset field names (FR-001).
-        true_label, predicted_label  — ground-truth and model-predicted
-            values for whatever downstream task is being audited (e.g.
-            gender classification as the audited task, with race/age as
-            the protected subgroup axes — task label semantics are
-            audit-specific and not fixed by this schema).
+    Captures one face image, its demographic annotation, and the audited model's
+    prediction for it.
+
+    Attributes
+    ----------
+    image_id : str
+        Unique identifier or filepath of the evaluated image.
+    race : RaceLabel
+        Demographic race annotation conforming to the locked 7-category taxonomy.
+    gender : GenderLabel
+        Demographic gender annotation conforming to the locked 2-category taxonomy.
+    age : AgeLabel
+        Demographic age group annotation conforming to the locked 9-bucket taxonomy.
+    true_label : str
+        Ground-truth label for the audited downstream classification task.
+    predicted_label : str
+        Model-predicted label for the audited downstream classification task.
     """
 
     image_id: str
@@ -107,16 +112,38 @@ class SubjectRecord:
 
 @dataclass(frozen=True, slots=True)
 class MetricResult:
-    """
-    One row of the detection engine's output (FR-003/FR-004), the shape
-    Stream B's report template (WP3) is built against from week one so
-    that WP5's mock-to-real swap is mechanical.
+    """One row of the detection engine's output (FR-003/FR-004).
 
     Field set locked at M1: metric name, point estimate, confidence
-    bounds, p-value, subgroup sample size — plus the subgroup identity
-    the row applies to and an explicit insufficient-sample flag per
-    NFR-003 (a flagged row has metric_value / p_value / ci as None,
-    never a fabricated placeholder number).
+    bounds, p-value, subgroup sample size, plus the subgroup identity
+    and an explicit insufficient-sample flag per NFR-003.
+
+    Attributes
+    ----------
+    metric_name : str
+        Disparity metric evaluated (one of the Core Four disparity metrics).
+    subgroup : str
+        Subgroup stratum identifier (e.g. ``"race=Black"`` or ``"ALL"``).
+    subgroup_sample_size : int
+        Number of cohort samples in this subgroup ($n$).
+    metric_value : float or None
+        Computed disparity estimate, or None if insufficient sample ($n < 30$).
+    ci_lower : float or None
+        Lower bound of the 95% BCa bootstrap confidence interval.
+    ci_upper : float or None
+        Upper bound of the 95% BCa bootstrap confidence interval.
+    p_value : float or None
+        Statistical significance test p-value.
+    insufficient_sample : bool, default=False
+        Flag set True when $n < 30$ per NFR-003.
+    raw_p_value : float or None, default=None
+        Unadjusted asymptotic p-value prior to multiple testing correction.
+    adjusted_p_value : float or None, default=None
+        FWER-adjusted p-value after Holm-Bonferroni step-down correction.
+    hypothesis_family : str or None, default=None
+        Statistical hypothesis family grouping.
+    adjustment_method : str or None, default=None
+        Identifier of multiple hypothesis testing procedure applied.
     """
 
     metric_name: Literal[

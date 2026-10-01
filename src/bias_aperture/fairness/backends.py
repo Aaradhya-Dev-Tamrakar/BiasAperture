@@ -50,7 +50,28 @@ def _build_core_metric_results(
     eligibility: dict[str, EligibilityReport],
     n_bootstrap_resamples: int = 1000,
 ) -> list[MetricResult]:
-    """Assemble canonical MetricResult list from group rate matrices."""
+    """Assemble canonical MetricResult list from group rate matrices.
+
+    Parameters
+    ----------
+    y_true : np.ndarray
+        Binary ground-truth labels (shape: (n,)).
+    y_pred : np.ndarray
+        Binary predicted labels (shape: (n,)).
+    sensitive : np.ndarray
+        Sensitive attribute strings per subject (shape: (n,)).
+    group_rates : dict[str, dict[str, float or None]]
+        Precomputed rate metrics (selection rate, TPR, FPR, base rate) per group.
+    eligibility : dict[str, EligibilityReport]
+        Eligibility reports per subgroup evaluated against NFR-003 sample bounds.
+    n_bootstrap_resamples : int, default=1000
+        Number of stratified BCa bootstrap resamples for confidence intervals.
+
+    Returns
+    -------
+    list[MetricResult]
+        Harmonized metric result objects for summary and per-subgroup strata.
+    """
     results: list[MetricResult] = []
     all_groups = sorted(eligibility.keys())
     total_n = len(y_true)
@@ -513,7 +534,26 @@ class FairlearnBackend(FairnessBackend):
         eligibility: dict[str, EligibilityReport],
         n_bootstrap_resamples: int = 1000,
     ) -> list[MetricResult]:
-        """Compute Core Four metrics with statistical confidence bounds."""
+        """Compute Core Four metrics with statistical confidence bounds.
+
+        Parameters
+        ----------
+        y_true : np.ndarray
+            Binary ground-truth labels (shape: (n,)).
+        y_pred : np.ndarray
+            Binary predicted labels (shape: (n,)).
+        sensitive : np.ndarray
+            Sensitive attribute labels (shape: (n,)).
+        eligibility : dict[str, EligibilityReport]
+            NFR-003 sample-size eligibility mapping per group.
+        n_bootstrap_resamples : int, default=1000
+            Bootstrap sample count for 95% confidence intervals.
+
+        Returns
+        -------
+        list[MetricResult]
+            Harmonized fairness metrics computed under Fairlearn convention.
+        """
         group_rates = compute_group_rates(y_true, y_pred, sensitive)
         return _build_core_metric_results(
             y_true,
@@ -548,7 +588,26 @@ class AIF360Backend(FairnessBackend):
         eligibility: dict[str, EligibilityReport],
         n_bootstrap_resamples: int = 1000,
     ) -> list[MetricResult]:
-        """Compute Core Four metrics using native AIF360 dataset & metrics."""
+        """Compute Core Four metrics using native AIF360 dataset and metrics.
+
+        Parameters
+        ----------
+        y_true : np.ndarray
+            Binary ground-truth labels (shape: (n,)).
+        y_pred : np.ndarray
+            Binary predicted labels (shape: (n,)).
+        sensitive : np.ndarray
+            Sensitive attribute labels (shape: (n,)).
+        eligibility : dict[str, EligibilityReport]
+            NFR-003 sample-size eligibility mapping per group.
+        n_bootstrap_resamples : int, default=1000
+            Bootstrap sample count for 95% confidence intervals.
+
+        Returns
+        -------
+        list[MetricResult]
+            Harmonized fairness metrics computed under AIF360 adapter.
+        """
         try:
             import pandas as pd
             from aif360.datasets import BinaryLabelDataset
@@ -685,7 +744,27 @@ class AIF360Backend(FairnessBackend):
 
 @dataclass(frozen=True, slots=True)
 class DivergenceAlert:
-    """Record of mathematical divergence between backends."""
+    """Record of mathematical divergence between backends.
+
+    Attributes
+    ----------
+    metric_name : str
+        Disparity metric where backends exhibited discrepancy.
+    subgroup : str
+        Demographic stratum key where divergence was detected.
+    backend_a : str
+        Name of first evaluation backend.
+    value_a : float or None
+        Metric value reported by backend A.
+    backend_b : str
+        Name of second evaluation backend.
+    value_b : float or None
+        Metric value reported by backend B.
+    difference : float
+        Absolute discrepancy between backend results.
+    tolerance : float
+        Maximum allowable tolerance threshold for the metric type.
+    """
 
     metric_name: str
     subgroup: str
@@ -698,7 +777,18 @@ class DivergenceAlert:
 
 
 class CrossValidationOrchestrator:
-    """Orchestrates multi-backend execution and detects algorithmic divergence."""
+    """Orchestrates multi-backend execution and detects algorithmic divergence.
+
+    Parameters
+    ----------
+    backends : Sequence[FairnessBackend] or None, default=None
+        Collection of fairness computation backends. If None, instantiates
+        both ``FairlearnBackend`` and ``AIF360Backend``.
+    tolerance_difference : float, default=0.05
+        Discrepancy threshold for additive difference metrics.
+    tolerance_ratio : float, default=0.10
+        Discrepancy threshold for ratio-based metrics (DIR).
+    """
 
     def __init__(
         self,

@@ -80,7 +80,25 @@ class ValidationSeverity(str, Enum):
 
 @dataclass(frozen=True, slots=True)
 class ValidationIssue:
-    """Individual data anomaly recorded during ingestion."""
+    """Individual data anomaly recorded during ingestion.
+
+    Attributes
+    ----------
+    row_index : int or None
+        Zero-based index of the row containing the anomaly, if applicable.
+    image_id : str or None
+        Image identifier associated with the anomalous record.
+    field_name : str
+        Column or attribute where validation failure occurred.
+    value : Any
+        Offending value encountered during parsing.
+    issue_type : str
+        Taxonomy classification of the issue (e.g. ``"invalid_race"``).
+    message : str
+        Human-readable diagnostic description of the validation issue.
+    severity : ValidationSeverity, default=ValidationSeverity.ERROR
+        Severity level determining whether STRICT mode halts ingestion.
+    """
 
     row_index: int | None
     image_id: str | None
@@ -93,7 +111,23 @@ class ValidationIssue:
 
 @dataclass(frozen=True, slots=True)
 class ValidationSummary:
-    """Aggregated report of data ingestion and validation results."""
+    """Aggregated report of data ingestion and validation results.
+
+    Attributes
+    ----------
+    total_records_processed : int
+        Total count of input rows encountered.
+    valid_records_passed : int
+        Number of rows successfully validated into SubjectRecord instances.
+    rejected_records_count : int
+        Number of rows rejected due to corruption or schema violations.
+    issues : list[ValidationIssue]
+        Detailed list of all validation issues encountered.
+    issue_counts_by_type : dict[str, int]
+        Frequencies of issues grouped by taxonomy code.
+    is_valid : bool
+        True if zero error-severity issues and zero rejected records occurred.
+    """
 
     total_records_processed: int
     valid_records_passed: int
@@ -115,7 +149,27 @@ class ValidationSummary:
 
 @dataclass(frozen=True, slots=True)
 class SubgroupCellStats:
-    """Demographic cohort contingency support and eligibility status."""
+    """Demographic cohort contingency support and eligibility status.
+
+    Attributes
+    ----------
+    subgroup_key : str
+        Formatted subgroup identifier (e.g. ``"race=Black"``).
+    total_n : int
+        Total sample count in this subgroup.
+    positive_n : int or None
+        Count of ground-truth positive samples, if task positive label is defined.
+    negative_n : int or None
+        Count of ground-truth negative samples, if task positive label is defined.
+    is_nfr003_eligible : bool
+        True if total sample count meets or exceeds NFR-003 threshold (n >= 30).
+    has_positive_support : bool
+        True if positive support meets minimum contingency threshold (>= 5).
+    has_negative_support : bool
+        True if negative support meets minimum contingency threshold (>= 5).
+    insufficient_sample_at_ingestion : bool
+        True if total sample count falls below NFR-003 threshold (n < 30).
+    """
 
     subgroup_key: str
     total_n: int
@@ -129,7 +183,23 @@ class SubgroupCellStats:
 
 @dataclass(frozen=True, slots=True)
 class SubgroupCohortProfile:
-    """Demographic cohort distribution across all axes and composite strata."""
+    """Demographic cohort distribution across all axes and composite strata.
+
+    Attributes
+    ----------
+    total_subjects : int
+        Total count of subjects represented across the profile.
+    race_counts : dict[str, SubgroupCellStats]
+        Cell statistics for the 7 locked race categories.
+    gender_counts : dict[str, SubgroupCellStats]
+        Cell statistics for the 2 locked gender categories.
+    age_counts : dict[str, SubgroupCellStats]
+        Cell statistics for the 9 locked age groups.
+    intersectional_counts : dict[str, SubgroupCellStats]
+        Cell statistics across intersectional race x gender strata.
+    insufficient_subgroups : list[str]
+        List of subgroup identifiers failing NFR-003 sample bounds (n < 30).
+    """
 
     total_subjects: int
     race_counts: dict[str, SubgroupCellStats]
@@ -141,7 +211,27 @@ class SubgroupCohortProfile:
 
 @dataclass(frozen=True, slots=True)
 class IngestionConfig:
-    """Configuration options for data ingestion pipeline."""
+    """Configuration options for data ingestion pipeline.
+
+    Attributes
+    ----------
+    true_label_col : str
+        Column name in raw data containing ground truth task labels.
+    predicted_label_col : str
+        Column name in raw data containing model predictions.
+    image_id_col : str, default=DEFAULT_IMAGE_COL
+        Column name in raw data identifying face images.
+    race_col : str, default=DEFAULT_RACE_COL
+        Column name containing race annotations.
+    gender_col : str, default=DEFAULT_GENDER_COL
+        Column name containing gender annotations.
+    age_col : str, default=DEFAULT_AGE_COL
+        Column name containing age group annotations.
+    validation_mode : ValidationMode, default=ValidationMode.STRICT
+        Behavior on encountering anomalies (STRICT raises, PERMISSIVE collects).
+    deduplicate_strategy : str, default="drop_exact_or_raise_conflicts"
+        Deduplication rule when encountering duplicate image IDs.
+    """
 
     true_label_col: str
     predicted_label_col: str
@@ -157,7 +247,17 @@ class IngestionConfig:
 
 @dataclass(frozen=True, slots=True)
 class IngestionResult:
-    """Structured output returned by the data ingestion pipeline."""
+    """Structured output returned by the data ingestion pipeline.
+
+    Attributes
+    ----------
+    records : list[SubjectRecord]
+        Clean, validated SubjectRecord instances conforming to locked M1 schema.
+    validation_summary : ValidationSummary
+        Audit trail of ingestion diagnostics, counts, and issues.
+    cohort_profile : SubgroupCohortProfile or None
+        Demographic support and NFR-003 eligibility analysis.
+    """
 
     records: list[SubjectRecord]
     validation_summary: ValidationSummary
@@ -165,8 +265,12 @@ class IngestionResult:
 
 
 class DataIngestionPipeline:
-    """
-    Ingests, validates, profiles, and standardizes demographic prediction datasets.
+    """Ingests, validates, profiles, and standardizes demographic prediction datasets.
+
+    Parameters
+    ----------
+    config : IngestionConfig
+        Pipeline configuration specifying column mappings and validation policies.
     """
 
     def __init__(self, config: IngestionConfig) -> None:
@@ -178,7 +282,27 @@ class DataIngestionPipeline:
         *,
         task_positive_label: str | None = None,
     ) -> IngestionResult:
-        """Ingest records from a CSV or JSON file on disk."""
+        """Ingest records from a CSV or JSON file on disk.
+
+        Parameters
+        ----------
+        path : str or Path
+            Path to input predictions file (.csv or .json).
+        task_positive_label : str or None, default=None
+            Label value representing positive classification outcome (Y=1).
+
+        Returns
+        -------
+        IngestionResult
+            Container with validated records, diagnostics, and cohort profile.
+
+        Raises
+        ------
+        FileNotFoundError
+            If ``path`` does not exist on disk.
+        ValueError
+            If file extension is neither .csv nor .json.
+        """
         target_path = Path(path)
         if not target_path.exists():
             raise FileNotFoundError(f"predictions file not found: {target_path}")
@@ -205,7 +329,20 @@ class DataIngestionPipeline:
         *,
         task_positive_label: str | None = None,
     ) -> IngestionResult:
-        """Ingest records from a pandas DataFrame."""
+        """Ingest records from a pandas DataFrame.
+
+        Parameters
+        ----------
+        df : pd.DataFrame
+            DataFrame containing raw model predictions and demographic columns.
+        task_positive_label : str or None, default=None
+            Label value representing positive classification outcome (Y=1).
+
+        Returns
+        -------
+        IngestionResult
+            Container with validated records, diagnostics, and cohort profile.
+        """
         rows = df.to_dict(orient="records")
         return self.ingest_records(rows, task_positive_label=task_positive_label)
 
@@ -215,7 +352,25 @@ class DataIngestionPipeline:
         *,
         task_positive_label: str | None = None,
     ) -> IngestionResult:
-        """Ingest and validate an iterable of dictionary rows."""
+        """Ingest and validate an iterable of dictionary rows.
+
+        Parameters
+        ----------
+        rows : Iterable[dict[str, Any]]
+            Tabular rows representing demographic predictions and ground truth.
+        task_positive_label : str or None, default=None
+            Label value representing positive classification outcome (Y=1).
+
+        Returns
+        -------
+        IngestionResult
+            Container with validated records, diagnostics, and cohort profile.
+
+        Raises
+        ------
+        SchemaValidationError
+            If validation encounters unrecoverable errors in STRICT mode.
+        """
         resolved_rows = list(rows)
         total_count = len(resolved_rows)
 
@@ -470,7 +625,24 @@ class DataIngestionPipeline:
         )
 
     def _resolve_image_col(self, sample_row: dict[str, Any]) -> str:
-        """Resolve image identifier column with alias fallback."""
+        """Resolve image identifier column with alias fallback.
+
+        Parameters
+        ----------
+        sample_row : dict[str, Any]
+            Sample input row used to detect available column headers.
+
+        Returns
+        -------
+        str
+            Matching column key present in the input row.
+
+        Raises
+        ------
+        SchemaValidationError
+            If neither the configured image ID column nor any known alias is found
+            when in STRICT validation mode.
+        """
         if self.config.image_id_col in sample_row:
             return self.config.image_id_col
         for alias in IMAGE_COL_ALIASES:
@@ -489,7 +661,22 @@ class DataIngestionPipeline:
         issue_list: list[ValidationIssue],
         counter: Counter[str],
     ) -> None:
-        """Record issue or immediately raise if in STRICT validation mode."""
+        """Record issue or immediately raise if in STRICT validation mode.
+
+        Parameters
+        ----------
+        issue : ValidationIssue
+            Anomaly record to register.
+        issue_list : list[ValidationIssue]
+            Active list accumulating validation issues.
+        counter : Counter[str]
+            Histogram counter tracking issues by type.
+
+        Raises
+        ------
+        SchemaValidationError
+            If the issue has severity ERROR and pipeline is operating in STRICT mode.
+        """
         if (
             self.config.validation_mode == ValidationMode.STRICT
             and issue.severity == ValidationSeverity.ERROR
@@ -505,9 +692,23 @@ class DataIngestionPipeline:
         *,
         task_positive_label: str | None = None,
     ) -> SubgroupCohortProfile:
-        """
-        Compute demographic support counts and NFR-003 eligibility across
-        unitary demographic axes and composite intersectional slices.
+        """Compute demographic support counts and NFR-003 eligibility across cohorts.
+
+        Evaluates representation across unitary demographic axes (race, gender, age)
+        and composite intersectional slices (race x gender).
+
+        Parameters
+        ----------
+        records : Sequence[SubjectRecord]
+            Collection of validated subject records.
+        task_positive_label : str or None, default=None
+            Label value representing positive classification outcome (Y=1).
+
+        Returns
+        -------
+        SubgroupCohortProfile
+            Demographic support distribution, contingency counts, and
+            NFR-003 eligibility.
         """
         total = len(records)
         race_groups: dict[str, list[SubjectRecord]] = {r: [] for r in RACE_LABELS}
@@ -590,8 +791,7 @@ class DataIngestionPipeline:
 
 
 class OvRTransformer:
-    r"""
-    Multi-Class One-vs-Rest (OvR) evaluation helper.
+    r"""Multi-Class One-vs-Rest (OvR) evaluation helper.
 
     Transforms a multi-class SubjectRecord dataset into an M-way set of
     binary tasks $Y^{(m)} = \mathbb{I}(Y = c_m)$ and
@@ -603,7 +803,20 @@ class OvRTransformer:
         records: Sequence[SubjectRecord],
         axis: Literal["true", "predicted", "both"] = "both",
     ) -> list[str]:
-        """Extract unique classes present across true, predicted, or both labels."""
+        """Extract unique classes present across true, predicted, or both labels.
+
+        Parameters
+        ----------
+        records : Sequence[SubjectRecord]
+            Collection of subject records to inspect.
+        axis : {"true", "predicted", "both"}, default="both"
+            Label space axis to query for unique values.
+
+        Returns
+        -------
+        list[str]
+            Sorted list of distinct task class labels.
+        """
         classes: set[str] = set()
         for r in records:
             if axis in ("true", "both"):
@@ -620,8 +833,23 @@ class OvRTransformer:
         positive_label: str = "1",
         negative_label: str = "0",
     ) -> list[SubjectRecord]:
-        """
-        Binarize ground truth and predictions against the specified target class.
+        """Binarize ground truth and predictions against the specified target class.
+
+        Parameters
+        ----------
+        records : Sequence[SubjectRecord]
+            Collection of multi-class subject records.
+        target_class : str
+            Class label treated as the positive class ($Y=1$).
+        positive_label : str, default="1"
+            String representation assigned to the positive class.
+        negative_label : str, default="0"
+            String representation assigned to all rest classes.
+
+        Returns
+        -------
+        list[SubjectRecord]
+            Transformed subject records with binary labels in {0, 1}.
         """
         target_str = str(target_class)
         binarized: list[SubjectRecord] = []
@@ -655,8 +883,24 @@ class OvRTransformer:
         positive_label: str = "1",
         negative_label: str = "0",
     ) -> dict[str, list[SubjectRecord]]:
-        """
-        Decompose a multi-class dataset into M distinct binary OvR datasets.
+        """Decompose a multi-class dataset into M distinct binary OvR datasets.
+
+        Parameters
+        ----------
+        records : Sequence[SubjectRecord]
+            Collection of multi-class subject records.
+        classes : Sequence[str] or None, default=None
+            Specific class labels to decompose. If None, extracts all unique
+            classes present in the records.
+        positive_label : str, default="1"
+            String representation assigned to the positive class.
+        negative_label : str, default="0"
+            String representation assigned to the negative class.
+
+        Returns
+        -------
+        dict[str, list[SubjectRecord]]
+            Mapping from class label to its binarized OvR SubjectRecord dataset.
         """
         target_classes = (
             list(classes) if classes is not None else cls.get_classes(records)

@@ -36,7 +36,25 @@ logger = logging.getLogger(__name__)
 
 @dataclass(frozen=True, slots=True)
 class ExplanationResult:
-    """Internal explanation artifact container."""
+    """Internal explanation artifact container.
+
+    Attributes
+    ----------
+    subgroup : str
+        Demographic subgroup identifier being audited.
+    metric_name : str
+        Disparity metric name associated with the flagged audit finding.
+    feature_attributions : dict[str, float]
+        Dictionary mapping feature or proxy column names to Shapley attribution weights.
+    base64_visualizations : list[str]
+        Base64-encoded SVG or PNG visual artifacts (if generated).
+    ita_value : float or None
+        Computed Individual Typology Angle (ITA) in degrees, if applicable.
+    proxy_warning : bool
+        Flag indicating if demographic proxy correlation exceeds threshold.
+    details : str
+        Human-readable summary of attribution analysis.
+    """
 
     subgroup: str
     metric_name: str
@@ -48,13 +66,33 @@ class ExplanationResult:
 
 
 class ShapExplainerEngine:
-    """Targeted explainability engine for flagged demographic disparities."""
+    """Targeted explainability engine for flagged demographic disparities.
+
+    Parameters
+    ----------
+    max_exemplars : int, default=20
+        Maximum number of background exemplars to retain for surrogate fitting.
+    """
 
     def __init__(self, max_exemplars: int = 20) -> None:
         self.max_exemplars = max_exemplars
 
     def should_explain(self, result: MetricResult) -> bool:
-        """Check if metric result qualifies for targeted explanation."""
+        """Check if metric result qualifies for targeted explanation.
+
+        A result qualifies only if it has sufficient sample size (n >= 30),
+        a non-null computed metric value, and statistical significance (p < 0.05).
+
+        Parameters
+        ----------
+        result : MetricResult
+            Audited metric outcome to evaluate for explanation eligibility.
+
+        Returns
+        -------
+        bool
+            True if the disparity finding warrants post-hoc attribution.
+        """
         if result.insufficient_sample or result.metric_value is None:
             return False
         if result.subgroup_sample_size < MIN_SUBGROUP_SAMPLE_SIZE:
@@ -69,7 +107,23 @@ class ShapExplainerEngine:
         image_paths: Sequence[Path | str] | None = None,
         records: Sequence[SubjectRecord] | None = None,
     ) -> ExplanationResult:
-        """Generate targeted visual or proxy attribution for a flagged disparity."""
+        """Generate targeted visual or proxy attribution for a flagged disparity.
+
+        Parameters
+        ----------
+        result : MetricResult
+            Flagged disparity metric requiring diagnostic explanation.
+        image_paths : Sequence[Path or str] or None, default=None
+            Optional collection of face image paths for exemplar inspection.
+        records : Sequence[SubjectRecord] or None, default=None
+            Cohort demographic records for surrogate Shapley attribution fitting.
+
+        Returns
+        -------
+        ExplanationResult
+            Attribution artifact containing feature importance weights or
+            diagnostic status.
+        """
         if not self.should_explain(result):
             return ExplanationResult(
                 subgroup=result.subgroup,
@@ -105,6 +159,20 @@ class ShapExplainerEngine:
 
         Uses the additive property: phi_i = w_i * (x_i - E[x_i]) for linear surrogate
         models, quantifying how protected and proxy axes drive predictions.
+
+        Parameters
+        ----------
+        result : MetricResult
+            Flagged disparity metric for which surrogate explanation is constructed.
+        records : Sequence[SubjectRecord]
+            Subject records used to extract demographic features and fit the
+            linear surrogate.
+
+        Returns
+        -------
+        ExplanationResult
+            Explanation container populated with sorted surrogate Shapley
+            attribution weights.
         """
         try:
             import pandas as pd

@@ -46,21 +46,44 @@ class ModelInterface(ABC):
 
     @abstractmethod
     def get_predictions(self) -> Iterator[SubjectRecord]:
-        """Yield one SubjectRecord per subject, in the locked schema."""
+        """Yield one SubjectRecord per subject in the locked schema.
+
+        Yields
+        ------
+        SubjectRecord
+            Immutable record containing demographic annotations, ground truth,
+            and model prediction.
+
+        Raises
+        ------
+        NotImplementedError
+            If called directly on the abstract base class.
+        """
         raise NotImplementedError
 
 
 class InProcessInterface(ModelInterface):
-    """
-    Direct in-process inference against a supplied PyTorch or TensorFlow
-    model object.
+    """Direct in-process inference against a supplied PyTorch or TensorFlow model.
 
-    Not implemented at M1 — WBS 1.2 scopes "predictions-file ingestion
-    path" as the WP1 deliverable; the in-process adapter is Stream A
-    (WP2) work once the FairFace classifier's actual weights file is
-    available in the working environment. Concrete subclasses
-    (e.g. TorchModelInterface) should be added under this class rather
-    than modifying the schema or PredictionsFileInterface.
+    Not implemented at M1 — WBS 1.2 scopes "predictions-file ingestion path"
+    as the WP1 deliverable; the in-process adapter is Stream A (WP2) work once
+    the FairFace classifier's actual weights file is available in the working
+    environment. Concrete subclasses (e.g. TorchModelInterface) should be added
+    under this class rather than modifying the schema or PredictionsFileInterface.
+
+    Parameters
+    ----------
+    model : Any
+        Pre-instantiated deep learning model object (PyTorch nn.Module or
+        TensorFlow tf.keras.Model).
+    framework : str
+        Underlying machine learning framework, must be ``"pytorch"`` or
+        ``"tensorflow"``.
+
+    Raises
+    ------
+    ValueError
+        If ``framework`` is not ``"pytorch"`` or ``"tensorflow"``.
     """
 
     def __init__(self, model: Any, *, framework: str) -> None:
@@ -72,6 +95,19 @@ class InProcessInterface(ModelInterface):
         self.framework = framework
 
     def get_predictions(self) -> Iterator[SubjectRecord]:
+        """Execute in-process model inference and yield SubjectRecords.
+
+        Yields
+        ------
+        SubjectRecord
+            Evaluated subject demographic record and inference prediction.
+
+        Raises
+        ------
+        NotImplementedError
+            Always raised in M1/M2 baseline as in-process execution is deferred
+            to v2 roadmap per Cut-List #4.
+        """
         raise NotImplementedError(
             "InProcessInterface is an architectural placeholder for future "
             "direct-model inference (v2 roadmap). The current operational path "
@@ -81,14 +117,27 @@ class InProcessInterface(ModelInterface):
 
 
 class PredictionsFileInterface(ModelInterface):
-    """
-    Batch ingestion of a precomputed predictions file (CSV or JSON).
+    """Batch ingestion of a precomputed predictions file (CSV or JSON).
 
     Expects the FairFace race_7 baseline's output columns as produced by
     dchen236/FairFace's predict.py. true_label / predicted_label are
     read from caller-specified columns since the audited *task* label
     (e.g. gender-classification correctness) is audit-specific, not
     fixed by the demographic schema itself.
+
+    Parameters
+    ----------
+    path : str or Path
+        Filesystem path to precomputed prediction file (.csv or .json).
+    true_label_col : str
+        Column name for ground-truth task labels.
+    predicted_label_col : str
+        Column name for model predictions.
+
+    Raises
+    ------
+    FileNotFoundError
+        If ``path`` does not exist on disk.
     """
 
     def __init__(
@@ -105,6 +154,18 @@ class PredictionsFileInterface(ModelInterface):
             raise FileNotFoundError(f"predictions file not found: {self.path}")
 
     def _load_rows(self) -> Iterable[dict[str, Any]]:
+        """Load tabular data rows from the configured predictions file.
+
+        Yields
+        ------
+        dict[str, Any]
+            Dictionary representing a single row from CSV or JSON.
+
+        Raises
+        ------
+        ValueError
+            If file extension is not supported (.csv or .json only).
+        """
         if self.path.suffix.lower() == ".csv":
             df = pd.read_csv(self.path)
             yield from df.to_dict(orient="records")
@@ -121,6 +182,19 @@ class PredictionsFileInterface(ModelInterface):
             )
 
     def get_predictions(self) -> Iterator[SubjectRecord]:
+        """Parse rows and yield validated SubjectRecord instances.
+
+        Yields
+        ------
+        SubjectRecord
+            Validated SubjectRecord with demographic labels mapped to locked
+            M1 taxonomy.
+
+        Raises
+        ------
+        ValueError
+            If race, gender, or age labels do not conform to locked M1 vocabularies.
+        """
         for row in self._load_rows():
             race = row[_FAIRFACE_RACE_COL]
             gender = row[_FAIRFACE_GENDER_COL]
