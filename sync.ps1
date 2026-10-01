@@ -18,6 +18,9 @@ param(
     [Parameter(ParameterSetName = 'Sync')]
     [switch]$MirrorOnly,
 
+    [Parameter(ParameterSetName = 'Sync')]
+    [switch]$Force,
+
     [Parameter(ParameterSetName = 'Pull')]
     [switch]$PullOnly
 )
@@ -163,16 +166,17 @@ function Initialize-Remotes {
 }
 
 function Push-AllRemotes {
-    param([string]$Branch)
+    param([string]$Branch, [switch]$Force)
     Initialize-Remotes
 
     $compulsoryRemotes = @($originRemote, $duoRemote)
     $allRemotes = @($originRemote, $duoRemote, $orgRemote)
     $results = @{}
+    $refspec = if ($Force) { "+refs/heads/$Branch`:refs/heads/$Branch" } else { "refs/heads/$Branch`:refs/heads/$Branch" }
 
     foreach ($remote in $allRemotes) {
         try {
-            $pushOutput = & git.exe push $remote "refs/heads/$Branch`:refs/heads/$Branch" 2>&1
+            $pushOutput = & git.exe push $remote $refspec 2>&1
             if ($LASTEXITCODE -eq 0) {
                 $results[$remote] = 'OK'
             }
@@ -214,7 +218,7 @@ function Sync-AllOriginBranches {
     foreach ($branchName in $branches) {
         $sourceSha = (git rev-parse "refs/remotes/$originRemote/$branchName").Trim()
         foreach ($remote in $mirrorRemotes) {
-            $pushOutput = & git.exe push $remote "refs/remotes/$originRemote/$branchName`:refs/heads/$branchName" 2>&1
+            $pushOutput = & git.exe push $remote "+refs/remotes/$originRemote/$branchName`:refs/heads/$branchName" 2>&1
             if ($LASTEXITCODE -eq 0) {
                 $destinationSha = (git ls-remote $remote "refs/heads/$branchName" | ForEach-Object { ($_ -split "\s+")[0] }).Trim()
                 if ($destinationSha -eq $sourceSha) {
@@ -387,11 +391,11 @@ else {
 
 $branch = git rev-parse --abbrev-ref HEAD
 $remoteRefExists = git ls-remote --heads $originRemote $branch
-if ($remoteRefExists) {
+if ($remoteRefExists -and -not $Force) {
     & git.exe pull --autostash --rebase $originRemote $branch
     if ($LASTEXITCODE -ne 0) {
         throw "Failed to pull and rebase [$branch] from [$originRemote]. Resolve the pull conflict or remote error before pushing."
     }
 }
-Push-AllRemotes -Branch $branch
+Push-AllRemotes -Branch $branch -Force:$Force
 Sync-AllOriginBranches
