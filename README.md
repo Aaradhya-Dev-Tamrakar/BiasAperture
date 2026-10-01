@@ -227,6 +227,7 @@ BiasAperture benchmarks demographic fairness on the **FairFace** dataset (Kärkk
 - **Literature Review Matrix**: Structured survey of 20 academic papers in [`docs/literature-review-matrix.md`](docs/literature-review-matrix.md)
 - **Technical Specifications**: Modular architectural specs in [`specs/`](specs/)
 - **Data Governance Policy**: Ethics and licensing protocol in [`docs/DATA_GOVERNANCE.md`](docs/DATA_GOVERNANCE.md)
+- **Research Knowledge Bases**: Google NotebookLM & Gemini workspaces catalogued in [`docs/NOTEBOOKS.md`](docs/NOTEBOOKS.md)
 
 ---
 
