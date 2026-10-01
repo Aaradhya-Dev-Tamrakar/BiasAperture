@@ -4,7 +4,7 @@ This document catalogues the Google NotebookLM and Gemini workspaces maintained 
 
 ---
 
-## Workspace Directory
+## Project Workspaces
 
 | Workspace | Notebook ID | Direct Link | Grounding Scope & Purpose |
 | :--- | :--- | :--- | :--- |
@@ -15,18 +15,9 @@ This document catalogues the Google NotebookLM and Gemini workspaces maintained 
 
 ---
 
-## Related & Personal Workspaces
-
-| Workspace | Notebook ID | Direct Link | Scope |
-| :--- | :--- | :--- | :--- |
-| **Personal Workspace** | `95a79d26-2f87-42cd-8cb9-8361a1e56059` | [Open Notebook](https://notebook.google.com/notebook/95a79d26-2f87-42cd-8cb9-8361a1e56059) | Lead engineer workspace and research journal. |
-| **SPARK** | `2c00f5a4-98dc-4783-96d1-3682fa3cb516` | [Open Notebook](https://notebook.google.com/notebook/2c00f5a4-98dc-4783-96d1-3682fa3cb516) | Shared cross-project knowledge repository. |
-
----
-
 ## MCP & Tooling Integration
 
-When interacting with MCP tools (`super-nlm` or `notebooklm`), use the corresponding Notebook ID to query or ground outputs:
+When interacting with MCP tools (`super-nlm` or `notebooklm`), use the corresponding project Notebook ID to query or ground outputs:
 
 ```json
 {
