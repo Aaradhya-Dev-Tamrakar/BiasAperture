@@ -20,6 +20,7 @@ from dataclasses import dataclass
 import numpy as np
 
 from bias_aperture.schema import (
+    MIN_POSITIVE_SUPPORT,
     MIN_SUBGROUP_SAMPLE_SIZE,
     MetricResult,
     SubjectRecord,
@@ -59,9 +60,9 @@ class EligibilityReport:
     eligible_eod: bool
 
 
-# Minimum positive/negative support for rate-based metrics.
-# This is a conservative engineering rule per LOW_LEVEL_SPEC §3.3.1.
-_MIN_SUPPORT: int = 5
+# Minimum positive/negative support now sourced from schema.MIN_POSITIVE_SUPPORT.
+# Alias kept for backward compatibility within this module.
+_MIN_SUPPORT: int = MIN_POSITIVE_SUPPORT
 
 
 def screen_subgroups(

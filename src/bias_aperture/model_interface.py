@@ -81,8 +81,15 @@ class InProcessInterface(ModelInterface):
 
 
 class PredictionsFileInterface(ModelInterface):
-    """
-    Batch ingestion of a precomputed predictions file (CSV or JSON).
+    """Batch ingestion of a precomputed predictions file (CSV or JSON).
+
+    .. deprecated::
+        This class duplicates file-loading logic that is now
+        consolidated in :class:`bias_aperture.data_ingestion.DataIngestionPipeline`.
+        New code should use ``DataIngestionPipeline.ingest_file()`` which
+        provides validation summaries, cohort profiling, and configurable
+        strict/permissive modes.  This class is retained for backward
+        compatibility with WP1 contracts.
 
     Expects the FairFace race_7 baseline's output columns as produced by
     dchen236/FairFace's predict.py. true_label / predicted_label are

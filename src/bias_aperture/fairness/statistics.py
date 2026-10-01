@@ -16,13 +16,21 @@ Implements statistical hypothesis testing and uncertainty quantification:
 
 from __future__ import annotations
 
+import logging
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass, replace
 
 import numpy as np
 from scipy import stats
 
-from bias_aperture.schema import ALPHA, MIN_BOOTSTRAP_RESAMPLES, MetricResult
+from bias_aperture.schema import (
+    ALPHA,
+    MIN_BOOTSTRAP_RESAMPLES,
+    MIN_SUBGROUP_SAMPLE_SIZE,
+    MetricResult,
+)
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True, slots=True)
@@ -94,7 +102,8 @@ def compute_contingency_chi2(
     try:
         chi2, p_val, dof, _ = stats.chi2_contingency(table_arr)
         return float(chi2), float(p_val), int(dof)
-    except Exception:
+    except Exception as exc:
+        logger.warning("chi2_contingency failed (%s); returning p=1.0", exc)
         return 0.0, 1.0, len(groups) - 1
 
 
@@ -364,7 +373,8 @@ def compute_stratified_bootstrap_ci(
             if not np.isnan(val) and not np.isinf(val):
                 boot_thetas[valid_count] = val
                 valid_count += 1
-        except Exception:
+        except Exception as exc:
+            logger.debug("Bootstrap replicate %d failed: %s", _b, exc)
             continue
 
     if valid_count < int(0.9 * n_resamples):
@@ -451,7 +461,11 @@ def compute_stratified_bootstrap_ci(
         ci_high = float(np.percentile(valid_thetas, 100 * a2))
 
         return float(np.clip(ci_low, 0.0, 1.0)), float(np.clip(ci_high, 0.0, 1.0))
-    except Exception:
+    except Exception as exc:
+        logger.warning(
+            "BCa jackknife acceleration failed (%s); falling back to percentile CI",
+            exc,
+        )
         return percentile_ci()
 
 
@@ -533,7 +547,7 @@ def compute_subgroup_bootstrap_ci(
     if subgroup not in groups:
         return None, None
 
-    if (sensitive == subgroup).sum() < 30:
+    if (sensitive == subgroup).sum() < MIN_SUBGROUP_SAMPLE_SIZE:
         return None, None
 
     point_est = _evaluate_subgroup_metric(
