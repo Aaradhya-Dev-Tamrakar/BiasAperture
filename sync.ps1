@@ -214,7 +214,7 @@ function Sync-AllOriginBranches {
     foreach ($branchName in $branches) {
         $sourceSha = (git rev-parse "refs/remotes/$originRemote/$branchName").Trim()
         foreach ($remote in $mirrorRemotes) {
-            $pushOutput = & git.exe push $remote "refs/remotes/$originRemote/$branchName`:refs/heads/$branchName" 2>&1
+            $pushOutput = & git.exe push $remote "+refs/remotes/$originRemote/$branchName`:refs/heads/$branchName" 2>&1
             if ($LASTEXITCODE -eq 0) {
                 $destinationSha = (git ls-remote $remote "refs/heads/$branchName" | ForEach-Object { ($_ -split "\s+")[0] }).Trim()
                 if ($destinationSha -eq $sourceSha) {
