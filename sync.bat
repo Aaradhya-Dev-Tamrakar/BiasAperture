@@ -1,7 +1,4 @@
 @echo off
-<<<<<<< Updated upstream
-pwsh -NoProfile -ExecutionPolicy Bypass -File "%~dp0sync.ps1" %*
-=======
 setlocal
 REM ============================================================================
 REM sync.bat - Zero-Friction Execution Wrapper for sync.ps1
@@ -15,4 +12,3 @@ if %ERRORLEVEL% equ 0 (
     powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0sync.ps1" %*
 )
 exit /b %ERRORLEVEL%
->>>>>>> Stashed changes
