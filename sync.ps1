@@ -98,7 +98,7 @@ function Sync-FeatureBranchWithMain {
     $behind = [int](git rev-list --count "$CurrentBranch..refs/remotes/$originRemote/main" 2>$null)
     if ($behind -gt 0) {
         Write-Host "Branch [$CurrentBranch] is $behind commit(s) behind origin/main. Rebasing to prevent drift..."
-        git rebase "refs/remotes/$originRemote/main"
+        git rebase --autostash "refs/remotes/$originRemote/main"
         if ($LASTEXITCODE -ne 0) {
             Write-Warning "Auto-rebase failed. Resolve conflicts manually, then re-run sync.ps1."
             git rebase --abort 2>$null
