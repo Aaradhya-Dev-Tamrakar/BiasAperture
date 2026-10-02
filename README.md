@@ -2,7 +2,9 @@
 
 ### A Diagnostic Framework for Demographic Bias Auditing in Facial Analysis Systems
 
-BiasAperture is a modular diagnostic software framework designed to audit computer vision models for demographic disparities across race, gender, age, and intersectional subgroups. Developed as a capstone project for the **Fusemachines AI Fellowship Program** (Kathmandu, Nepal), the framework provides an end-to-end, black-box evaluation pipeline that transforms model predictions and demographic metadata into rigorous, regulator-ready compliance reports.
+**BiasAperture audits facial analysis models for demographic disparities and generates regulator-ready compliance reports.**
+
+Developed as a capstone project for the **Fusemachines AI Fellowship Program** (Kathmandu, Nepal), the framework provides an end-to-end, black-box diagnostic pipeline. It evaluates demographic parity and equalized performance across race, gender, age, and intersectional cohorts using dual independent backends (**Fairlearn** and **AIF360**), coupling every finding with Pearson's $\chi^2$ significance tests and 95% bootstrap confidence intervals.
 
 **Authors:** Aaradhya Dev Tamrakar, Tisha Manandhar  
 **Supervisor:** Shreejan Kisee, Teaching Assistant, Fusemachines AI Fellowship  
@@ -24,11 +26,23 @@ BiasAperture addresses these challenges through a non-invasive, diagnostic pipel
 
 ---
 
-## Core Principles & Scope
+## Empirical Audit Proof (Self-Audited Benchmarks)
 
-1. **Strictly Diagnostic & Evaluative**: BiasAperture is engineered purely for auditing, benchmarking, and reporting. It operates externally on datasets and prediction outputs without modifying model weights, performing in-processing debiasing, or generating synthetic data.
-2. **Statistical Integrity**: To prevent unreliable claims on small sample sizes, subgroups with fewer than 30 samples are marked with `insufficient_sample=True` and have their computed values suppressed in compliance outputs.
-3. **Reproducibility & Offline Portability**: The full pipeline—from dataset profiling to report compilation—executes locally without external network dependencies or remote CDN scripts.
+BiasAperture was dog-fooded on our own case-study model: a multi-task ResNet-34 classifier evaluated on the **FairFace benchmark ($N = 10,954$)**. The compiled, standalone HTML audit dossiers demonstrate the platform's diagnostic findings:
+
+| Audit Target | Protected Axis | Sample Size ($N$) | Key Empirical Finding | Standalone Compliance Report |
+| :--- | :--- | :--- | :--- | :--- |
+| **FairFace ResNet-34** | **Race** (7 subgroups) | 10,954 | **4 of 7 subgroups** exhibit statistically significant disparity ($p < 0.05$); largest deviation observed in Middle Eastern cohort. | [audit_val_race_verified.html](report/audit_val_race_verified.html) |
+| **FairFace ResNet-34** | **Gender** (Binary) | 10,954 | **2 of 2 subgroups** exhibit statistically significant error rate disparity ($p < 0.05$). | [audit_report_val_gender.html](report/audit_report_val_gender.html) |
+| **FairFace ResNet-34** | **Race × Gender** (Intersectional) | 10,954 | Cross-attribute surrogate attribution isolates primary demographic feature contributions without confounding artifacts. | [audit_report_val_race_gender_shap.html](report/audit_report_val_race_gender_shap.html) |
+
+---
+
+## Core Principles & Scope Boundaries
+
+1. **Strictly Diagnostic & Evaluative**: BiasAperture is engineered purely for auditing, benchmarking, and reporting. It operates externally on datasets and prediction outputs. It does **not** modify model weights, perform in-processing debiasing, or generate synthetic data.
+2. **Statistical Integrity over Bare Thresholds**: Subgroups with fewer than 30 samples ($n < 30$) are marked with `insufficient_sample=True` and have their computed values suppressed from point estimates to prevent ungrounded claims.
+3. **Reproducibility & Offline Portability**: The full pipeline—from dataset profiling to report compilation—executes locally without external network dependencies, remote CDN scripts, or third-party tracking.
 
 ---
 

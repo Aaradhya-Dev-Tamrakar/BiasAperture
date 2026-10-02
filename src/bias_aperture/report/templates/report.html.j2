@@ -4,6 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BiasAperture — Demographic Bias Audit & Compliance Dossier</title>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Report",
+        "name": "BiasAperture Demographic Fairness Audit Dossier — {{ context.model_name }}",
+        "description": "Diagnostic Demographic Bias Evaluation & Regulatory Traceability Report on {{ context.dataset_name }} across {{ context.protected_axis | capitalize }} axis.",
+        "datePublished": "{{ context.timestamp }}",
+        "author": {
+            "@type": "SoftwareApplication",
+            "name": "BiasAperture",
+            "applicationCategory": "AI Diagnostic Fairness Auditing Framework"
+        },
+        "about": {
+            "@type": "Thing",
+            "name": "{{ context.model_name }}"
+        }
+    }
+    </script>
     <style>
         :root {
             --bg-primary: #f8fafc;
@@ -273,6 +291,12 @@
                 </div>
             </div>
         </header>
+
+        <!-- Diagnostic Scope & Boundary Assertion -->
+        <div class="scope-card" style="background-color: var(--bg-card); border: 1px solid var(--border-color); border-left: 4px solid var(--brand-blue); border-radius: 6px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; font-size: 0.85rem; color: var(--text-main); line-height: 1.5;">
+            <strong style="color: #1e293b; display: block; margin-bottom: 0.25rem;">Diagnostic Scope & Non-Intervention Guarantee:</strong>
+            BiasAperture is engineered exclusively as an external diagnostic auditing, statistical significance testing, and regulatory traceability platform. It does <strong>not</strong> perform model retraining, in-processing debiasing, or synthetic image generation. In adherence to statistical integrity safeguards (NFR-003), demographic subgroups with fewer than 30 samples (<em>n &lt; 30</em>) have point estimates suppressed to prevent unreliable compliance claims.
+        </div>
 
         <!-- 0. Executive Summary Strip -->
         <div class="exec-summary">
