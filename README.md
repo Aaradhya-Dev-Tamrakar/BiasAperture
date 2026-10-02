@@ -30,11 +30,11 @@ BiasAperture addresses these challenges through a non-invasive, diagnostic pipel
 
 BiasAperture was dog-fooded on our own case-study model: a multi-task ResNet-34 classifier evaluated on the **FairFace benchmark ($N = 10,954$)**. The compiled, standalone HTML audit dossiers demonstrate the platform's diagnostic findings:
 
-| Audit Target | Protected Axis | Sample Size ($N$) | Key Empirical Finding | Standalone Compliance Report |
+| Audit Target | Protected Axis | Sample Size ($N$) | Key Empirical Finding | Compliance Dossier Formats |
 | :--- | :--- | :--- | :--- | :--- |
-| **FairFace ResNet-34** | **Race** (7 subgroups) | 10,954 | **4 of 7 subgroups** exhibit statistically significant disparity ($p < 0.05$); largest deviation observed in Middle Eastern cohort. | [audit_val_race_verified.html](report/audit_val_race_verified.html) |
-| **FairFace ResNet-34** | **Gender** (Binary) | 10,954 | **2 of 2 subgroups** exhibit statistically significant error rate disparity ($p < 0.05$). | [audit_report_val_gender.html](report/audit_report_val_gender.html) |
-| **FairFace ResNet-34** | **Race × Gender** (Intersectional) | 10,954 | Cross-attribute surrogate attribution isolates primary demographic feature contributions without confounding artifacts. | [audit_report_val_race_gender_shap.html](report/audit_report_val_race_gender_shap.html) |
+| **FairFace ResNet-34** | **Race** (7 subgroups) | 10,954 | **4 of 7 subgroups** exhibit statistically significant disparity ($p < 0.05$); largest deviation observed in Middle Eastern cohort. | [HTML](report/audit_val_race_verified.html) · [PDF](report/audit_val_race_verified.pdf) |
+| **FairFace ResNet-34** | **Gender** (Binary) | 10,954 | **2 of 2 subgroups** exhibit statistically significant error rate disparity ($p < 0.05$). | [HTML](report/audit_report_val_gender.html) · [PDF](report/audit_report_val_gender.pdf) |
+| **FairFace ResNet-34** | **Race × Gender** (Intersectional) | 10,954 | Cross-attribute surrogate attribution isolates primary demographic feature contributions without confounding artifacts. | [HTML](report/audit_report_val_race_gender_shap.html) · [PDF](report/audit_report_val_race_gender_shap.pdf) |
 
 ---
 
