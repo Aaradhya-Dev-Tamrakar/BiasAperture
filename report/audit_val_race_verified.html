@@ -247,6 +247,52 @@
             padding: 0.15rem 0.5rem;
             margin: 0.15rem 0.25rem 0.15rem 0;
         }
+
+        /* --- Print & Headless PDF Compilation Standards --- */
+        @media print {
+            @page {
+                size: A4;
+                margin: 12mm 15mm;
+            }
+            body {
+                padding: 0;
+                background: #ffffff;
+                color: #0f172a;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .container {
+                max-width: 100%;
+                margin: 0;
+            }
+            header, .section-card, .exec-summary, .scope-card {
+                break-inside: avoid;
+                box-shadow: none !important;
+                border: 1px solid #cbd5e1 !important;
+            }
+            /* Auto-expand collapsed details blocks so suppressed cohorts print fully */
+            details.insufficient-block,
+            details.insufficient-block > * {
+                display: block !important;
+            }
+            details.insufficient-block summary {
+                font-weight: 700;
+                margin-bottom: 0.5rem;
+            }
+            details.insufficient-block summary::before {
+                content: "▼ " !important;
+            }
+            table {
+                page-break-inside: auto;
+            }
+            tr {
+                page-break-inside: avoid;
+                page-break-after: auto;
+            }
+            thead {
+                display: table-header-group;
+            }
+        }
     </style>
 </head>
 <body>
@@ -273,6 +319,12 @@
                 </div>
             </div>
         </header>
+
+        <!-- Diagnostic Scope & Boundary Assertion -->
+        <div class="scope-card" style="background-color: var(--bg-card); border: 1px solid var(--border-color); border-left: 4px solid var(--brand-blue); border-radius: 6px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; font-size: 0.85rem; color: var(--text-main); line-height: 1.5;">
+            <strong style="color: #1e293b; display: block; margin-bottom: 0.25rem;">Diagnostic Scope & Non-Intervention Guarantee:</strong>
+            BiasAperture is engineered exclusively as an external diagnostic auditing, statistical significance testing, and regulatory traceability platform. It does <strong>not</strong> perform model retraining, in-processing debiasing, or synthetic image generation. In adherence to statistical integrity safeguards (NFR-003), demographic subgroups with fewer than 30 samples (<em>n &lt; 30</em>) have point estimates suppressed to prevent unreliable compliance claims.
+        </div>
 
         <!-- 0. Executive Summary Strip -->
         <div class="exec-summary">
