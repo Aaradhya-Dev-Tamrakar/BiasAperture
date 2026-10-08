@@ -13,7 +13,7 @@ if command -v pwsh >/dev/null 2>&1; then
     exec pwsh -File "$(dirname "$0")/sync.ps1" "$@"
 fi
 
-REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || (cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd))"
 cd "$REPO_ROOT"
 
 MESSAGE=""
