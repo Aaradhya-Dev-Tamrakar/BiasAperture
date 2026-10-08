@@ -45,10 +45,17 @@ BiasAperture/
 
 ## 3. Build & Test Commands
 
-- **Run all tests**: `uv run --extra dev pytest`
-- **Lint code**: `uv run --extra dev ruff check src/`
-- **Format code**: `uv run --extra dev ruff format src/`
-- **Sync remotes**: `pwsh -File .\sync.ps1 -m "type(scope): summary (#issue)"`
+- **Universal Makefile Entrypoints** (Recommended across POSIX & build pipelines):
+  - **Run tests**: `make test` (or `uv run --extra dev pytest`)
+  - **Lint code**: `make lint` (or `uv run --extra dev ruff check src/`)
+  - **Format code**: `make format` (or `uv run --extra dev ruff format src/`)
+  - **Deterministic verification**: `make verify` (or `python scripts/verify.py`)
+  - **Generate audit report**: `make audit`
+  - **Export companion PDF**: `make pdf`
+  - **Clean cache artifacts**: `make clean`
+- **Cross-Platform Multi-Remote Sync**:
+  - **Windows**: `.\sync.bat -m "type(scope): summary (#issue)"` (or `pwsh -File .\sync.ps1`)
+  - **Linux / macOS**: `./sync.sh -m "type(scope): summary (#issue)"` (or `make sync ARGS="-m 'type(scope): summary (#issue)'"`)
 
 ---
 
