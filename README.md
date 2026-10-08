@@ -126,6 +126,15 @@ uv sync --extra dev
 
 ### 2. Run Quality Checks & Test Suite
 
+Using standard `make` (cross-platform / Linux / macOS):
+```bash
+make test        # Run pytest test suite
+make lint        # Check Ruff linting
+make format      # Format codebase
+make verify      # Deterministic verification suite (AST, lint, SHA integrity)
+```
+
+Or directly via `uv`:
 ```bash
 # Run pytest test suite
 uv run --extra dev pytest
