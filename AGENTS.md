@@ -1,4 +1,4 @@
-# AGENT.md — Developer & AI Agent Guidelines
+# AGENTS.md — Developer & AI Agent Guidelines
 
 This repository contains **BiasAperture**, a demographic bias auditing platform for computer vision models. All AI coding agents operating on this codebase must follow the rules and constraints below.
 
