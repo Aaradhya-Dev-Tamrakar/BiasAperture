@@ -3,13 +3,13 @@
 # Cross-platform environment resolution
 ifeq ($(OS),Windows_NT)
 	PYTHON ?= python
-	SYNC_RUNNER = cmd /c sync.bat
+	SYNC_RUNNER = cmd /c scripts\sync.bat
 else
 	PYTHON ?= python3
 	ifneq ($(shell which pwsh 2>/dev/null),)
-		SYNC_RUNNER = pwsh -File ./sync.ps1
+		SYNC_RUNNER = pwsh -File ./scripts/sync.ps1
 	else
-		SYNC_RUNNER = ./sync.sh
+		SYNC_RUNNER = ./scripts/sync.sh
 	endif
 endif
 

@@ -37,7 +37,13 @@ BiasAperture/
 │   └── tests/                     # Pytest suite
 ├── docs/                          # Meta-documentation, schema lock, literature matrix
 ├── report/                        # LaTeX report source and compiled main.pdf
-├── sync.ps1                       # Multi-remote sync script (origin & duo compulsory, org mirror)
+├── scripts/                       # Orchestration, sync, and verification scripts
+│   ├── sync.ps1                   # Full PowerShell synchronization engine
+│   ├── sync.bat                   # Windows execution wrapper
+│   ├── sync.sh                    # POSIX shell execution wrapper
+│   └── verify.py                  # Deterministic verification suite
+├── Makefile                       # Universal POSIX build & sync interface
+├── make.bat                       # Zero-dependency Windows make dispatcher
 └── pyproject.toml                 # Ruff & pytest configuration
 ```
 
@@ -54,8 +60,9 @@ BiasAperture/
   - **Export companion PDF**: `make pdf`
   - **Clean cache artifacts**: `make clean`
 - **Cross-Platform Multi-Remote Sync**:
-  - **Windows**: `.\sync.bat -m "type(scope): summary (#issue)"` (or `pwsh -File .\sync.ps1`)
-  - **Linux / macOS**: `./sync.sh -m "type(scope): summary (#issue)"` (or `make sync ARGS="-m 'type(scope): summary (#issue)'"`)
+  - **Universal**: `make sync ARGS="-m 'type(scope): summary (#issue)'"` (or `make sync -m "..."` on Windows)
+  - **Windows**: `.\sync.bat -m "type(scope): summary (#issue)"` (or `.\scripts\sync.bat`)
+  - **Linux / macOS**: `./scripts/sync.sh -m "type(scope): summary (#issue)"` (or `pwsh -File ./scripts/sync.ps1`)
 
 ---
 
