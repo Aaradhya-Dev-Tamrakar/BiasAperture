@@ -129,24 +129,32 @@ Every metric computation is validated by statistical confidence and hypothesis t
 
 Explainability is executed **conditionally** as a targeted post-processing stage to minimize compute overhead.
 
-```
-Metric Result Row ──► [ Is Disparity Flagged? ] ──► NO  ──► Skip SHAP (Zero overhead)
-                             │ (p < 0.05 AND n >= 30)
-                             ▼ YES
-                      [ Explainer Strategy ]
-                             │
-            ┌────────────────┴────────────────┐
-            ▼                                 ▼
-   PartitionExplainer               GradientExplainer
-   (Black-Box Default)              (In-Process PyTorch Fast-Path)
-            │                                 │
-            └────────────────┬────────────────┘
-                             ▼
-              [ Pretrained Face Parsing (BiSeNet) ]
-                             ▼
-              [ Spatial Attribution Shift + ITA ]
-                             ▼
-              [ Inlined Base64 PNG Visualization ]
+```mermaid
+flowchart TD
+    row["Metric Result Row"]
+    flag{"[ Is Disparity Flagged? ]<br>(p < 0.05 AND n >= 30)"}
+    skip["Skip SHAP (Zero overhead)"]
+    exp["[ Explainer Strategy ]"]
+    
+    p_exp["PartitionExplainer<br>(Black-Box Default)"]
+    g_exp["GradientExplainer<br>(In-Process PyTorch Fast-Path)"]
+    
+    parse["[ Pretrained Face Parsing (BiSeNet) ]"]
+    attr["[ Spatial Attribution Shift + ITA ]"]
+    vis["[ Inlined Base64 PNG Visualization ]"]
+    
+    row --> flag
+    flag -- "NO" --> skip
+    flag -- "YES" --> exp
+    
+    exp --> p_exp
+    exp --> g_exp
+    
+    p_exp --> parse
+    g_exp --> parse
+    
+    parse --> attr
+    attr --> vis
 ```
 
 - **Selective Triggering**: Only subgroups failing the fairness audit ($p < \alpha, n \ge 30$) trigger SHAP. Sample size is capped at $k = \min(n, 20)$ representative exemplars.
