@@ -335,6 +335,22 @@ class ModelInterface(ABC):
   - GPU: Dedicated NVIDIA GPU with $\ge 8$ GB VRAM (T4, RTX 3060, A10)
   - Storage: 25 GB free NVMe space (to accommodate extracted FairFace tarballs)
 
+### VRAM Sizing Justification
+
+The following engineering estimate confirms that 6–8 GB VRAM is sufficient for the full BiasAperture audit pipeline (validated during Proposal Defense Q&A, 2026-09-07):
+
+| Component | Memory Footprint | Notes |
+|-----------|-----------------|-------|
+| ResNet-34 model weights (FP32) | ~83 MB | 21.8M parameters × 4 bytes |
+| Input tensor batch (batch=32) | ~19 MB | 32 × 3 × 224 × 224 × 4 bytes |
+| Inference activations (no grad) | ~500 MB peak | `torch.no_grad()` context; no backward pass |
+| **Total GPU inference footprint** | **~600 MB** | Well within 6 GB minimum |
+| Bootstrap resampling ($B = 1{,}000$) | CPU-only | NumPy array operations; no GPU required |
+| Surrogate attribution | CPU-only | scikit-learn `LogisticRegression`; no GPU required |
+| Chi-squared significance testing | CPU-only | SciPy `chi2_contingency`; no GPU required |
+
+**Bottleneck:** Disk I/O for loading 97,698 JPEG images from FairFace, not GPU compute. Full audit completes in ≤ 4 hours on a mid-range GPU (T4 / RTX 3060) per NFR-004.
+
 ### Software Stack
 
 - **Core Runtime:** Python 3.10, 3.11, or 3.12 managed via `uv` package manager.
