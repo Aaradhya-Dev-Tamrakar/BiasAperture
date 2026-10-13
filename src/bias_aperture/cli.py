@@ -229,6 +229,7 @@ class AuditPipeline:
             protected_axis=protected_attr,
             total_subjects=len(records),
             explanations=explanations,
+            attributions=explanations,
             backend=backend,
             backend_status=backend_status,
         )

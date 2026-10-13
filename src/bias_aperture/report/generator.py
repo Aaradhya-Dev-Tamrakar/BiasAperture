@@ -51,8 +51,15 @@ class ReportContext:
         default_factory=lambda: dict(REGULATORY_MAPPING)
     )
     explanations: Sequence[ExplanationResult] = field(default_factory=list)
+    attributions: Sequence[ExplanationResult] = field(default_factory=tuple)
     backend: str = "unspecified"
     backend_status: str = "Execution status was not supplied."
+
+    def __post_init__(self) -> None:
+        if not self.attributions and self.explanations:
+            object.__setattr__(self, "attributions", tuple(self.explanations))
+        elif not self.explanations and self.attributions:
+            object.__setattr__(self, "explanations", list(self.attributions))
 
 
 # ── Report Analytical Helpers (R12) ──────────────────────────────────
@@ -196,12 +203,15 @@ class HTMLReportGenerator:
             groups, valid_groups, insufficient_groups
         )
 
+        resolved_attributions = list(context.attributions or context.explanations)
         return {
             "context": context,
             "summary_metrics": summary_metrics,
             "subgroup_matrix": valid_groups,
             "insufficient_groups": insufficient_groups,
             "exec_summary": exec_summary,
+            "has_attributions": bool(resolved_attributions),
+            "attributions": resolved_attributions,
         }
 
     def generate(self, context: ReportContext) -> str:

@@ -538,6 +538,58 @@
             {% endif %}
         </div>
 
+        {% if has_attributions %}
+        <!-- 3. Targeted Disparity Explainability & Proxy Attributions -->
+        <div class="section-card">
+            <h2>3. Targeted Disparity Explainability &amp; Proxy Attributions</h2>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">
+                Surrogate additive Shapley attributions computed for statistically flagged disparities
+                (p&nbsp;&lt;&nbsp;0.05, n&nbsp;≥&nbsp;30). Bar lengths represent mean absolute Shapley
+                attribution magnitude across the evaluation cohort. Only the top proxy features are shown.
+            </p>
+            <div class="regulatory-box" style="background:#fefce8; border-left-color:#ca8a04;">
+                <strong>Non-Causal Disclaimer (Bilodeau et al., 2022):</strong>
+                Attributions identify empirical associations between demographic proxy features and model
+                predictions. They do <em>not</em> establish causal relationships or prescribe remediation.
+                This is a diagnostic tool only — no model retraining or weight modification is performed.
+            </div>
+
+            {% for item in attributions %}
+            <div style="margin: 1.5rem 0;">
+                <h3 style="font-size: 1rem; color: var(--text); margin-bottom: 0.5rem;">
+                    Flagged Disparity: <code>{{ item.metric_name }}</code> for subgroup <strong>{{ item.subgroup }}</strong>
+                </h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">{{ item.details }}</p>
+                {% if item.feature_attributions %}
+                {% set items = item.feature_attributions.items() | list %}
+                {% set max_val = items | map(attribute=1) | max %}
+                {% set bar_h = 16 %}
+                {% set gap = 6 %}
+                {% set label_w = 140 %}
+                {% set track_w = 200 %}
+                {% set total_h = items | length * (bar_h + gap) + 10 %}
+                <svg class="inline-chart" width="{{ label_w + track_w + 60 }}" height="{{ total_h }}"
+                     viewBox="0 0 {{ label_w + track_w + 60 }} {{ total_h }}"
+                     role="img" aria-label="Feature attribution bars">
+                    {% for feat, val in items %}
+                        {% set y = loop.index0 * (bar_h + gap) + 5 %}
+                        {% set frac = (val / max_val) if max_val > 0 else 0 %}
+                        {% set bar_len = frac * track_w %}
+                        <text x="{{ label_w - 6 }}" y="{{ y + bar_h - 4 }}"
+                              font-size="11" fill="#475569" text-anchor="end">{{ feat }}</text>
+                        <rect x="{{ label_w }}" y="{{ y }}" width="{{ track_w }}"
+                              height="{{ bar_h }}" fill="#f1f5f9" rx="3"/>
+                        <rect x="{{ label_w }}" y="{{ y }}" width="{{ bar_len }}"
+                              height="{{ bar_h }}" fill="#3b82f6" rx="3"/>
+                        <text x="{{ label_w + bar_len + 6 }}" y="{{ y + bar_h - 4 }}"
+                              font-size="11" font-weight="600" fill="#1e293b">{{ "%.3f" | format(val) }}</text>
+                    {% endfor %}
+                </svg>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
         {% if context.explanations %}
         <div class="section-card">
             <h2>Demographic Surrogate Associations</h2>
@@ -559,9 +611,9 @@
         </div>
         {% endif %}
 
-        <!-- 3. Model Card & Dataset Datasheet (Mitchell / Gebru) -->
+        <!-- Governance Documentation & Intended Use -->
         <div class="section-card">
-            <h2>3. Governance Documentation & Intended Use</h2>
+            <h2>Governance Documentation &amp; Intended Use</h2>
             <div class="regulatory-box">
                 <strong>EU AI Act (Regulation EU 2024/1689) Article 10 / Annex IV Alignment:</strong>
                 This audit dossier provides verifiable diagnostic documentation of demographic performance disparities. It does not perform model retraining or in-situ weight modifications.

@@ -176,3 +176,80 @@ def test_cli_intersectional_race_gender_audit(tmp_path: Path) -> None:
     content = out_report.read_text(encoding="utf-8")
     assert "White_Female" in content
     assert "Black_Male" in content
+
+
+def test_cli_end_to_end_renders_targeted_disparity_explainability(
+    tmp_path: Path,
+) -> None:
+    """End-to-end regression test: CLI must render Targeted Disparity
+    Explainability section.
+    """
+    rows = []
+    for i in range(40):
+        rows.append(
+            {
+                "face_name_align": f"white_{i}.jpg",
+                "race": "White",
+                "gender": "Female",
+                "age": "20-29",
+                "true_label": "1",
+                "predicted_label": "1",
+            }
+        )
+    for i in range(40):
+        rows.append(
+            {
+                "face_name_align": f"black_{i}.jpg",
+                "race": "Black",
+                "gender": "Female",
+                "age": "20-29",
+                "true_label": "1",
+                "predicted_label": "0",
+            }
+        )
+    df = pd.DataFrame(rows)
+    pred_csv = tmp_path / "disparate_preds.csv"
+    df.to_csv(pred_csv, index=False)
+
+    out_report = tmp_path / "explain_report.html"
+    rc = main(
+        [
+            "-i",
+            str(pred_csv),
+            "-a",
+            "race",
+            "--backend",
+            "fairlearn",
+            "--bca-resamples",
+            "1000",
+            "--explain",
+            "-o",
+            str(out_report),
+        ]
+    )
+    assert rc == 0
+    assert out_report.exists()
+    content = out_report.read_text(encoding="utf-8")
+    assert "3. Targeted Disparity Explainability &amp; Proxy Attributions" in content
+    assert "Non-Causal Disclaimer" in content
+    assert "Bilodeau et al." in content
+    assert '<svg class="inline-chart"' in content
+
+    # Verify --no-explain suppresses the section
+    out_no_explain = tmp_path / "no_explain_report.html"
+    rc_no = main(
+        [
+            "-i",
+            str(pred_csv),
+            "-a",
+            "race",
+            "--backend",
+            "fairlearn",
+            "--no-explain",
+            "-o",
+            str(out_no_explain),
+        ]
+    )
+    assert rc_no == 0
+    content_no = out_no_explain.read_text(encoding="utf-8")
+    assert "Targeted Disparity Explainability" not in content_no
