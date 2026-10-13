@@ -1,6 +1,6 @@
 # Track 22 — Multi-Model Comparative Benchmarking & Leaderboard
 
-> **⏸ PARKED (2026-09-02, Aaradhya) — do not claim yet.** Holds until Track 25 (Web Dashboard Architecture) and Track 36 (Regulatory Expansion Map) land. Live status: `task_2026-09-02_004`, blocked. Full reasoning in `PHASE2_TASK_MAP.md`.
+> **▶ ACTIVE (2026-10-12, Post-Proposal Defense)** — Unparked per defense panel recommendation (*"Evaluate different models, not just ResNet. Try some other models like ViT and compare the scores."*). Scoped strictly to comparative empirical disparity auditing between **ViT-B/16** and baseline **ResNet-34** on the FairFace validation split ($N=10,954$) without changing diagnostic boundaries.
 
 **Stream:** G (Novelty) · **Priority:** 🔴 High · **Owner Focus:** Open (orchestrator-claimed)
 **Estimated Time:** 45 min · **Feeds:** Phase-2 novelty defense

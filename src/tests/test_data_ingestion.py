@@ -741,4 +741,3 @@ def test_subgroup_cohort_profile_126_properties() -> None:
     assert profile.insufficient_126_count == 125
     assert "race=White&age=20-29&gender=Female" in profile.eligible_126_cells
     assert "race=Indian&age=70+&gender=Male" in profile.insufficient_126_cells
-

@@ -745,7 +745,6 @@ class DataIngestionPipeline:
         return stats_map
 
 
-
 class OvRTransformer:
     r"""
     Multi-Class One-vs-Rest (OvR) evaluation helper.

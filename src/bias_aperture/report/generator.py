@@ -243,8 +243,6 @@ class HTMLReportGenerator:
 
         Returns
         -------
-        Path
-            Absolute path to the written report.
         """
         html = self.generate(context)
         out = Path(output_path).resolve()
