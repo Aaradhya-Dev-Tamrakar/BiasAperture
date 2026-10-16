@@ -93,9 +93,11 @@ class FairFaceDataset(Dataset):
         try:
             pil_img = Image.open(img_path).convert("RGB")
         except Exception as exc:
-            print(f"[!] Warning: failed to load {img_path}: {exc}", file=sys.stderr)
-            # Return a black placeholder so DataLoader doesn't crash
-            pil_img = Image.new("RGB", (224, 224), (0, 0, 0))
+            raise RuntimeError(
+                f"Audit-cohort integrity violation: failed to read image '{image_name}' "
+                f"at '{img_path}': {exc}. Synthetic image substitution is strictly prohibited "
+                "to prevent demographic distortion and maintain audit validity."
+            ) from exc
 
         # AutoImageProcessor handles resize, normalisation, tensor conversion
         pixel_values = self.processor(images=pil_img, return_tensors="pt")["pixel_values"][0]
