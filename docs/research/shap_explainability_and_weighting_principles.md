@@ -23,7 +23,7 @@ In summary:
    - **Kernel Weights (KernelSHAP):** Approximating attributions via weighted linear regression requires the **Shapley Kernel**:
      $$\pi_x(z') = \frac{M - 1}{\binom{M}{|z'|} \cdot |z'| \cdot (M - |z'|)}$$
      This forms a **U-shaped weighting curve** that heavily prioritizes single-feature main effects ($|z'|=1$) and total interactive effects ($|z'|=M-1$), while down-weighting intermediate coalitions.
-3. **What "Values" Mean:** Feature values are quantified through their marginal contribution to the prediction relative to a background baseline expectation $\mathbb{E}[f(X)]$. In linear surrogate models, this reduces to $\phi_i = w_i \cdot (x_i - \mathbb{E}[x_i])$, directly matching BiasAperture's surrogate explainer implementation.
+3. **What "Values" Mean:** Features cannot be natively omitted from a trained neural network. Instead, "absent" features are marginalized over a reference background distribution $D_{\text{bg}}$: $v(S) = \frac{1}{|D_{\text{bg}}|} \sum_{x' \in D_{\text{bg}}} f(x_S, x'_{\bar{S}})$. The choice of baseline (zero pixels, dataset mean, or demographic cohort exemplars) directly governs what the attributions measure — deviation from a neutral state vs. deviation from a population mean.
 4. **Diagnostic Application to BiasAperture:** For facial analysis models (ResNet-34 on FairFace), pixel-level SHAP is computationally intractable ($50,176$ features). BiasAperture structures explainability by partitioning faces into semantic anatomical regions (skin tone, hair, facial geometry, background) to detect **proxy variable entanglement** (Stanley et al. 2025; EU AI Act Article 13/15) when demographic disparities are statistically flagged ($p < 0.05, n \ge 30$).
 
 ---
