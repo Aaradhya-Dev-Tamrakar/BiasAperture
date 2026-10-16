@@ -1,4 +1,7 @@
-"""Regression and unit tests for MobileNetV2 FairFaceDataset and prediction pipeline (Model 4)."""
+"""Regression and unit tests for MobileNetV2 FairFaceDataset and prediction pipeline.
+
+Covers Model 4 integration tests and schema adherence.
+"""
 
 from __future__ import annotations
 
@@ -14,7 +17,11 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from bias_aperture.cli import main  # noqa: E402
-from bias_aperture.data_ingestion import DataIngestionPipeline, IngestionConfig, ValidationMode  # noqa: E402
+from bias_aperture.data_ingestion import (  # noqa: E402
+    DataIngestionPipeline,
+    IngestionConfig,
+    ValidationMode,
+)
 from scripts.predict_mobilenet import FairFaceDataset  # noqa: E402
 
 
@@ -59,8 +66,10 @@ def test_mobilenet_fairface_dataset_valid_read(tmp_path: Path) -> None:
     assert meta["age"] == "20-29"
 
 
-def test_mobilenet_fairface_dataset_raises_on_missing_image(tmp_path: Path) -> None:
-    """Audit-cohort integrity test: missing or corrupted images MUST raise RuntimeError."""
+def test_mobilenet_fairface_dataset_raises_on_missing_image(
+    tmp_path: Path,
+) -> None:
+    """Cohort integrity test: missing or corrupted images MUST raise RuntimeError."""
     img_dir = tmp_path / "images"
     img_dir.mkdir()
 
@@ -126,8 +135,10 @@ def mobilenet_synthetic_csv(tmp_path: Path) -> Path:
     return csv_path
 
 
-def test_mobilenet_ingestion_pipeline_strict(mobilenet_synthetic_csv: Path) -> None:
-    """MobileNet predictions CSV passes DataIngestionPipeline under STRICT validation."""
+def test_mobilenet_ingestion_pipeline_strict(
+    mobilenet_synthetic_csv: Path,
+) -> None:
+    """MobileNet predictions CSV passes DataIngestionPipeline under STRICT mode."""
     pipeline = DataIngestionPipeline(
         config=IngestionConfig(
             validation_mode=ValidationMode.STRICT,
@@ -141,7 +152,9 @@ def test_mobilenet_ingestion_pipeline_strict(mobilenet_synthetic_csv: Path) -> N
     assert result.validation_summary.rejected_records_count == 0
 
 
-def test_mobilenet_audit_cli_execution(mobilenet_synthetic_csv: Path, tmp_path: Path) -> None:
+def test_mobilenet_audit_cli_execution(
+    mobilenet_synthetic_csv: Path, tmp_path: Path
+) -> None:
     """Full end-to-end CLI execution with MobileNetV2 predictions."""
     report_path = tmp_path / "audit_report_mobilenet.html"
     exit_code = main(
