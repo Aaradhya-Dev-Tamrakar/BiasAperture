@@ -2,7 +2,8 @@
 ResNet-50 Integration & Schema Compliance Tests (Model 3).
 
 Verifies:
-  1. Ingestion of ResNet-50 prediction CSV schema (face_name_align, race, gender, age, true_label, predicted_label)
+  1. Ingestion of ResNet-50 prediction CSV schema
+     (face_name_align, race, gender, age, true_label, predicted_label)
   2. Strict validation and alignment against locked demographic taxonomies
   3. Auditing with dual consensus fairness backends (Fairlearn + AIF360)
   4. Core Four metric generation with BCa bootstrap CIs and chi-squared significance
@@ -17,7 +18,11 @@ import pandas as pd
 import pytest
 
 from bias_aperture.cli import main
-from bias_aperture.data_ingestion import DataIngestionPipeline, IngestionConfig, ValidationMode
+from bias_aperture.data_ingestion import (
+    DataIngestionPipeline,
+    IngestionConfig,
+    ValidationMode,
+)
 
 
 @pytest.fixture
@@ -59,8 +64,10 @@ def resnet50_synthetic_csv(tmp_path: Path) -> Path:
     return csv_path
 
 
-def test_resnet50_ingestion_pipeline_strict(resnet50_synthetic_csv: Path) -> None:
-    """ResNet-50 predictions CSV passes DataIngestionPipeline under STRICT validation."""
+def test_resnet50_ingestion_pipeline_strict(
+    resnet50_synthetic_csv: Path,
+) -> None:
+    """ResNet-50 predictions CSV passes DataIngestionPipeline under STRICT mode."""
     pipeline = DataIngestionPipeline(
         config=IngestionConfig(
             validation_mode=ValidationMode.STRICT,
@@ -74,7 +81,9 @@ def test_resnet50_ingestion_pipeline_strict(resnet50_synthetic_csv: Path) -> Non
     assert result.validation_summary.rejected_records_count == 0
 
 
-def test_resnet50_audit_cli_execution(resnet50_synthetic_csv: Path, tmp_path: Path) -> None:
+def test_resnet50_audit_cli_execution(
+    resnet50_synthetic_csv: Path, tmp_path: Path
+) -> None:
     """Full end-to-end CLI execution with ResNet-50 predictions."""
     report_path = tmp_path / "audit_report_resnet50.html"
     exit_code = main(
