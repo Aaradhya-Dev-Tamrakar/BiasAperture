@@ -35,7 +35,6 @@ import warnings
 from pathlib import Path
 from typing import Literal
 
-import numpy as np
 import pandas as pd
 import torch
 from PIL import Image
@@ -113,17 +112,18 @@ class FairFaceImageDataset(Dataset):
 
         try:
             pil_img = Image.open(image_path).convert("RGB")
-        except Exception as e:
-            pil_img = None
-            err_msg = str(e)
-        else:
-            err_msg = ""
+        except Exception as exc:
+            raise RuntimeError(
+                f"Audit-cohort integrity violation: failed to read image "
+                f"'{image_name}' at '{image_path}': {exc}. "
+                "Synthetic image substitution is strictly prohibited "
+                "to prevent demographic distortion and maintain audit validity."
+            ) from exc
 
         return {
             "index": idx,
             "image_name": image_name,
             "pil_image": pil_img,
-            "error": err_msg,
             "race": str(row.get("race", "")),
             "gender": str(row.get("gender", "")),
             "age": str(row.get("age", "")),
@@ -132,11 +132,7 @@ class FairFaceImageDataset(Dataset):
 
 def collate_fairface_batch(batch: list[dict], processor, device: torch.device):
     """Collate function that batches PIL images through processor/transform."""
-    valid_items = [item for item in batch if item["pil_image"] is not None]
-    if not valid_items:
-        return None
-
-    images = [item["pil_image"] for item in valid_items]
+    images = [item["pil_image"] for item in batch]
 
     # Preprocess via HuggingFace AutoImageProcessor or torchvision
     if hasattr(processor, "preprocess"):
@@ -155,7 +151,7 @@ def collate_fairface_batch(batch: list[dict], processor, device: torch.device):
             "gender": item["gender"],
             "age": item["age"],
         }
-        for item in valid_items
+        for item in batch
     ]
 
     return {"pixel_values": pixel_values, "metadata": metadata}
@@ -335,7 +331,6 @@ def run_resnet50_predictions(
 
     # 5. Inference loop
     records: list[dict] = []
-    skipped = 0
 
     print(f"[*] Running ResNet-50 inference across {len(dataset)} items (batch_size={batch_size})...")
     with torch.no_grad():
