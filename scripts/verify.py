@@ -125,11 +125,53 @@ def check_commit_sha_integrity():
         ok("all commit SHAs are authentic 7-40 hex format (0 placeholders found)")
 
 
+def check_report_integrity():
+    print("\n[4/4] Report integrity & self-healing reconciliation check")
+    report_dir = os.path.join(ROOT, "report")
+    if not os.path.exists(report_dir):
+        ok("report/ directory not present (skipping report check)")
+        return
+
+    uv = shutil.which("uv")
+    if uv:
+        res = subprocess.run(
+            [uv, "run", "--extra", "dev", "python", "scripts/reconcile_reports.py", "--check"],
+            capture_output=True,
+            text=True,
+        )
+        if res.returncode == 0:
+            ok("all compliance dossiers in report/ satisfy offline contract and visual invariants")
+        else:
+            err(f"Report reconciler check detected discrepancies:\n{res.stdout.strip()}")
+            print("\n  --> Remediation: Run 'make reconcile' or 'python scripts/reconcile_reports.py --heal' to self-heal all dossiers.")
+        return
+
+    src_dir = os.path.join(ROOT, "src")
+    if src_dir not in sys.path:
+        sys.path.insert(0, src_dir)
+
+    try:
+        from pathlib import Path
+        from bias_aperture.report.reconciler import ReportReconciler
+
+        issues = ReportReconciler.audit_dossiers(Path(report_dir))
+        if issues:
+            for issue in issues:
+                err(f"{issue.report_name}: [{issue.issue_type}] {issue.message}")
+            print("\n  --> Remediation: Run 'make reconcile' or 'python scripts/reconcile_reports.py --heal' to self-heal all dossiers.")
+        else:
+            ok("all compliance dossiers in report/ satisfy offline contract and visual invariants")
+    except Exception as exc:
+        err(f"Failed to execute report reconciler: {exc}")
+
+
+
 def main():
     print(f"Running deterministic verification in {ROOT}")
     check_python_syntax()
     check_ruff()
     check_commit_sha_integrity()
+    check_report_integrity()
 
     print(f"\n{'='*50}")
     print(f"Passed: {len(passes)}   Errors: {len(errors)}")
@@ -142,3 +184,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

@@ -30,11 +30,15 @@ BiasAperture addresses these challenges through a non-invasive, diagnostic pipel
 
 BiasAperture was dog-fooded on our own case-study model: a multi-task ResNet-34 classifier evaluated on the **FairFace benchmark ($N = 10,954$)**. The compiled, standalone HTML audit dossiers demonstrate the platform's diagnostic findings:
 
-| Audit Target | Protected Axis | Sample Size ($N$) | Key Empirical Finding | Compliance Dossier Formats |
-| :--- | :--- | :--- | :--- | :--- |
-| **FairFace ResNet-34** | **Race** (7 subgroups) | 10,954 | **4 of 7 subgroups** exhibit statistically significant disparity ($p < 0.05$); largest deviation observed in Middle Eastern cohort. | [HTML](report/audit_val_race_verified.html) · [PDF](report/audit_val_race_verified.pdf) |
-| **FairFace ResNet-34** | **Gender** (Binary) | 10,954 | **2 of 2 subgroups** exhibit statistically significant error rate disparity ($p < 0.05$). | [HTML](report/audit_report_val_gender.html) · [PDF](report/audit_report_val_gender.pdf) |
-| **FairFace ResNet-34** | **Race × Gender** (Intersectional) | 10,954 | Cross-attribute surrogate attribution isolates primary demographic feature contributions without confounding artifacts. | [HTML](report/audit_report_val_race_gender_shap.html) · [PDF](report/audit_report_val_race_gender_shap.pdf) |
+| Audit Target | Architecture & Parameters | Protected Axis | Sample Size ($N$) | Key Empirical Finding | Compliance Dossier Formats |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **FairFace ResNet-34** | Multi-Task CNN (21.3M) | **Race** (7 subgroups) | 10,954 | **4 of 7 subgroups** exhibit statistically significant disparity ($p < 0.05$); largest deviation in Middle Eastern cohort. | [HTML](report/audit_val_race_verified.html) · [PDF](report/audit_val_race_verified.pdf) |
+| **ResNet-34 Baseline** | ImageNet CNN (21.3M) | **Race** (7 subgroups) | 10,954 | Baseline race audit across FairFace validation split (DPD=0.053, DIR=0.923). | [HTML](report/audit_report_val_resnet_race.html) · [PDF](report/audit_report_val_resnet_race.pdf) |
+| **FairFace ResNet-34** | Multi-Task CNN (21.3M) | **Gender** (Binary) | 10,954 | Binary gender disparity audit with conditional support checks ($p < 0.05$). | [HTML](report/audit_report_val_gender.html) · [PDF](report/audit_report_val_gender.pdf) |
+| **FairFace ResNet-34** | Intersectional (21.3M) | **Race × Gender** (14 subgroups) | 10,954 | Cross-attribute surrogate attribution isolates primary demographic proxy features. | [HTML](report/audit_report_val_race_gender_shap.html) · [PDF](report/audit_report_val_race_gender_shap.pdf) |
+| **ViT-B/16 Baseline** | Vision Transformer (86.6M) | **Race** (7 subgroups) | 10,954 | Self-attention disparity profile across balanced demographic validation cohorts. | [HTML](report/audit_report_val_vit_race.html) · [PDF](report/audit_report_val_vit_race.pdf) |
+| **ResNet-50 Baseline** | Deep Residual CNN (25.6M) | **Race** (7 subgroups) | 10,954 | Deep residual baseline disparity profile with unified Section 3 proxy attribution. | [HTML](report/audit_report_val_resnet50_race.html) · [PDF](report/audit_report_val_resnet50_race.pdf) |
+| **MobileNetV2 Baseline** | Lightweight Edge CNN (3.5M) | **Race** (7 subgroups) | 10,954 | Edge-tier mobile architecture disparity profile with unified Section 3 proxy attribution. | [HTML](report/audit_report_val_mobilenet_race.html) · [PDF](report/audit_report_val_mobilenet_race.pdf) |
 
 ---
 

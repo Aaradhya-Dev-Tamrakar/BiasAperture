@@ -13,9 +13,25 @@ from bias_aperture.report.generator import (
     HTMLReportGenerator,
     ReportContext,
 )
+from bias_aperture.report.metadata_registry import (
+    ModelMetadata,
+    ModelMetadataRegistry,
+)
+from bias_aperture.report.reconciler import (
+    ReconciliationIssue,
+    ReconciliationSummary,
+    ReportReconciler,
+)
 
 __all__ = [
     "HTMLReportGenerator",
+    "ModelMetadata",
+    "ModelMetadataRegistry",
     "REGULATORY_MAPPING",
+    "ReconciliationIssue",
+    "ReconciliationSummary",
     "ReportContext",
+    "ReportReconciler",
 ]
+
+

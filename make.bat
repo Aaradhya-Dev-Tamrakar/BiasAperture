@@ -13,6 +13,8 @@ if /i "%TARGET%"=="format" goto do_format
 if /i "%TARGET%"=="verify" goto do_verify
 if /i "%TARGET%"=="audit" goto do_audit
 if /i "%TARGET%"=="pdf" goto do_pdf
+if /i "%TARGET%"=="reconcile" goto do_reconcile
+if /i "%TARGET%"=="check-reports" goto do_check_reports
 if /i "%TARGET%"=="sync" goto do_sync
 if /i "%TARGET%"=="install" goto do_install
 if /i "%TARGET%"=="clean" goto do_clean
@@ -45,6 +47,14 @@ exit /b %ERRORLEVEL%
 python scripts\export_report_pdf.py reports\bias_audit_report.html reports\bias_audit_report.pdf %1 %2 %3 %4 %5 %6 %7 %8 %9
 exit /b %ERRORLEVEL%
 
+:do_reconcile
+python scripts\reconcile_reports.py --heal %1 %2 %3 %4 %5 %6 %7 %8 %9
+exit /b %ERRORLEVEL%
+
+:do_check_reports
+python scripts\reconcile_reports.py --check %1 %2 %3 %4 %5 %6 %7 %8 %9
+exit /b %ERRORLEVEL%
+
 :do_sync
 call "%~dp0scripts\sync.bat" %1 %2 %3 %4 %5 %6 %7 %8 %9
 exit /b %ERRORLEVEL%
@@ -61,13 +71,16 @@ exit /b 0
 echo BiasAperture — Engineering ^& Build Automation
 echo.
 echo Usage:
-echo   make test        Run full test suite [pytest via uv]
-echo   make lint        Run ruff linter check
-echo   make format      Run ruff code formatter
-echo   make verify      Run deterministic verification suite [AST, lint, SHA integrity]
-echo   make audit       Run CLI audit pipeline on sample predictions
-echo   make pdf         Export HTML compliance report to A4 PDF
-echo   make sync        Synchronize across remotes [compulsory: origin, duo; optional: org]
-echo   make install     Install project and development dependencies via uv
-echo   make clean       Remove bytecode, pytest, and ruff cache artifacts
+echo   make test          Run full test suite [pytest via uv]
+echo   make lint          Run ruff linter check
+echo   make format        Run ruff code formatter
+echo   make verify        Run deterministic verification suite [AST, lint, SHA, report integrity]
+echo   make audit         Run CLI audit pipeline on sample predictions
+echo   make pdf           Export HTML compliance report to A4 PDF
+echo   make reconcile     Self-heal and regenerate all HTML reports and companion PDFs
+echo   make check-reports Audit reports against offline contract and consistency
+echo   make sync          Synchronize across remotes [compulsory: origin, duo; optional: org]
+echo   make install       Install project and development dependencies via uv
+echo   make clean         Remove bytecode, pytest, and ruff cache artifacts
 exit /b 0
+
