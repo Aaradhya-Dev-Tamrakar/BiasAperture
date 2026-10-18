@@ -3,8 +3,8 @@
 CLI runner for autonomous compliance report reconciliation and audit.
 
 Usage:
-  python scripts/reconcile_reports.py --check   # Audit mode (exit code 0 if all clean, 1 if issues found)
-  python scripts/reconcile_reports.py --heal    # Self-healing mode (re-renders HTML and re-exports PDFs)
+  python scripts/reconcile_reports.py --check   # Audit (exit 0 if clean, 1 if issues)
+  python scripts/reconcile_reports.py --heal    # Self-heal (re-render HTML + PDFs)
 """
 
 from __future__ import annotations
@@ -18,7 +18,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 
-from bias_aperture.report.reconciler import ReportReconciler
+from bias_aperture.report.reconciler import ReportReconciler  # noqa: E402
 
 logging.basicConfig(
     level=logging.INFO,
@@ -35,12 +35,18 @@ def main() -> int:
     group.add_argument(
         "--check",
         action="store_true",
-        help="Audit compliance dossiers for invariant violations without modifying files.",
+        help=(
+            "Audit compliance dossiers for invariant violations without modifying "
+            "files."
+        ),
     )
     group.add_argument(
         "--heal",
         action="store_true",
-        help="Self-heal all compliance dossiers: re-render HTML with latest templates and re-export PDFs.",
+        help=(
+            "Self-heal all compliance dossiers: re-render HTML with latest templates "
+            "and re-export PDFs."
+        ),
     )
     parser.add_argument(
         "--report-dir",
@@ -57,7 +63,8 @@ def main() -> int:
         issues = reconciler.audit_dossiers()
         if not issues:
             print(
-                "  [PASS] All compliance dossiers and companion PDFs are healthy and in sync."
+                "  [PASS] All compliance dossiers and companion PDFs are healthy "
+                "and in sync."
             )
             return 0
 
@@ -67,7 +74,8 @@ def main() -> int:
                 f"    - [{issue.issue_type}] {issue.report_name}: {issue.description}"
             )
         print(
-            "\nAction required: Run 'python scripts/reconcile_reports.py --heal' (or 'make reconcile') to self-heal."
+            "\nAction required: Run 'python scripts/reconcile_reports.py --heal' "
+            "(or 'make reconcile') to self-heal."
         )
         return 1
 
@@ -78,7 +86,8 @@ def main() -> int:
         print(f"  Healed:  {len(summary.healed_reports)}")
         if not summary.issues:
             print(
-                "  [SUCCESS] All compliance dossiers and companion PDFs healed and verified clean."
+                "  [SUCCESS] All compliance dossiers and companion PDFs healed "
+                "and verified clean."
             )
             return 0
 

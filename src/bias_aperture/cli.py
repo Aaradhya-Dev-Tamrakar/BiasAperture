@@ -23,6 +23,7 @@ import logging
 import sys
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 from bias_aperture.data_ingestion import DataIngestionPipeline, IngestionConfig
 from bias_aperture.explainability import ExplanationResult, ShapExplainerEngine
@@ -367,7 +368,10 @@ def _add_audit_arguments(parser: argparse.ArgumentParser) -> None:
         "--model-description",
         type=str,
         default=None,
-        help="Custom model description for Model Card presentation (auto-resolved if omitted).",
+        help=(
+            "Custom model description for Model Card presentation (auto-resolved if "
+            "omitted)."
+        ),
     )
     parser.add_argument(
         "--explain",

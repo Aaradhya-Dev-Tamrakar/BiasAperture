@@ -31,7 +31,8 @@ class ModelMetadata:
     license: str = "Academic Research Only"
     intended_use: str = (
         "Diagnostic benchmarking and demographic disparity auditing in facial analysis "
-        "models. Not intended for production biometrics, identity verification, or automated "
+        "models. Not intended for production biometrics, identity verification, "
+        "or automated "
         "surveillance decision systems."
     )
 
@@ -48,14 +49,20 @@ class ModelMetadataRegistry:
             input_shape="224 × 224 × 3",
             tasks=["Race (7 classes)", "Gender (2 classes)", "Age (9 classes)"],
             description=(
-                "ImageNet-pretrained ResNet-34 terminating in an 18-unit linear multi-task head "
+                "ImageNet-pretrained ResNet-34 terminating in an 18-unit linear "
+                "multi-task head "
                 "sliced for race (7), gender (2), and age (9) classification."
             ),
-            citation="Kärkkäinen & Joo, 'FairFace: Face Attribute Dataset for Balanced Race, Gender, and Age', WACV 2021.",
+            citation=(
+                "Kärkkäinen & Joo, 'FairFace: Face Attribute Dataset for Balanced "
+                "Race, Gender, and Age', WACV 2021."
+            ),
             license="CC BY 4.0 (FairFace Benchmark Weights)",
             intended_use=(
-                "Diagnostic demographic fairness auditing on balanced facial attribute benchmarks. "
-                "Explicitly prohibited from deployment in unconstrained surveillance or punitive legal systems."
+                "Diagnostic demographic fairness auditing on balanced facial "
+                "attribute benchmarks. "
+                "Explicitly prohibited from deployment in unconstrained "
+                "surveillance or punitive legal systems."
             ),
         ),
         "resnet50": ModelMetadata(
@@ -66,13 +73,18 @@ class ModelMetadataRegistry:
             input_shape="224 × 224 × 3",
             tasks=["Race (7 classes)", "Gender (2 classes)", "Age (9 classes)"],
             description=(
-                "ImageNet-1k pretrained ResNet-50 feature extractor fine-tuned on the FairFace balanced "
-                "demographic training split, evaluating baseline residual scaling on subgroup disparity."
+                "ImageNet-1k pretrained ResNet-50 feature extractor fine-tuned on "
+                "the FairFace balanced "
+                "demographic training split, evaluating baseline residual scaling "
+                "on subgroup disparity."
             ),
-            citation="He et al., 'Deep Residual Learning for Image Recognition', CVPR 2016.",
+            citation=(
+                "He et al., 'Deep Residual Learning for Image Recognition', CVPR 2016."
+            ),
             license="Academic Research Only",
             intended_use=(
-                "Baseline demographic disparity profiling and comparative fairness auditing against "
+                "Baseline demographic disparity profiling and comparative "
+                "fairness auditing against "
                 "ResNet-34 and Vision Transformer architectures."
             ),
         ),
@@ -84,13 +96,19 @@ class ModelMetadataRegistry:
             input_shape="224 × 224 × 3",
             tasks=["Race (7 classes)", "Gender (2 classes)", "Age (9 classes)"],
             description=(
-                "Lightweight MobileNetV2 architecture with depthwise separable convolutions and inverted "
-                "residual blocks fine-tuned on FairFace, evaluating edge-scale model fairness trade-offs."
+                "Lightweight MobileNetV2 architecture with depthwise separable "
+                "convolutions and inverted "
+                "residual blocks fine-tuned on FairFace, evaluating edge-scale "
+                "model fairness trade-offs."
             ),
-            citation="Sandler et al., 'MobileNetV2: Inverted Residuals and Linear Bottlenecks', CVPR 2018.",
+            citation=(
+                "Sandler et al., 'MobileNetV2: Inverted Residuals and Linear "
+                "Bottlenecks', CVPR 2018."
+            ),
             license="Apache 2.0 / Academic Research",
             intended_use=(
-                "Edge-tier demographic parity evaluation and mobile efficiency disparity benchmarking."
+                "Edge-tier demographic parity evaluation and mobile efficiency "
+                "disparity benchmarking."
             ),
         ),
         "vit": ModelMetadata(
@@ -101,13 +119,19 @@ class ModelMetadataRegistry:
             input_shape="224 × 224 × 3",
             tasks=["Race (7 classes)", "Gender (2 classes)", "Age (9 classes)"],
             description=(
-                "Vision Transformer (ViT-B/16) pre-trained on ImageNet-21k / ImageNet-1k and fine-tuned "
-                "on FairFace, evaluating self-attention mechanisms against demographic disparity propagation."
+                "Vision Transformer (ViT-B/16) pre-trained on ImageNet-21k / "
+                "ImageNet-1k and fine-tuned "
+                "on FairFace, evaluating self-attention mechanisms against "
+                "demographic disparity propagation."
             ),
-            citation="Dosovitskiy et al., 'An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale', ICLR 2021.",
+            citation=(
+                "Dosovitskiy et al., 'An Image is Worth 16x16 Words: Transformers for "
+                "Image Recognition at Scale', ICLR 2021."
+            ),
             license="Apache 2.0 / Academic Research",
             intended_use=(
-                "Attention-based demographic disparity benchmarking and cross-architecture disparity comparison."
+                "Attention-based demographic disparity benchmarking and "
+                "cross-architecture disparity comparison."
             ),
         ),
     }
@@ -119,9 +143,9 @@ class ModelMetadataRegistry:
         target_axis: str = "race",
         custom_description: str | None = None,
     ) -> ModelMetadata:
-        """Resolve a model name or string pattern into a structured ModelMetadata instance.
+        """Resolve a model name or pattern into a structured ModelMetadata instance.
 
-        If custom_description is explicitly provided and non-empty, it overrides the default
+        If custom_description is provided and non-empty, it overrides the default
         description for the resolved architecture.
         """
         normalized = model_name.strip().lower()
@@ -180,7 +204,8 @@ class ModelMetadataRegistry:
             custom_description
             if custom_description
             else (
-                f"Custom computer vision architecture evaluated for demographic disparities across "
+                "Custom computer vision architecture evaluated for demographic "
+                f"disparities across "
                 f"protected demographic axis '{target_axis}'."
             )
         )
@@ -195,7 +220,9 @@ class ModelMetadataRegistry:
             citation="Unspecified",
             license="Academic Research Only",
             intended_use=(
-                "Diagnostic demographic fairness auditing on facial analysis benchmarks. "
-                "Not certified for production facial recognition or high-risk legal/surveillance deployment."
+                "Diagnostic demographic fairness auditing on facial analysis "
+                "benchmarks. "
+                "Not certified for production facial recognition or high-risk "
+                "legal/surveillance deployment."
             ),
         )

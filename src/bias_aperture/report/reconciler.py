@@ -63,7 +63,7 @@ class ReconciliationSummary:
 
 
 def count_pdf_pages(pdf_path: Path) -> int:
-    """Count pages in a PDF file deterministically without heavy external dependencies."""
+    """Count PDF pages deterministically without external dependencies."""
     if not pdf_path.exists():
         return 0
     try:
@@ -98,7 +98,7 @@ def _convert_pdf(html_path: Path, pdf_path: Path) -> None:
         if res.returncode != 0:
             raise RuntimeError(
                 f"PDF export failed for {html_path}: {res.stderr or res.stdout}"
-            )
+            ) from None
 
 
 class ReportReconciler:
@@ -114,7 +114,7 @@ class ReportReconciler:
     def audit_dossiers(
         cls, report_dir: Path | str | None = None
     ) -> list[ReconciliationIssue]:
-        """Audit all HTML and companion PDF reports in report_dir against compliance invariants."""
+        """Audit HTML and companion PDF reports in report_dir against invariants."""
         target_dir = Path(report_dir) if report_dir is not None else Path("report")
         issues: list[ReconciliationIssue] = []
         if not target_dir.exists():
@@ -163,14 +163,15 @@ class ReportReconciler:
                     )
                 )
             else:
-                # Page count sanity check (guard against runaway 17-page duplication bug)
+                # Page count sanity check (guards against the 17-page duplication bug)
                 pages = count_pdf_pages(pdf_path)
                 if pages > 8:
                     issues.append(
                         ReconciliationIssue(
                             name,
                             "PAGE_BLOAT",
-                            f"PDF page count exceeds 8 pages ({pages} pages); likely duplicate explainability sections",
+                            f"PDF page count exceeds 8 pages ({pages} pages); "
+                            "likely duplicate explainability sections",
                         )
                     )
 
@@ -199,7 +200,8 @@ class ReportReconciler:
                     ReconciliationIssue(
                         name,
                         "OFFLINE_BREACH",
-                        f"Violates R-015 Offline Contract: {total_ext} external network references found",
+                        "Violates R-015 Offline Contract: "
+                        f"{total_ext} external network references found",
                     )
                 )
 
@@ -231,7 +233,8 @@ class ReportReconciler:
                     ReconciliationIssue(
                         name,
                         "EXPLAINABILITY_DUPLICATION",
-                        f"Explainer rendered {h3_shap_count} duplicate blocks; should be unified in Section 3",
+                        f"Explainer rendered {h3_shap_count} duplicate blocks; "
+                        "should be unified in Section 3",
                     )
                 )
 
@@ -239,14 +242,15 @@ class ReportReconciler:
 
     @classmethod
     def extract_metrics_and_context_from_html(cls, html_path: Path) -> Any | None:
-        """Parse an existing HTML report to recover its exact MetricResult rows and ExplanationResult attributions."""
+        """Recover MetricResult rows and ExplanationResult attributions from HTML."""
         try:
             html_text = html_path.read_text(encoding="utf-8")
 
             # Extract model name
             model_name = "Custom Vision Model"
             m_model = re.search(
-                r'<span class="meta-label">\s*Audited Model\s*</span>\s*<strong>\s*([^<]+)\s*</strong>',
+                r'<span class="meta-label">\s*Audited '
+                r"Model\s*</span>\s*<strong>\s*([^<]+)\s*</strong>",
                 html_text,
                 re.I,
             )
@@ -256,7 +260,8 @@ class ReportReconciler:
             # Extract dataset name
             dataset_name = "FairFace Benchmark Dataset"
             m_dataset = re.search(
-                r'<span class="meta-label">\s*Evaluation Dataset\s*</span>\s*<strong>\s*([^<]+)\s*</strong>',
+                r'<span class="meta-label">\s*Evaluation '
+                r"Dataset\s*</span>\s*<strong>\s*([^<]+)\s*</strong>",
                 html_text,
                 re.I,
             )
@@ -268,7 +273,8 @@ class ReportReconciler:
             # Extract protected axis
             protected_axis = "race"
             m_axis = re.search(
-                r'<span class="meta-label">\s*Protected Axis\s*</span>\s*<strong>\s*([^<]+)\s*</strong>',
+                r'<span class="meta-label">\s*Protected '
+                r"Axis\s*</span>\s*<strong>\s*([^<]+)\s*</strong>",
                 html_text,
                 re.I,
             )
@@ -437,7 +443,10 @@ class ReportReconciler:
                         metric_name="demographic_parity_difference",
                         subgroup=f"{protected_axis}=Global",
                         feature_attributions=feat_attributions,
-                        details="Surrogate Shapley attribution computed using logistic surrogate model.",
+                        details=(
+                            "Surrogate Shapley attribution computed using logistic "
+                            "surrogate model."
+                        ),
                     )
                 )
 
@@ -472,7 +481,7 @@ class ReportReconciler:
         report_dir: Path | str | None = None,
         predictions_csv: Path | None = None,
     ) -> ReconciliationSummary:
-        """Self-heal all reports in report_dir, regenerating HTML and re-exporting PDFs."""
+        """Self-heal all reports in report_dir: regenerate HTML, re-export PDFs."""
         target_dir = Path(report_dir) if report_dir is not None else Path("report")
         if predictions_csv is None:
             default_csv = Path("data/processed/fairface_predictions_val.csv")
@@ -508,7 +517,8 @@ class ReportReconciler:
                 )
                 healed.append(name)
 
-            # Case B: Multi-backbone and multiclass reports (ViT, ResNet-50, MobileNetV2, race_verified, etc.)
+            # Case B: Multi-backbone/multiclass reports (ViT, ResNet-50, MobileNetV2,
+            # race_verified, ...) re-rendered from embedded metrics
             else:
                 ctx = cls.extract_metrics_and_context_from_html(html_path)
                 if ctx is not None:

@@ -8,7 +8,7 @@ from bias_aperture.schema import MetricResult
 
 
 def extract_report_metadata_and_metrics(html_path: Path) -> dict[str, Any]:
-    """Parse an existing HTML report to extract its metrics, model name, and metadata."""
+    """Parse an existing HTML report to extract metrics, model name, and metadata."""
     text = html_path.read_text(encoding="utf-8")
 
     # 1. Metadata
@@ -20,7 +20,8 @@ def extract_report_metadata_and_metrics(html_path: Path) -> dict[str, Any]:
     )
 
     dataset_match = re.search(
-        r'<span class="meta-label">Evaluation Dataset</span>\s*<strong>(.*?)\s*\(N=(\d+)\)</strong>',
+        r'<span class="meta-label">Evaluation '
+        r"Dataset</span>\s*<strong>(.*?)\s*\(N=(\d+)\)</strong>",
         text,
     )
     dataset_name = (
@@ -132,11 +133,12 @@ def extract_report_metadata_and_metrics(html_path: Path) -> dict[str, Any]:
                 )
 
                 # Extract significance from bar colors if available
-                # In Table 2 SVG bars, each metric bar has a color: red if p < 0.05 else blue
+                # Table 2 SVG bars are crimson if p < 0.05, else navy
                 bars_html = tds[6] if len(tds) > 6 else ""
                 red_bars = set(
                     re.findall(
-                        r'<text[^>]*>([A-Z]+)</text>\s*<rect[^>]*/>\s*<rect[^>]*fill="#(?:dc2626|991b1b)"',
+                        r"<text[^>]*>([A-Z]+)</text>\s*<rect[^>]*/>\s*<rect[^>]*fi"
+                        r'll="#(?:dc2626|991b1b)"',
                         bars_html,
                     )
                 )
@@ -185,7 +187,8 @@ def extract_report_metadata_and_metrics(html_path: Path) -> dict[str, Any]:
         # Check SVG feature attribution bars in old style
         # e.g., <text ...>gender_Female</text> ... <text ...>0.243</text>
         svg_bars = re.findall(
-            r"<text[^>]*>([a-zA-Z0-9_\-]+)</text>\s*<rect[^>]*/>\s*<rect[^>]*/>\s*<text[^>]*>([0-9\.]+)</text>",
+            r"<text[^>]*>([a-zA-Z0-9_\-]+)</text>\s*<rect[^>]*/>\s*<rect[^>]*/>\s*"
+            r"<text[^>]*>([0-9\.]+)</text>",
             text,
         )
         if svg_bars:
@@ -200,7 +203,10 @@ def extract_report_metadata_and_metrics(html_path: Path) -> dict[str, Any]:
                 metric_name="demographic_parity_difference",
                 subgroup="ALL",
                 feature_attributions=feature_attributions,
-                details=f"Surrogate Shapley attribution computed across {total_subjects} subjects for ALL.",
+                details=(
+                    "Surrogate Shapley attribution computed across "
+                    f"{total_subjects} subjects for ALL."
+                ),
             )
         )
 

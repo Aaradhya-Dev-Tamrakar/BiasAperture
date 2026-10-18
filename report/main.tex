@@ -7,6 +7,21 @@
 \usepackage{tikz}
 \usetikzlibrary{positioning,shapes,arrows}
 
+% 60-30-10 palette, kept in sync with report.html.j2 :root tokens
+% 60% canvas + charcoal body | 30% navy structure | 10% gem-toned accents
+\definecolor{BodyCharcoal}{HTML}{1E293B}
+\definecolor{ReportNavy}{HTML}{1B365D}
+\definecolor{AccentTeal}{HTML}{0F766E}
+\definecolor{ParityGreen}{HTML}{166534}
+\definecolor{AlertAmber}{HTML}{B45309}
+\definecolor{AlertCrimson}{HTML}{991B1B}
+\definecolor{GuardIndigo}{HTML}{3730A3}
+\definecolor{TintNavy}{HTML}{F1F5F9}
+\definecolor{SoftHighlight}{HTML}{FEF9C3}
+\AtBeginDocument{\color{BodyCharcoal}}
+\addtokomafont{disposition}{\color{ReportNavy}}
+\hypersetup{urlcolor=AccentTeal}
+
 % Glossary entries (define once, print later)
 \input{src/frontmatter/abbreviations}
 \input{src/frontmatter/symbols}

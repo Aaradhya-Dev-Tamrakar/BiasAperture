@@ -109,6 +109,5 @@ def test_canonical_metric_bar_order(mock_core_four_results: list[MetricResult]) 
         if len(g_data["metric_bars"]) > 1:
             labels = [b["label"] for b in g_data["metric_bars"]]
             order = {"DPD": 0, "EOD": 1, "EOP": 2, "DIR": 3}
-            ranks = [order.get(l, 99) for l in labels]
+            ranks = [order.get(lbl, 99) for lbl in labels]
             assert ranks == sorted(ranks), f"Bars out of canonical order: {labels}"
-
