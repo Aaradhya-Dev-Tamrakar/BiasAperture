@@ -1,7 +1,11 @@
+<<<<<<< Updated upstream
 """Regression and unit tests for MobileNetV2 FairFaceDataset and prediction pipeline.
 
 Covers Model 4 integration tests and schema adherence.
 """
+=======
+"""Regression and unit tests for MobileNetV2 FairFaceDataset and prediction pipeline."""
+>>>>>>> Stashed changes
 
 from __future__ import annotations
 
@@ -69,7 +73,11 @@ def test_mobilenet_fairface_dataset_valid_read(tmp_path: Path) -> None:
 def test_mobilenet_fairface_dataset_raises_on_missing_image(
     tmp_path: Path,
 ) -> None:
+<<<<<<< Updated upstream
     """Cohort integrity test: missing or corrupted images MUST raise RuntimeError."""
+=======
+    """Audit-cohort integrity: missing/corrupted images MUST raise RuntimeError."""
+>>>>>>> Stashed changes
     img_dir = tmp_path / "images"
     img_dir.mkdir()
 
@@ -135,10 +143,15 @@ def mobilenet_synthetic_csv(tmp_path: Path) -> Path:
     return csv_path
 
 
+<<<<<<< Updated upstream
 def test_mobilenet_ingestion_pipeline_strict(
     mobilenet_synthetic_csv: Path,
 ) -> None:
     """MobileNet predictions CSV passes DataIngestionPipeline under STRICT mode."""
+=======
+def test_mobilenet_ingestion_pipeline_strict(mobilenet_synthetic_csv: Path) -> None:
+    """MobileNet predictions pass DataIngestionPipeline under STRICT mode."""
+>>>>>>> Stashed changes
     pipeline = DataIngestionPipeline(
         config=IngestionConfig(
             validation_mode=ValidationMode.STRICT,

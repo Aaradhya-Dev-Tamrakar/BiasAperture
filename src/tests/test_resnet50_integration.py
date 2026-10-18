@@ -1,5 +1,4 @@
-"""
-ResNet-50 Integration & Schema Compliance Tests (Model 3).
+"""ResNet-50 Integration & Schema Compliance Tests (Model 3).
 
 Verifies:
   1. Ingestion of ResNet-50 prediction CSV schema
@@ -64,10 +63,15 @@ def resnet50_synthetic_csv(tmp_path: Path) -> Path:
     return csv_path
 
 
+<<<<<<< Updated upstream
 def test_resnet50_ingestion_pipeline_strict(
     resnet50_synthetic_csv: Path,
 ) -> None:
     """ResNet-50 predictions CSV passes DataIngestionPipeline under STRICT mode."""
+=======
+def test_resnet50_ingestion_pipeline_strict(resnet50_synthetic_csv: Path) -> None:
+    """ResNet-50 predictions pass DataIngestionPipeline under STRICT mode."""
+>>>>>>> Stashed changes
     pipeline = DataIngestionPipeline(
         config=IngestionConfig(
             validation_mode=ValidationMode.STRICT,
