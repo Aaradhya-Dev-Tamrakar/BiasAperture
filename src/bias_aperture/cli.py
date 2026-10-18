@@ -23,6 +23,7 @@ import logging
 import sys
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 from bias_aperture.data_ingestion import DataIngestionPipeline, IngestionConfig
 from bias_aperture.explainability import ExplanationResult, ShapExplainerEngine
@@ -77,6 +78,7 @@ class AuditPipeline:
         model_name: str = "FairFace ResNet-34 Multi-Task Classifier",
         dataset_name: str = "FairFace Benchmark Dataset",
         explain: bool = True,
+        model_description: str | None = None,
     ) -> AuditResult:
         """Execute the full audit pipeline and return structured results."""
 
@@ -85,6 +87,33 @@ class AuditPipeline:
         logger.info("Protected demographic axis: %s", protected_attr)
         logger.info("Computational backend: %s", backend)
         logger.info("Bootstrap resamples (BCa): %d", bca_resamples)
+
+        # Self-healing column name resolution for standard FairFace CSV layouts
+        if predictions_file.suffix.lower() == ".csv" and predictions_file.exists():
+            try:
+                with predictions_file.open("r", encoding="utf-8") as f:
+                    first_line = f.readline().strip()
+                headers = [h.strip() for h in first_line.split(",")]
+                if race_col not in headers and "subgroup_race" in headers:
+                    race_col = "subgroup_race"
+                if gender_col not in headers and "subgroup_gender" in headers:
+                    gender_col = "subgroup_gender"
+                if age_col not in headers and "subgroup_age" in headers:
+                    age_col = "subgroup_age"
+                if true_label_col not in headers:
+                    if f"true_{protected_attr}" in headers:
+                        true_label_col = f"true_{protected_attr}"
+                    elif protected_attr == "race_gender" and "true_race" in headers:
+                        true_label_col = "true_race"
+                if predicted_label_col not in headers:
+                    if f"predicted_{protected_attr}" in headers:
+                        predicted_label_col = f"predicted_{protected_attr}"
+                    elif (
+                        protected_attr == "race_gender" and "predicted_race" in headers
+                    ):
+                        predicted_label_col = "predicted_race"
+            except Exception as exc:
+                logger.debug("Column auto-detection skipped: %s", exc)
 
         ingestion = DataIngestionPipeline(
             config=IngestionConfig(
@@ -157,6 +186,7 @@ class AuditPipeline:
                         else "Single backend execution; no cross-library validation."
                     )
                 ),
+                model_description=model_description,
             )
 
         return AuditResult(
@@ -219,20 +249,25 @@ class AuditPipeline:
         explanations: list[ExplanationResult],
         backend: str,
         backend_status: str,
+        model_description: str | None = None,
     ) -> Path:
         """Compile and save the offline compliance report."""
         logger.info("Compiling offline compliance report to: %s...", output_report)
-        context = ReportContext(
-            metrics=metrics,
-            model_name=model_name,
-            dataset_name=dataset_name,
-            protected_axis=protected_attr,
-            total_subjects=len(records),
-            explanations=explanations,
-            attributions=explanations,
-            backend=backend,
-            backend_status=backend_status,
-        )
+        context_kwargs: dict[str, Any] = {
+            "metrics": metrics,
+            "model_name": model_name,
+            "dataset_name": dataset_name,
+            "protected_axis": protected_attr,
+            "total_subjects": len(records),
+            "explanations": explanations,
+            "attributions": explanations,
+            "backend": backend,
+            "backend_status": backend_status,
+        }
+        if model_description:
+            context_kwargs["model_description"] = model_description
+
+        context = ReportContext(**context_kwargs)
         generator = HTMLReportGenerator()
         saved_path = generator.save(context, output_report)
         logger.info("Audit complete. Standalone report saved to: %s", saved_path)
@@ -330,6 +365,15 @@ def _add_audit_arguments(parser: argparse.ArgumentParser) -> None:
         help="Dataset name for presentation.",
     )
     parser.add_argument(
+        "--model-description",
+        type=str,
+        default=None,
+        help=(
+            "Custom model description for Model Card presentation (auto-resolved if "
+            "omitted)."
+        ),
+    )
+    parser.add_argument(
         "--explain",
         action=argparse.BooleanOptionalAction,
         default=True,
@@ -417,6 +461,7 @@ def main(argv: list[str] | None = None) -> int:
             model_name=args.model_name,
             dataset_name=args.dataset_name,
             explain=args.explain,
+            model_description=getattr(args, "model_description", None),
         )
     except (ValueError, RuntimeError) as exc:
         logger.error("Audit failed: %s", exc)

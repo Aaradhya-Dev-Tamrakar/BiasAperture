@@ -4,17 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BiasAperture — Demographic Bias Audit & Compliance Dossier</title>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Report",
+        "name": "BiasAperture Demographic Fairness Audit Dossier — HuggingFace ViT-B/16 Gender Classifier",
+        "description": "Diagnostic Demographic Bias Evaluation & Regulatory Traceability Report on FairFace Benchmark Dataset across Race axis.",
+        "datePublished": "2026-10-18 16:46:53 UTC",
+        "author": {
+            "@type": "SoftwareApplication",
+            "name": "BiasAperture",
+            "applicationCategory": "AI Diagnostic Fairness Auditing Framework"
+        },
+        "about": {
+            "@type": "Thing",
+            "name": "HuggingFace ViT-B/16 Gender Classifier"
+        }
+    }
+    </script>
     <style>
         :root {
+            /* 60-30-10 LaTeX palette: 60% canvas/charcoal, 30% navy structure, 10% gem accents */
             --bg-primary: #f8fafc;
             --bg-card: #ffffff;
-            --text-main: #0f172a;
+            --text-main: #1e293b;
             --text-muted: #64748b;
             --border-color: #cbd5e1;
-            --brand-blue: #0369a1;
-            --accent-green: #15803d;
-            --accent-red: #b91c1c;
+            --structure: #1b365d;
+            --brand-blue: #1b365d;
+            --accent-teal: #0f766e;
+            --accent-green: #166534;
+            --accent-red: #991b1b;
             --accent-amber: #b45309;
+            --accent-indigo: #3730a3;
+            --tint-green: #ecfdf3;
+            --tint-red: #fdf2f2;
+            --tint-amber: #fef9e7;
+            --tint-indigo: #eef2ff;
+            --tint-navy: #f1f5f9;
+            --tint-highlight: #fef9c3;
             --font-stack: "Latin Modern Roman", "CMU Serif", "Computer Modern Roman", "TeX Gyre Termes", "Times New Roman", "Nimbus Roman No9 L", Times, serif;
             --font-mono: "Latin Modern Mono", "CMU Typewriter Text", "Courier New", Courier, monospace;
         }
@@ -46,7 +74,7 @@
 
         h1, h2, h3, h4 {
             font-family: var(--font-stack);
-            color: #0f172a;
+            color: var(--structure);
             font-weight: 700;
             font-variant: small-caps;
             letter-spacing: 0.04em;
@@ -55,7 +83,7 @@
         h1 {
             margin: 0 0 0.5rem 0;
             font-size: 1.8rem;
-            border-bottom: 1.5px solid #0f172a;
+            border-bottom: 1.5px solid var(--structure);
             padding-bottom: 0.5rem;
         }
 
@@ -68,7 +96,7 @@
         }
 
         .meta-item {
-            background: #f1f5f9;
+            background: var(--tint-navy);
             padding: 0.75rem;
             border-radius: 6px;
         }
@@ -93,7 +121,7 @@
         }
 
         h2 {
-            border-bottom: 1.5px solid #0f172a;
+            border-bottom: 1.5px solid var(--structure);
             padding-bottom: 0.5rem;
             margin-top: 0;
             font-size: 1.3rem;
@@ -109,8 +137,8 @@
             border-collapse: collapse;
             margin: 1rem 0;
             font-size: 0.9rem;
-            border-top: 1.5px solid #0f172a;
-            border-bottom: 1.5px solid #0f172a;
+            border-top: 1.5px solid var(--structure);
+            border-bottom: 1.5px solid var(--structure);
         }
 
         th, td {
@@ -120,12 +148,12 @@
         }
 
         th {
-            border-top: 1.5px solid #0f172a;
-            border-bottom: 1px solid #0f172a;
+            border-top: 1.5px solid var(--structure);
+            border-bottom: 1px solid var(--structure);
             font-weight: 700;
             font-variant: small-caps;
             letter-spacing: 0.03em;
-            color: #0f172a;
+            color: var(--structure);
             background: none;
         }
 
@@ -135,7 +163,7 @@
         }
 
         tr:last-child td {
-            border-bottom: 1.5px solid #0f172a;
+            border-bottom: 1.5px solid var(--structure);
         }
 
         .badge {
@@ -147,27 +175,27 @@
         }
 
         .badge-pass {
-            background-color: #dcfce7;
-            color: #15803d;
+            background-color: var(--tint-green);
+            color: var(--accent-green);
         }
 
         .badge-warn {
-            background-color: #fef3c7;
-            color: #b45309;
+            background-color: var(--tint-amber);
+            color: var(--accent-amber);
         }
 
         .badge-fail {
-            background-color: #fee2e2;
-            color: #b91c1c;
+            background-color: var(--tint-red);
+            color: var(--accent-red);
         }
 
         .badge-guard {
-            background-color: #e0e7ff;
-            color: #3730a3;
+            background-color: var(--tint-indigo);
+            color: var(--accent-indigo);
         }
 
         .regulatory-box {
-            background-color: #eff6ff;
+            background-color: var(--tint-navy);
             border-left: 4px solid var(--brand-blue);
             padding: 1rem;
             margin: 1rem 0;
@@ -208,7 +236,7 @@
         .exec-stat-value {
             font-size: 1.6rem;
             font-weight: 700;
-            color: #1e293b;
+            color: var(--text-main);
             display: block;
             line-height: 1.2;
         }
@@ -290,7 +318,7 @@
             body {
                 padding: 0;
                 background: #ffffff;
-                color: #0f172a;
+                color: var(--structure);
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
@@ -326,6 +354,10 @@
                 display: table-header-group;
             }
         }
+            a { color: var(--accent-teal); text-decoration-thickness: 0.5px; text-underline-offset: 2px; }
+
+        mark { background-color: var(--tint-highlight); color: inherit; padding: 0 0.15em; }
+
     </style>
 </head>
 <body>
@@ -340,7 +372,7 @@
                 </div>
                 <div class="meta-item">
                     <span class="meta-label">Evaluation Dataset</span>
-                    <strong>FairFace Benchmark Dataset (N=10954) (N=10954)</strong>
+                    <strong>FairFace Benchmark Dataset (N=10954)</strong>
                 </div>
                 <div class="meta-item">
                     <span class="meta-label">Protected Axis</span>
@@ -348,10 +380,16 @@
                 </div>
                 <div class="meta-item">
                     <span class="meta-label">Audit Date</span>
-                    <strong>2026-10-12 09:12:29 UTC</strong>
+                    <strong>2026-10-18 16:46:53 UTC</strong>
                 </div>
             </div>
         </header>
+
+        <!-- Diagnostic Scope & Boundary Assertion -->
+        <div class="scope-card" style="background-color: var(--bg-card); border: 1px solid var(--border-color); border-left: 4px solid var(--brand-blue); border-radius: 6px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; font-size: 0.85rem; color: var(--text-main); line-height: 1.5;">
+            <strong style="color: #1e293b; display: block; margin-bottom: 0.25rem;">Diagnostic Scope & Non-Intervention Guarantee:</strong>
+            BiasAperture is engineered exclusively as an external diagnostic auditing, statistical significance testing, and regulatory traceability platform. It does <strong>not</strong> perform model retraining, in-processing debiasing, or synthetic image generation. In adherence to statistical integrity safeguards (NFR-003), demographic subgroups with fewer than 30 samples (<em>n &lt; 30</em>) have point estimates suppressed to prevent unreliable compliance claims.
+        </div>
 
         <!-- 0. Executive Summary Strip -->
         <div class="exec-summary">
@@ -362,18 +400,26 @@
             <div class="exec-stat">
                 <span class="exec-stat-value">
                     
-                        Middle Eastern
+                        Overall (Table 1)
                     
                 </span>
-                <span class="exec-stat-label">Largest deviation subgroup</span>
+                <span class="exec-stat-label">
+                    
+                        Worst disparity cohort (28 metric failures)
+                    
+                </span>
             </div>
             <div class="exec-stat">
                 <span class="exec-stat-value">
                     
-                        DIR = 0.691
+                        DIR = 0.527
                     
                 </span>
-                <span class="exec-stat-label">Worst headline metric</span>
+                <span class="exec-stat-label">
+                    
+                        Worst headline metric (Overall)
+                    
+                </span>
             </div>
             <div class="exec-stat">
                 <span class="exec-stat-value">0</span>
@@ -385,7 +431,7 @@
         <div class="section-card">
             <h2>1. Headline Fairness Metrics (Core Four — Cross-Group Overview)</h2>
             <p style="font-size: 0.9rem; color: var(--text-muted);">
-                Summary metrics evaluated across all eligible demographic strata (n ≥ 30 per NFR-003). Accompanied by 95% stratified BCa bootstrap confidence intervals and Pearson's χ² test of independence. <em>Note: each CI band is scaled to its own row — dot colour (red = CI excludes null), not bar width, indicates significance across rows.</em>
+                Summary metrics evaluated across all eligible demographic strata (n ≥ 30 per NFR-003). Accompanied by 95% stratified BCa bootstrap confidence intervals and Pearson's χ² test of independence. Plotted on a calibrated [0.0, 1.0] domain with null-point reference and threshold lines.
             </p>
             
             <table>
@@ -423,12 +469,39 @@
                 
                 
                 
-                <svg class="inline-chart" width="200" height="34" viewBox="0 0 200 34" role="img" aria-label="Point estimate 0.276 with 95% CI [0.239, 0.308]">
-                    <line x1="100.00000000000001" y1="4" x2="100.00000000000001" y2="30" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,2" />
-                    <line x1="167.5935272259189" y1="17.0" x2="186.95652173913047" y2="17.0" stroke="#64748b" stroke-width="2" />
-                    <line x1="167.5935272259189" y1="12.0" x2="167.5935272259189" y2="22.0" stroke="#64748b" stroke-width="2" />
-                    <line x1="186.95652173913047" y1="12.0" x2="186.95652173913047" y2="22.0" stroke="#64748b" stroke-width="2" />
-                    <circle cx="178.05421521959596" cy="17.0" r="4.5" fill="#dc2626" />
+                
+                
+                
+                
+                
+                
+
+                <svg class="inline-chart" width="220" height="38" viewBox="0 0 220 38" role="img" aria-label="Point estimate 0.276 with 95% CI [0.239, 0.308]">
+                    <!-- Base Axis Line [0.0, 1.0] -->
+                    <line x1="10" y1="25" x2="210" y2="25" stroke="#cbd5e1" stroke-width="1" />
+                    
+                    <!-- Axis Ticks (0.0, 0.5, 1.0) -->
+                    <line x1="10" y1="23" x2="10" y2="28" stroke="#94a3b8" stroke-width="1" />
+                    <text x="10" y="35" font-size="8" fill="#64748b" text-anchor="middle">0.0</text>
+                    
+                    <line x1="110.0" y1="23" x2="110.0" y2="28" stroke="#94a3b8" stroke-width="1" />
+                    <text x="110.0" y="35" font-size="8" fill="#64748b" text-anchor="middle">0.5</text>
+                    
+                    <line x1="210" y1="23" x2="210" y2="28" stroke="#94a3b8" stroke-width="1" />
+                    <text x="210" y="35" font-size="8" fill="#64748b" text-anchor="middle">1.0</text>
+
+                    
+                        <!-- Difference Metric: 0.10 Fairness Threshold Indicator -->
+                        <line x1="30.0" y1="4" x2="30.0" y2="26" stroke="#b45309" stroke-width="1" stroke-dasharray="2,2" />
+                    
+
+                    <!-- CI Whisker Bar and End Caps -->
+                    <line x1="57.8" y1="14" x2="71.6" y2="14" stroke="#64748b" stroke-width="2" />
+                    <line x1="57.8" y1="10" x2="57.8" y2="18" stroke="#64748b" stroke-width="2" />
+                    <line x1="71.6" y1="10" x2="71.6" y2="18" stroke="#64748b" stroke-width="2" />
+
+                    <!-- Point Estimate -->
+                    <circle cx="65.2" cy="14" r="4" fill="#991b1b" />
                 </svg>
             
                             
@@ -466,12 +539,39 @@
                 
                 
                 
-                <svg class="inline-chart" width="200" height="34" viewBox="0 0 200 34" role="img" aria-label="Point estimate 0.274 with 95% CI [0.232, 0.305]">
-                    <line x1="99.99999999999999" y1="4" x2="99.99999999999999" y2="30" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,2" />
-                    <line x1="166.0301431499575" y1="17.0" x2="186.9565217391304" y2="17.0" stroke="#64748b" stroke-width="2" />
-                    <line x1="166.0301431499575" y1="12.0" x2="166.0301431499575" y2="22.0" stroke="#64748b" stroke-width="2" />
-                    <line x1="186.9565217391304" y1="12.0" x2="186.9565217391304" y2="22.0" stroke="#64748b" stroke-width="2" />
-                    <circle cx="178.20083110564752" cy="17.0" r="4.5" fill="#dc2626" />
+                
+                
+                
+                
+                
+                
+
+                <svg class="inline-chart" width="220" height="38" viewBox="0 0 220 38" role="img" aria-label="Point estimate 0.274 with 95% CI [0.232, 0.305]">
+                    <!-- Base Axis Line [0.0, 1.0] -->
+                    <line x1="10" y1="25" x2="210" y2="25" stroke="#cbd5e1" stroke-width="1" />
+                    
+                    <!-- Axis Ticks (0.0, 0.5, 1.0) -->
+                    <line x1="10" y1="23" x2="10" y2="28" stroke="#94a3b8" stroke-width="1" />
+                    <text x="10" y="35" font-size="8" fill="#64748b" text-anchor="middle">0.0</text>
+                    
+                    <line x1="110.0" y1="23" x2="110.0" y2="28" stroke="#94a3b8" stroke-width="1" />
+                    <text x="110.0" y="35" font-size="8" fill="#64748b" text-anchor="middle">0.5</text>
+                    
+                    <line x1="210" y1="23" x2="210" y2="28" stroke="#94a3b8" stroke-width="1" />
+                    <text x="210" y="35" font-size="8" fill="#64748b" text-anchor="middle">1.0</text>
+
+                    
+                        <!-- Difference Metric: 0.10 Fairness Threshold Indicator -->
+                        <line x1="30.0" y1="4" x2="30.0" y2="26" stroke="#b45309" stroke-width="1" stroke-dasharray="2,2" />
+                    
+
+                    <!-- CI Whisker Bar and End Caps -->
+                    <line x1="56.400000000000006" y1="14" x2="71.0" y2="14" stroke="#64748b" stroke-width="2" />
+                    <line x1="56.400000000000006" y1="10" x2="56.400000000000006" y2="18" stroke="#64748b" stroke-width="2" />
+                    <line x1="71.0" y1="10" x2="71.0" y2="18" stroke="#64748b" stroke-width="2" />
+
+                    <!-- Point Estimate -->
+                    <circle cx="64.80000000000001" cy="14" r="4" fill="#991b1b" />
                 </svg>
             
                             
@@ -509,12 +609,39 @@
                 
                 
                 
-                <svg class="inline-chart" width="200" height="34" viewBox="0 0 200 34" role="img" aria-label="Point estimate 0.274 with 95% CI [0.232, 0.305]">
-                    <line x1="99.99999999999999" y1="4" x2="99.99999999999999" y2="30" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,2" />
-                    <line x1="166.0301431499575" y1="17.0" x2="186.9565217391304" y2="17.0" stroke="#64748b" stroke-width="2" />
-                    <line x1="166.0301431499575" y1="12.0" x2="166.0301431499575" y2="22.0" stroke="#64748b" stroke-width="2" />
-                    <line x1="186.9565217391304" y1="12.0" x2="186.9565217391304" y2="22.0" stroke="#64748b" stroke-width="2" />
-                    <circle cx="178.20083110564752" cy="17.0" r="4.5" fill="#dc2626" />
+                
+                
+                
+                
+                
+                
+
+                <svg class="inline-chart" width="220" height="38" viewBox="0 0 220 38" role="img" aria-label="Point estimate 0.274 with 95% CI [0.232, 0.305]">
+                    <!-- Base Axis Line [0.0, 1.0] -->
+                    <line x1="10" y1="25" x2="210" y2="25" stroke="#cbd5e1" stroke-width="1" />
+                    
+                    <!-- Axis Ticks (0.0, 0.5, 1.0) -->
+                    <line x1="10" y1="23" x2="10" y2="28" stroke="#94a3b8" stroke-width="1" />
+                    <text x="10" y="35" font-size="8" fill="#64748b" text-anchor="middle">0.0</text>
+                    
+                    <line x1="110.0" y1="23" x2="110.0" y2="28" stroke="#94a3b8" stroke-width="1" />
+                    <text x="110.0" y="35" font-size="8" fill="#64748b" text-anchor="middle">0.5</text>
+                    
+                    <line x1="210" y1="23" x2="210" y2="28" stroke="#94a3b8" stroke-width="1" />
+                    <text x="210" y="35" font-size="8" fill="#64748b" text-anchor="middle">1.0</text>
+
+                    
+                        <!-- Difference Metric: 0.10 Fairness Threshold Indicator -->
+                        <line x1="30.0" y1="4" x2="30.0" y2="26" stroke="#b45309" stroke-width="1" stroke-dasharray="2,2" />
+                    
+
+                    <!-- CI Whisker Bar and End Caps -->
+                    <line x1="56.400000000000006" y1="14" x2="71.0" y2="14" stroke="#64748b" stroke-width="2" />
+                    <line x1="56.400000000000006" y1="10" x2="56.400000000000006" y2="18" stroke="#64748b" stroke-width="2" />
+                    <line x1="71.0" y1="10" x2="71.0" y2="18" stroke="#64748b" stroke-width="2" />
+
+                    <!-- Point Estimate -->
+                    <circle cx="64.80000000000001" cy="14" r="4" fill="#991b1b" />
                 </svg>
             
                             
@@ -552,12 +679,40 @@
                 
                 
                 
-                <svg class="inline-chart" width="200" height="34" viewBox="0 0 200 34" role="img" aria-label="Point estimate 0.527 with 95% CI [0.493, 0.579]">
-                    <line x1="100.0" y1="4" x2="100.0" y2="30" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,2" />
-                    <line x1="13.043478260869568" y1="17.0" x2="27.825799828968446" y2="17.0" stroke="#64748b" stroke-width="2" />
-                    <line x1="13.043478260869568" y1="12.0" x2="13.043478260869568" y2="22.0" stroke="#64748b" stroke-width="2" />
-                    <line x1="27.825799828968446" y1="12.0" x2="27.825799828968446" y2="22.0" stroke="#64748b" stroke-width="2" />
-                    <circle cx="18.895224140408967" cy="17.0" r="4.5" fill="#dc2626" />
+                
+                
+                
+                
+                
+                
+
+                <svg class="inline-chart" width="220" height="38" viewBox="0 0 220 38" role="img" aria-label="Point estimate 0.527 with 95% CI [0.493, 0.579]">
+                    <!-- Base Axis Line [0.0, 1.0] -->
+                    <line x1="10" y1="25" x2="210" y2="25" stroke="#cbd5e1" stroke-width="1" />
+                    
+                    <!-- Axis Ticks (0.0, 0.5, 1.0) -->
+                    <line x1="10" y1="23" x2="10" y2="28" stroke="#94a3b8" stroke-width="1" />
+                    <text x="10" y="35" font-size="8" fill="#64748b" text-anchor="middle">0.0</text>
+                    
+                    <line x1="110.0" y1="23" x2="110.0" y2="28" stroke="#94a3b8" stroke-width="1" />
+                    <text x="110.0" y="35" font-size="8" fill="#64748b" text-anchor="middle">0.5</text>
+                    
+                    <line x1="210" y1="23" x2="210" y2="28" stroke="#94a3b8" stroke-width="1" />
+                    <text x="210" y="35" font-size="8" fill="#64748b" text-anchor="middle">1.0</text>
+
+                    
+                        <!-- Ratio Metric (DIR): 0.80 EEOC 4/5ths Rule & 1.0 Parity Line -->
+                        <line x1="170.0" y1="4" x2="170.0" y2="26" stroke="#b45309" stroke-width="1" stroke-dasharray="2,2" />
+                        <line x1="210.0" y1="4" x2="210.0" y2="26" stroke="#166534" stroke-width="1" stroke-dasharray="2,2" />
+                    
+
+                    <!-- CI Whisker Bar and End Caps -->
+                    <line x1="108.6" y1="14" x2="125.8" y2="14" stroke="#64748b" stroke-width="2" />
+                    <line x1="108.6" y1="10" x2="108.6" y2="18" stroke="#64748b" stroke-width="2" />
+                    <line x1="125.8" y1="10" x2="125.8" y2="18" stroke="#64748b" stroke-width="2" />
+
+                    <!-- Point Estimate -->
+                    <circle cx="115.4" cy="14" r="4" fill="#991b1b" />
                 </svg>
             
                             
@@ -623,28 +778,28 @@
                         
                         <text x="0" y="10" font-size="9" fill="#475569">DPD</text>
                         <rect x="34" y="0" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="0" width="78.2361298437323" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="0" width="78.43333333333334" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="26" font-size="9" fill="#475569">EOP</text>
+                        <text x="0" y="26" font-size="9" fill="#475569">EOD</text>
                         <rect x="34" y="16" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="16" width="56.6987180576226" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="16" width="56.76666666666667" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="42" font-size="9" fill="#475569">EOD</text>
+                        <text x="0" y="42" font-size="9" fill="#475569">EOP</text>
                         <rect x="34" y="32" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="32" width="56.6987180576226" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="32" width="56.76666666666667" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
                         <text x="0" y="58" font-size="9" fill="#475569">DIR</text>
                         <rect x="34" y="48" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="48" width="130.0" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="48" width="130.0" height="12" fill="#991b1b" rx="2" />
                     
                 </svg>
             
@@ -679,28 +834,28 @@
                         
                         <text x="0" y="10" font-size="9" fill="#475569">DPD</text>
                         <rect x="34" y="0" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="0" width="41.5344794752641" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="0" width="41.6" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="26" font-size="9" fill="#475569">EOP</text>
+                        <text x="0" y="26" font-size="9" fill="#475569">EOD</text>
                         <rect x="34" y="16" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="16" width="60.08501348625657" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="16" width="60.23333333333334" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="42" font-size="9" fill="#475569">EOD</text>
+                        <text x="0" y="42" font-size="9" fill="#475569">EOP</text>
                         <rect x="34" y="32" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="32" width="60.08501348625657" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="32" width="60.23333333333334" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
                         <text x="0" y="58" font-size="9" fill="#475569">DIR</text>
                         <rect x="34" y="48" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="48" width="102.74812289341529" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="48" width="102.7" height="12" fill="#991b1b" rx="2" />
                     
                 </svg>
             
@@ -735,28 +890,28 @@
                         
                         <text x="0" y="10" font-size="9" fill="#475569">DPD</text>
                         <rect x="34" y="0" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="0" width="38.890913990253274" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="0" width="39.0" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="26" font-size="9" fill="#475569">EOP</text>
+                        <text x="0" y="26" font-size="9" fill="#475569">EOD</text>
                         <rect x="34" y="16" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="16" width="62.220209907167266" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="16" width="62.4" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="42" font-size="9" fill="#475569">EOD</text>
+                        <text x="0" y="42" font-size="9" fill="#475569">EOP</text>
                         <rect x="34" y="32" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="32" width="62.220209907167266" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="32" width="62.4" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
                         <text x="0" y="58" font-size="9" fill="#475569">DIR</text>
                         <rect x="34" y="48" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="48" width="96.20846247724351" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="48" width="96.2" height="12" fill="#991b1b" rx="2" />
                     
                 </svg>
             
@@ -791,28 +946,28 @@
                         
                         <text x="0" y="10" font-size="9" fill="#475569">DPD</text>
                         <rect x="34" y="0" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="0" width="17.07731496015531" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="0" width="16.900000000000002" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="26" font-size="9" fill="#475569">EOP</text>
+                        <text x="0" y="26" font-size="9" fill="#475569">EOD</text>
                         <rect x="34" y="16" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="16" width="28.261316036543544" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="16" width="28.166666666666668" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="42" font-size="9" fill="#475569">EOD</text>
+                        <text x="0" y="42" font-size="9" fill="#475569">EOP</text>
                         <rect x="34" y="32" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="32" width="28.261316036543544" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="32" width="28.166666666666668" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
                         <text x="0" y="58" font-size="9" fill="#475569">DIR</text>
                         <rect x="34" y="48" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="48" width="38.493191018296" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="48" width="38.566666666666656" height="12" fill="#991b1b" rx="2" />
                     
                 </svg>
             
@@ -847,28 +1002,28 @@
                         
                         <text x="0" y="10" font-size="9" fill="#475569">DPD</text>
                         <rect x="34" y="0" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="0" width="15.31456074236752" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="0" width="15.166666666666668" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="26" font-size="9" fill="#475569">EOP</text>
+                        <text x="0" y="26" font-size="9" fill="#475569">EOD</text>
                         <rect x="34" y="16" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="16" width="34.469875730943606" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="16" width="34.666666666666664" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="42" font-size="9" fill="#475569">EOD</text>
+                        <text x="0" y="42" font-size="9" fill="#475569">EOP</text>
                         <rect x="34" y="32" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="32" width="34.469875730943606" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="32" width="34.666666666666664" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
                         <text x="0" y="58" font-size="9" fill="#475569">DIR</text>
                         <rect x="34" y="48" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="48" width="37.885207401060036" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="48" width="37.69999999999999" height="12" fill="#991b1b" rx="2" />
                     
                 </svg>
             
@@ -903,28 +1058,28 @@
                         
                         <text x="0" y="10" font-size="9" fill="#475569">DPD</text>
                         <rect x="34" y="0" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="0" width="10.912906117836007" height="12" fill="#2563eb" rx="2" />
+                        <rect x="34" y="0" width="10.833333333333334" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="26" font-size="9" fill="#475569">EOP</text>
+                        <text x="0" y="26" font-size="9" fill="#475569">EOD</text>
                         <rect x="34" y="16" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="16" width="33.102083684904336" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="16" width="32.93333333333334" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="42" font-size="9" fill="#475569">EOD</text>
+                        <text x="0" y="42" font-size="9" fill="#475569">EOP</text>
                         <rect x="34" y="32" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="32" width="33.102083684904336" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="32" width="32.93333333333334" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
                         <text x="0" y="58" font-size="9" fill="#475569">DIR</text>
                         <rect x="34" y="48" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="48" width="25.41315771834006" height="12" fill="#2563eb" rx="2" />
+                        <rect x="34" y="48" width="25.56666666666669" height="12" fill="#991b1b" rx="2" />
                     
                 </svg>
             
@@ -959,28 +1114,28 @@
                         
                         <text x="0" y="10" font-size="9" fill="#475569">DPD</text>
                         <rect x="34" y="0" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="0" width="2.1559490755662125" height="12" fill="#2563eb" rx="2" />
+                        <rect x="34" y="0" width="2.1666666666666665" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="26" font-size="9" fill="#475569">EOP</text>
+                        <text x="0" y="26" font-size="9" fill="#475569">EOD</text>
                         <rect x="34" y="16" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="16" width="21.725368324125267" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="16" width="21.666666666666668" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="42" font-size="9" fill="#475569">EOD</text>
+                        <text x="0" y="42" font-size="9" fill="#475569">EOP</text>
                         <rect x="34" y="32" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="32" width="21.725368324125267" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="32" width="21.666666666666668" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
                         <text x="0" y="58" font-size="9" fill="#475569">DIR</text>
                         <rect x="34" y="48" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="48" width="5.333393444840151" height="12" fill="#2563eb" rx="2" />
+                        <rect x="34" y="48" width="5.200000000000005" height="12" fill="#991b1b" rx="2" />
                     
                 </svg>
             
@@ -997,15 +1152,18 @@
             
         </div>
 
-        <!-- 3. Model Card & Dataset Datasheet (Mitchell / Gebru) -->
+        
+
+        <!-- Governance Documentation & Intended Use -->
         <div class="section-card">
-            <h2>3. Governance Documentation & Intended Use</h2>
+            <h2>3. Governance Documentation &amp; Intended Use</h2>
             <div class="regulatory-box">
                 <strong>EU AI Act (Regulation EU 2024/1689) Article 10 / Annex IV Alignment:</strong>
                 This audit dossier provides verifiable diagnostic documentation of demographic performance disparities. It does not perform model retraining or in-situ weight modifications.
             </div>
-            <p><strong>Model Description:</strong> ImageNet-pretrained ResNet-34 terminating in an 18-unit linear head sliced for race (7), gender (2), and age (9) classification.</p>
-            <p><strong>Evaluation Protocol:</strong> Standalone offline evaluation using dual-backend cross-validation (Fairlearn + AIF360) and 1,000-resample stratified BCa bootstrap estimation.</p>
+            <p><strong>Model Description:</strong> Vision Transformer (ViT-B/16) pre-trained on ImageNet-21k / ImageNet-1k and fine-tuned on FairFace, evaluating self-attention mechanisms against demographic disparity propagation.</p>
+            <p><strong>Backend configuration:</strong> dual. Both backend executions completed.</p>
+            <p>Cross-backend agreement checks point estimates only; bootstrap, hypothesis tests, and reporting share implementation. Consult execution logs for backend failures and divergences.</p>
         </div>
 
         <footer>

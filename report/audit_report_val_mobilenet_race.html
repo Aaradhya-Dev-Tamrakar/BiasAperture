@@ -10,7 +10,7 @@
         "@type": "Report",
         "name": "BiasAperture Demographic Fairness Audit Dossier — MobileNetV2 0.35 Rep Gender Classifier (Seeed SSCMA)",
         "description": "Diagnostic Demographic Bias Evaluation & Regulatory Traceability Report on FairFace Benchmark Dataset (Validation Split) across Race axis.",
-        "datePublished": "2026-10-16 04:59:28 UTC",
+        "datePublished": "2026-10-18 16:46:44 UTC",
         "author": {
             "@type": "SoftwareApplication",
             "name": "BiasAperture",
@@ -24,15 +24,25 @@
     </script>
     <style>
         :root {
+            /* 60-30-10 LaTeX palette: 60% canvas/charcoal, 30% navy structure, 10% gem accents */
             --bg-primary: #f8fafc;
             --bg-card: #ffffff;
-            --text-main: #0f172a;
+            --text-main: #1e293b;
             --text-muted: #64748b;
             --border-color: #cbd5e1;
-            --brand-blue: #0369a1;
-            --accent-green: #15803d;
-            --accent-red: #b91c1c;
+            --structure: #1b365d;
+            --brand-blue: #1b365d;
+            --accent-teal: #0f766e;
+            --accent-green: #166534;
+            --accent-red: #991b1b;
             --accent-amber: #b45309;
+            --accent-indigo: #3730a3;
+            --tint-green: #ecfdf3;
+            --tint-red: #fdf2f2;
+            --tint-amber: #fef9e7;
+            --tint-indigo: #eef2ff;
+            --tint-navy: #f1f5f9;
+            --tint-highlight: #fef9c3;
             --font-stack: "Latin Modern Roman", "CMU Serif", "Computer Modern Roman", "TeX Gyre Termes", "Times New Roman", "Nimbus Roman No9 L", Times, serif;
             --font-mono: "Latin Modern Mono", "CMU Typewriter Text", "Courier New", Courier, monospace;
         }
@@ -64,7 +74,7 @@
 
         h1, h2, h3, h4 {
             font-family: var(--font-stack);
-            color: #0f172a;
+            color: var(--structure);
             font-weight: 700;
             font-variant: small-caps;
             letter-spacing: 0.04em;
@@ -73,7 +83,7 @@
         h1 {
             margin: 0 0 0.5rem 0;
             font-size: 1.8rem;
-            border-bottom: 1.5px solid #0f172a;
+            border-bottom: 1.5px solid var(--structure);
             padding-bottom: 0.5rem;
         }
 
@@ -86,7 +96,7 @@
         }
 
         .meta-item {
-            background: #f1f5f9;
+            background: var(--tint-navy);
             padding: 0.75rem;
             border-radius: 6px;
         }
@@ -111,7 +121,7 @@
         }
 
         h2 {
-            border-bottom: 1.5px solid #0f172a;
+            border-bottom: 1.5px solid var(--structure);
             padding-bottom: 0.5rem;
             margin-top: 0;
             font-size: 1.3rem;
@@ -127,8 +137,8 @@
             border-collapse: collapse;
             margin: 1rem 0;
             font-size: 0.9rem;
-            border-top: 1.5px solid #0f172a;
-            border-bottom: 1.5px solid #0f172a;
+            border-top: 1.5px solid var(--structure);
+            border-bottom: 1.5px solid var(--structure);
         }
 
         th, td {
@@ -138,12 +148,12 @@
         }
 
         th {
-            border-top: 1.5px solid #0f172a;
-            border-bottom: 1px solid #0f172a;
+            border-top: 1.5px solid var(--structure);
+            border-bottom: 1px solid var(--structure);
             font-weight: 700;
             font-variant: small-caps;
             letter-spacing: 0.03em;
-            color: #0f172a;
+            color: var(--structure);
             background: none;
         }
 
@@ -153,7 +163,7 @@
         }
 
         tr:last-child td {
-            border-bottom: 1.5px solid #0f172a;
+            border-bottom: 1.5px solid var(--structure);
         }
 
         .badge {
@@ -165,27 +175,27 @@
         }
 
         .badge-pass {
-            background-color: #dcfce7;
-            color: #15803d;
+            background-color: var(--tint-green);
+            color: var(--accent-green);
         }
 
         .badge-warn {
-            background-color: #fef3c7;
-            color: #b45309;
+            background-color: var(--tint-amber);
+            color: var(--accent-amber);
         }
 
         .badge-fail {
-            background-color: #fee2e2;
-            color: #b91c1c;
+            background-color: var(--tint-red);
+            color: var(--accent-red);
         }
 
         .badge-guard {
-            background-color: #e0e7ff;
-            color: #3730a3;
+            background-color: var(--tint-indigo);
+            color: var(--accent-indigo);
         }
 
         .regulatory-box {
-            background-color: #eff6ff;
+            background-color: var(--tint-navy);
             border-left: 4px solid var(--brand-blue);
             padding: 1rem;
             margin: 1rem 0;
@@ -226,7 +236,7 @@
         .exec-stat-value {
             font-size: 1.6rem;
             font-weight: 700;
-            color: #1e293b;
+            color: var(--text-main);
             display: block;
             line-height: 1.2;
         }
@@ -308,7 +318,7 @@
             body {
                 padding: 0;
                 background: #ffffff;
-                color: #0f172a;
+                color: var(--structure);
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
@@ -344,6 +354,10 @@
                 display: table-header-group;
             }
         }
+            a { color: var(--accent-teal); text-decoration-thickness: 0.5px; text-underline-offset: 2px; }
+
+        mark { background-color: var(--tint-highlight); color: inherit; padding: 0 0.15em; }
+
     </style>
 </head>
 <body>
@@ -366,7 +380,7 @@
                 </div>
                 <div class="meta-item">
                     <span class="meta-label">Audit Date</span>
-                    <strong>2026-10-16 04:59:28 UTC</strong>
+                    <strong>2026-10-18 16:46:44 UTC</strong>
                 </div>
             </div>
         </header>
@@ -380,24 +394,32 @@
         <!-- 0. Executive Summary Strip -->
         <div class="exec-summary">
             <div class="exec-stat exec-stat-alert">
-                <span class="exec-stat-value">3 / 7</span>
+                <span class="exec-stat-value">7 / 7</span>
                 <span class="exec-stat-label">Subgroups with significant disparity (p &lt; 0.05)</span>
             </div>
             <div class="exec-stat">
                 <span class="exec-stat-value">
                     
-                        Black
+                        Overall (Table 1)
                     
                 </span>
-                <span class="exec-stat-label">Largest deviation subgroup</span>
+                <span class="exec-stat-label">
+                    
+                        Worst disparity cohort (28 metric failures)
+                    
+                </span>
             </div>
             <div class="exec-stat">
                 <span class="exec-stat-value">
                     
-                        EOP = 0.080
+                        DIR = 0.855
                     
                 </span>
-                <span class="exec-stat-label">Worst headline metric</span>
+                <span class="exec-stat-label">
+                    
+                        Worst headline metric (Overall)
+                    
+                </span>
             </div>
             <div class="exec-stat">
                 <span class="exec-stat-value">0</span>
@@ -409,7 +431,7 @@
         <div class="section-card">
             <h2>1. Headline Fairness Metrics (Core Four — Cross-Group Overview)</h2>
             <p style="font-size: 0.9rem; color: var(--text-muted);">
-                Summary metrics evaluated across all eligible demographic strata (n ≥ 30 per NFR-003). Accompanied by 95% stratified BCa bootstrap confidence intervals and Pearson's χ² test of independence. <em>Note: each CI band is scaled to its own row — dot colour (red = CI excludes null), not bar width, indicates significance across rows.</em>
+                Summary metrics evaluated across all eligible demographic strata (n ≥ 30 per NFR-003). Accompanied by 95% stratified BCa bootstrap confidence intervals and Pearson's χ² test of independence. Plotted on a calibrated [0.0, 1.0] domain with null-point reference and threshold lines.
             </p>
             
             <table>
@@ -447,12 +469,39 @@
                 
                 
                 
-                <svg class="inline-chart" width="200" height="34" viewBox="0 0 200 34" role="img" aria-label="Point estimate 0.125 with 95% CI [0.099, 0.155]">
-                    <line x1="100.0" y1="4" x2="100.0" y2="30" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,2" />
-                    <line x1="155.64391223749513" y1="17.0" x2="186.95652173913047" y2="17.0" stroke="#64748b" stroke-width="2" />
-                    <line x1="155.64391223749513" y1="12.0" x2="155.64391223749513" y2="22.0" stroke="#64748b" stroke-width="2" />
-                    <line x1="186.95652173913047" y1="12.0" x2="186.95652173913047" y2="22.0" stroke="#64748b" stroke-width="2" />
-                    <circle cx="170.50228357667757" cy="17.0" r="4.5" fill="#dc2626" />
+                
+                
+                
+                
+                
+                
+
+                <svg class="inline-chart" width="220" height="38" viewBox="0 0 220 38" role="img" aria-label="Point estimate 0.125 with 95% CI [0.099, 0.155]">
+                    <!-- Base Axis Line [0.0, 1.0] -->
+                    <line x1="10" y1="25" x2="210" y2="25" stroke="#cbd5e1" stroke-width="1" />
+                    
+                    <!-- Axis Ticks (0.0, 0.5, 1.0) -->
+                    <line x1="10" y1="23" x2="10" y2="28" stroke="#94a3b8" stroke-width="1" />
+                    <text x="10" y="35" font-size="8" fill="#64748b" text-anchor="middle">0.0</text>
+                    
+                    <line x1="110.0" y1="23" x2="110.0" y2="28" stroke="#94a3b8" stroke-width="1" />
+                    <text x="110.0" y="35" font-size="8" fill="#64748b" text-anchor="middle">0.5</text>
+                    
+                    <line x1="210" y1="23" x2="210" y2="28" stroke="#94a3b8" stroke-width="1" />
+                    <text x="210" y="35" font-size="8" fill="#64748b" text-anchor="middle">1.0</text>
+
+                    
+                        <!-- Difference Metric: 0.10 Fairness Threshold Indicator -->
+                        <line x1="30.0" y1="4" x2="30.0" y2="26" stroke="#b45309" stroke-width="1" stroke-dasharray="2,2" />
+                    
+
+                    <!-- CI Whisker Bar and End Caps -->
+                    <line x1="29.8" y1="14" x2="41.0" y2="14" stroke="#64748b" stroke-width="2" />
+                    <line x1="29.8" y1="10" x2="29.8" y2="18" stroke="#64748b" stroke-width="2" />
+                    <line x1="41.0" y1="10" x2="41.0" y2="18" stroke="#64748b" stroke-width="2" />
+
+                    <!-- Point Estimate -->
+                    <circle cx="35.0" cy="14" r="4" fill="#991b1b" />
                 </svg>
             
                             
@@ -490,12 +539,39 @@
                 
                 
                 
-                <svg class="inline-chart" width="200" height="34" viewBox="0 0 200 34" role="img" aria-label="Point estimate 0.137 with 95% CI [0.102, 0.160]">
-                    <line x1="100.00000000000001" y1="4" x2="100.00000000000001" y2="30" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,2" />
-                    <line x1="155.446416866492" y1="17.0" x2="186.95652173913047" y2="17.0" stroke="#64748b" stroke-width="2" />
-                    <line x1="155.446416866492" y1="12.0" x2="155.446416866492" y2="22.0" stroke="#64748b" stroke-width="2" />
-                    <line x1="186.95652173913047" y1="12.0" x2="186.95652173913047" y2="22.0" stroke="#64748b" stroke-width="2" />
-                    <circle cx="174.2525653114971" cy="17.0" r="4.5" fill="#dc2626" />
+                
+                
+                
+                
+                
+                
+
+                <svg class="inline-chart" width="220" height="38" viewBox="0 0 220 38" role="img" aria-label="Point estimate 0.137 with 95% CI [0.102, 0.160]">
+                    <!-- Base Axis Line [0.0, 1.0] -->
+                    <line x1="10" y1="25" x2="210" y2="25" stroke="#cbd5e1" stroke-width="1" />
+                    
+                    <!-- Axis Ticks (0.0, 0.5, 1.0) -->
+                    <line x1="10" y1="23" x2="10" y2="28" stroke="#94a3b8" stroke-width="1" />
+                    <text x="10" y="35" font-size="8" fill="#64748b" text-anchor="middle">0.0</text>
+                    
+                    <line x1="110.0" y1="23" x2="110.0" y2="28" stroke="#94a3b8" stroke-width="1" />
+                    <text x="110.0" y="35" font-size="8" fill="#64748b" text-anchor="middle">0.5</text>
+                    
+                    <line x1="210" y1="23" x2="210" y2="28" stroke="#94a3b8" stroke-width="1" />
+                    <text x="210" y="35" font-size="8" fill="#64748b" text-anchor="middle">1.0</text>
+
+                    
+                        <!-- Difference Metric: 0.10 Fairness Threshold Indicator -->
+                        <line x1="30.0" y1="4" x2="30.0" y2="26" stroke="#b45309" stroke-width="1" stroke-dasharray="2,2" />
+                    
+
+                    <!-- CI Whisker Bar and End Caps -->
+                    <line x1="30.4" y1="14" x2="42.0" y2="14" stroke="#64748b" stroke-width="2" />
+                    <line x1="30.4" y1="10" x2="30.4" y2="18" stroke="#64748b" stroke-width="2" />
+                    <line x1="42.0" y1="10" x2="42.0" y2="18" stroke="#64748b" stroke-width="2" />
+
+                    <!-- Point Estimate -->
+                    <circle cx="37.400000000000006" cy="14" r="4" fill="#991b1b" />
                 </svg>
             
                             
@@ -533,12 +609,39 @@
                 
                 
                 
-                <svg class="inline-chart" width="200" height="34" viewBox="0 0 200 34" role="img" aria-label="Point estimate 0.137 with 95% CI [0.100, 0.161]">
-                    <line x1="100.0" y1="4" x2="100.0" y2="30" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,2" />
-                    <line x1="154.10760557372478" y1="17.0" x2="186.95652173913044" y2="17.0" stroke="#64748b" stroke-width="2" />
-                    <line x1="154.10760557372478" y1="12.0" x2="154.10760557372478" y2="22.0" stroke="#64748b" stroke-width="2" />
-                    <line x1="186.95652173913044" y1="12.0" x2="186.95652173913044" y2="22.0" stroke="#64748b" stroke-width="2" />
-                    <circle cx="173.69982625824227" cy="17.0" r="4.5" fill="#dc2626" />
+                
+                
+                
+                
+                
+                
+
+                <svg class="inline-chart" width="220" height="38" viewBox="0 0 220 38" role="img" aria-label="Point estimate 0.137 with 95% CI [0.100, 0.161]">
+                    <!-- Base Axis Line [0.0, 1.0] -->
+                    <line x1="10" y1="25" x2="210" y2="25" stroke="#cbd5e1" stroke-width="1" />
+                    
+                    <!-- Axis Ticks (0.0, 0.5, 1.0) -->
+                    <line x1="10" y1="23" x2="10" y2="28" stroke="#94a3b8" stroke-width="1" />
+                    <text x="10" y="35" font-size="8" fill="#64748b" text-anchor="middle">0.0</text>
+                    
+                    <line x1="110.0" y1="23" x2="110.0" y2="28" stroke="#94a3b8" stroke-width="1" />
+                    <text x="110.0" y="35" font-size="8" fill="#64748b" text-anchor="middle">0.5</text>
+                    
+                    <line x1="210" y1="23" x2="210" y2="28" stroke="#94a3b8" stroke-width="1" />
+                    <text x="210" y="35" font-size="8" fill="#64748b" text-anchor="middle">1.0</text>
+
+                    
+                        <!-- Difference Metric: 0.10 Fairness Threshold Indicator -->
+                        <line x1="30.0" y1="4" x2="30.0" y2="26" stroke="#b45309" stroke-width="1" stroke-dasharray="2,2" />
+                    
+
+                    <!-- CI Whisker Bar and End Caps -->
+                    <line x1="30.0" y1="14" x2="42.2" y2="14" stroke="#64748b" stroke-width="2" />
+                    <line x1="30.0" y1="10" x2="30.0" y2="18" stroke="#64748b" stroke-width="2" />
+                    <line x1="42.2" y1="10" x2="42.2" y2="18" stroke="#64748b" stroke-width="2" />
+
+                    <!-- Point Estimate -->
+                    <circle cx="37.400000000000006" cy="14" r="4" fill="#991b1b" />
                 </svg>
             
                             
@@ -576,12 +679,40 @@
                 
                 
                 
-                <svg class="inline-chart" width="200" height="34" viewBox="0 0 200 34" role="img" aria-label="Point estimate 0.855 with 95% CI [0.824, 0.885]">
-                    <line x1="100.0" y1="4" x2="100.0" y2="30" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,2" />
-                    <line x1="13.043478260869579" y1="17.0" x2="43.21057669827839" y2="17.0" stroke="#64748b" stroke-width="2" />
-                    <line x1="13.043478260869579" y1="12.0" x2="13.043478260869579" y2="22.0" stroke="#64748b" stroke-width="2" />
-                    <line x1="43.21057669827839" y1="12.0" x2="43.21057669827839" y2="22.0" stroke="#64748b" stroke-width="2" />
-                    <circle cx="28.579363481515475" cy="17.0" r="4.5" fill="#dc2626" />
+                
+                
+                
+                
+                
+                
+
+                <svg class="inline-chart" width="220" height="38" viewBox="0 0 220 38" role="img" aria-label="Point estimate 0.855 with 95% CI [0.824, 0.885]">
+                    <!-- Base Axis Line [0.0, 1.0] -->
+                    <line x1="10" y1="25" x2="210" y2="25" stroke="#cbd5e1" stroke-width="1" />
+                    
+                    <!-- Axis Ticks (0.0, 0.5, 1.0) -->
+                    <line x1="10" y1="23" x2="10" y2="28" stroke="#94a3b8" stroke-width="1" />
+                    <text x="10" y="35" font-size="8" fill="#64748b" text-anchor="middle">0.0</text>
+                    
+                    <line x1="110.0" y1="23" x2="110.0" y2="28" stroke="#94a3b8" stroke-width="1" />
+                    <text x="110.0" y="35" font-size="8" fill="#64748b" text-anchor="middle">0.5</text>
+                    
+                    <line x1="210" y1="23" x2="210" y2="28" stroke="#94a3b8" stroke-width="1" />
+                    <text x="210" y="35" font-size="8" fill="#64748b" text-anchor="middle">1.0</text>
+
+                    
+                        <!-- Ratio Metric (DIR): 0.80 EEOC 4/5ths Rule & 1.0 Parity Line -->
+                        <line x1="170.0" y1="4" x2="170.0" y2="26" stroke="#b45309" stroke-width="1" stroke-dasharray="2,2" />
+                        <line x1="210.0" y1="4" x2="210.0" y2="26" stroke="#166534" stroke-width="1" stroke-dasharray="2,2" />
+                    
+
+                    <!-- CI Whisker Bar and End Caps -->
+                    <line x1="174.79999999999998" y1="14" x2="187.0" y2="14" stroke="#64748b" stroke-width="2" />
+                    <line x1="174.79999999999998" y1="10" x2="174.79999999999998" y2="18" stroke="#64748b" stroke-width="2" />
+                    <line x1="187.0" y1="10" x2="187.0" y2="18" stroke="#64748b" stroke-width="2" />
+
+                    <!-- Point Estimate -->
+                    <circle cx="181.0" cy="14" r="4" fill="#991b1b" />
                 </svg>
             
                             
@@ -647,28 +778,28 @@
                         
                         <text x="0" y="10" font-size="9" fill="#475569">DPD</text>
                         <rect x="34" y="0" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="0" width="28.19916941751738" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="0" width="28.166666666666668" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="26" font-size="9" fill="#475569">EOP</text>
+                        <text x="0" y="26" font-size="9" fill="#475569">EOD</text>
                         <rect x="34" y="16" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="16" width="34.75968176150205" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="16" width="34.666666666666664" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="42" font-size="9" fill="#475569">EOD</text>
+                        <text x="0" y="42" font-size="9" fill="#475569">EOP</text>
                         <rect x="34" y="32" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="32" width="34.75968176150205" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="32" width="34.666666666666664" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
                         <text x="0" y="58" font-size="9" fill="#475569">DIR</text>
                         <rect x="34" y="48" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="48" width="32.47809593905036" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="48" width="32.49999999999998" height="12" fill="#991b1b" rx="2" />
                     
                 </svg>
             
@@ -703,28 +834,28 @@
                         
                         <text x="0" y="10" font-size="9" fill="#475569">DPD</text>
                         <rect x="34" y="0" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="0" width="26.179533441573543" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="0" width="26.0" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="26" font-size="9" fill="#475569">EOP</text>
+                        <text x="0" y="26" font-size="9" fill="#475569">EOD</text>
                         <rect x="34" y="16" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="16" width="22.31057980469309" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="16" width="25.566666666666666" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="42" font-size="9" fill="#475569">EOD</text>
+                        <text x="0" y="42" font-size="9" fill="#475569">EOP</text>
                         <rect x="34" y="32" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="32" width="25.624969832641305" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="32" width="22.099999999999998" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
                         <text x="0" y="58" font-size="9" fill="#475569">DIR</text>
                         <rect x="34" y="48" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="48" width="32.59497719015648" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="48" width="32.49999999999998" height="12" fill="#991b1b" rx="2" />
                     
                 </svg>
             
@@ -759,28 +890,28 @@
                         
                         <text x="0" y="10" font-size="9" fill="#475569">DPD</text>
                         <rect x="34" y="0" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="0" width="18.003364699148158" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="0" width="18.200000000000003" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="26" font-size="9" fill="#475569">EOP</text>
+                        <text x="0" y="26" font-size="9" fill="#475569">EOD</text>
                         <rect x="34" y="16" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="16" width="24.536660889033353" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="16" width="24.7" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="42" font-size="9" fill="#475569">EOD</text>
+                        <text x="0" y="42" font-size="9" fill="#475569">EOP</text>
                         <rect x="34" y="32" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="32" width="24.536660889033353" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="32" width="24.7" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
                         <text x="0" y="58" font-size="9" fill="#475569">DIR</text>
                         <rect x="34" y="48" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="48" width="22.415191738402907" height="12" fill="#dc2626" rx="2" />
+                        <rect x="34" y="48" width="22.533333333333356" height="12" fill="#991b1b" rx="2" />
                     
                 </svg>
             
@@ -815,28 +946,28 @@
                         
                         <text x="0" y="10" font-size="9" fill="#475569">DPD</text>
                         <rect x="34" y="0" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="0" width="7.810613093882446" height="12" fill="#2563eb" rx="2" />
+                        <rect x="34" y="0" width="7.8" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="26" font-size="9" fill="#475569">EOP</text>
+                        <text x="0" y="26" font-size="9" fill="#475569">EOD</text>
                         <rect x="34" y="16" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="16" width="14.825750742285864" height="12" fill="#2563eb" rx="2" />
+                        <rect x="34" y="16" width="14.733333333333334" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="42" font-size="9" fill="#475569">EOD</text>
+                        <text x="0" y="42" font-size="9" fill="#475569">EOP</text>
                         <rect x="34" y="32" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="32" width="14.825750742285864" height="12" fill="#2563eb" rx="2" />
+                        <rect x="34" y="32" width="14.733333333333334" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
                         <text x="0" y="58" font-size="9" fill="#475569">DIR</text>
                         <rect x="34" y="48" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="48" width="9.511202691775948" height="12" fill="#2563eb" rx="2" />
+                        <rect x="34" y="48" width="9.533333333333342" height="12" fill="#991b1b" rx="2" />
                     
                 </svg>
             
@@ -871,28 +1002,28 @@
                         
                         <text x="0" y="10" font-size="9" fill="#475569">DPD</text>
                         <rect x="34" y="0" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="0" width="9.256579324524758" height="12" fill="#2563eb" rx="2" />
+                        <rect x="34" y="0" width="9.100000000000001" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="26" font-size="9" fill="#475569">EOP</text>
+                        <text x="0" y="26" font-size="9" fill="#475569">EOD</text>
                         <rect x="34" y="16" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="16" width="10.973585706284714" height="12" fill="#2563eb" rx="2" />
+                        <rect x="34" y="16" width="10.833333333333334" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="42" font-size="9" fill="#475569">EOD</text>
+                        <text x="0" y="42" font-size="9" fill="#475569">EOP</text>
                         <rect x="34" y="32" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="32" width="10.973585706284714" height="12" fill="#2563eb" rx="2" />
+                        <rect x="34" y="32" width="10.833333333333334" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
                         <text x="0" y="58" font-size="9" fill="#475569">DIR</text>
                         <rect x="34" y="48" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="48" width="11.226379404783609" height="12" fill="#2563eb" rx="2" />
+                        <rect x="34" y="48" width="11.266666666666678" height="12" fill="#991b1b" rx="2" />
                     
                 </svg>
             
@@ -927,28 +1058,28 @@
                         
                         <text x="0" y="10" font-size="9" fill="#475569">DPD</text>
                         <rect x="34" y="0" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="0" width="2.215375735480348" height="12" fill="#2563eb" rx="2" />
+                        <rect x="34" y="0" width="2.1666666666666665" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="26" font-size="9" fill="#475569">EOP</text>
+                        <text x="0" y="26" font-size="9" fill="#475569">EOD</text>
                         <rect x="34" y="16" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="16" width="2.954696014088276" height="12" fill="#2563eb" rx="2" />
+                        <rect x="34" y="16" width="8.666666666666666" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="42" font-size="9" fill="#475569">EOD</text>
+                        <text x="0" y="42" font-size="9" fill="#475569">EOP</text>
                         <rect x="34" y="32" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="32" width="8.478951651694256" height="12" fill="#2563eb" rx="2" />
+                        <rect x="34" y="32" width="3.0333333333333337" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
                         <text x="0" y="58" font-size="9" fill="#475569">DIR</text>
                         <rect x="34" y="48" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="48" width="2.7582661748638033" height="12" fill="#2563eb" rx="2" />
+                        <rect x="34" y="48" width="2.6000000000000023" height="12" fill="#991b1b" rx="2" />
                     
                 </svg>
             
@@ -983,28 +1114,28 @@
                         
                         <text x="0" y="10" font-size="9" fill="#475569">DPD</text>
                         <rect x="34" y="0" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="0" width="2.254469698767936" height="12" fill="#2563eb" rx="2" />
+                        <rect x="34" y="0" width="2.1666666666666665" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="26" font-size="9" fill="#475569">EOP</text>
+                        <text x="0" y="26" font-size="9" fill="#475569">EOD</text>
                         <rect x="34" y="16" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="16" width="4.4895163481568785" height="12" fill="#2563eb" rx="2" />
+                        <rect x="34" y="16" width="7.366666666666667" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
-                        <text x="0" y="42" font-size="9" fill="#475569">EOD</text>
+                        <text x="0" y="42" font-size="9" fill="#475569">EOP</text>
                         <rect x="34" y="32" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="32" width="7.176944896984317" height="12" fill="#2563eb" rx="2" />
+                        <rect x="34" y="32" width="4.333333333333333" height="12" fill="#991b1b" rx="2" />
                     
                         
                         
                         
                         <text x="0" y="58" font-size="9" fill="#475569">DIR</text>
                         <rect x="34" y="48" width="130" height="12" fill="#f1f5f9" rx="2" />
-                        <rect x="34" y="48" width="2.7888752447411256" height="12" fill="#2563eb" rx="2" />
+                        <rect x="34" y="48" width="2.6000000000000023" height="12" fill="#991b1b" rx="2" />
                     
                 </svg>
             
@@ -1025,24 +1156,36 @@
         <!-- 3. Targeted Disparity Explainability & Proxy Attributions -->
         <div class="section-card">
             <h2>3. Targeted Disparity Explainability &amp; Proxy Attributions</h2>
+            <h3>Demographic Surrogate Associations — Mean absolute contribution to surrogate log-odds</h3>
             <p style="font-size: 0.9rem; color: var(--text-muted);">
                 Surrogate additive Shapley attributions computed for statistically flagged disparities
-                (p&nbsp;&lt;&nbsp;0.05, n&nbsp;≥&nbsp;30). Bar lengths represent mean absolute Shapley
-                attribution magnitude across the evaluation cohort. Only the top proxy features are shown.
+                (p&nbsp;&lt;&nbsp;0.05, n&nbsp;≥&nbsp;30). A global ridge-regularized logistic surrogate model is fitted
+                to predictions across the full evaluation dataset to estimate feature proxy influence.
+                Mean absolute Shapley attributions measure the proxy contribution of each demographic feature to surrogate log-odds.
             </p>
-            <div class="regulatory-box" style="background:#fefce8; border-left-color:#ca8a04;">
-                <strong>Non-Causal Disclaimer (Bilodeau et al., 2022):</strong>
+            <div class="regulatory-box" style="background:#fef9e7; border-left-color:#b45309;">
+                <strong>Non-Causal Disclaimer (Bilodeau et al., 2024):</strong>
                 Attributions identify empirical associations between demographic proxy features and model
                 predictions. They do <em>not</em> establish causal relationships or prescribe remediation.
-                This is a diagnostic tool only — no model retraining or weight modification is performed.
+                This is a diagnostic tool only — no model retraining, in-situ weight modification, or causal intervention is performed.
             </div>
 
             
+            <div style="margin: 1.25rem 0;">
+                <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem;">Statistically Flagged Disparities Triggering Surrogate Analysis</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                    
+                        <span class="badge badge-warn" style="font-size: 0.8rem; padding: 0.3rem 0.6rem;">
+                            <strong>race=Global</strong> • DPD
+                        </span>
+                    
+                </div>
+            </div>
+            
+
+            
             <div style="margin: 1.5rem 0;">
-                <h3 style="font-size: 1rem; color: var(--text); margin-bottom: 0.5rem;">
-                    Flagged Disparity: <code>demographic_parity_difference</code> for subgroup <strong>ALL</strong>
-                </h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">Surrogate Shapley attribution computed across 10954 subjects for ALL. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
+                <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem;">Global Demographic Proxy Feature Importance</h4>
                 
                 
                 
@@ -1050,2765 +1193,207 @@
                 
                 
                 
-                
-                <svg class="inline-chart" width="400" height="230"
-                     viewBox="0 0 400 230"
+                <svg class="inline-chart" width="450" height="230"
+                     viewBox="0 0 450 230"
                      role="img" aria-label="Feature attribution bars">
                     
                         
                         
                         
-                        <text x="134" y="17"
+                        <text x="132" y="17"
                               font-size="11" fill="#475569" text-anchor="end">gender_Female</text>
-                        <rect x="140" y="5" width="200"
+                        <rect x="140" y="5" width="240"
                               height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="5" width="200.0"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="346.0" y="17"
+                        <rect x="140" y="5" width="240.0"
+                              height="16" fill="#0f766e" rx="3"/>
+                        <text x="388.0" y="17"
                               font-size="11" font-weight="600" fill="#1e293b">0.243</text>
                     
                         
                         
                         
-                        <text x="134" y="39"
+                        <text x="132" y="39"
                               font-size="11" fill="#475569" text-anchor="end">race_Black</text>
-                        <rect x="140" y="27" width="200"
+                        <rect x="140" y="27" width="240"
                               height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="27" width="112.37916926792803"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="258.37916926792803" y="39"
+                        <rect x="140" y="27" width="134.84586929716397"
+                              height="16" fill="#0f766e" rx="3"/>
+                        <text x="282.845869297164" y="39"
                               font-size="11" font-weight="600" fill="#1e293b">0.137</text>
                     
                         
                         
                         
-                        <text x="134" y="61"
+                        <text x="132" y="61"
                               font-size="11" fill="#475569" text-anchor="end">gender_Male</text>
-                        <rect x="140" y="49" width="200"
+                        <rect x="140" y="49" width="240"
                               height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="49" width="102.20982114004866"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="248.20982114004866" y="61"
+                        <rect x="140" y="49" width="122.61405672009863"
+                              height="16" fill="#0f766e" rx="3"/>
+                        <text x="270.61405672009863" y="61"
                               font-size="11" font-weight="600" fill="#1e293b">0.124</text>
                     
                         
                         
                         
-                        <text x="134" y="83"
+                        <text x="132" y="83"
                               font-size="11" fill="#475569" text-anchor="end">age_20-29</text>
-                        <rect x="140" y="71" width="200"
+                        <rect x="140" y="71" width="240"
                               height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="71" width="95.18657317552687"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="241.18657317552686" y="83"
+                        <rect x="140" y="71" width="114.22934648581999"
+                              height="16" fill="#0f766e" rx="3"/>
+                        <text x="262.22934648582" y="83"
                               font-size="11" font-weight="600" fill="#1e293b">0.116</text>
                     
                         
                         
                         
-                        <text x="134" y="105"
+                        <text x="132" y="105"
                               font-size="11" fill="#475569" text-anchor="end">age_30-39</text>
-                        <rect x="140" y="93" width="200"
+                        <rect x="140" y="93" width="240"
                               height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="93" width="81.3479013076773"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="227.34790130767732" y="105"
+                        <rect x="140" y="93" width="97.55856966707769"
+                              height="16" fill="#0f766e" rx="3"/>
+                        <text x="245.55856966707768" y="105"
                               font-size="11" font-weight="600" fill="#1e293b">0.099</text>
                     
                         
                         
                         
-                        <text x="134" y="127"
+                        <text x="132" y="127"
                               font-size="11" fill="#475569" text-anchor="end">race_Indian</text>
-                        <rect x="140" y="115" width="200"
+                        <rect x="140" y="115" width="240"
                               height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="115" width="42.60109821220382"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="188.60109821220382" y="127"
+                        <rect x="140" y="115" width="51.097410604192355"
+                              height="16" fill="#0f766e" rx="3"/>
+                        <text x="199.09741060419236" y="127"
                               font-size="11" font-weight="600" fill="#1e293b">0.052</text>
                     
                         
                         
                         
-                        <text x="134" y="149"
+                        <text x="132" y="149"
                               font-size="11" fill="#475569" text-anchor="end">race_White</text>
-                        <rect x="140" y="137" width="200"
+                        <rect x="140" y="137" width="240"
                               height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="137" width="40.66344503706296"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="186.66344503706296" y="149"
-                              font-size="11" font-weight="600" fill="#1e293b">0.049</text>
+                        <rect x="140" y="137" width="48.82860665844637"
+                              height="16" fill="#0f766e" rx="3"/>
+                        <text x="196.82860665844638" y="149"
+                              font-size="11" font-weight="600" fill="#1e293b">0.050</text>
                     
                         
                         
                         
-                        <text x="134" y="171"
+                        <text x="132" y="171"
                               font-size="11" fill="#475569" text-anchor="end">race_Southeast Asian</text>
-                        <rect x="140" y="159" width="200"
+                        <rect x="140" y="159" width="240"
                               height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="159" width="37.32670482609353"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.32670482609353" y="171"
+                        <rect x="140" y="159" width="44.7842170160296"
+                              height="16" fill="#0f766e" rx="3"/>
+                        <text x="192.7842170160296" y="171"
                               font-size="11" font-weight="600" fill="#1e293b">0.045</text>
                     
                         
                         
                         
-                        <text x="134" y="193"
+                        <text x="132" y="193"
                               font-size="11" fill="#475569" text-anchor="end">race_Middle Eastern</text>
-                        <rect x="140" y="181" width="200"
+                        <rect x="140" y="181" width="240"
                               height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="181" width="37.16939188897776"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.16939188897777" y="193"
+                        <rect x="140" y="181" width="44.5869297163995"
+                              height="16" fill="#0f766e" rx="3"/>
+                        <text x="192.5869297163995" y="193"
                               font-size="11" font-weight="600" fill="#1e293b">0.045</text>
                     
                         
                         
                         
-                        <text x="134" y="215"
+                        <text x="132" y="215"
                               font-size="11" fill="#475569" text-anchor="end">age_10-19</text>
-                        <rect x="140" y="203" width="200"
+                        <rect x="140" y="203" width="240"
                               height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="203" width="32.13655724342052"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="178.13655724342053" y="215"
+                        <rect x="140" y="203" width="38.569667077681885"
+                              height="16" fill="#0f766e" rx="3"/>
+                        <text x="186.56966707768188" y="215"
                               font-size="11" font-weight="600" fill="#1e293b">0.039</text>
                     
                 </svg>
-                
+
+                <table style="margin-top: 1.5rem;">
+                    <thead>
+                        <tr>
+                            <th>Demographic Feature</th>
+                            <th>Mean absolute contribution to surrogate log-odds</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <tr>
+                            <td><code>gender_Female</code></td>
+                            <td>0.2433</td>
+                        </tr>
+                        
+                        <tr>
+                            <td><code>race_Black</code></td>
+                            <td>0.1367</td>
+                        </tr>
+                        
+                        <tr>
+                            <td><code>gender_Male</code></td>
+                            <td>0.1243</td>
+                        </tr>
+                        
+                        <tr>
+                            <td><code>age_20-29</code></td>
+                            <td>0.1158</td>
+                        </tr>
+                        
+                        <tr>
+                            <td><code>age_30-39</code></td>
+                            <td>0.0989</td>
+                        </tr>
+                        
+                        <tr>
+                            <td><code>race_Indian</code></td>
+                            <td>0.0518</td>
+                        </tr>
+                        
+                        <tr>
+                            <td><code>race_White</code></td>
+                            <td>0.0495</td>
+                        </tr>
+                        
+                        <tr>
+                            <td><code>race_Southeast Asian</code></td>
+                            <td>0.0454</td>
+                        </tr>
+                        
+                        <tr>
+                            <td><code>race_Middle Eastern</code></td>
+                            <td>0.0452</td>
+                        </tr>
+                        
+                        <tr>
+                            <td><code>age_10-19</code></td>
+                            <td>0.0391</td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
             </div>
-            
-            <div style="margin: 1.5rem 0;">
-                <h3 style="font-size: 1rem; color: var(--text); margin-bottom: 0.5rem;">
-                    Flagged Disparity: <code>equalized_odds_difference</code> for subgroup <strong>ALL</strong>
-                </h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">Surrogate Shapley attribution computed across 10954 subjects for ALL. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-                
-                
-                
-                
-                
-                
-                
-                
-                <svg class="inline-chart" width="400" height="230"
-                     viewBox="0 0 400 230"
-                     role="img" aria-label="Feature attribution bars">
-                    
-                        
-                        
-                        
-                        <text x="134" y="17"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Female</text>
-                        <rect x="140" y="5" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="5" width="200.0"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="346.0" y="17"
-                              font-size="11" font-weight="600" fill="#1e293b">0.243</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="39"
-                              font-size="11" fill="#475569" text-anchor="end">race_Black</text>
-                        <rect x="140" y="27" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="27" width="112.37916926792803"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="258.37916926792803" y="39"
-                              font-size="11" font-weight="600" fill="#1e293b">0.137</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="61"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Male</text>
-                        <rect x="140" y="49" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="49" width="102.20982114004866"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="248.20982114004866" y="61"
-                              font-size="11" font-weight="600" fill="#1e293b">0.124</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="83"
-                              font-size="11" fill="#475569" text-anchor="end">age_20-29</text>
-                        <rect x="140" y="71" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="71" width="95.18657317552687"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="241.18657317552686" y="83"
-                              font-size="11" font-weight="600" fill="#1e293b">0.116</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="105"
-                              font-size="11" fill="#475569" text-anchor="end">age_30-39</text>
-                        <rect x="140" y="93" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="93" width="81.3479013076773"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="227.34790130767732" y="105"
-                              font-size="11" font-weight="600" fill="#1e293b">0.099</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="127"
-                              font-size="11" fill="#475569" text-anchor="end">race_Indian</text>
-                        <rect x="140" y="115" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="115" width="42.60109821220382"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="188.60109821220382" y="127"
-                              font-size="11" font-weight="600" fill="#1e293b">0.052</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="149"
-                              font-size="11" fill="#475569" text-anchor="end">race_White</text>
-                        <rect x="140" y="137" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="137" width="40.66344503706296"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="186.66344503706296" y="149"
-                              font-size="11" font-weight="600" fill="#1e293b">0.049</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="171"
-                              font-size="11" fill="#475569" text-anchor="end">race_Southeast Asian</text>
-                        <rect x="140" y="159" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="159" width="37.32670482609353"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.32670482609353" y="171"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="193"
-                              font-size="11" fill="#475569" text-anchor="end">race_Middle Eastern</text>
-                        <rect x="140" y="181" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="181" width="37.16939188897776"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.16939188897777" y="193"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="215"
-                              font-size="11" fill="#475569" text-anchor="end">age_10-19</text>
-                        <rect x="140" y="203" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="203" width="32.13655724342052"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="178.13655724342053" y="215"
-                              font-size="11" font-weight="600" fill="#1e293b">0.039</text>
-                    
-                </svg>
-                
-            </div>
-            
-            <div style="margin: 1.5rem 0;">
-                <h3 style="font-size: 1rem; color: var(--text); margin-bottom: 0.5rem;">
-                    Flagged Disparity: <code>equal_opportunity_difference</code> for subgroup <strong>ALL</strong>
-                </h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">Surrogate Shapley attribution computed across 10954 subjects for ALL. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-                
-                
-                
-                
-                
-                
-                
-                
-                <svg class="inline-chart" width="400" height="230"
-                     viewBox="0 0 400 230"
-                     role="img" aria-label="Feature attribution bars">
-                    
-                        
-                        
-                        
-                        <text x="134" y="17"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Female</text>
-                        <rect x="140" y="5" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="5" width="200.0"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="346.0" y="17"
-                              font-size="11" font-weight="600" fill="#1e293b">0.243</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="39"
-                              font-size="11" fill="#475569" text-anchor="end">race_Black</text>
-                        <rect x="140" y="27" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="27" width="112.37916926792803"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="258.37916926792803" y="39"
-                              font-size="11" font-weight="600" fill="#1e293b">0.137</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="61"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Male</text>
-                        <rect x="140" y="49" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="49" width="102.20982114004866"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="248.20982114004866" y="61"
-                              font-size="11" font-weight="600" fill="#1e293b">0.124</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="83"
-                              font-size="11" fill="#475569" text-anchor="end">age_20-29</text>
-                        <rect x="140" y="71" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="71" width="95.18657317552687"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="241.18657317552686" y="83"
-                              font-size="11" font-weight="600" fill="#1e293b">0.116</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="105"
-                              font-size="11" fill="#475569" text-anchor="end">age_30-39</text>
-                        <rect x="140" y="93" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="93" width="81.3479013076773"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="227.34790130767732" y="105"
-                              font-size="11" font-weight="600" fill="#1e293b">0.099</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="127"
-                              font-size="11" fill="#475569" text-anchor="end">race_Indian</text>
-                        <rect x="140" y="115" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="115" width="42.60109821220382"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="188.60109821220382" y="127"
-                              font-size="11" font-weight="600" fill="#1e293b">0.052</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="149"
-                              font-size="11" fill="#475569" text-anchor="end">race_White</text>
-                        <rect x="140" y="137" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="137" width="40.66344503706296"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="186.66344503706296" y="149"
-                              font-size="11" font-weight="600" fill="#1e293b">0.049</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="171"
-                              font-size="11" fill="#475569" text-anchor="end">race_Southeast Asian</text>
-                        <rect x="140" y="159" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="159" width="37.32670482609353"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.32670482609353" y="171"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="193"
-                              font-size="11" fill="#475569" text-anchor="end">race_Middle Eastern</text>
-                        <rect x="140" y="181" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="181" width="37.16939188897776"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.16939188897777" y="193"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="215"
-                              font-size="11" fill="#475569" text-anchor="end">age_10-19</text>
-                        <rect x="140" y="203" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="203" width="32.13655724342052"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="178.13655724342053" y="215"
-                              font-size="11" font-weight="600" fill="#1e293b">0.039</text>
-                    
-                </svg>
-                
-            </div>
-            
-            <div style="margin: 1.5rem 0;">
-                <h3 style="font-size: 1rem; color: var(--text); margin-bottom: 0.5rem;">
-                    Flagged Disparity: <code>disparate_impact_ratio</code> for subgroup <strong>ALL</strong>
-                </h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">Surrogate Shapley attribution computed across 10954 subjects for ALL. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-                
-                
-                
-                
-                
-                
-                
-                
-                <svg class="inline-chart" width="400" height="230"
-                     viewBox="0 0 400 230"
-                     role="img" aria-label="Feature attribution bars">
-                    
-                        
-                        
-                        
-                        <text x="134" y="17"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Female</text>
-                        <rect x="140" y="5" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="5" width="200.0"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="346.0" y="17"
-                              font-size="11" font-weight="600" fill="#1e293b">0.243</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="39"
-                              font-size="11" fill="#475569" text-anchor="end">race_Black</text>
-                        <rect x="140" y="27" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="27" width="112.37916926792803"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="258.37916926792803" y="39"
-                              font-size="11" font-weight="600" fill="#1e293b">0.137</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="61"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Male</text>
-                        <rect x="140" y="49" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="49" width="102.20982114004866"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="248.20982114004866" y="61"
-                              font-size="11" font-weight="600" fill="#1e293b">0.124</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="83"
-                              font-size="11" fill="#475569" text-anchor="end">age_20-29</text>
-                        <rect x="140" y="71" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="71" width="95.18657317552687"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="241.18657317552686" y="83"
-                              font-size="11" font-weight="600" fill="#1e293b">0.116</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="105"
-                              font-size="11" fill="#475569" text-anchor="end">age_30-39</text>
-                        <rect x="140" y="93" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="93" width="81.3479013076773"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="227.34790130767732" y="105"
-                              font-size="11" font-weight="600" fill="#1e293b">0.099</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="127"
-                              font-size="11" fill="#475569" text-anchor="end">race_Indian</text>
-                        <rect x="140" y="115" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="115" width="42.60109821220382"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="188.60109821220382" y="127"
-                              font-size="11" font-weight="600" fill="#1e293b">0.052</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="149"
-                              font-size="11" fill="#475569" text-anchor="end">race_White</text>
-                        <rect x="140" y="137" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="137" width="40.66344503706296"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="186.66344503706296" y="149"
-                              font-size="11" font-weight="600" fill="#1e293b">0.049</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="171"
-                              font-size="11" fill="#475569" text-anchor="end">race_Southeast Asian</text>
-                        <rect x="140" y="159" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="159" width="37.32670482609353"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.32670482609353" y="171"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="193"
-                              font-size="11" fill="#475569" text-anchor="end">race_Middle Eastern</text>
-                        <rect x="140" y="181" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="181" width="37.16939188897776"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.16939188897777" y="193"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="215"
-                              font-size="11" fill="#475569" text-anchor="end">age_10-19</text>
-                        <rect x="140" y="203" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="203" width="32.13655724342052"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="178.13655724342053" y="215"
-                              font-size="11" font-weight="600" fill="#1e293b">0.039</text>
-                    
-                </svg>
-                
-            </div>
-            
-            <div style="margin: 1.5rem 0;">
-                <h3 style="font-size: 1rem; color: var(--text); margin-bottom: 0.5rem;">
-                    Flagged Disparity: <code>demographic_parity_difference</code> for subgroup <strong>Black</strong>
-                </h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">Surrogate Shapley attribution computed across 10954 subjects for Black. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-                
-                
-                
-                
-                
-                
-                
-                
-                <svg class="inline-chart" width="400" height="230"
-                     viewBox="0 0 400 230"
-                     role="img" aria-label="Feature attribution bars">
-                    
-                        
-                        
-                        
-                        <text x="134" y="17"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Female</text>
-                        <rect x="140" y="5" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="5" width="200.0"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="346.0" y="17"
-                              font-size="11" font-weight="600" fill="#1e293b">0.243</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="39"
-                              font-size="11" fill="#475569" text-anchor="end">race_Black</text>
-                        <rect x="140" y="27" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="27" width="112.37916926792803"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="258.37916926792803" y="39"
-                              font-size="11" font-weight="600" fill="#1e293b">0.137</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="61"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Male</text>
-                        <rect x="140" y="49" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="49" width="102.20982114004866"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="248.20982114004866" y="61"
-                              font-size="11" font-weight="600" fill="#1e293b">0.124</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="83"
-                              font-size="11" fill="#475569" text-anchor="end">age_20-29</text>
-                        <rect x="140" y="71" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="71" width="95.18657317552687"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="241.18657317552686" y="83"
-                              font-size="11" font-weight="600" fill="#1e293b">0.116</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="105"
-                              font-size="11" fill="#475569" text-anchor="end">age_30-39</text>
-                        <rect x="140" y="93" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="93" width="81.3479013076773"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="227.34790130767732" y="105"
-                              font-size="11" font-weight="600" fill="#1e293b">0.099</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="127"
-                              font-size="11" fill="#475569" text-anchor="end">race_Indian</text>
-                        <rect x="140" y="115" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="115" width="42.60109821220382"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="188.60109821220382" y="127"
-                              font-size="11" font-weight="600" fill="#1e293b">0.052</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="149"
-                              font-size="11" fill="#475569" text-anchor="end">race_White</text>
-                        <rect x="140" y="137" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="137" width="40.66344503706296"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="186.66344503706296" y="149"
-                              font-size="11" font-weight="600" fill="#1e293b">0.049</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="171"
-                              font-size="11" fill="#475569" text-anchor="end">race_Southeast Asian</text>
-                        <rect x="140" y="159" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="159" width="37.32670482609353"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.32670482609353" y="171"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="193"
-                              font-size="11" fill="#475569" text-anchor="end">race_Middle Eastern</text>
-                        <rect x="140" y="181" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="181" width="37.16939188897776"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.16939188897777" y="193"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="215"
-                              font-size="11" fill="#475569" text-anchor="end">age_10-19</text>
-                        <rect x="140" y="203" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="203" width="32.13655724342052"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="178.13655724342053" y="215"
-                              font-size="11" font-weight="600" fill="#1e293b">0.039</text>
-                    
-                </svg>
-                
-            </div>
-            
-            <div style="margin: 1.5rem 0;">
-                <h3 style="font-size: 1rem; color: var(--text); margin-bottom: 0.5rem;">
-                    Flagged Disparity: <code>equal_opportunity_difference</code> for subgroup <strong>Black</strong>
-                </h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">Surrogate Shapley attribution computed across 10954 subjects for Black. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-                
-                
-                
-                
-                
-                
-                
-                
-                <svg class="inline-chart" width="400" height="230"
-                     viewBox="0 0 400 230"
-                     role="img" aria-label="Feature attribution bars">
-                    
-                        
-                        
-                        
-                        <text x="134" y="17"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Female</text>
-                        <rect x="140" y="5" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="5" width="200.0"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="346.0" y="17"
-                              font-size="11" font-weight="600" fill="#1e293b">0.243</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="39"
-                              font-size="11" fill="#475569" text-anchor="end">race_Black</text>
-                        <rect x="140" y="27" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="27" width="112.37916926792803"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="258.37916926792803" y="39"
-                              font-size="11" font-weight="600" fill="#1e293b">0.137</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="61"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Male</text>
-                        <rect x="140" y="49" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="49" width="102.20982114004866"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="248.20982114004866" y="61"
-                              font-size="11" font-weight="600" fill="#1e293b">0.124</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="83"
-                              font-size="11" fill="#475569" text-anchor="end">age_20-29</text>
-                        <rect x="140" y="71" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="71" width="95.18657317552687"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="241.18657317552686" y="83"
-                              font-size="11" font-weight="600" fill="#1e293b">0.116</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="105"
-                              font-size="11" fill="#475569" text-anchor="end">age_30-39</text>
-                        <rect x="140" y="93" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="93" width="81.3479013076773"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="227.34790130767732" y="105"
-                              font-size="11" font-weight="600" fill="#1e293b">0.099</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="127"
-                              font-size="11" fill="#475569" text-anchor="end">race_Indian</text>
-                        <rect x="140" y="115" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="115" width="42.60109821220382"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="188.60109821220382" y="127"
-                              font-size="11" font-weight="600" fill="#1e293b">0.052</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="149"
-                              font-size="11" fill="#475569" text-anchor="end">race_White</text>
-                        <rect x="140" y="137" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="137" width="40.66344503706296"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="186.66344503706296" y="149"
-                              font-size="11" font-weight="600" fill="#1e293b">0.049</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="171"
-                              font-size="11" fill="#475569" text-anchor="end">race_Southeast Asian</text>
-                        <rect x="140" y="159" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="159" width="37.32670482609353"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.32670482609353" y="171"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="193"
-                              font-size="11" fill="#475569" text-anchor="end">race_Middle Eastern</text>
-                        <rect x="140" y="181" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="181" width="37.16939188897776"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.16939188897777" y="193"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="215"
-                              font-size="11" fill="#475569" text-anchor="end">age_10-19</text>
-                        <rect x="140" y="203" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="203" width="32.13655724342052"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="178.13655724342053" y="215"
-                              font-size="11" font-weight="600" fill="#1e293b">0.039</text>
-                    
-                </svg>
-                
-            </div>
-            
-            <div style="margin: 1.5rem 0;">
-                <h3 style="font-size: 1rem; color: var(--text); margin-bottom: 0.5rem;">
-                    Flagged Disparity: <code>equalized_odds_difference</code> for subgroup <strong>Black</strong>
-                </h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">Surrogate Shapley attribution computed across 10954 subjects for Black. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-                
-                
-                
-                
-                
-                
-                
-                
-                <svg class="inline-chart" width="400" height="230"
-                     viewBox="0 0 400 230"
-                     role="img" aria-label="Feature attribution bars">
-                    
-                        
-                        
-                        
-                        <text x="134" y="17"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Female</text>
-                        <rect x="140" y="5" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="5" width="200.0"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="346.0" y="17"
-                              font-size="11" font-weight="600" fill="#1e293b">0.243</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="39"
-                              font-size="11" fill="#475569" text-anchor="end">race_Black</text>
-                        <rect x="140" y="27" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="27" width="112.37916926792803"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="258.37916926792803" y="39"
-                              font-size="11" font-weight="600" fill="#1e293b">0.137</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="61"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Male</text>
-                        <rect x="140" y="49" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="49" width="102.20982114004866"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="248.20982114004866" y="61"
-                              font-size="11" font-weight="600" fill="#1e293b">0.124</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="83"
-                              font-size="11" fill="#475569" text-anchor="end">age_20-29</text>
-                        <rect x="140" y="71" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="71" width="95.18657317552687"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="241.18657317552686" y="83"
-                              font-size="11" font-weight="600" fill="#1e293b">0.116</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="105"
-                              font-size="11" fill="#475569" text-anchor="end">age_30-39</text>
-                        <rect x="140" y="93" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="93" width="81.3479013076773"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="227.34790130767732" y="105"
-                              font-size="11" font-weight="600" fill="#1e293b">0.099</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="127"
-                              font-size="11" fill="#475569" text-anchor="end">race_Indian</text>
-                        <rect x="140" y="115" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="115" width="42.60109821220382"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="188.60109821220382" y="127"
-                              font-size="11" font-weight="600" fill="#1e293b">0.052</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="149"
-                              font-size="11" fill="#475569" text-anchor="end">race_White</text>
-                        <rect x="140" y="137" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="137" width="40.66344503706296"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="186.66344503706296" y="149"
-                              font-size="11" font-weight="600" fill="#1e293b">0.049</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="171"
-                              font-size="11" fill="#475569" text-anchor="end">race_Southeast Asian</text>
-                        <rect x="140" y="159" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="159" width="37.32670482609353"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.32670482609353" y="171"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="193"
-                              font-size="11" fill="#475569" text-anchor="end">race_Middle Eastern</text>
-                        <rect x="140" y="181" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="181" width="37.16939188897776"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.16939188897777" y="193"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="215"
-                              font-size="11" fill="#475569" text-anchor="end">age_10-19</text>
-                        <rect x="140" y="203" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="203" width="32.13655724342052"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="178.13655724342053" y="215"
-                              font-size="11" font-weight="600" fill="#1e293b">0.039</text>
-                    
-                </svg>
-                
-            </div>
-            
-            <div style="margin: 1.5rem 0;">
-                <h3 style="font-size: 1rem; color: var(--text); margin-bottom: 0.5rem;">
-                    Flagged Disparity: <code>disparate_impact_ratio</code> for subgroup <strong>Black</strong>
-                </h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">Surrogate Shapley attribution computed across 10954 subjects for Black. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-                
-                
-                
-                
-                
-                
-                
-                
-                <svg class="inline-chart" width="400" height="230"
-                     viewBox="0 0 400 230"
-                     role="img" aria-label="Feature attribution bars">
-                    
-                        
-                        
-                        
-                        <text x="134" y="17"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Female</text>
-                        <rect x="140" y="5" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="5" width="200.0"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="346.0" y="17"
-                              font-size="11" font-weight="600" fill="#1e293b">0.243</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="39"
-                              font-size="11" fill="#475569" text-anchor="end">race_Black</text>
-                        <rect x="140" y="27" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="27" width="112.37916926792803"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="258.37916926792803" y="39"
-                              font-size="11" font-weight="600" fill="#1e293b">0.137</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="61"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Male</text>
-                        <rect x="140" y="49" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="49" width="102.20982114004866"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="248.20982114004866" y="61"
-                              font-size="11" font-weight="600" fill="#1e293b">0.124</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="83"
-                              font-size="11" fill="#475569" text-anchor="end">age_20-29</text>
-                        <rect x="140" y="71" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="71" width="95.18657317552687"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="241.18657317552686" y="83"
-                              font-size="11" font-weight="600" fill="#1e293b">0.116</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="105"
-                              font-size="11" fill="#475569" text-anchor="end">age_30-39</text>
-                        <rect x="140" y="93" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="93" width="81.3479013076773"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="227.34790130767732" y="105"
-                              font-size="11" font-weight="600" fill="#1e293b">0.099</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="127"
-                              font-size="11" fill="#475569" text-anchor="end">race_Indian</text>
-                        <rect x="140" y="115" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="115" width="42.60109821220382"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="188.60109821220382" y="127"
-                              font-size="11" font-weight="600" fill="#1e293b">0.052</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="149"
-                              font-size="11" fill="#475569" text-anchor="end">race_White</text>
-                        <rect x="140" y="137" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="137" width="40.66344503706296"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="186.66344503706296" y="149"
-                              font-size="11" font-weight="600" fill="#1e293b">0.049</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="171"
-                              font-size="11" fill="#475569" text-anchor="end">race_Southeast Asian</text>
-                        <rect x="140" y="159" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="159" width="37.32670482609353"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.32670482609353" y="171"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="193"
-                              font-size="11" fill="#475569" text-anchor="end">race_Middle Eastern</text>
-                        <rect x="140" y="181" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="181" width="37.16939188897776"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.16939188897777" y="193"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="215"
-                              font-size="11" fill="#475569" text-anchor="end">age_10-19</text>
-                        <rect x="140" y="203" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="203" width="32.13655724342052"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="178.13655724342053" y="215"
-                              font-size="11" font-weight="600" fill="#1e293b">0.039</text>
-                    
-                </svg>
-                
-            </div>
-            
-            <div style="margin: 1.5rem 0;">
-                <h3 style="font-size: 1rem; color: var(--text); margin-bottom: 0.5rem;">
-                    Flagged Disparity: <code>demographic_parity_difference</code> for subgroup <strong>Middle Eastern</strong>
-                </h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">Surrogate Shapley attribution computed across 10954 subjects for Middle Eastern. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-                
-                
-                
-                
-                
-                
-                
-                
-                <svg class="inline-chart" width="400" height="230"
-                     viewBox="0 0 400 230"
-                     role="img" aria-label="Feature attribution bars">
-                    
-                        
-                        
-                        
-                        <text x="134" y="17"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Female</text>
-                        <rect x="140" y="5" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="5" width="200.0"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="346.0" y="17"
-                              font-size="11" font-weight="600" fill="#1e293b">0.243</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="39"
-                              font-size="11" fill="#475569" text-anchor="end">race_Black</text>
-                        <rect x="140" y="27" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="27" width="112.37916926792803"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="258.37916926792803" y="39"
-                              font-size="11" font-weight="600" fill="#1e293b">0.137</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="61"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Male</text>
-                        <rect x="140" y="49" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="49" width="102.20982114004866"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="248.20982114004866" y="61"
-                              font-size="11" font-weight="600" fill="#1e293b">0.124</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="83"
-                              font-size="11" fill="#475569" text-anchor="end">age_20-29</text>
-                        <rect x="140" y="71" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="71" width="95.18657317552687"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="241.18657317552686" y="83"
-                              font-size="11" font-weight="600" fill="#1e293b">0.116</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="105"
-                              font-size="11" fill="#475569" text-anchor="end">age_30-39</text>
-                        <rect x="140" y="93" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="93" width="81.3479013076773"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="227.34790130767732" y="105"
-                              font-size="11" font-weight="600" fill="#1e293b">0.099</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="127"
-                              font-size="11" fill="#475569" text-anchor="end">race_Indian</text>
-                        <rect x="140" y="115" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="115" width="42.60109821220382"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="188.60109821220382" y="127"
-                              font-size="11" font-weight="600" fill="#1e293b">0.052</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="149"
-                              font-size="11" fill="#475569" text-anchor="end">race_White</text>
-                        <rect x="140" y="137" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="137" width="40.66344503706296"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="186.66344503706296" y="149"
-                              font-size="11" font-weight="600" fill="#1e293b">0.049</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="171"
-                              font-size="11" fill="#475569" text-anchor="end">race_Southeast Asian</text>
-                        <rect x="140" y="159" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="159" width="37.32670482609353"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.32670482609353" y="171"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="193"
-                              font-size="11" fill="#475569" text-anchor="end">race_Middle Eastern</text>
-                        <rect x="140" y="181" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="181" width="37.16939188897776"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.16939188897777" y="193"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="215"
-                              font-size="11" fill="#475569" text-anchor="end">age_10-19</text>
-                        <rect x="140" y="203" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="203" width="32.13655724342052"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="178.13655724342053" y="215"
-                              font-size="11" font-weight="600" fill="#1e293b">0.039</text>
-                    
-                </svg>
-                
-            </div>
-            
-            <div style="margin: 1.5rem 0;">
-                <h3 style="font-size: 1rem; color: var(--text); margin-bottom: 0.5rem;">
-                    Flagged Disparity: <code>equal_opportunity_difference</code> for subgroup <strong>Middle Eastern</strong>
-                </h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">Surrogate Shapley attribution computed across 10954 subjects for Middle Eastern. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-                
-                
-                
-                
-                
-                
-                
-                
-                <svg class="inline-chart" width="400" height="230"
-                     viewBox="0 0 400 230"
-                     role="img" aria-label="Feature attribution bars">
-                    
-                        
-                        
-                        
-                        <text x="134" y="17"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Female</text>
-                        <rect x="140" y="5" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="5" width="200.0"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="346.0" y="17"
-                              font-size="11" font-weight="600" fill="#1e293b">0.243</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="39"
-                              font-size="11" fill="#475569" text-anchor="end">race_Black</text>
-                        <rect x="140" y="27" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="27" width="112.37916926792803"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="258.37916926792803" y="39"
-                              font-size="11" font-weight="600" fill="#1e293b">0.137</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="61"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Male</text>
-                        <rect x="140" y="49" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="49" width="102.20982114004866"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="248.20982114004866" y="61"
-                              font-size="11" font-weight="600" fill="#1e293b">0.124</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="83"
-                              font-size="11" fill="#475569" text-anchor="end">age_20-29</text>
-                        <rect x="140" y="71" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="71" width="95.18657317552687"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="241.18657317552686" y="83"
-                              font-size="11" font-weight="600" fill="#1e293b">0.116</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="105"
-                              font-size="11" fill="#475569" text-anchor="end">age_30-39</text>
-                        <rect x="140" y="93" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="93" width="81.3479013076773"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="227.34790130767732" y="105"
-                              font-size="11" font-weight="600" fill="#1e293b">0.099</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="127"
-                              font-size="11" fill="#475569" text-anchor="end">race_Indian</text>
-                        <rect x="140" y="115" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="115" width="42.60109821220382"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="188.60109821220382" y="127"
-                              font-size="11" font-weight="600" fill="#1e293b">0.052</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="149"
-                              font-size="11" fill="#475569" text-anchor="end">race_White</text>
-                        <rect x="140" y="137" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="137" width="40.66344503706296"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="186.66344503706296" y="149"
-                              font-size="11" font-weight="600" fill="#1e293b">0.049</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="171"
-                              font-size="11" fill="#475569" text-anchor="end">race_Southeast Asian</text>
-                        <rect x="140" y="159" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="159" width="37.32670482609353"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.32670482609353" y="171"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="193"
-                              font-size="11" fill="#475569" text-anchor="end">race_Middle Eastern</text>
-                        <rect x="140" y="181" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="181" width="37.16939188897776"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.16939188897777" y="193"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="215"
-                              font-size="11" fill="#475569" text-anchor="end">age_10-19</text>
-                        <rect x="140" y="203" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="203" width="32.13655724342052"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="178.13655724342053" y="215"
-                              font-size="11" font-weight="600" fill="#1e293b">0.039</text>
-                    
-                </svg>
-                
-            </div>
-            
-            <div style="margin: 1.5rem 0;">
-                <h3 style="font-size: 1rem; color: var(--text); margin-bottom: 0.5rem;">
-                    Flagged Disparity: <code>equalized_odds_difference</code> for subgroup <strong>Middle Eastern</strong>
-                </h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">Surrogate Shapley attribution computed across 10954 subjects for Middle Eastern. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-                
-                
-                
-                
-                
-                
-                
-                
-                <svg class="inline-chart" width="400" height="230"
-                     viewBox="0 0 400 230"
-                     role="img" aria-label="Feature attribution bars">
-                    
-                        
-                        
-                        
-                        <text x="134" y="17"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Female</text>
-                        <rect x="140" y="5" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="5" width="200.0"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="346.0" y="17"
-                              font-size="11" font-weight="600" fill="#1e293b">0.243</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="39"
-                              font-size="11" fill="#475569" text-anchor="end">race_Black</text>
-                        <rect x="140" y="27" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="27" width="112.37916926792803"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="258.37916926792803" y="39"
-                              font-size="11" font-weight="600" fill="#1e293b">0.137</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="61"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Male</text>
-                        <rect x="140" y="49" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="49" width="102.20982114004866"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="248.20982114004866" y="61"
-                              font-size="11" font-weight="600" fill="#1e293b">0.124</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="83"
-                              font-size="11" fill="#475569" text-anchor="end">age_20-29</text>
-                        <rect x="140" y="71" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="71" width="95.18657317552687"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="241.18657317552686" y="83"
-                              font-size="11" font-weight="600" fill="#1e293b">0.116</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="105"
-                              font-size="11" fill="#475569" text-anchor="end">age_30-39</text>
-                        <rect x="140" y="93" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="93" width="81.3479013076773"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="227.34790130767732" y="105"
-                              font-size="11" font-weight="600" fill="#1e293b">0.099</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="127"
-                              font-size="11" fill="#475569" text-anchor="end">race_Indian</text>
-                        <rect x="140" y="115" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="115" width="42.60109821220382"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="188.60109821220382" y="127"
-                              font-size="11" font-weight="600" fill="#1e293b">0.052</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="149"
-                              font-size="11" fill="#475569" text-anchor="end">race_White</text>
-                        <rect x="140" y="137" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="137" width="40.66344503706296"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="186.66344503706296" y="149"
-                              font-size="11" font-weight="600" fill="#1e293b">0.049</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="171"
-                              font-size="11" fill="#475569" text-anchor="end">race_Southeast Asian</text>
-                        <rect x="140" y="159" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="159" width="37.32670482609353"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.32670482609353" y="171"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="193"
-                              font-size="11" fill="#475569" text-anchor="end">race_Middle Eastern</text>
-                        <rect x="140" y="181" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="181" width="37.16939188897776"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.16939188897777" y="193"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="215"
-                              font-size="11" fill="#475569" text-anchor="end">age_10-19</text>
-                        <rect x="140" y="203" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="203" width="32.13655724342052"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="178.13655724342053" y="215"
-                              font-size="11" font-weight="600" fill="#1e293b">0.039</text>
-                    
-                </svg>
-                
-            </div>
-            
-            <div style="margin: 1.5rem 0;">
-                <h3 style="font-size: 1rem; color: var(--text); margin-bottom: 0.5rem;">
-                    Flagged Disparity: <code>disparate_impact_ratio</code> for subgroup <strong>Middle Eastern</strong>
-                </h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">Surrogate Shapley attribution computed across 10954 subjects for Middle Eastern. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-                
-                
-                
-                
-                
-                
-                
-                
-                <svg class="inline-chart" width="400" height="230"
-                     viewBox="0 0 400 230"
-                     role="img" aria-label="Feature attribution bars">
-                    
-                        
-                        
-                        
-                        <text x="134" y="17"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Female</text>
-                        <rect x="140" y="5" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="5" width="200.0"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="346.0" y="17"
-                              font-size="11" font-weight="600" fill="#1e293b">0.243</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="39"
-                              font-size="11" fill="#475569" text-anchor="end">race_Black</text>
-                        <rect x="140" y="27" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="27" width="112.37916926792803"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="258.37916926792803" y="39"
-                              font-size="11" font-weight="600" fill="#1e293b">0.137</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="61"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Male</text>
-                        <rect x="140" y="49" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="49" width="102.20982114004866"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="248.20982114004866" y="61"
-                              font-size="11" font-weight="600" fill="#1e293b">0.124</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="83"
-                              font-size="11" fill="#475569" text-anchor="end">age_20-29</text>
-                        <rect x="140" y="71" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="71" width="95.18657317552687"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="241.18657317552686" y="83"
-                              font-size="11" font-weight="600" fill="#1e293b">0.116</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="105"
-                              font-size="11" fill="#475569" text-anchor="end">age_30-39</text>
-                        <rect x="140" y="93" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="93" width="81.3479013076773"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="227.34790130767732" y="105"
-                              font-size="11" font-weight="600" fill="#1e293b">0.099</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="127"
-                              font-size="11" fill="#475569" text-anchor="end">race_Indian</text>
-                        <rect x="140" y="115" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="115" width="42.60109821220382"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="188.60109821220382" y="127"
-                              font-size="11" font-weight="600" fill="#1e293b">0.052</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="149"
-                              font-size="11" fill="#475569" text-anchor="end">race_White</text>
-                        <rect x="140" y="137" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="137" width="40.66344503706296"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="186.66344503706296" y="149"
-                              font-size="11" font-weight="600" fill="#1e293b">0.049</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="171"
-                              font-size="11" fill="#475569" text-anchor="end">race_Southeast Asian</text>
-                        <rect x="140" y="159" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="159" width="37.32670482609353"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.32670482609353" y="171"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="193"
-                              font-size="11" fill="#475569" text-anchor="end">race_Middle Eastern</text>
-                        <rect x="140" y="181" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="181" width="37.16939188897776"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.16939188897777" y="193"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="215"
-                              font-size="11" fill="#475569" text-anchor="end">age_10-19</text>
-                        <rect x="140" y="203" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="203" width="32.13655724342052"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="178.13655724342053" y="215"
-                              font-size="11" font-weight="600" fill="#1e293b">0.039</text>
-                    
-                </svg>
-                
-            </div>
-            
-            <div style="margin: 1.5rem 0;">
-                <h3 style="font-size: 1rem; color: var(--text); margin-bottom: 0.5rem;">
-                    Flagged Disparity: <code>demographic_parity_difference</code> for subgroup <strong>White</strong>
-                </h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">Surrogate Shapley attribution computed across 10954 subjects for White. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-                
-                
-                
-                
-                
-                
-                
-                
-                <svg class="inline-chart" width="400" height="230"
-                     viewBox="0 0 400 230"
-                     role="img" aria-label="Feature attribution bars">
-                    
-                        
-                        
-                        
-                        <text x="134" y="17"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Female</text>
-                        <rect x="140" y="5" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="5" width="200.0"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="346.0" y="17"
-                              font-size="11" font-weight="600" fill="#1e293b">0.243</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="39"
-                              font-size="11" fill="#475569" text-anchor="end">race_Black</text>
-                        <rect x="140" y="27" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="27" width="112.37916926792803"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="258.37916926792803" y="39"
-                              font-size="11" font-weight="600" fill="#1e293b">0.137</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="61"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Male</text>
-                        <rect x="140" y="49" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="49" width="102.20982114004866"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="248.20982114004866" y="61"
-                              font-size="11" font-weight="600" fill="#1e293b">0.124</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="83"
-                              font-size="11" fill="#475569" text-anchor="end">age_20-29</text>
-                        <rect x="140" y="71" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="71" width="95.18657317552687"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="241.18657317552686" y="83"
-                              font-size="11" font-weight="600" fill="#1e293b">0.116</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="105"
-                              font-size="11" fill="#475569" text-anchor="end">age_30-39</text>
-                        <rect x="140" y="93" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="93" width="81.3479013076773"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="227.34790130767732" y="105"
-                              font-size="11" font-weight="600" fill="#1e293b">0.099</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="127"
-                              font-size="11" fill="#475569" text-anchor="end">race_Indian</text>
-                        <rect x="140" y="115" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="115" width="42.60109821220382"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="188.60109821220382" y="127"
-                              font-size="11" font-weight="600" fill="#1e293b">0.052</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="149"
-                              font-size="11" fill="#475569" text-anchor="end">race_White</text>
-                        <rect x="140" y="137" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="137" width="40.66344503706296"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="186.66344503706296" y="149"
-                              font-size="11" font-weight="600" fill="#1e293b">0.049</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="171"
-                              font-size="11" fill="#475569" text-anchor="end">race_Southeast Asian</text>
-                        <rect x="140" y="159" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="159" width="37.32670482609353"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.32670482609353" y="171"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="193"
-                              font-size="11" fill="#475569" text-anchor="end">race_Middle Eastern</text>
-                        <rect x="140" y="181" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="181" width="37.16939188897776"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.16939188897777" y="193"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="215"
-                              font-size="11" fill="#475569" text-anchor="end">age_10-19</text>
-                        <rect x="140" y="203" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="203" width="32.13655724342052"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="178.13655724342053" y="215"
-                              font-size="11" font-weight="600" fill="#1e293b">0.039</text>
-                    
-                </svg>
-                
-            </div>
-            
-            <div style="margin: 1.5rem 0;">
-                <h3 style="font-size: 1rem; color: var(--text); margin-bottom: 0.5rem;">
-                    Flagged Disparity: <code>equal_opportunity_difference</code> for subgroup <strong>White</strong>
-                </h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">Surrogate Shapley attribution computed across 10954 subjects for White. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-                
-                
-                
-                
-                
-                
-                
-                
-                <svg class="inline-chart" width="400" height="230"
-                     viewBox="0 0 400 230"
-                     role="img" aria-label="Feature attribution bars">
-                    
-                        
-                        
-                        
-                        <text x="134" y="17"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Female</text>
-                        <rect x="140" y="5" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="5" width="200.0"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="346.0" y="17"
-                              font-size="11" font-weight="600" fill="#1e293b">0.243</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="39"
-                              font-size="11" fill="#475569" text-anchor="end">race_Black</text>
-                        <rect x="140" y="27" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="27" width="112.37916926792803"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="258.37916926792803" y="39"
-                              font-size="11" font-weight="600" fill="#1e293b">0.137</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="61"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Male</text>
-                        <rect x="140" y="49" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="49" width="102.20982114004866"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="248.20982114004866" y="61"
-                              font-size="11" font-weight="600" fill="#1e293b">0.124</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="83"
-                              font-size="11" fill="#475569" text-anchor="end">age_20-29</text>
-                        <rect x="140" y="71" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="71" width="95.18657317552687"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="241.18657317552686" y="83"
-                              font-size="11" font-weight="600" fill="#1e293b">0.116</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="105"
-                              font-size="11" fill="#475569" text-anchor="end">age_30-39</text>
-                        <rect x="140" y="93" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="93" width="81.3479013076773"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="227.34790130767732" y="105"
-                              font-size="11" font-weight="600" fill="#1e293b">0.099</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="127"
-                              font-size="11" fill="#475569" text-anchor="end">race_Indian</text>
-                        <rect x="140" y="115" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="115" width="42.60109821220382"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="188.60109821220382" y="127"
-                              font-size="11" font-weight="600" fill="#1e293b">0.052</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="149"
-                              font-size="11" fill="#475569" text-anchor="end">race_White</text>
-                        <rect x="140" y="137" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="137" width="40.66344503706296"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="186.66344503706296" y="149"
-                              font-size="11" font-weight="600" fill="#1e293b">0.049</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="171"
-                              font-size="11" fill="#475569" text-anchor="end">race_Southeast Asian</text>
-                        <rect x="140" y="159" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="159" width="37.32670482609353"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.32670482609353" y="171"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="193"
-                              font-size="11" fill="#475569" text-anchor="end">race_Middle Eastern</text>
-                        <rect x="140" y="181" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="181" width="37.16939188897776"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.16939188897777" y="193"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="215"
-                              font-size="11" fill="#475569" text-anchor="end">age_10-19</text>
-                        <rect x="140" y="203" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="203" width="32.13655724342052"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="178.13655724342053" y="215"
-                              font-size="11" font-weight="600" fill="#1e293b">0.039</text>
-                    
-                </svg>
-                
-            </div>
-            
-            <div style="margin: 1.5rem 0;">
-                <h3 style="font-size: 1rem; color: var(--text); margin-bottom: 0.5rem;">
-                    Flagged Disparity: <code>equalized_odds_difference</code> for subgroup <strong>White</strong>
-                </h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">Surrogate Shapley attribution computed across 10954 subjects for White. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-                
-                
-                
-                
-                
-                
-                
-                
-                <svg class="inline-chart" width="400" height="230"
-                     viewBox="0 0 400 230"
-                     role="img" aria-label="Feature attribution bars">
-                    
-                        
-                        
-                        
-                        <text x="134" y="17"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Female</text>
-                        <rect x="140" y="5" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="5" width="200.0"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="346.0" y="17"
-                              font-size="11" font-weight="600" fill="#1e293b">0.243</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="39"
-                              font-size="11" fill="#475569" text-anchor="end">race_Black</text>
-                        <rect x="140" y="27" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="27" width="112.37916926792803"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="258.37916926792803" y="39"
-                              font-size="11" font-weight="600" fill="#1e293b">0.137</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="61"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Male</text>
-                        <rect x="140" y="49" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="49" width="102.20982114004866"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="248.20982114004866" y="61"
-                              font-size="11" font-weight="600" fill="#1e293b">0.124</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="83"
-                              font-size="11" fill="#475569" text-anchor="end">age_20-29</text>
-                        <rect x="140" y="71" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="71" width="95.18657317552687"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="241.18657317552686" y="83"
-                              font-size="11" font-weight="600" fill="#1e293b">0.116</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="105"
-                              font-size="11" fill="#475569" text-anchor="end">age_30-39</text>
-                        <rect x="140" y="93" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="93" width="81.3479013076773"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="227.34790130767732" y="105"
-                              font-size="11" font-weight="600" fill="#1e293b">0.099</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="127"
-                              font-size="11" fill="#475569" text-anchor="end">race_Indian</text>
-                        <rect x="140" y="115" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="115" width="42.60109821220382"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="188.60109821220382" y="127"
-                              font-size="11" font-weight="600" fill="#1e293b">0.052</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="149"
-                              font-size="11" fill="#475569" text-anchor="end">race_White</text>
-                        <rect x="140" y="137" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="137" width="40.66344503706296"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="186.66344503706296" y="149"
-                              font-size="11" font-weight="600" fill="#1e293b">0.049</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="171"
-                              font-size="11" fill="#475569" text-anchor="end">race_Southeast Asian</text>
-                        <rect x="140" y="159" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="159" width="37.32670482609353"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.32670482609353" y="171"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="193"
-                              font-size="11" fill="#475569" text-anchor="end">race_Middle Eastern</text>
-                        <rect x="140" y="181" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="181" width="37.16939188897776"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.16939188897777" y="193"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="215"
-                              font-size="11" fill="#475569" text-anchor="end">age_10-19</text>
-                        <rect x="140" y="203" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="203" width="32.13655724342052"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="178.13655724342053" y="215"
-                              font-size="11" font-weight="600" fill="#1e293b">0.039</text>
-                    
-                </svg>
-                
-            </div>
-            
-            <div style="margin: 1.5rem 0;">
-                <h3 style="font-size: 1rem; color: var(--text); margin-bottom: 0.5rem;">
-                    Flagged Disparity: <code>disparate_impact_ratio</code> for subgroup <strong>White</strong>
-                </h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">Surrogate Shapley attribution computed across 10954 subjects for White. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-                
-                
-                
-                
-                
-                
-                
-                
-                <svg class="inline-chart" width="400" height="230"
-                     viewBox="0 0 400 230"
-                     role="img" aria-label="Feature attribution bars">
-                    
-                        
-                        
-                        
-                        <text x="134" y="17"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Female</text>
-                        <rect x="140" y="5" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="5" width="200.0"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="346.0" y="17"
-                              font-size="11" font-weight="600" fill="#1e293b">0.243</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="39"
-                              font-size="11" fill="#475569" text-anchor="end">race_Black</text>
-                        <rect x="140" y="27" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="27" width="112.37916926792803"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="258.37916926792803" y="39"
-                              font-size="11" font-weight="600" fill="#1e293b">0.137</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="61"
-                              font-size="11" fill="#475569" text-anchor="end">gender_Male</text>
-                        <rect x="140" y="49" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="49" width="102.20982114004866"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="248.20982114004866" y="61"
-                              font-size="11" font-weight="600" fill="#1e293b">0.124</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="83"
-                              font-size="11" fill="#475569" text-anchor="end">age_20-29</text>
-                        <rect x="140" y="71" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="71" width="95.18657317552687"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="241.18657317552686" y="83"
-                              font-size="11" font-weight="600" fill="#1e293b">0.116</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="105"
-                              font-size="11" fill="#475569" text-anchor="end">age_30-39</text>
-                        <rect x="140" y="93" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="93" width="81.3479013076773"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="227.34790130767732" y="105"
-                              font-size="11" font-weight="600" fill="#1e293b">0.099</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="127"
-                              font-size="11" fill="#475569" text-anchor="end">race_Indian</text>
-                        <rect x="140" y="115" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="115" width="42.60109821220382"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="188.60109821220382" y="127"
-                              font-size="11" font-weight="600" fill="#1e293b">0.052</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="149"
-                              font-size="11" fill="#475569" text-anchor="end">race_White</text>
-                        <rect x="140" y="137" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="137" width="40.66344503706296"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="186.66344503706296" y="149"
-                              font-size="11" font-weight="600" fill="#1e293b">0.049</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="171"
-                              font-size="11" fill="#475569" text-anchor="end">race_Southeast Asian</text>
-                        <rect x="140" y="159" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="159" width="37.32670482609353"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.32670482609353" y="171"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="193"
-                              font-size="11" fill="#475569" text-anchor="end">race_Middle Eastern</text>
-                        <rect x="140" y="181" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="181" width="37.16939188897776"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="183.16939188897777" y="193"
-                              font-size="11" font-weight="600" fill="#1e293b">0.045</text>
-                    
-                        
-                        
-                        
-                        <text x="134" y="215"
-                              font-size="11" fill="#475569" text-anchor="end">age_10-19</text>
-                        <rect x="140" y="203" width="200"
-                              height="16" fill="#f1f5f9" rx="3"/>
-                        <rect x="140" y="203" width="32.13655724342052"
-                              height="16" fill="#3b82f6" rx="3"/>
-                        <text x="178.13655724342053" y="215"
-                              font-size="11" font-weight="600" fill="#1e293b">0.039</text>
-                    
-                </svg>
-                
-            </div>
-            
-        </div>
-        
-        
-        <div class="section-card">
-            <h2>Demographic Surrogate Associations</h2>
-            <p>These associations describe a surrogate fitted to predictions across the full audit. They do not establish causation or explain individual images or disparity metrics. Image-native SHAP is deferred.</p>
-            
-            <h3>ALL — demographic_parity_difference</h3>
-            <p>Surrogate Shapley attribution computed across 10954 subjects for ALL. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-            
-            <table>
-                <thead><tr><th>Demographic feature</th><th>Mean absolute contribution to surrogate log-odds</th></tr></thead>
-                <tbody>
-                
-                <tr><td>gender_Female</td><td>0.2433</td></tr>
-                
-                <tr><td>race_Black</td><td>0.1367</td></tr>
-                
-                <tr><td>gender_Male</td><td>0.1243</td></tr>
-                
-                <tr><td>age_20-29</td><td>0.1158</td></tr>
-                
-                <tr><td>age_30-39</td><td>0.0989</td></tr>
-                
-                <tr><td>race_Indian</td><td>0.0518</td></tr>
-                
-                <tr><td>race_White</td><td>0.0495</td></tr>
-                
-                <tr><td>race_Southeast Asian</td><td>0.0454</td></tr>
-                
-                <tr><td>race_Middle Eastern</td><td>0.0452</td></tr>
-                
-                <tr><td>age_10-19</td><td>0.0391</td></tr>
-                
-                </tbody>
-            </table>
-            
-            
-            <h3>ALL — equalized_odds_difference</h3>
-            <p>Surrogate Shapley attribution computed across 10954 subjects for ALL. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-            
-            <table>
-                <thead><tr><th>Demographic feature</th><th>Mean absolute contribution to surrogate log-odds</th></tr></thead>
-                <tbody>
-                
-                <tr><td>gender_Female</td><td>0.2433</td></tr>
-                
-                <tr><td>race_Black</td><td>0.1367</td></tr>
-                
-                <tr><td>gender_Male</td><td>0.1243</td></tr>
-                
-                <tr><td>age_20-29</td><td>0.1158</td></tr>
-                
-                <tr><td>age_30-39</td><td>0.0989</td></tr>
-                
-                <tr><td>race_Indian</td><td>0.0518</td></tr>
-                
-                <tr><td>race_White</td><td>0.0495</td></tr>
-                
-                <tr><td>race_Southeast Asian</td><td>0.0454</td></tr>
-                
-                <tr><td>race_Middle Eastern</td><td>0.0452</td></tr>
-                
-                <tr><td>age_10-19</td><td>0.0391</td></tr>
-                
-                </tbody>
-            </table>
-            
-            
-            <h3>ALL — equal_opportunity_difference</h3>
-            <p>Surrogate Shapley attribution computed across 10954 subjects for ALL. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-            
-            <table>
-                <thead><tr><th>Demographic feature</th><th>Mean absolute contribution to surrogate log-odds</th></tr></thead>
-                <tbody>
-                
-                <tr><td>gender_Female</td><td>0.2433</td></tr>
-                
-                <tr><td>race_Black</td><td>0.1367</td></tr>
-                
-                <tr><td>gender_Male</td><td>0.1243</td></tr>
-                
-                <tr><td>age_20-29</td><td>0.1158</td></tr>
-                
-                <tr><td>age_30-39</td><td>0.0989</td></tr>
-                
-                <tr><td>race_Indian</td><td>0.0518</td></tr>
-                
-                <tr><td>race_White</td><td>0.0495</td></tr>
-                
-                <tr><td>race_Southeast Asian</td><td>0.0454</td></tr>
-                
-                <tr><td>race_Middle Eastern</td><td>0.0452</td></tr>
-                
-                <tr><td>age_10-19</td><td>0.0391</td></tr>
-                
-                </tbody>
-            </table>
-            
-            
-            <h3>ALL — disparate_impact_ratio</h3>
-            <p>Surrogate Shapley attribution computed across 10954 subjects for ALL. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-            
-            <table>
-                <thead><tr><th>Demographic feature</th><th>Mean absolute contribution to surrogate log-odds</th></tr></thead>
-                <tbody>
-                
-                <tr><td>gender_Female</td><td>0.2433</td></tr>
-                
-                <tr><td>race_Black</td><td>0.1367</td></tr>
-                
-                <tr><td>gender_Male</td><td>0.1243</td></tr>
-                
-                <tr><td>age_20-29</td><td>0.1158</td></tr>
-                
-                <tr><td>age_30-39</td><td>0.0989</td></tr>
-                
-                <tr><td>race_Indian</td><td>0.0518</td></tr>
-                
-                <tr><td>race_White</td><td>0.0495</td></tr>
-                
-                <tr><td>race_Southeast Asian</td><td>0.0454</td></tr>
-                
-                <tr><td>race_Middle Eastern</td><td>0.0452</td></tr>
-                
-                <tr><td>age_10-19</td><td>0.0391</td></tr>
-                
-                </tbody>
-            </table>
-            
-            
-            <h3>Black — demographic_parity_difference</h3>
-            <p>Surrogate Shapley attribution computed across 10954 subjects for Black. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-            
-            <table>
-                <thead><tr><th>Demographic feature</th><th>Mean absolute contribution to surrogate log-odds</th></tr></thead>
-                <tbody>
-                
-                <tr><td>gender_Female</td><td>0.2433</td></tr>
-                
-                <tr><td>race_Black</td><td>0.1367</td></tr>
-                
-                <tr><td>gender_Male</td><td>0.1243</td></tr>
-                
-                <tr><td>age_20-29</td><td>0.1158</td></tr>
-                
-                <tr><td>age_30-39</td><td>0.0989</td></tr>
-                
-                <tr><td>race_Indian</td><td>0.0518</td></tr>
-                
-                <tr><td>race_White</td><td>0.0495</td></tr>
-                
-                <tr><td>race_Southeast Asian</td><td>0.0454</td></tr>
-                
-                <tr><td>race_Middle Eastern</td><td>0.0452</td></tr>
-                
-                <tr><td>age_10-19</td><td>0.0391</td></tr>
-                
-                </tbody>
-            </table>
-            
-            
-            <h3>Black — equal_opportunity_difference</h3>
-            <p>Surrogate Shapley attribution computed across 10954 subjects for Black. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-            
-            <table>
-                <thead><tr><th>Demographic feature</th><th>Mean absolute contribution to surrogate log-odds</th></tr></thead>
-                <tbody>
-                
-                <tr><td>gender_Female</td><td>0.2433</td></tr>
-                
-                <tr><td>race_Black</td><td>0.1367</td></tr>
-                
-                <tr><td>gender_Male</td><td>0.1243</td></tr>
-                
-                <tr><td>age_20-29</td><td>0.1158</td></tr>
-                
-                <tr><td>age_30-39</td><td>0.0989</td></tr>
-                
-                <tr><td>race_Indian</td><td>0.0518</td></tr>
-                
-                <tr><td>race_White</td><td>0.0495</td></tr>
-                
-                <tr><td>race_Southeast Asian</td><td>0.0454</td></tr>
-                
-                <tr><td>race_Middle Eastern</td><td>0.0452</td></tr>
-                
-                <tr><td>age_10-19</td><td>0.0391</td></tr>
-                
-                </tbody>
-            </table>
-            
-            
-            <h3>Black — equalized_odds_difference</h3>
-            <p>Surrogate Shapley attribution computed across 10954 subjects for Black. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-            
-            <table>
-                <thead><tr><th>Demographic feature</th><th>Mean absolute contribution to surrogate log-odds</th></tr></thead>
-                <tbody>
-                
-                <tr><td>gender_Female</td><td>0.2433</td></tr>
-                
-                <tr><td>race_Black</td><td>0.1367</td></tr>
-                
-                <tr><td>gender_Male</td><td>0.1243</td></tr>
-                
-                <tr><td>age_20-29</td><td>0.1158</td></tr>
-                
-                <tr><td>age_30-39</td><td>0.0989</td></tr>
-                
-                <tr><td>race_Indian</td><td>0.0518</td></tr>
-                
-                <tr><td>race_White</td><td>0.0495</td></tr>
-                
-                <tr><td>race_Southeast Asian</td><td>0.0454</td></tr>
-                
-                <tr><td>race_Middle Eastern</td><td>0.0452</td></tr>
-                
-                <tr><td>age_10-19</td><td>0.0391</td></tr>
-                
-                </tbody>
-            </table>
-            
-            
-            <h3>Black — disparate_impact_ratio</h3>
-            <p>Surrogate Shapley attribution computed across 10954 subjects for Black. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-            
-            <table>
-                <thead><tr><th>Demographic feature</th><th>Mean absolute contribution to surrogate log-odds</th></tr></thead>
-                <tbody>
-                
-                <tr><td>gender_Female</td><td>0.2433</td></tr>
-                
-                <tr><td>race_Black</td><td>0.1367</td></tr>
-                
-                <tr><td>gender_Male</td><td>0.1243</td></tr>
-                
-                <tr><td>age_20-29</td><td>0.1158</td></tr>
-                
-                <tr><td>age_30-39</td><td>0.0989</td></tr>
-                
-                <tr><td>race_Indian</td><td>0.0518</td></tr>
-                
-                <tr><td>race_White</td><td>0.0495</td></tr>
-                
-                <tr><td>race_Southeast Asian</td><td>0.0454</td></tr>
-                
-                <tr><td>race_Middle Eastern</td><td>0.0452</td></tr>
-                
-                <tr><td>age_10-19</td><td>0.0391</td></tr>
-                
-                </tbody>
-            </table>
-            
-            
-            <h3>Middle Eastern — demographic_parity_difference</h3>
-            <p>Surrogate Shapley attribution computed across 10954 subjects for Middle Eastern. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-            
-            <table>
-                <thead><tr><th>Demographic feature</th><th>Mean absolute contribution to surrogate log-odds</th></tr></thead>
-                <tbody>
-                
-                <tr><td>gender_Female</td><td>0.2433</td></tr>
-                
-                <tr><td>race_Black</td><td>0.1367</td></tr>
-                
-                <tr><td>gender_Male</td><td>0.1243</td></tr>
-                
-                <tr><td>age_20-29</td><td>0.1158</td></tr>
-                
-                <tr><td>age_30-39</td><td>0.0989</td></tr>
-                
-                <tr><td>race_Indian</td><td>0.0518</td></tr>
-                
-                <tr><td>race_White</td><td>0.0495</td></tr>
-                
-                <tr><td>race_Southeast Asian</td><td>0.0454</td></tr>
-                
-                <tr><td>race_Middle Eastern</td><td>0.0452</td></tr>
-                
-                <tr><td>age_10-19</td><td>0.0391</td></tr>
-                
-                </tbody>
-            </table>
-            
-            
-            <h3>Middle Eastern — equal_opportunity_difference</h3>
-            <p>Surrogate Shapley attribution computed across 10954 subjects for Middle Eastern. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-            
-            <table>
-                <thead><tr><th>Demographic feature</th><th>Mean absolute contribution to surrogate log-odds</th></tr></thead>
-                <tbody>
-                
-                <tr><td>gender_Female</td><td>0.2433</td></tr>
-                
-                <tr><td>race_Black</td><td>0.1367</td></tr>
-                
-                <tr><td>gender_Male</td><td>0.1243</td></tr>
-                
-                <tr><td>age_20-29</td><td>0.1158</td></tr>
-                
-                <tr><td>age_30-39</td><td>0.0989</td></tr>
-                
-                <tr><td>race_Indian</td><td>0.0518</td></tr>
-                
-                <tr><td>race_White</td><td>0.0495</td></tr>
-                
-                <tr><td>race_Southeast Asian</td><td>0.0454</td></tr>
-                
-                <tr><td>race_Middle Eastern</td><td>0.0452</td></tr>
-                
-                <tr><td>age_10-19</td><td>0.0391</td></tr>
-                
-                </tbody>
-            </table>
-            
-            
-            <h3>Middle Eastern — equalized_odds_difference</h3>
-            <p>Surrogate Shapley attribution computed across 10954 subjects for Middle Eastern. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-            
-            <table>
-                <thead><tr><th>Demographic feature</th><th>Mean absolute contribution to surrogate log-odds</th></tr></thead>
-                <tbody>
-                
-                <tr><td>gender_Female</td><td>0.2433</td></tr>
-                
-                <tr><td>race_Black</td><td>0.1367</td></tr>
-                
-                <tr><td>gender_Male</td><td>0.1243</td></tr>
-                
-                <tr><td>age_20-29</td><td>0.1158</td></tr>
-                
-                <tr><td>age_30-39</td><td>0.0989</td></tr>
-                
-                <tr><td>race_Indian</td><td>0.0518</td></tr>
-                
-                <tr><td>race_White</td><td>0.0495</td></tr>
-                
-                <tr><td>race_Southeast Asian</td><td>0.0454</td></tr>
-                
-                <tr><td>race_Middle Eastern</td><td>0.0452</td></tr>
-                
-                <tr><td>age_10-19</td><td>0.0391</td></tr>
-                
-                </tbody>
-            </table>
-            
-            
-            <h3>Middle Eastern — disparate_impact_ratio</h3>
-            <p>Surrogate Shapley attribution computed across 10954 subjects for Middle Eastern. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-            
-            <table>
-                <thead><tr><th>Demographic feature</th><th>Mean absolute contribution to surrogate log-odds</th></tr></thead>
-                <tbody>
-                
-                <tr><td>gender_Female</td><td>0.2433</td></tr>
-                
-                <tr><td>race_Black</td><td>0.1367</td></tr>
-                
-                <tr><td>gender_Male</td><td>0.1243</td></tr>
-                
-                <tr><td>age_20-29</td><td>0.1158</td></tr>
-                
-                <tr><td>age_30-39</td><td>0.0989</td></tr>
-                
-                <tr><td>race_Indian</td><td>0.0518</td></tr>
-                
-                <tr><td>race_White</td><td>0.0495</td></tr>
-                
-                <tr><td>race_Southeast Asian</td><td>0.0454</td></tr>
-                
-                <tr><td>race_Middle Eastern</td><td>0.0452</td></tr>
-                
-                <tr><td>age_10-19</td><td>0.0391</td></tr>
-                
-                </tbody>
-            </table>
-            
-            
-            <h3>White — demographic_parity_difference</h3>
-            <p>Surrogate Shapley attribution computed across 10954 subjects for White. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-            
-            <table>
-                <thead><tr><th>Demographic feature</th><th>Mean absolute contribution to surrogate log-odds</th></tr></thead>
-                <tbody>
-                
-                <tr><td>gender_Female</td><td>0.2433</td></tr>
-                
-                <tr><td>race_Black</td><td>0.1367</td></tr>
-                
-                <tr><td>gender_Male</td><td>0.1243</td></tr>
-                
-                <tr><td>age_20-29</td><td>0.1158</td></tr>
-                
-                <tr><td>age_30-39</td><td>0.0989</td></tr>
-                
-                <tr><td>race_Indian</td><td>0.0518</td></tr>
-                
-                <tr><td>race_White</td><td>0.0495</td></tr>
-                
-                <tr><td>race_Southeast Asian</td><td>0.0454</td></tr>
-                
-                <tr><td>race_Middle Eastern</td><td>0.0452</td></tr>
-                
-                <tr><td>age_10-19</td><td>0.0391</td></tr>
-                
-                </tbody>
-            </table>
-            
-            
-            <h3>White — equal_opportunity_difference</h3>
-            <p>Surrogate Shapley attribution computed across 10954 subjects for White. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-            
-            <table>
-                <thead><tr><th>Demographic feature</th><th>Mean absolute contribution to surrogate log-odds</th></tr></thead>
-                <tbody>
-                
-                <tr><td>gender_Female</td><td>0.2433</td></tr>
-                
-                <tr><td>race_Black</td><td>0.1367</td></tr>
-                
-                <tr><td>gender_Male</td><td>0.1243</td></tr>
-                
-                <tr><td>age_20-29</td><td>0.1158</td></tr>
-                
-                <tr><td>age_30-39</td><td>0.0989</td></tr>
-                
-                <tr><td>race_Indian</td><td>0.0518</td></tr>
-                
-                <tr><td>race_White</td><td>0.0495</td></tr>
-                
-                <tr><td>race_Southeast Asian</td><td>0.0454</td></tr>
-                
-                <tr><td>race_Middle Eastern</td><td>0.0452</td></tr>
-                
-                <tr><td>age_10-19</td><td>0.0391</td></tr>
-                
-                </tbody>
-            </table>
-            
-            
-            <h3>White — equalized_odds_difference</h3>
-            <p>Surrogate Shapley attribution computed across 10954 subjects for White. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-            
-            <table>
-                <thead><tr><th>Demographic feature</th><th>Mean absolute contribution to surrogate log-odds</th></tr></thead>
-                <tbody>
-                
-                <tr><td>gender_Female</td><td>0.2433</td></tr>
-                
-                <tr><td>race_Black</td><td>0.1367</td></tr>
-                
-                <tr><td>gender_Male</td><td>0.1243</td></tr>
-                
-                <tr><td>age_20-29</td><td>0.1158</td></tr>
-                
-                <tr><td>age_30-39</td><td>0.0989</td></tr>
-                
-                <tr><td>race_Indian</td><td>0.0518</td></tr>
-                
-                <tr><td>race_White</td><td>0.0495</td></tr>
-                
-                <tr><td>race_Southeast Asian</td><td>0.0454</td></tr>
-                
-                <tr><td>race_Middle Eastern</td><td>0.0452</td></tr>
-                
-                <tr><td>age_10-19</td><td>0.0391</td></tr>
-                
-                </tbody>
-            </table>
-            
-            
-            <h3>White — disparate_impact_ratio</h3>
-            <p>Surrogate Shapley attribution computed across 10954 subjects for White. These demographic surrogate associations summarize prediction log-odds across the full audit; they do not explain images, causation, or the disparity itself.</p>
-            
-            <table>
-                <thead><tr><th>Demographic feature</th><th>Mean absolute contribution to surrogate log-odds</th></tr></thead>
-                <tbody>
-                
-                <tr><td>gender_Female</td><td>0.2433</td></tr>
-                
-                <tr><td>race_Black</td><td>0.1367</td></tr>
-                
-                <tr><td>gender_Male</td><td>0.1243</td></tr>
-                
-                <tr><td>age_20-29</td><td>0.1158</td></tr>
-                
-                <tr><td>age_30-39</td><td>0.0989</td></tr>
-                
-                <tr><td>race_Indian</td><td>0.0518</td></tr>
-                
-                <tr><td>race_White</td><td>0.0495</td></tr>
-                
-                <tr><td>race_Southeast Asian</td><td>0.0454</td></tr>
-                
-                <tr><td>race_Middle Eastern</td><td>0.0452</td></tr>
-                
-                <tr><td>age_10-19</td><td>0.0391</td></tr>
-                
-                </tbody>
-            </table>
-            
             
         </div>
         
 
         <!-- Governance Documentation & Intended Use -->
         <div class="section-card">
-            <h2>Governance Documentation &amp; Intended Use</h2>
+            <h2>4. Governance Documentation &amp; Intended Use</h2>
             <div class="regulatory-box">
                 <strong>EU AI Act (Regulation EU 2024/1689) Article 10 / Annex IV Alignment:</strong>
                 This audit dossier provides verifiable diagnostic documentation of demographic performance disparities. It does not perform model retraining or in-situ weight modifications.
             </div>
-            <p><strong>Model Description:</strong> ImageNet-pretrained ResNet-34 terminating in an 18-unit linear head sliced for race (7), gender (2), and age (9) classification.</p>
-            <p><strong>Backend configuration:</strong> dual. Both backend executions completed; 0 point-estimate discrepancies detected.</p>
+            <p><strong>Model Description:</strong> Lightweight MobileNetV2 architecture with depthwise separable convolutions and inverted residual blocks fine-tuned on FairFace, evaluating edge-scale model fairness trade-offs.</p>
+            <p><strong>Backend configuration:</strong> dual. Both backend executions completed.</p>
             <p>Cross-backend agreement checks point estimates only; bootstrap, hypothesis tests, and reporting share implementation. Consult execution logs for backend failures and divergences.</p>
         </div>
 

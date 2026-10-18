@@ -1,4 +1,4 @@
-.PHONY: help install test lint format verify audit pdf sync clean
+.PHONY: help install test lint format verify audit pdf reconcile check-reports sync clean
 
 # Cross-platform environment resolution
 ifeq ($(OS),Windows_NT)
@@ -17,15 +17,17 @@ help:
 	@echo "BiasAperture — Engineering & Build Automation"
 	@echo ""
 	@echo "Usage:"
-	@echo "  make test        Run full test suite (pytest via uv)"
-	@echo "  make lint        Run ruff linter check"
-	@echo "  make format      Run ruff code formatter"
-	@echo "  make verify      Run deterministic verification suite (AST, lint, SHA integrity)"
-	@echo "  make audit       Run CLI audit pipeline on sample predictions"
-	@echo "  make pdf         Export HTML compliance report to A4 PDF"
-	@echo "  make sync        Synchronize across remotes (compulsory: origin, duo; optional: org)"
-	@echo "  make install     Install project and development dependencies via uv"
-	@echo "  make clean       Remove bytecode, pytest, and ruff cache artifacts"
+	@echo "  make test          Run full test suite (pytest via uv)"
+	@echo "  make lint          Run ruff linter check"
+	@echo "  make format        Run ruff code formatter"
+	@echo "  make verify        Run deterministic verification suite (AST, lint, SHA, report integrity)"
+	@echo "  make audit         Run CLI audit pipeline on sample predictions"
+	@echo "  make pdf           Export HTML compliance report to A4 PDF"
+	@echo "  make reconcile     Self-heal and regenerate all HTML reports and companion PDFs"
+	@echo "  make check-reports Audit reports against offline contract and consistency"
+	@echo "  make sync          Synchronize across remotes (compulsory: origin, duo; optional: org)"
+	@echo "  make install       Install project and development dependencies via uv"
+	@echo "  make clean         Remove bytecode, pytest, and ruff cache artifacts"
 
 install:
 	uv sync --extra dev
@@ -48,8 +50,15 @@ audit:
 pdf:
 	$(PYTHON) scripts/export_report_pdf.py reports/bias_audit_report.html reports/bias_audit_report.pdf
 
+reconcile:
+	$(PYTHON) scripts/reconcile_reports.py --heal
+
+check-reports:
+	$(PYTHON) scripts/reconcile_reports.py --check
+
 sync:
 	$(SYNC_RUNNER) $(ARGS)
 
 clean:
 	$(PYTHON) -c "import shutil, pathlib; [shutil.rmtree(p, ignore_errors=True) for p in pathlib.Path('.').rglob('__pycache__')]; [shutil.rmtree(p, ignore_errors=True) for p in pathlib.Path('.').glob('.*_cache')]"
+

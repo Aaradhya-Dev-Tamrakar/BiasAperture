@@ -63,3 +63,51 @@ def test_html_report_generator_offline_compliance(
     saved_path = generator.save(context, out_file)
     assert saved_path.exists()
     assert saved_path.read_text(encoding="utf-8") == html_out
+
+
+def test_executive_summary_card3_sources_from_summary_metrics(
+    mock_core_four_results: list[MetricResult],
+) -> None:
+    # Summary metrics with overall DPD = 0.053, EOD = 0.244
+    full_metrics = list(mock_core_four_results) + [
+        MetricResult(
+            metric_name="demographic_parity_difference",
+            subgroup="ALL",
+            subgroup_sample_size=1000,
+            metric_value=0.053,
+            ci_lower=0.030,
+            ci_upper=0.075,
+            p_value=0.001,
+            insufficient_sample=False,
+        ),
+        MetricResult(
+            metric_name="equalized_odds_difference",
+            subgroup="ALL",
+            subgroup_sample_size=1000,
+            metric_value=0.244,
+            ci_lower=0.210,
+            ci_upper=0.280,
+            p_value=0.0001,
+            insufficient_sample=False,
+        ),
+    ]
+
+    context = ReportContext(metrics=full_metrics, total_subjects=1000)
+    generator = HTMLReportGenerator()
+    html_out = generator.generate(context)
+
+    # Executive Summary Card 3 must display EOD = 0.244 as worst overall headline metric
+    assert "Worst headline metric (Overall)" in html_out
+    assert "EOD = 0.244" in html_out
+
+
+def test_canonical_metric_bar_order(mock_core_four_results: list[MetricResult]) -> None:
+    from bias_aperture.report.generator import _build_subgroup_matrix
+
+    groups = _build_subgroup_matrix(mock_core_four_results)
+    for g_data in groups.values():
+        if len(g_data["metric_bars"]) > 1:
+            labels = [b["label"] for b in g_data["metric_bars"]]
+            order = {"DPD": 0, "EOD": 1, "EOP": 2, "DIR": 3}
+            ranks = [order.get(lbl, 99) for lbl in labels]
+            assert ranks == sorted(ranks), f"Bars out of canonical order: {labels}"
