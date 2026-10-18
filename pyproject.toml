@@ -54,7 +54,7 @@ where = ["src"]
 [tool.pytest.ini_options]
 minversion = "7.0"
 testpaths = ["src/tests"]
-pythonpath = ["src"]
+pythonpath = ["src", "."]
 addopts = "-ra -q"
 
 [tool.ruff]

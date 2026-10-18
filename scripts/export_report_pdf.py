@@ -121,11 +121,12 @@ def convert_html_to_pdf(html_path: Path, pdf_path: Path | None = None) -> Path:
     target_pdf.parent.mkdir(parents=True, exist_ok=True)
     browser_bin = find_blink_browser()
 
-    cmd = [
-        str(browser_bin),
-        "--headless",
+    base_args = [
         "--disable-gpu",
         "--run-all-compositor-stages-before-draw",
+        "--no-pdf-header-footer",
+        "--generate-pdf-document-outline",
+        "--allow-file-access-from-files",
         # Cross-platform / Docker container flags
         "--no-sandbox",
         "--disable-setuid-sandbox",
@@ -134,12 +135,28 @@ def convert_html_to_pdf(html_path: Path, pdf_path: Path | None = None) -> Path:
         str(html_file),
     ]
 
+    # Try modern headless first (--headless=new), with fallback to legacy
+    # --headless for older Chromium builds
+    cmd = [str(browser_bin), "--headless=new", *base_args]
     result = subprocess.run(
         cmd,
         capture_output=True,
         text=True,
         check=False,
     )
+
+    needs_legacy_fallback = (
+        (result.returncode != 0 or not target_pdf.exists())
+        and "unknown flag" in result.stderr.lower()
+    )
+    if needs_legacy_fallback:
+        cmd_legacy = [str(browser_bin), "--headless", *base_args]
+        result = subprocess.run(
+            cmd_legacy,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
 
     if result.returncode != 0 and not target_pdf.exists():
         raise RuntimeError(
