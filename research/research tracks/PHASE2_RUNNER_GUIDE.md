@@ -1,4 +1,4 @@
-# 🚀 Phase 2 Runner Guide — Product Upgrade Sprint (18 Parallel Orch Executors)
+#  Phase 2 Runner Guide — Product Upgrade Sprint (18 Parallel Orch Executors)
 
 Continues the original `RUNNER_GUIDE.md` (20-track capstone sprint, tracks 01–20, now complete) into a second sprint: tracks 21–38, planning BiasAperture's evolution from capstone to full product.
 
