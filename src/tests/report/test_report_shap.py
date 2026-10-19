@@ -11,7 +11,7 @@ from pathlib import Path
 from bias_aperture.explainability import ExplanationResult
 from bias_aperture.report.generator import HTMLReportGenerator, ReportContext
 from bias_aperture.schema import MetricResult
-from tests.test_offline_report_contract import _verify_offline_html_contract
+from tests.report.test_offline_report_contract import _verify_offline_html_contract
 
 
 def test_html_report_with_shap_attributions(

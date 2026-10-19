@@ -8,7 +8,7 @@ from pathlib import Path
 
 from bias_aperture.report.generator import HTMLReportGenerator, ReportContext
 from bias_aperture.schema import MetricResult
-from tests.test_offline_report_contract import _verify_offline_html_contract
+from tests.report.test_offline_report_contract import _verify_offline_html_contract
 
 
 def test_html_report_generator_offline_compliance(
@@ -57,6 +57,10 @@ def test_html_report_generator_offline_compliance(
     assert "Headline Fairness Metrics" in html_out
     assert "FairFace ResNet-34" in html_out
     assert "Flagged: n &lt; 30 (NFR-003)" in html_out or "n < 30" in html_out
+    assert "Executive Translation • Non-Technical Review" in html_out
+    assert "Disparity Impact" in html_out
+    assert "How to Read These Metrics (In Plain English)" in html_out
+    assert "Disparate Impact Ratio (DIR)" in html_out
 
     # 3. Test saving to disk
     out_file = tmp_path / "compliance_report.html"

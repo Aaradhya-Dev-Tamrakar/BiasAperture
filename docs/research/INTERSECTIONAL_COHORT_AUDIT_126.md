@@ -9,6 +9,18 @@
 
 ---
 
+> [!CAUTION]
+> **QUARANTINED — do not use this matrix as evidence for the current validation cohort.**
+> A reconciliation on 19 October 2026 compared the committed cell counts with the
+> current `data/processed/fairface_predictions_val.csv` (SHA-256
+> `87b6789e85183b89e26d6293b2125e259b6d71e93818a0d88fad59f0e85a29be`). The
+> current file has 10,954 rows and 10,954 unique IDs; its demographic columns
+> produce 126 cells, 85 with `n >= 30` and 41 with `n < 30`. This document's
+> stored cells sum to 10,389, and 103 of its 126 cell counts differ from that
+> file. The 565-record total difference and cell-level differences remain
+> unexplained. These stored figures are preserved as historical content; replace
+> or revalidate them only when their input population and exclusions are traced.
+
 ## 1. Executive Summary
 
 Under **EU AI Act Article 10(5)** and **NFR-003**, demographic auditing cannot rely exclusively on 1D marginal distributions (e.g. race alone or gender alone). Deeply marginalized intersectional subgroups may experience compounding error rates that remain obscured in aggregate performance figures.

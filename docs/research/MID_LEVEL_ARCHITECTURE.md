@@ -62,6 +62,37 @@ BiasAperture implements a decoupled, pipeline-oriented architecture designed aro
 
 ## 2. Component Design & Interfacing
 
+### Current Python Module Boundaries
+
+The implementation separates CLI parsing (`cli_parser.py`) from reusable
+end-to-end execution (`pipeline.py`). Ingestion behavior lives in
+`data_ingestion.py`; shared validation/configuration/cohort contracts are in
+`ingestion_contracts.py`, row validation is in `ingestion_validation.py`, and
+subgroup/intersectional support profiles are in `cohort_profiling.py`; label
+transformations are in `transformations.py`. Existing imports from
+`data_ingestion.py` remain available as compatibility exports.
+
+The fairness package separates backend implementations and metric-row helpers
+(`backend_adapters.py`) from dual-backend execution and divergence detection
+(`orchestration.py`). `backends.py` remains as a compatibility export module.
+Metrics, eligibility screening, and statistical inference remain in
+`metrics.py`, `base.py`, and `statistics.py`, respectively.
+
+Report construction separates pure metric-to-presentation analysis
+(`report/analysis.py`), plain-language narrative synthesis
+(`report/narrative.py`), Jinja2 rendering (`report/generator.py`), metadata
+resolution, and dossier reconciliation. The test suite mirrors these subsystem
+boundaries in `src/tests/` while retaining shared fixtures at its root.
+
+Reconciliation is divided into the dossier audit/healing coordinator
+(`report/reconciler.py`), HTML-to-context recovery
+(`report/reconciliation_extraction.py`), and shared status/helper contracts
+(`report/reconciliation_support.py`). The existing `ReportReconciler` extraction
+method remains as a compatibility delegate.
+
+These boundaries are implementation organization only: the locked M1 schema,
+CLI options, and report contract remain unchanged.
+
 ### 2.1. Module 1: Ingestion & Invariant Validation (`data_ingestion.py`, `model_interface.py`)
 
 The ingestion module transforms heterogeneous prediction outputs into standardized `SubjectRecord` streams.
