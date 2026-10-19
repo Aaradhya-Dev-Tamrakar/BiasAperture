@@ -1,4 +1,4 @@
-# 🚀 Parallel Research Runner Guide — 20 Claude Desktop Instances
+#  Parallel Research Runner Guide — 20 Claude Desktop Instances
 
 ## Quick Start (5 minutes setup)
 
