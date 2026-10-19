@@ -498,7 +498,7 @@ class ReportReconciler:
             name = html_path.name
             logger.info("Healing compliance report: %s", name)
 
-            # Case A: Binary task regenerable directly from live FairFace validation CSV
+            # Case A: Binary tasks regenerable from live FairFace validation CSV
             if (
                 predictions_csv
                 and predictions_csv.exists()
@@ -512,6 +512,26 @@ class ReportReconciler:
                     protected_attr="gender",
                     output_report=html_path,
                     model_name="ResNet-34 (FairFace Baseline)",
+                    dataset_name="FairFace Benchmark Dataset",
+                    explain=True,
+                )
+                healed.append(name)
+            elif (
+                predictions_csv
+                and predictions_csv.exists()
+                and name == "audit_report_val_race_gender_shap.html"
+            ):
+                pipeline = AuditPipeline()
+                pipeline.run(
+                    predictions_file=predictions_csv,
+                    true_label_col="true_gender",
+                    predicted_label_col="predicted_gender",
+                    protected_attr="race_gender",
+                    race_col="subgroup_race",
+                    gender_col="subgroup_gender",
+                    age_col="subgroup_age",
+                    output_report=html_path,
+                    model_name="FairFace ResNet-34 Multi-Task Classifier",
                     dataset_name="FairFace Benchmark Dataset",
                     explain=True,
                 )
