@@ -30,11 +30,18 @@ BiasAperture/
 │   ├── bias_aperture/
 │   │   ├── schema.py              # Locked demographic and metric schemas (M1)
 │   │   ├── model_interface.py     # PredictionsFileInterface & InProcessInterface
-│   │   ├── data_ingestion.py      # Stream Data (WP2) — FairFace loading & alignment
-│   │   ├── report/                # Stream Report (WP3) — HTML & Jinja2 generation
-│   │   ├── fairness/              # WP4 — Fairlearn & AIF360 backends, statistics
+│   │   ├── cli.py                 # CLI entry point and argument-to-pipeline dispatch
+│   │   ├── cli_parser.py          # CLI option and parser definitions
+│   │   ├── pipeline.py            # Reusable end-to-end audit execution
+│   │   ├── data_ingestion.py      # Ingestion pipeline (legacy import facade)
+│   │   ├── ingestion_contracts.py # Validation, configuration, and cohort contracts
+│   │   ├── ingestion_validation.py # Row and schema validation behavior
+│   │   ├── cohort_profiling.py    # Subgroup and intersectional support profiles
+│   │   ├── transformations.py     # Label transformations such as one-vs-rest
+│   │   ├── report/                # Report context, analysis, narrative, rendering, reconciliation
+│   │   ├── fairness/              # WP4 — backend adapters, orchestration, metrics, statistics
 │   │   └── explainability.py      # WP4 (FR-005) — surrogate attribution on flagged disparities (SHAP deferred)
-│   └── tests/                     # Pytest suite
+│   └── tests/                     # Pytest suite organized by subsystem
 ├── docs/                          # Meta-documentation, schema lock, literature matrix
 ├── report/                        # LaTeX report source and compiled main.pdf
 ├── scripts/                       # Orchestration, sync, and verification scripts

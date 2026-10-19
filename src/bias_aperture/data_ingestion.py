@@ -20,13 +20,29 @@ import json
 import logging
 from collections import Counter
 from collections.abc import Iterable, Sequence
-from dataclasses import dataclass, field
-from enum import Enum
 from pathlib import Path
-from typing import Any, Literal
+from typing import Any
 
 import pandas as pd
 
+from bias_aperture.ingestion_contracts import (
+    DEFAULT_AGE_COL,
+    DEFAULT_GENDER_COL,
+    DEFAULT_IMAGE_COL,
+    DEFAULT_RACE_COL,
+    IMAGE_COL_ALIASES,
+    RAW_AGE_LABEL_ALIASES,
+    IngestionConfig,
+    IngestionResult,
+    SchemaValidationError,
+    SubgroupCellStats,
+    SubgroupCohortProfile,
+    ValidationIssue,
+    ValidationMode,
+    ValidationSeverity,
+    ValidationSummary,
+)
+from bias_aperture.ingestion_validation import IngestionValidator
 from bias_aperture.schema import (
     AGE_LABELS,
     GENDER_LABELS,
@@ -36,171 +52,39 @@ from bias_aperture.schema import (
     SubjectRecord,
     format_intersectional_key,
 )
+from bias_aperture.transformations import OvRTransformer
 
 logger = logging.getLogger(__name__)
 
-# Canonical FairFace column names
-DEFAULT_IMAGE_COL = "face_name_align"
-DEFAULT_RACE_COL = "race"
-DEFAULT_GENDER_COL = "gender"
-DEFAULT_AGE_COL = "age"
-
-# Common fallback column aliases for image identifiers
-IMAGE_COL_ALIASES: tuple[str, ...] = (
-    "face_name_align",
-    "file",
-    "image_id",
-    "img_path",
-    "filename",
-)
-
-# Raw labels emitted by upstream dataset/model implementations.
-RAW_AGE_LABEL_ALIASES: dict[str, str] = {
-    "more than 70": "70+",
-}
-
-
-class SchemaValidationError(ValueError):
-    """
-    Raised when data violates the locked schema or taxonomy in STRICT mode.
-    """
-
-    pass
-
-
-class ValidationMode(str, Enum):
-    """Validation behavior policy upon encountering invalid or corrupt data."""
-
-    STRICT = "strict"  # Raise SchemaValidationError immediately on first anomaly
-    PERMISSIVE = "permissive"  # Collect issues into summary, yield valid records
+__all__ = [
+    "DEFAULT_AGE_COL",
+    "DEFAULT_GENDER_COL",
+    "DEFAULT_IMAGE_COL",
+    "DEFAULT_RACE_COL",
+    "IMAGE_COL_ALIASES",
+    "IngestionConfig",
+    "IngestionResult",
+    "OvRTransformer",
+    "RAW_AGE_LABEL_ALIASES",
+    "SchemaValidationError",
+    "SubgroupCellStats",
+    "SubgroupCohortProfile",
+    "ValidationIssue",
+    "ValidationMode",
+    "ValidationSeverity",
+    "ValidationSummary",
+    "DataIngestionPipeline",
+    "IngestionValidator",
+    "AGE_LABELS",
+    "GENDER_LABELS",
+    "MIN_POSITIVE_SUPPORT",
+    "MIN_SUBGROUP_SAMPLE_SIZE",
+    "RACE_LABELS",
+    "format_intersectional_key",
+]
 
 
-class ValidationSeverity(str, Enum):
-    """Severity classification of validation anomalies."""
-
-    ERROR = "error"
-    WARNING = "warning"
-    INFO = "info"
-
-
-@dataclass(frozen=True, slots=True)
-class ValidationIssue:
-    """Individual data anomaly recorded during ingestion."""
-
-    row_index: int | None
-    image_id: str | None
-    field_name: str
-    value: Any
-    issue_type: str
-    message: str
-    severity: ValidationSeverity = ValidationSeverity.ERROR
-
-
-@dataclass(frozen=True, slots=True)
-class ValidationSummary:
-    """Aggregated report of data ingestion and validation results."""
-
-    total_records_processed: int
-    valid_records_passed: int
-    rejected_records_count: int
-    issues: list[ValidationIssue]
-    issue_counts_by_type: dict[str, int]
-    is_valid: bool = field(init=False)
-
-    def __post_init__(self) -> None:
-        has_errors = any(
-            issue.severity == ValidationSeverity.ERROR for issue in self.issues
-        )
-        object.__setattr__(
-            self,
-            "is_valid",
-            not has_errors and self.rejected_records_count == 0,
-        )
-
-
-@dataclass(frozen=True, slots=True)
-class SubgroupCellStats:
-    """Demographic cohort contingency support and eligibility status."""
-
-    subgroup_key: str
-    total_n: int
-    positive_n: int | None
-    negative_n: int | None
-    is_nfr003_eligible: bool
-    has_positive_support: bool
-    has_negative_support: bool
-    insufficient_sample_at_ingestion: bool
-
-
-@dataclass(frozen=True, slots=True)
-class SubgroupCohortProfile:
-    """Demographic cohort distribution across all axes and composite strata."""
-
-    total_subjects: int
-    race_counts: dict[str, SubgroupCellStats]
-    gender_counts: dict[str, SubgroupCellStats]
-    age_counts: dict[str, SubgroupCellStats]
-    intersectional_counts: dict[str, SubgroupCellStats]
-    insufficient_subgroups: list[str]
-    intersectional_126_counts: dict[str, SubgroupCellStats] = field(
-        default_factory=dict
-    )
-
-    @property
-    def eligible_126_cells(self) -> dict[str, SubgroupCellStats]:
-        """Return all 126 intersectional cells meeting NFR-003 sample size (n >= 30)."""
-        return {
-            k: v
-            for k, v in self.intersectional_126_counts.items()
-            if v.is_nfr003_eligible
-        }
-
-    @property
-    def insufficient_126_cells(self) -> dict[str, SubgroupCellStats]:
-        """Return all 126 intersectional cells failing NFR-003 sample size (n < 30)."""
-        return {
-            k: v
-            for k, v in self.intersectional_126_counts.items()
-            if v.insufficient_sample_at_ingestion
-        }
-
-    @property
-    def eligible_126_count(self) -> int:
-        """Count of 126 intersectional cells with n >= 30."""
-        return len(self.eligible_126_cells)
-
-    @property
-    def insufficient_126_count(self) -> int:
-        """Count of 126 intersectional cells with n < 30."""
-        return len(self.insufficient_126_cells)
-
-
-@dataclass(frozen=True, slots=True)
-class IngestionConfig:
-    """Configuration options for data ingestion pipeline."""
-
-    true_label_col: str
-    predicted_label_col: str
-    image_id_col: str = DEFAULT_IMAGE_COL
-    race_col: str = DEFAULT_RACE_COL
-    gender_col: str = DEFAULT_GENDER_COL
-    age_col: str = DEFAULT_AGE_COL
-    validation_mode: ValidationMode = ValidationMode.STRICT
-    deduplicate_strategy: Literal[
-        "keep_all", "drop_exact_or_raise_conflicts", "drop_duplicates"
-    ] = "drop_exact_or_raise_conflicts"
-
-
-@dataclass(frozen=True, slots=True)
-class IngestionResult:
-    """Structured output returned by the data ingestion pipeline."""
-
-    records: list[SubjectRecord]
-    validation_summary: ValidationSummary
-    cohort_profile: SubgroupCohortProfile | None
-
-
-class DataIngestionPipeline:
+class DataIngestionPipeline(IngestionValidator):
     """
     Ingests, validates, profiles, and standardizes demographic prediction datasets.
     """
@@ -343,250 +227,6 @@ class DataIngestionPipeline:
             cohort_profile=profile,
         )
 
-    def _validate_columns(
-        self,
-        first_row: dict[str, Any],
-        total_count: int,
-    ) -> IngestionResult | None:
-        """Validate that all required columns are present in the input data.
-
-        Returns None if columns are valid, or a terminal IngestionResult
-        with the missing-column errors if not.
-        """
-        required_cols = [
-            self.config.race_col,
-            self.config.gender_col,
-            self.config.age_col,
-            self.config.true_label_col,
-            self.config.predicted_label_col,
-        ]
-
-        missing_cols = [col for col in required_cols if col not in first_row]
-        if not missing_cols:
-            return None
-
-        msg = f"Missing required column(s) in input data: {missing_cols}"
-        if self.config.validation_mode == ValidationMode.STRICT:
-            raise SchemaValidationError(msg)
-
-        logger.warning(msg)
-        summary = ValidationSummary(
-            total_records_processed=total_count,
-            valid_records_passed=0,
-            rejected_records_count=total_count,
-            issues=[
-                ValidationIssue(
-                    row_index=None,
-                    image_id=None,
-                    field_name=col,
-                    value=None,
-                    issue_type="missing_column",
-                    message=f"Column {col!r} is missing from dataset",
-                )
-                for col in missing_cols
-            ],
-            issue_counts_by_type={"missing_column": len(missing_cols)},
-        )
-        return IngestionResult(
-            records=[],
-            validation_summary=summary,
-            cohort_profile=None,
-        )
-
-    def _validate_and_convert_row(
-        self,
-        idx: int,
-        row: dict[str, Any],
-        image_id_str: str,
-        issues: list[ValidationIssue],
-        issue_counter: Counter[str],
-    ) -> SubjectRecord | None:
-        """Validate a single row's fields and convert to SubjectRecord.
-
-        Returns None if the row fails validation (null fields or
-        unrecognised taxonomy labels), recording all issues found.
-        """
-        # Extract raw fields
-        raw_race = row.get(self.config.race_col)
-        raw_gender = row.get(self.config.gender_col)
-        raw_age = row.get(self.config.age_col)
-        raw_true = row.get(self.config.true_label_col)
-        raw_pred = row.get(self.config.predicted_label_col)
-
-        # Null / NaN check
-        null_fields: list[tuple[str, Any]] = []
-        for fname, fval in [
-            (self.config.race_col, raw_race),
-            (self.config.gender_col, raw_gender),
-            (self.config.age_col, raw_age),
-            (self.config.true_label_col, raw_true),
-            (self.config.predicted_label_col, raw_pred),
-        ]:
-            if pd.isna(fval) or fval is None:
-                null_fields.append((fname, fval))
-
-        if null_fields:
-            for fn, fv in null_fields:
-                issue = ValidationIssue(
-                    row_index=idx,
-                    image_id=image_id_str,
-                    field_name=fn,
-                    value=fv,
-                    issue_type="null_value",
-                    message=(
-                        f"Field {fn!r} has null/NaN value for image {image_id_str!r}"
-                    ),
-                )
-                self._handle_issue(issue, issues, issue_counter)
-            return None
-
-        # Taxonomy normalisation and validation
-        race_str = str(raw_race).strip()
-        gender_str = str(raw_gender).strip()
-        raw_age_str = str(raw_age).strip()
-        age_str = RAW_AGE_LABEL_ALIASES.get(raw_age_str, raw_age_str)
-
-        taxonomy_invalid = False
-        if race_str not in RACE_LABELS:
-            issue = ValidationIssue(
-                row_index=idx,
-                image_id=image_id_str,
-                field_name=self.config.race_col,
-                value=raw_race,
-                issue_type="invalid_race_label",
-                message=(
-                    f"unrecognised race label {raw_race!r} for {image_id_str} — "
-                    f"expected one of {RACE_LABELS} (schema locked at M1)"
-                ),
-            )
-            self._handle_issue(issue, issues, issue_counter)
-            taxonomy_invalid = True
-
-        if gender_str not in GENDER_LABELS:
-            issue = ValidationIssue(
-                row_index=idx,
-                image_id=image_id_str,
-                field_name=self.config.gender_col,
-                value=raw_gender,
-                issue_type="invalid_gender_label",
-                message=(
-                    f"unrecognised gender label {raw_gender!r} for "
-                    f"{image_id_str} — expected one of {GENDER_LABELS} "
-                    "(schema locked at M1)"
-                ),
-            )
-            self._handle_issue(issue, issues, issue_counter)
-            taxonomy_invalid = True
-
-        if age_str not in AGE_LABELS:
-            issue = ValidationIssue(
-                row_index=idx,
-                image_id=image_id_str,
-                field_name=self.config.age_col,
-                value=raw_age,
-                issue_type="invalid_age_label",
-                message=(
-                    f"unrecognised age label {raw_age!r} for {image_id_str} — "
-                    f"expected one of {AGE_LABELS} (schema locked at M1)"
-                ),
-            )
-            self._handle_issue(issue, issues, issue_counter)
-            taxonomy_invalid = True
-
-        if taxonomy_invalid:
-            return None
-
-        return SubjectRecord(
-            image_id=image_id_str,
-            race=race_str,  # type: ignore[arg-type]
-            gender=gender_str,  # type: ignore[arg-type]
-            age=age_str,  # type: ignore[arg-type]
-            true_label=str(raw_true),
-            predicted_label=str(raw_pred),
-        )
-
-    def _check_duplicate(
-        self,
-        idx: int,
-        image_id_str: str,
-        row_signature: tuple[Any, ...],
-        seen_images: dict[str, tuple[Any, ...]],
-        issues: list[ValidationIssue],
-        issue_counter: Counter[str],
-    ) -> bool:
-        """Check whether a row is a duplicate and handle dedup strategy.
-
-        Returns True if the row should be skipped (exact or conflicting
-        duplicate), False if it should be kept.
-        """
-        if image_id_str not in seen_images:
-            return False
-
-        prev_sig = seen_images[image_id_str]
-        if prev_sig == row_signature:
-            if self.config.deduplicate_strategy == "drop_exact_or_raise_conflicts":
-                issue = ValidationIssue(
-                    row_index=idx,
-                    image_id=image_id_str,
-                    field_name="image_id",
-                    value=image_id_str,
-                    issue_type="exact_duplicate",
-                    message=(f"Duplicate record for image_id {image_id_str!r} dropped"),
-                    severity=ValidationSeverity.WARNING,
-                )
-                issues.append(issue)
-                issue_counter["exact_duplicate"] += 1
-                return True
-            elif self.config.deduplicate_strategy == "drop_duplicates":
-                return True
-        else:
-            # Conflicting duplicate
-            issue = ValidationIssue(
-                row_index=idx,
-                image_id=image_id_str,
-                field_name="image_id",
-                value=image_id_str,
-                issue_type="conflicting_duplicate",
-                message=(
-                    f"Conflicting duplicate records found for "
-                    f"image_id {image_id_str!r}: "
-                    f"original={prev_sig}, duplicate={row_signature}"
-                ),
-            )
-            self._handle_issue(issue, issues, issue_counter)
-            return True
-
-        return False
-
-    def _resolve_image_col(self, sample_row: dict[str, Any]) -> str:
-        """Resolve image identifier column with alias fallback."""
-        if self.config.image_id_col in sample_row:
-            return self.config.image_id_col
-        for alias in IMAGE_COL_ALIASES:
-            if alias in sample_row:
-                return alias
-        if self.config.validation_mode == ValidationMode.STRICT:
-            raise SchemaValidationError(
-                f"Could not locate image id column {self.config.image_id_col!r} "
-                f"or any standard alias in row keys: {list(sample_row.keys())}"
-            )
-        return self.config.image_id_col
-
-    def _handle_issue(
-        self,
-        issue: ValidationIssue,
-        issue_list: list[ValidationIssue],
-        counter: Counter[str],
-    ) -> None:
-        """Record issue or immediately raise if in STRICT validation mode."""
-        if (
-            self.config.validation_mode == ValidationMode.STRICT
-            and issue.severity == ValidationSeverity.ERROR
-        ):
-            raise SchemaValidationError(issue.message)
-        issue_list.append(issue)
-        counter[issue.issue_type] += 1
-
     @classmethod
     def compute_cohort_profile(
         cls,
@@ -594,93 +234,10 @@ class DataIngestionPipeline:
         *,
         task_positive_label: str | None = None,
     ) -> SubgroupCohortProfile:
-        """
-        Compute demographic support counts and NFR-003 eligibility across
-        unitary demographic axes and composite intersectional slices.
-        """
-        total = len(records)
-        race_groups: dict[str, list[SubjectRecord]] = {r: [] for r in RACE_LABELS}
-        gender_groups: dict[str, list[SubjectRecord]] = {g: [] for g in GENDER_LABELS}
-        age_groups: dict[str, list[SubjectRecord]] = {a: [] for a in AGE_LABELS}
-        intersectional_groups: dict[str, list[SubjectRecord]] = {}
+        """Compute subgroup support through the cohort-profiling module."""
+        from bias_aperture.cohort_profiling import compute_cohort_profile
 
-        for rec in records:
-            if rec.race in race_groups:
-                race_groups[rec.race].append(rec)
-            if rec.gender in gender_groups:
-                gender_groups[rec.gender].append(rec)
-            if rec.age in age_groups:
-                age_groups[rec.age].append(rec)
-
-            inter_key = format_intersectional_key(race=rec.race, gender=rec.gender)
-            intersectional_groups.setdefault(inter_key, []).append(rec)
-
-        def _build_stats(
-            subgroup_key: str, sub_records: list[SubjectRecord]
-        ) -> SubgroupCellStats:
-            n_sub = len(sub_records)
-            pos_n: int | None = None
-            neg_n: int | None = None
-
-            if task_positive_label is not None:
-                pos_n = sum(
-                    1
-                    for r in sub_records
-                    if str(r.true_label) == str(task_positive_label)
-                )
-                neg_n = n_sub - pos_n
-                has_pos = pos_n >= MIN_POSITIVE_SUPPORT
-                has_neg = neg_n >= MIN_POSITIVE_SUPPORT
-            else:
-                has_pos = True
-                has_neg = True
-
-            is_eligible = n_sub >= MIN_SUBGROUP_SAMPLE_SIZE
-            is_insufficient = n_sub < MIN_SUBGROUP_SAMPLE_SIZE
-
-            return SubgroupCellStats(
-                subgroup_key=subgroup_key,
-                total_n=n_sub,
-                positive_n=pos_n,
-                negative_n=neg_n,
-                is_nfr003_eligible=is_eligible,
-                has_positive_support=has_pos,
-                has_negative_support=has_neg,
-                insufficient_sample_at_ingestion=is_insufficient,
-            )
-
-        race_counts = {
-            f"race={r}": _build_stats(f"race={r}", race_groups[r]) for r in RACE_LABELS
-        }
-        gender_counts = {
-            f"gender={g}": _build_stats(f"gender={g}", gender_groups[g])
-            for g in GENDER_LABELS
-        }
-        age_counts = {
-            f"age={a}": _build_stats(f"age={a}", age_groups[a]) for a in AGE_LABELS
-        }
-        inter_counts = {k: _build_stats(k, v) for k, v in intersectional_groups.items()}
-
-        inter_126_counts = cls.compute_126_intersectional_matrix(
-            records, task_positive_label=task_positive_label
-        )
-
-        insufficient_keys: list[str] = [
-            k
-            for d in (race_counts, gender_counts, age_counts, inter_counts)
-            for k, v in d.items()
-            if v.insufficient_sample_at_ingestion
-        ]
-
-        return SubgroupCohortProfile(
-            total_subjects=total,
-            race_counts=race_counts,
-            gender_counts=gender_counts,
-            age_counts=age_counts,
-            intersectional_counts=inter_counts,
-            insufficient_subgroups=insufficient_keys,
-            intersectional_126_counts=inter_126_counts,
-        )
+        return compute_cohort_profile(records, task_positive_label=task_positive_label)
 
     @classmethod
     def compute_126_intersectional_matrix(
@@ -689,140 +246,9 @@ class DataIngestionPipeline:
         *,
         task_positive_label: str | None = None,
     ) -> dict[str, SubgroupCellStats]:
-        """Compute the full 7 x 9 x 2 = 126 intersectional grid (FR-002, NFR-003).
+        """Compute the complete 126-cell grid through the profiling module."""
+        from bias_aperture.cohort_profiling import compute_126_intersectional_matrix
 
-        Systematically enumerates all 126 intersectional demographic cells defined
-        by the locked FairFace taxonomies (RACE_LABELS, AGE_LABELS, GENDER_LABELS).
-        Guarantees that every cell is represented, calculating exact sample sizes
-        and flagging whether n >= 30 (eligible) or n < 30 (insufficient / sparse).
-        """
-        cell_records: dict[tuple[str, str, str], list[SubjectRecord]] = {
-            (r, a, g): []
-            for r in RACE_LABELS
-            for a in AGE_LABELS
-            for g in GENDER_LABELS
-        }
-
-        for rec in records:
-            key = (rec.race, rec.age, rec.gender)
-            if key in cell_records:
-                cell_records[key].append(rec)
-
-        stats_map: dict[str, SubgroupCellStats] = {}
-        for (r, a, g), sub_records in cell_records.items():
-            cell_key = f"race={r}&age={a}&gender={g}"
-            n_sub = len(sub_records)
-            pos_n: int | None = None
-            neg_n: int | None = None
-
-            if task_positive_label is not None:
-                pos_n = sum(
-                    1
-                    for rec in sub_records
-                    if str(rec.true_label) == str(task_positive_label)
-                )
-                neg_n = n_sub - pos_n
-                has_pos = pos_n >= 5
-                has_neg = neg_n >= 5
-            else:
-                has_pos = True
-                has_neg = True
-
-            is_eligible = n_sub >= MIN_SUBGROUP_SAMPLE_SIZE
-            is_insufficient = n_sub < MIN_SUBGROUP_SAMPLE_SIZE
-
-            stats_map[cell_key] = SubgroupCellStats(
-                subgroup_key=cell_key,
-                total_n=n_sub,
-                positive_n=pos_n,
-                negative_n=neg_n,
-                is_nfr003_eligible=is_eligible,
-                has_positive_support=has_pos,
-                has_negative_support=has_neg,
-                insufficient_sample_at_ingestion=is_insufficient,
-            )
-
-        return stats_map
-
-
-class OvRTransformer:
-    r"""
-    Multi-Class One-vs-Rest (OvR) evaluation helper.
-
-    Transforms a multi-class SubjectRecord dataset into an M-way set of
-    binary tasks $Y^{(m)} = \mathbb{I}(Y = c_m)$ and
-    $\hat{Y}^{(m)} = \mathbb{I}(\hat{Y} = c_m)$ preserving demographic axes.
-    """
-
-    @staticmethod
-    def get_classes(
-        records: Sequence[SubjectRecord],
-        axis: Literal["true", "predicted", "both"] = "both",
-    ) -> list[str]:
-        """Extract unique classes present across true, predicted, or both labels."""
-        classes: set[str] = set()
-        for r in records:
-            if axis in ("true", "both"):
-                classes.add(str(r.true_label))
-            if axis in ("predicted", "both"):
-                classes.add(str(r.predicted_label))
-        return sorted(classes)
-
-    @staticmethod
-    def binarize(
-        records: Sequence[SubjectRecord],
-        target_class: str,
-        *,
-        positive_label: str = "1",
-        negative_label: str = "0",
-    ) -> list[SubjectRecord]:
-        """
-        Binarize ground truth and predictions against the specified target class.
-        """
-        target_str = str(target_class)
-        binarized: list[SubjectRecord] = []
-        for r in records:
-            y_bin = (
-                positive_label if str(r.true_label) == target_str else negative_label
-            )
-            y_hat_bin = (
-                positive_label
-                if str(r.predicted_label) == target_str
-                else negative_label
-            )
-            binarized.append(
-                SubjectRecord(
-                    image_id=r.image_id,
-                    race=r.race,
-                    gender=r.gender,
-                    age=r.age,
-                    true_label=y_bin,
-                    predicted_label=y_hat_bin,
-                )
-            )
-        return binarized
-
-    @classmethod
-    def decompose_all(
-        cls,
-        records: Sequence[SubjectRecord],
-        classes: Sequence[str] | None = None,
-        *,
-        positive_label: str = "1",
-        negative_label: str = "0",
-    ) -> dict[str, list[SubjectRecord]]:
-        """
-        Decompose a multi-class dataset into M distinct binary OvR datasets.
-        """
-        target_classes = (
-            list(classes) if classes is not None else cls.get_classes(records)
+        return compute_126_intersectional_matrix(
+            records, task_positive_label=task_positive_label
         )
-        return {
-            c: cls.binarize(
-                records,
-                c,
-                positive_label=positive_label,
-                negative_label=negative_label,
-            )
-            for c in target_classes
-        }
