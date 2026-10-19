@@ -10,7 +10,7 @@
         "@type": "Report",
         "name": "BiasAperture Demographic Fairness Audit Dossier — FairFace ResNet-34 Multi-Task Classifier",
         "description": "Diagnostic Demographic Bias Evaluation & Regulatory Traceability Report on FairFace Benchmark Dataset across Race axis.",
-        "datePublished": "2026-10-19 04:36:51 UTC",
+        "datePublished": "2026-10-19 04:51:34 UTC",
         "author": {
             "@type": "SoftwareApplication",
             "name": "BiasAperture",
@@ -426,9 +426,24 @@
                 margin: 0;
             }
             header, .section-card, .exec-summary, .scope-card, .plain-narrative-card, .metric-guide-card, .plain-pillar {
-                break-inside: avoid;
                 box-shadow: none !important;
                 border: 1px solid #cbd5e1 !important;
+            }
+            .exec-summary, .scope-card, .plain-narrative-card, .metric-guide-card, .plain-pillar {
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
+            }
+            .section-headline {
+                break-before: page !important;
+                page-break-before: always !important;
+            }
+            .section-subgroups {
+                break-before: page !important;
+                page-break-before: always !important;
+            }
+            .section-explainability, .section-governance {
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
             }
             /* Auto-expand collapsed details blocks so suppressed cohorts and metric guide print fully */
             details.insufficient-block,
@@ -447,10 +462,12 @@
                 content: "▼ " !important;
             }
             table {
-                page-break-inside: auto;
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
             }
             tr {
-                page-break-inside: avoid;
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
                 page-break-after: auto;
             }
             thead {
@@ -483,7 +500,7 @@
                 </div>
                 <div class="meta-item">
                     <span class="meta-label">Audit Date</span>
-                    <strong>2026-10-19 04:36:51 UTC</strong>
+                    <strong>2026-10-19 04:51:34 UTC</strong>
                 </div>
             </div>
         </header>
@@ -590,7 +607,7 @@
         
 
         <!-- 1. Executive Summary & Core Four Headline Metrics -->
-        <div class="section-card">
+        <div class="section-card section-headline">
             <h2>1. Headline Fairness Metrics (Core Four — Cross-Group Overview)</h2>
             <p style="font-size: 0.9rem; color: var(--text-muted);">
                 Summary metrics evaluated across all eligible demographic strata (n ≥ 30 per NFR-003). Accompanied by 95% stratified BCa bootstrap confidence intervals and Pearson's χ² test of independence. Plotted on a calibrated [0.0, 1.0] domain with null-point reference and threshold lines.
@@ -949,7 +966,7 @@
         </div>
 
         <!-- 2. Per-Subgroup Disparity Analysis -->
-        <div class="section-card">
+        <div class="section-card section-subgroups">
             <h2>2. Per-Subgroup Disparity Matrix</h2>
             <p style="font-size: 0.9rem; color: var(--text-muted);">
                 Detailed stratification across individual demographic groups, ordered by largest deviation from the null (no-disparity) point, most significant first. Subgroups below the NFR-003 sample threshold (n &lt; 30) are strictly flagged, uncomputed to prevent small-sample estimation artifacts, and summarised separately below.
@@ -1455,7 +1472,7 @@
         
 
         <!-- Governance Documentation & Intended Use -->
-        <div class="section-card">
+        <div class="section-card section-governance">
             <h2>3. Governance Documentation &amp; Intended Use</h2>
             <div class="regulatory-box">
                 <strong>EU AI Act (Regulation EU 2024/1689) Article 10 / Annex IV Alignment:</strong>
