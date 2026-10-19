@@ -1,5 +1,5 @@
 # Track 17 — Strategy Pattern for Dual Fairness Backends
-**Stream:** E (Architecture) · **Priority:** 🔴 Critical · **Owner Focus:** Both
+**Stream:** E (Architecture) · **Priority:**  Critical · **Owner Focus:** Both
 **Estimated Time:** 30 min · **Feeds:** `fairness/base.py` architecture
 
 ## Instructions

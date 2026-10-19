@@ -1,5 +1,5 @@
 # Track 35 — Data Privacy & Governance for Third-Party Client Audits
-**Stream:** J (Deployment/Ops) · **Priority:** 🔴 High · **Owner Focus:** Open (orchestrator-claimed)
+**Stream:** J (Deployment/Ops) · **Priority:**  High · **Owner Focus:** Open (orchestrator-claimed)
 **Estimated Time:** 45 min · **Feeds:** Phase-2 ops spec — Track 32/33 dependency
 
 ## Instructions

@@ -1,5 +1,5 @@
 # Track 25 — Web Dashboard Architecture Evaluation
-**Stream:** H (UI/UX) · **Priority:** 🔴 High · **Owner Focus:** Open (orchestrator-claimed)
+**Stream:** H (UI/UX) · **Priority:**  High · **Owner Focus:** Open (orchestrator-claimed)
 **Estimated Time:** 45 min · **Feeds:** Phase-2 UI/UX spec — decision needed from Aaradhya/Tisha
 
 ## Instructions

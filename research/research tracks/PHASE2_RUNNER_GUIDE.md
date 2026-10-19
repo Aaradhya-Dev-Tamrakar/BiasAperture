@@ -42,7 +42,7 @@ If an executor is running manually in Claude Desktop instead of via the orchestr
 
 ## Priority order (if reviewing as they finish)
 
-### 🔴 Phase 1 — Critical (read first)
+###  Phase 1 — Critical (read first)
 
 | Track | File | What it unlocks |
 |---|---|---|
@@ -55,7 +55,7 @@ If an executor is running manually in Claude Desktop instead of via the orchestr
 | 35 | `track_35_data_privacy_and_governance_for_third_party_client_audi.md` | Blocking for any real client pilot |
 | 36 | `track_36_regulatory_expansion_map_beyond_eu_ai_act.md` | Blocking for any non-EU client claim |
 
-### 🟡 Phase 2 — Medium
+###  Phase 2 — Medium
 
 | Track | File |
 |---|---|

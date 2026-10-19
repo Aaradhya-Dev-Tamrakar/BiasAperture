@@ -18,7 +18,7 @@ As each Claude Desktop instance finishes, save its output to `results/XX_descrip
 
 ## Priority Order (if reviewing as they finish)
 
-### 🔴 Phase 1 — Critical (read these first)
+###  Phase 1 — Critical (read these first)
 | Track | File | What it unlocks |
 |---|---|---|
 | 01 | `track_01_fairface_dataset.md` | data_ingestion.py |
@@ -32,7 +32,7 @@ As each Claude Desktop instance finishes, save its output to `results/XX_descrip
 | 12 | `track_12_chi_squared.md` | fairness/statistics.py |
 | 17 | `track_17_strategy_pattern.md` | fairness/base.py |
 
-### 🟡 Phase 2 — Medium (read these second)
+###  Phase 2 — Medium (read these second)
 | Track | File | What it unlocks |
 |---|---|---|
 | 02 | `track_02_utkface_comparison.md` | UTKFace cut decision |
@@ -45,7 +45,7 @@ As each Claude Desktop instance finishes, save its output to `results/XX_descrip
 | 19 | `track_19_nist_rmf.md` | NIST compliance |
 | 20 | `track_20_competitor_analysis.md` | Novelty defense |
 
-### 🟢 Phase 3 — Low (read last)
+###  Phase 3 — Low (read last)
 | Track | File | What it unlocks |
 |---|---|---|
 | 16 | `track_16_proxy_detection.md` | Proxy analysis methodology |

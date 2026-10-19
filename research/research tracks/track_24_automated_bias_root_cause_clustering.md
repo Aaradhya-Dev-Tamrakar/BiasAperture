@@ -1,5 +1,5 @@
 # Track 24 — Automated Bias Root-Cause Clustering
-**Stream:** G (Novelty) · **Priority:** 🟡 Medium · **Owner Focus:** Open (orchestrator-claimed)
+**Stream:** G (Novelty) · **Priority:**  Medium · **Owner Focus:** Open (orchestrator-claimed)
 **Estimated Time:** 45 min · **Feeds:** Phase-2 novelty defense, explainability.py roadmap
 
 ## Instructions

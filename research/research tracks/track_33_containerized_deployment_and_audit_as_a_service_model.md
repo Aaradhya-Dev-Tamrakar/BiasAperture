@@ -1,5 +1,5 @@
 # Track 33 — Containerized Deployment & Audit-as-a-Service Model
-**Stream:** J (Deployment/Ops) · **Priority:** 🟡 Medium · **Owner Focus:** Open (orchestrator-claimed)
+**Stream:** J (Deployment/Ops) · **Priority:**  Medium · **Owner Focus:** Open (orchestrator-claimed)
 **Estimated Time:** 45 min · **Feeds:** Phase-2 ops spec
 
 ## Instructions

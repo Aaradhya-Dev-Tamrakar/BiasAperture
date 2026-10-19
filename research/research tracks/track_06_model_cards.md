@@ -1,5 +1,5 @@
 # Track 06 — Model Cards Specification Deep-Dive
-**Stream:** B (Report Generation) · **Priority:** 🟡 Medium · **Owner Focus:** Aaradhya (WP3)
+**Stream:** B (Report Generation) · **Priority:**  Medium · **Owner Focus:** Aaradhya (WP3)
 **Estimated Time:** 30 min · **Feeds:** Report template structure
 
 ## Instructions

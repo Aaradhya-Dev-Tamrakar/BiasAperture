@@ -67,11 +67,11 @@ An earlier working split (A = statistical bias detection, T = testing-matrix + r
 
 | Claim                        | Source-checked value                                                  | Doc's value                                | Result |
 | ---------------------------- | --------------------------------------------------------------------- | ------------------------------------------ | ------ |
-| Gender Shades error-rate gap | 34.7% vs 0.8% (PMLR v81, pp.77–91)                                    | "exceeding thirty percentage points"       | ✅     |
-| FairFace scale/taxonomy      | 108,501 pre-discard images (97,698 released), 7 exact race categories | Matches exactly                            | ✅     |
-| EU AI Act citation           | Reg. (EU) 2024/1689, 13 June 2024                                     | Matches exactly                            | ✅     |
-| NIST AI RMF citation         | NIST AI 100-1, Jan 2023                                               | Matches exactly                            | ✅     |
-| All 18 bib entries           | —                                                                     | Resolve to real papers, correct venue/year | ✅     |
+| Gender Shades error-rate gap | 34.7% vs 0.8% (PMLR v81, pp.77–91)                                    | "exceeding thirty percentage points"       |      |
+| FairFace scale/taxonomy      | 108,501 pre-discard images (97,698 released), 7 exact race categories | Matches exactly                            |      |
+| EU AI Act citation           | Reg. (EU) 2024/1689, 13 June 2024                                     | Matches exactly                            |      |
+| NIST AI RMF citation         | NIST AI 100-1, Jan 2023                                               | Matches exactly                            |      |
+| All 18 bib entries           | —                                                                     | Resolve to real papers, correct venue/year |      |
 
 Proposes 5 architectural modules (data ingestion, model interface, fairness metrics engine, report generation, orchestration) validated against FairFace (with UTKFace subsequently cut per Cut-List #2), using AIF360 + Fairlearn as computational back ends, reporting modelled on Model Cards + Datasheets for Datasets.
 
@@ -233,13 +233,13 @@ Consolidated here so neither drops through the cracks — both are edits pending
 
 | Claim                                                                  | Result                                                                                                                                                                                                 |
 | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Art. 10 in force 2 Aug 2026                                            | ✅ Supported — Art. 113 EUR-Lex                                                                                                                                                                        |
-| Table 4-3 mapping (10(2)/10(3)/10(4)/10(5))                            | ✅ Supported — matches actual EUR-Lex sub-clause content                                                                                                                                               |
-| AIF360 + Fairlearn implement DPD/EOD/EOP/DIR                           | ✅ Supported                                                                                                                                                                                           |
-| FairFace 97,698 released images (108,501 pre-discard)                  | ✅ Supported                                                                                                                                                                                           |
-| Gender Shades 34.7% vs 0.8%                                            | ✅ Supported                                                                                                                                                                                           |
-| Requirements/architecture/schedule/risk register vs. feasibility study | ✅ Supported — Explainability Layer (§3 above) is a documented addition beyond the original feasibility scope, not drift; Appendix D risk register is a verbatim reproduction of feasibility Table 8.1 |
-| EU AI Act = Reg. (EU) 2024/1689                                        | ✅ Supported                                                                                                                                                                                           |
+| Art. 10 in force 2 Aug 2026                                            |  Supported — Art. 113 EUR-Lex                                                                                                                                                                        |
+| Table 4-3 mapping (10(2)/10(3)/10(4)/10(5))                            |  Supported — matches actual EUR-Lex sub-clause content                                                                                                                                               |
+| AIF360 + Fairlearn implement DPD/EOD/EOP/DIR                           |  Supported                                                                                                                                                                                           |
+| FairFace 97,698 released images (108,501 pre-discard)                  |  Supported                                                                                                                                                                                           |
+| Gender Shades 34.7% vs 0.8%                                            |  Supported                                                                                                                                                                                           |
+| Requirements/architecture/schedule/risk register vs. feasibility study |  Supported — Explainability Layer (§3 above) is a documented addition beyond the original feasibility scope, not drift; Appendix D risk register is a verbatim reproduction of feasibility Table 8.1 |
+| EU AI Act = Reg. (EU) 2024/1689                                        |  Supported                                                                                                                                                                                           |
 
 Zero unsupported or contradicted claims. Proposal is factually submission-ready; §13's two items remain the only open documentation gaps (both on feasibility_study.pdf, not main.pdf).
 

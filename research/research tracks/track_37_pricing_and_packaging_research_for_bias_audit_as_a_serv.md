@@ -1,5 +1,5 @@
 # Track 37 — Pricing & Packaging Research for Bias-Audit-as-a-Service
-**Stream:** K (Business/GTM) · **Priority:** 🟡 Medium · **Owner Focus:** Open (orchestrator-claimed)
+**Stream:** K (Business/GTM) · **Priority:**  Medium · **Owner Focus:** Open (orchestrator-claimed)
 **Estimated Time:** 30 min · **Feeds:** Phase-2 business case
 
 ## Instructions

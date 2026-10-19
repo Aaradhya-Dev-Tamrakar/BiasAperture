@@ -1,5 +1,5 @@
 # Track 38 — Licensing Strategy: Open-Core vs Commercial
-**Stream:** K (Business/GTM) · **Priority:** 🟡 Medium · **Owner Focus:** Open (orchestrator-claimed)
+**Stream:** K (Business/GTM) · **Priority:**  Medium · **Owner Focus:** Open (orchestrator-claimed)
 **Estimated Time:** 30 min · **Feeds:** Phase-2 business case
 
 ## Instructions

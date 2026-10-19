@@ -1,5 +1,5 @@
 # Track 09 — Fairlearn API — MetricFrame & Core Four
-**Stream:** C (Fairness Engine) · **Priority:** 🔴 Critical · **Owner Focus:** Tisha (WP4)
+**Stream:** C (Fairness Engine) · **Priority:**  Critical · **Owner Focus:** Tisha (WP4)
 **Estimated Time:** 45 min · **Feeds:** `fairness/fairlearn_backend.py`
 
 ## Instructions

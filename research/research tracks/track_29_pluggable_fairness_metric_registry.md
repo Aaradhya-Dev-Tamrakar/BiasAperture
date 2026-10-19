@@ -1,5 +1,5 @@
 # Track 29 — Pluggable Fairness-Metric Registry
-**Stream:** I (Modular Architecture) · **Priority:** 🔴 High · **Owner Focus:** Open (orchestrator-claimed)
+**Stream:** I (Modular Architecture) · **Priority:**  High · **Owner Focus:** Open (orchestrator-claimed)
 **Estimated Time:** 45 min · **Feeds:** fairness/base.py roadmap
 
 ## Instructions

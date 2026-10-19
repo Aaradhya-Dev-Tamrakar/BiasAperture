@@ -32,13 +32,13 @@
 
 | # | Panel Feedback | Category | Existing Coverage | Action Required | Tracking |
 |---|----------------|----------|-------------------|-----------------|----------|
-| 1 | Dataset: FairFace, manually annotated | Dataset justification | ✅ Master Dossier §1.9, BiasAperture-AT §8, Discrepancy Notes #2 | None — fully documented | — |
-| 2 | GPU resource estimation skepticism | Resource sizing | ⚠️ Partial — §1.11 says "≥ 8 GB VRAM" but no engineering breakdown | Add VRAM sizing justification with model weight / tensor / overhead math | Dossier §1.11 amendment |
-| 3 | "Very impressive" / positive assessment | Validation | ✅ N/A | Record for morale | — |
-| 4 | Leveraging existing models, not creating | Architecture clarity | ✅ Master Dossier §1.10, `model_interface.py`, Novelty Defense memo | None — model-agnostic architecture already documented | — |
-| 5 | Multi-model comparison recommended | Evaluation scope | ❌ Not tracked — no issue exists for evaluating ViT, ResNet-50, etc. | Create GitHub issue for multi-model comparative evaluation | **New Issue #46+** |
-| 6 | Narrow scope to specific deployment context | Report framing | ⚠️ Scope is "facial analysis models" generally | Consider adding a primary evaluation context in report framing (Phase 2) | Issue #22 (ongoing reconciliation) |
-| 7 | Team size concern (2 people) | Feasibility | ✅ 5-Tier Descoping Cut-List (Dossier §5.6, BiasAperture-AT §8) | None — descoping strategy already addresses this | — |
+| 1 | Dataset: FairFace, manually annotated | Dataset justification |  Master Dossier §1.9, BiasAperture-AT §8, Discrepancy Notes #2 | None — fully documented | — |
+| 2 | GPU resource estimation skepticism | Resource sizing |  Partial — §1.11 says "≥ 8 GB VRAM" but no engineering breakdown | Add VRAM sizing justification with model weight / tensor / overhead math | Dossier §1.11 amendment |
+| 3 | "Very impressive" / positive assessment | Validation |  N/A | Record for morale | — |
+| 4 | Leveraging existing models, not creating | Architecture clarity |  Master Dossier §1.10, `model_interface.py`, Novelty Defense memo | None — model-agnostic architecture already documented | — |
+| 5 | Multi-model comparison recommended | Evaluation scope |  Not tracked — no issue exists for evaluating ViT, ResNet-50, etc. | Create GitHub issue for multi-model comparative evaluation | **New Issue #46+** |
+| 6 | Narrow scope to specific deployment context | Report framing |  Scope is "facial analysis models" generally | Consider adding a primary evaluation context in report framing (Phase 2) | Issue #22 (ongoing reconciliation) |
+| 7 | Team size concern (2 people) | Feasibility |  5-Tier Descoping Cut-List (Dossier §5.6, BiasAperture-AT §8) | None — descoping strategy already addresses this | — |
 
 ---
 

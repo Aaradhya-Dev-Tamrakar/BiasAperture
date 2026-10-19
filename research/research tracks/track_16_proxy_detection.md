@@ -1,5 +1,5 @@
 # Track 16 — Proxy Variable Detection via SHAP
-**Stream:** D (Explainability) · **Priority:** 🟢 Low · **Owner Focus:** Tisha (WP4)
+**Stream:** D (Explainability) · **Priority:**  Low · **Owner Focus:** Tisha (WP4)
 **Estimated Time:** 30 min · **Feeds:** `explainability.py`, proxy analysis methodology
 
 ## Instructions

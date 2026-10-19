@@ -1,5 +1,5 @@
 # Track 08 — EU AI Act Article 10 Regulatory Mapping
-**Stream:** B (Report Generation) · **Priority:** 🔴 Critical · **Owner Focus:** Both
+**Stream:** B (Report Generation) · **Priority:**  Critical · **Owner Focus:** Both
 **Estimated Time:** 45 min · **Feeds:** Report regulatory mapping section
 
 ## Instructions

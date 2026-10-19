@@ -1,5 +1,5 @@
 # Track 19 — NIST AI RMF Detailed Mapping
-**Stream:** F (Defense) · **Priority:** 🟡 Medium · **Owner Focus:** Both
+**Stream:** F (Defense) · **Priority:**  Medium · **Owner Focus:** Both
 **Estimated Time:** 30 min · **Feeds:** Report regulatory mapping, defense documentation
 
 ## Instructions

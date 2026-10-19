@@ -1,8 +1,8 @@
 # Track 23 — Cross-Modal Schema Generalization (v2 Architecture)
 
-> **🚫 DROPPED (2026-09-02, Aaradhya) — do not claim/execute.** Dilutes BiasAperture's defensible vision/face-classifier niche per `BiasAperture_NOVELTY_INTEGRATION_DEFENSE.md`. Live status: `task_2026-09-02_005`, blocked. Full reasoning in `PHASE2_TASK_MAP.md`.
+> ** DROPPED (2026-09-02, Aaradhya) — do not claim/execute.** Dilutes BiasAperture's defensible vision/face-classifier niche per `BiasAperture_NOVELTY_INTEGRATION_DEFENSE.md`. Live status: `task_2026-09-02_005`, blocked. Full reasoning in `PHASE2_TASK_MAP.md`.
 
-**Stream:** G (Novelty) · **Priority:** 🟡 Medium · **Owner Focus:** Open (orchestrator-claimed)
+**Stream:** G (Novelty) · **Priority:**  Medium · **Owner Focus:** Open (orchestrator-claimed)
 **Estimated Time:** 60 min · **Feeds:** Phase-2 architecture spec
 
 ## Instructions

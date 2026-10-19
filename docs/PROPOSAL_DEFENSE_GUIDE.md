@@ -221,8 +221,8 @@ When examiners ask: _"Aren't you just combining existing toolkits like Fairlearn
 
 ### What NOT to Say
 
-- ❌ _"We invented brand new fairness metrics."_ (False — metrics are established in literature).
-- ❌ _"No other tool can compute these numbers."_ (False — Fairlearn/AIF360 compute tabular metrics).
+-  _"We invented brand new fairness metrics."_ (False — metrics are established in literature).
+-  _"No other tool can compute these numbers."_ (False — Fairlearn/AIF360 compute tabular metrics).
 
 ### The 5-Step Defense Framework
 
@@ -407,32 +407,32 @@ When examiners ask: _"Aren't you just combining existing toolkits like Fairlearn
 
 ## 6. Traps to Avoid
 
-### ❌ Trap 1: Overclaiming Novelty
+###  Trap 1: Overclaiming Novelty
 
 - **Don't say:** _"No one has ever built a fairness auditing system before."_
 - **Do say:** _"Among the seven tools evaluated in our comparative review, we did not identify a platform that integrates this complete facial analysis audit workflow."_
 
-### ❌ Trap 2: Oversimplifying the Engineering Effort
+###  Trap 2: Oversimplifying the Engineering Effort
 
 - **Don't say:** _"We are simply piping Fairlearn into AIF360."_
 - **Do say:** _"We harmonized underlying mathematical divergences between toolkits and implemented statistical screening and bootstrap safeguards."_
 
-### ❌ Trap 3: Claiming Causal Explanations
+###  Trap 3: Claiming Causal Explanations
 
 - **Don't say:** _"Feature attribution or surrogate models (SHAP deferred) explain why the model is biased."_
 - **Do say:** _"The current explainability implementation uses demographic-dummy surrogate attribution, which provides feature attributions that highlight visual proxy correlations associated with detected disparities, subject to known non-causal theoretical bounds; richer spatial SHAP and ITA analysis remain deferred."_
 
-### ❌ Trap 4: Overstating Regulatory Certification
+###  Trap 4: Overstating Regulatory Certification
 
 - **Don't say:** _"BiasAperture guarantees EU AI Act compliance."_
 - **Do say:** _"BiasAperture provides technical diagnostic evidence supporting the examination of Article 10 requirements."_
 
-### ❌ Trap 5: Misrepresenting Project Phase
+###  Trap 5: Misrepresenting Project Phase
 
 - **Don't say:** _"We have already completed the full benchmark audit."_
 - **Do say:** _"We have completed research verification, locked our contracts, and implemented acceptance tests; core pipeline execution and full benchmark validation constitute the upcoming phase."_
 
-### ❌ Trap 6: Misattributing Sample-Size Invariants
+###  Trap 6: Misattributing Sample-Size Invariants
 
 - **Don't say:** _"The Central Limit Theorem proves that $n \ge 30$ ensures statistical validity."_
 - **Do say:** _"The $n \ge 30$ threshold is a conservative screening invariant to filter out unstable, undersized subgroups before applying support checks and hypothesis tests."_
