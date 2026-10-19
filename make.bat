@@ -48,11 +48,11 @@ python scripts\export_report_pdf.py reports\bias_audit_report.html reports\bias_
 exit /b %ERRORLEVEL%
 
 :do_reconcile
-python scripts\reconcile_reports.py --heal %1 %2 %3 %4 %5 %6 %7 %8 %9
+uv run --extra dev python scripts\reconcile_reports.py --heal %1 %2 %3 %4 %5 %6 %7 %8 %9
 exit /b %ERRORLEVEL%
 
 :do_check_reports
-python scripts\reconcile_reports.py --check %1 %2 %3 %4 %5 %6 %7 %8 %9
+uv run --extra dev python scripts\reconcile_reports.py --check %1 %2 %3 %4 %5 %6 %7 %8 %9
 exit /b %ERRORLEVEL%
 
 :do_sync

@@ -18,9 +18,15 @@
 \definecolor{GuardIndigo}{HTML}{3730A3}
 \definecolor{TintNavy}{HTML}{F1F5F9}
 \definecolor{SoftHighlight}{HTML}{FEF9C3}
+% Color palette assignments
 \AtBeginDocument{\color{BodyCharcoal}}
 \addtokomafont{disposition}{\color{ReportNavy}}
-\hypersetup{urlcolor=AccentTeal}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=ReportNavy,    % Internal section, table, and figure links
+    citecolor=AccentTeal,    % Citations match references
+    urlcolor=AccentTeal      % External URLs
+}
 
 % Glossary entries (define once, print later)
 \input{src/frontmatter/abbreviations}
