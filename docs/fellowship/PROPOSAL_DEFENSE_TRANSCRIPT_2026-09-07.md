@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Proposal Defense Transcript — BiasAperture"
 date: 2026-09-07
 time: "18:00 GMT+05:45"
@@ -115,9 +115,9 @@ status: Archived
 
 [00:18:46] Actually म चाहिँ यसको basic concept को बारेमा सोध्न मन लाग्यो है। Basically हाम्रो यसमा चाहिँ pre-existing modelsहरूको चाहिँ अब कतिको fair, fairly judge गरिराको छ? Like if [00:19:00] there is a woman of color भनेको जस्तै। अब उनीहरूलाई चाहिँ हाम्रै examination लिएर होइन online examination लिएछम् भने चाहिँ त्यसको लागि that particular model लाई चाहिँ कतिको fair छ भनेर judge गर्ने concept हो होइन यसमा?
 
-[00:19:16] Or- Facial कुनै पनि facial analysis model को task गर्दाखेरि चाहिँ त्यसले कति fairly सबै demographic subgroups लाई कति fairly judge गर्यो भनेर evaluate audit गर्नु। के यसमा मैले थपेन? त्यो evaluation सँगसँगै चाहिँ हामीले explainable part पनि थप्न खोजिरहेछौँ। Why it evaluated as it the-- it as जे होस् त्यो model ले गर्‍यो भनौँ न, होइन?
+[00:19:16] Or- Facial कुनै पनि facial analysis model को task गर्दाखेरि चाहिँ त्यसले कति fairly सबै demographic subgroups लाई कति fairly judge गर्यो भनेर evaluate audit गर्नु। के यसमा मैले थपेन? त्यो evaluation सँगसँगै चाहिँ हामीले explainable part पनि थप्न खोजिरहेछौँ। Why it evaluated as it the-- it as जे होस् त्यो model ले गर्यो भनौँ न, होइन?
 
-[00:19:44] त्यसमा चाहिँ किन चाहिँ उल्ले गर्‍यो भन्ने explainable part पनि राख्न खोजिरहेछौँ। तो... सो त्यसमा होइन, उनीहरूले चाहिँ के गर्छ भन्दाखेरि input image input दिन्छ होइन? Image input को firstमा original name उनीहरूले चाहिँ कुनै JSON or CSV मा save गर्छन् होइन? अब [00:20:00] result मा feed गर्नु भन्दा अगाडि त pre processing हुन्छ होइन?
+[00:19:44] त्यसमा चाहिँ किन चाहिँ उल्ले गर्यो भन्ने explainable part पनि राख्न खोजिरहेछौँ। तो... सो त्यसमा होइन, उनीहरूले चाहिँ के गर्छ भन्दाखेरि input image input दिन्छ होइन? Image input को firstमा original name उनीहरूले चाहिँ कुनै JSON or CSV मा save गर्छन् होइन? अब [00:20:00] result मा feed गर्नु भन्दा अगाडि त pre processing हुन्छ होइन?
 
 [00:20:03] So rescaling हुन्छ, black and white गर्ने के के के हुन्छ, blurring गर्ने processing हुन्छ। उनीहरूले every processing को चाहिँ every detail चाहिँ CSV मा or JSON मा save गरेर राख्नुपर्छ क्या। अनि त्यसपछि उनारको त्यो जुन embedding छ, embedding लाई कसरी-- कसरी store गर्ने? अब छुट्टै folder मा store गरेर mapping गर्ने कसरी?
 
@@ -133,7 +133,7 @@ status: Archived
 
 [00:23:33] यो चाहिँ मेरै आफ्नै experience बाट भनिराको हो। मैले चाहिँ पहिला कोज्रा भन्ने कम्पनीमा चाहिँ त्यो work गरेको थिएँ कि हैन? So basically facial attendance system चाहिँ त्यहाँको CCTV cameraबाट if there are thirty peoples जसको चाहिँ every day facial कुन time मा entry भयो र exit भयो भनेर पाइराको छ अरे हैन?
 
-[00:23:53] त basically त्यो thirty वटा people को लागि चाहिँ thirty days week को thirty days को कतिवटा week छ, [00:24:00] त्यसबाट चाहिँ कतिजना मान्छेको actual आको छ र कतिजनालाई चाहिँ actually चाहिँ त्यो particular time आएकोमा चाहिँ recognize गरेर database मा चाहिँ register गर्‍यो। अनि त्यसबाट चाहिँ like depending on how they look or how like time lightingहरू तिनीहरूको basis मा चाहिँ fairnessहरू compare गर्ने type को concept हो कि...
+[00:23:53] त basically त्यो thirty वटा people को लागि चाहिँ thirty days week को thirty days को कतिवटा week छ, [00:24:00] त्यसबाट चाहिँ कतिजना मान्छेको actual आको छ र कतिजनालाई चाहिँ actually चाहिँ त्यो particular time आएकोमा चाहिँ recognize गरेर database मा चाहिँ register गर्यो। अनि त्यसबाट चाहिँ like depending on how they look or how like time lightingहरू तिनीहरूको basis मा चाहिँ fairnessहरू compare गर्ने type को concept हो कि...
 
 [00:24:24] हैन, उनीहरूले चाहिँ मलाई चाहिँ के लाग्छ भन्दा उनीहरूले चाहिँ आफ्नो scopeलाई चाहिँ एकदम narrow down गर्नुपर्छ। के को कुरामा चाहिँ discrimination गर्ने, discrimination गर्ने हुन्छ नि? Scope चाहिँ उनीहरूको चाहिँ clear छैन जस्तो लाग्यो मलाई चाहिँ है। Discrimination, discrimination त भने, भनेको छ but के को context मा चाहिँ discrim-- अब like हुन्छ नि अब चोरहरू भन्यो भने चाहिँ त्यही कालेहरूलाई धेरै देखाइदिने हुन्छ कि हैन?
 

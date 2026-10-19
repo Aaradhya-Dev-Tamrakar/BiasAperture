@@ -1,5 +1,5 @@
 # Track 13 — Disparate Impact Ratio — Implementation & Legal Context
-**Stream:** C (Fairness Engine) · **Priority:** 🟡 Medium · **Owner Focus:** Tisha (WP4)
+**Stream:** C (Fairness Engine) · **Priority:**  Medium · **Owner Focus:** Tisha (WP4)
 **Estimated Time:** 30 min · **Feeds:** Metric implementation, report phrasing
 
 ## Instructions

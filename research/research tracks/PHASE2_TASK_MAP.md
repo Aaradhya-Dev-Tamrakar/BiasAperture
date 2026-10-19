@@ -5,8 +5,8 @@ Epic (parent): `task_2026-09-02_002`
 | Track | Stream | Task ID | Title | Status |
 |---|---|---|---|---|
 | 21 | G | task_2026-09-02_003 | Continuous / Streaming Audit Mode | pending |
-| 22 | G | task_2026-09-02_004 | Multi-Model Comparative Benchmarking & Leaderboard | **✅ COMPLETE (2026-10-12)** — ViT-B/16 vs ResNet-34 audit done; see `dev-logs/2026-10-12_session_vit_benchmark_decision.md §5` |
-| 23 | G | task_2026-09-02_005 | Cross-Modal Schema Generalization (v2 Architecture) | **🚫 blocked (dropped)** — see below |
+| 22 | G | task_2026-09-02_004 | Multi-Model Comparative Benchmarking & Leaderboard | ** COMPLETE (2026-10-12)** — ViT-B/16 vs ResNet-34 audit done; see `dev-logs/2026-10-12_session_vit_benchmark_decision.md §5` |
+| 23 | G | task_2026-09-02_005 | Cross-Modal Schema Generalization (v2 Architecture) | ** blocked (dropped)** — see below |
 | 24 | G | task_2026-09-02_006 | Automated Bias Root-Cause Clustering | pending |
 | 25 | H | task_2026-09-02_007 | Web Dashboard Architecture Evaluation | pending |
 | 26 | H | task_2026-09-02_008 | Interactive Drill-Down Report UX | pending |

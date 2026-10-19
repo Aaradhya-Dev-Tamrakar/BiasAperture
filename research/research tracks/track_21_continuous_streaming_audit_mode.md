@@ -1,5 +1,5 @@
 # Track 21 — Continuous / Streaming Audit Mode
-**Stream:** G (Novelty) · **Priority:** 🔴 High · **Owner Focus:** Open (orchestrator-claimed)
+**Stream:** G (Novelty) · **Priority:**  High · **Owner Focus:** Open (orchestrator-claimed)
 **Estimated Time:** 45 min · **Feeds:** Phase-2 novelty defense, WP6 spec draft
 
 ## Instructions

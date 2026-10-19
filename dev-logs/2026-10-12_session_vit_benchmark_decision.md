@@ -60,7 +60,7 @@ Because BiasAperture's core engine (`src/bias_aperture/`) was designed to ingest
 
 ## 5. Audit Execution Results (2026-10-12, Session 2)
 
-**Status:** ✅ COMPLETE — Full inference run + audit report generated.
+**Status:**  COMPLETE — Full inference run + audit report generated.
 
 ### Infrastructure Resolved
 - Resolved `SyntaxError` in `src/bias_aperture/report/generator.py` (git merge conflict markers at line 219–223 corrupted the `save()` method). Fixed by restoring `out.write_text(html, encoding="utf-8")`.
@@ -71,10 +71,10 @@ Because BiasAperture's core engine (`src/bias_aperture/`) was designed to ingest
 
 | Metric | Point Estimate | 95% BCa CI | p-value |
 |---|---|---|---|
-| DPD | 0.276 | [0.239, 0.308] | <0.001 🔴 |
-| EOD | 0.274 | [0.232, 0.305] | <0.001 🔴 |
-| EOP | 0.274 | [0.232, 0.305] | <0.001 🔴 |
-| DIR | 0.527 | [0.493, 0.579] | <0.001 🔴 |
+| DPD | 0.276 | [0.239, 0.308] | <0.001  |
+| EOD | 0.274 | [0.232, 0.305] | <0.001  |
+| EOP | 0.274 | [0.232, 0.305] | <0.001  |
+| DIR | 0.527 | [0.493, 0.579] | <0.001  |
 
 All 7 race subgroups flagged (p < 0.05). 0 suppressed by NFR-003 (all n ≥ 30).
 
@@ -82,21 +82,21 @@ All 7 race subgroups flagged (p < 0.05). 0 suppressed by NFR-003 (all n ≥ 30).
 
 | Race | n | DPD | EOP | EOD | DIR | EEOC 4/5 |
 |---|---|---|---|---|---|---|
-| Middle Eastern | 1,209 | 0.181 | 0.131 | 0.131 | 0.691 | ❌ FAIL |
-| East Asian | 1,550 | 0.096 | 0.139 | 0.139 | 0.763 | ❌ FAIL |
-| Southeast Asian | 1,415 | 0.090 | 0.144 | 0.144 | 0.778 | ❌ FAIL |
-| White | 2,085 | 0.039 | 0.065 | 0.065 | 0.911 | ✅ PASS |
-| Black | 1,556 | 0.035 | 0.080 | 0.080 | 0.913 | ✅ PASS |
-| Indian | 1,516 | 0.025 | 0.076 | 0.076 | 0.941 | ✅ PASS |
-| Latino/Hispanic | 1,623 | 0.005 | 0.050 | 0.050 | 0.988 | ✅ PASS |
+| Middle Eastern | 1,209 | 0.181 | 0.131 | 0.131 | 0.691 |  FAIL |
+| East Asian | 1,550 | 0.096 | 0.139 | 0.139 | 0.763 |  FAIL |
+| Southeast Asian | 1,415 | 0.090 | 0.144 | 0.144 | 0.778 |  FAIL |
+| White | 2,085 | 0.039 | 0.065 | 0.065 | 0.911 |  PASS |
+| Black | 1,556 | 0.035 | 0.080 | 0.080 | 0.913 |  PASS |
+| Indian | 1,516 | 0.025 | 0.076 | 0.076 | 0.941 |  PASS |
+| Latino/Hispanic | 1,623 | 0.005 | 0.050 | 0.050 | 0.988 |  PASS |
 
 ### Cross-Model Comparison: ViT-B/16 (Race) vs. ResNet-34 (Gender)
 
 | Dimension | ViT-B/16 — Race | ResNet-34 — Gender |
 |---|---|---|
 | N | 10,954 | 10,954 |
-| DPD | **0.276** 🔴 | **0.923** 🔴 |
-| DIR | **0.527** 🔴 | **0.039** 🔴 |
+| DPD | **0.276**  | **0.923**  |
+| DIR | **0.527**  | **0.039**  |
 | Significant subgroups | 7 / 7 | 2 / 2 |
 | Worst subgroup | Middle Eastern (DIR=0.691) | Female (DPD=0.488, DIR=0.070) |
 

@@ -1,5 +1,5 @@
 # Track 32 — API-First Service Layer
-**Stream:** I (Modular Architecture) · **Priority:** 🔴 High · **Owner Focus:** Open (orchestrator-claimed)
+**Stream:** I (Modular Architecture) · **Priority:**  High · **Owner Focus:** Open (orchestrator-claimed)
 **Estimated Time:** 60 min · **Feeds:** Phase-2 architecture spec — depends on Track 25 dashboard decision
 
 ## Instructions

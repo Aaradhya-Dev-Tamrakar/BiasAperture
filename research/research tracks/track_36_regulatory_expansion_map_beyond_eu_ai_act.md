@@ -1,5 +1,5 @@
 # Track 36 — Regulatory Expansion Map Beyond EU AI Act
-**Stream:** K (Business/Regulatory) · **Priority:** 🔴 High · **Owner Focus:** Open (orchestrator-claimed)
+**Stream:** K (Business/Regulatory) · **Priority:**  High · **Owner Focus:** Open (orchestrator-claimed)
 **Estimated Time:** 45 min · **Feeds:** Report regulatory-mapping roadmap
 
 ## Instructions

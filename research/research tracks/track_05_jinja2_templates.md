@@ -1,5 +1,5 @@
 # Track 05 — Jinja2 HTML Report Template Patterns
-**Stream:** B (Report Generation) · **Priority:** 🔴 Critical · **Owner Focus:** Aaradhya (WP3)
+**Stream:** B (Report Generation) · **Priority:**  Critical · **Owner Focus:** Aaradhya (WP3)
 **Estimated Time:** 45 min · **Feeds:** `report/` package
 
 ## Instructions

@@ -1,5 +1,5 @@
 # Track 14 — Equalized Odds & Equal Opportunity — Theory to Code
-**Stream:** C (Fairness Engine) · **Priority:** 🟡 Medium · **Owner Focus:** Tisha (WP4)
+**Stream:** C (Fairness Engine) · **Priority:**  Medium · **Owner Focus:** Tisha (WP4)
 **Estimated Time:** 30 min · **Feeds:** Metric implementation, cross-validation
 
 ## Instructions

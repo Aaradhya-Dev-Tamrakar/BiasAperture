@@ -1,5 +1,5 @@
 # Track 27 — Executive / Compliance-Officer Summary Mode
-**Stream:** H (UI/UX) · **Priority:** 🟡 Medium · **Owner Focus:** Open (orchestrator-claimed)
+**Stream:** H (UI/UX) · **Priority:**  Medium · **Owner Focus:** Open (orchestrator-claimed)
 **Estimated Time:** 30 min · **Feeds:** Phase-2 report UX spec
 
 ## Instructions

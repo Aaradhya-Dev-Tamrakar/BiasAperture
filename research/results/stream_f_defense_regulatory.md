@@ -17,14 +17,14 @@
 
 | Tool | Face/7-race ingestion | Computes Core Four | Bootstrap CI + χ² | Regulatory mapping | Compliance report | SHAP | 2026 status |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|---|
-| Aequitas | ✗ | ✗ (own rate/ratio family) | ✗ | ✗ | ✗ plots only | ✗ | Active |
-| FairTest | ✗ | ✗ (own metric family) | Partial | ✗ | ✗ bug report | ✗ | Dead (Py2, ~2017) |
-| Google What-If Tool | ✗ | ✗ interactive only | ✗ | ✗ | ✗ dashboard only | ✗ | Stagnant (sibling active) |
-| FairSight | ✗ | ✗ ranking metrics | ✗ | ✗ | ✗ | ✗ | Unmaintained research prototype |
-| FAT Forensics | ✗ | ✗ own implementations | ✗ | ✗ | ✗ library only | ✗ (own module) | Active, low-velocity |
-| Themis-ML | ✗ | ✗ own metrics | Partial | ✗ | ✗ | ✗ | Effectively unmaintained |
-| JFAM (Algorithm Audit) | ✗ | ✗ *different paradigm by design* | Partial | ✗ | Partial | ✗ | **Active, real-world deployed** (Dutch govt audit, 250k+ students) |
-| **BiasAperture (M1 lock)** | ✓ | ✓ dual-backend cross-validated | ✓ | ✓ | ✓ | ✓ | In development |
+| Aequitas |  |  (own rate/ratio family) |  |  |  plots only |  | Active |
+| FairTest |  |  (own metric family) | Partial |  |  bug report |  | Dead (Py2, ~2017) |
+| Google What-If Tool |  |  interactive only |  |  |  dashboard only |  | Stagnant (sibling active) |
+| FairSight |  |  ranking metrics |  |  |  |  | Unmaintained research prototype |
+| FAT Forensics |  |  own implementations |  |  |  library only |  (own module) | Active, low-velocity |
+| Themis-ML |  |  own metrics | Partial |  |  |  | Effectively unmaintained |
+| JFAM (Algorithm Audit) |  |  *different paradigm by design* | Partial |  | Partial |  | **Active, real-world deployed** (Dutch govt audit, 250k+ students) |
+| **BiasAperture (M1 lock)** |  |  dual-backend cross-validated |  |  |  |  | In development |
 
 - **No competitor combines more than one or two of the five differentiators** — face-native ingestion at this exact granularity, named cross-validated Core Four, statistical rigor as a hard guard, regulatory-mapped output, SHAP wired via a Strategy pattern to flagged disparities specifically. The claimed contribution is the **combination**, not inventing any single piece.
 - **Honest, non-dismissive framing recommended**: several surveyed tools are more mature or more real-world-deployed than a capstone project will be — JFAM in particular is already in production for a government audit; BiasAperture is not. The defensible claim stays narrow: *no existing tool bridges FairFace-scale face-classifier output to a regulatory-mapped, dual-backend, statistically-guarded compliance report in one pipeline.*

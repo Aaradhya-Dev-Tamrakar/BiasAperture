@@ -1,5 +1,5 @@
 # Track 02 — UTKFace Comparison & Risk Assessment
-**Stream:** A (Data Pipeline) · **Priority:** 🟡 Medium · **Owner Focus:** Aaradhya (WP2)
+**Stream:** A (Data Pipeline) · **Priority:**  Medium · **Owner Focus:** Aaradhya (WP2)
 **Estimated Time:** 30 min · **Feeds:** UTKFace cut decision
 
 ## Instructions

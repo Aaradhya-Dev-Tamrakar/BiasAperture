@@ -1,5 +1,5 @@
 # Track 20 — Competitor Deep Analysis
-**Stream:** F (Defense) · **Priority:** 🟡 Medium · **Owner Focus:** Both
+**Stream:** F (Defense) · **Priority:**  Medium · **Owner Focus:** Both
 **Estimated Time:** 45 min · **Feeds:** Novelty defense, literature review
 
 ## Instructions

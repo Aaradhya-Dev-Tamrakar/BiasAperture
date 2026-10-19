@@ -1,5 +1,5 @@
 # Track 15 — SHAP for Image Classifiers
-**Stream:** D (Explainability) · **Priority:** 🟡 Medium · **Owner Focus:** Tisha (WP4)
+**Stream:** D (Explainability) · **Priority:**  Medium · **Owner Focus:** Tisha (WP4)
 **Estimated Time:** 45 min · **Feeds:** `explainability.py`
 
 ## Instructions

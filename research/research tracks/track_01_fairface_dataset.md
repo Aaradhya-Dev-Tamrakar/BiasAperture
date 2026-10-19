@@ -1,5 +1,5 @@
 # Track 01 — FairFace Dataset Deep-Dive
-**Stream:** A (Data Pipeline) · **Priority:** 🔴 Critical · **Owner Focus:** Aaradhya (WP2)
+**Stream:** A (Data Pipeline) · **Priority:**  Critical · **Owner Focus:** Aaradhya (WP2)
 **Estimated Time:** 30–45 min · **Feeds:** `data_ingestion.py`
 
 ## Instructions

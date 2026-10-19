@@ -1,5 +1,5 @@
 # Track 18 — Pytest Testing Patterns for Fairness Metrics
-**Stream:** E (Testing) · **Priority:** 🟡 Medium · **Owner Focus:** Both
+**Stream:** E (Testing) · **Priority:**  Medium · **Owner Focus:** Both
 **Estimated Time:** 30 min · **Feeds:** `src/tests/` test suite
 
 ## Instructions

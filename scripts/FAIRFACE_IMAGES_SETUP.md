@@ -1,15 +1,15 @@
 # FairFace Validation Images Setup Guide
 
-## Status: ✅ INFERENCE COMPLETE
+## Status:  INFERENCE COMPLETE
 
 The validation inference was executed successfully and produced the verified predictions file at `data/processed/fairface_predictions_val.csv`. No additional image download or inference setup is required for the current repository state.
 
 **Verified evidence**:
 
 - `10954/10954 images processed`
-- `✓ CSV written: .../fairface_predictions_val.csv`
-- `✓ SCHEMA VALID`
-- `✓ INFERENCE COMPLETE`
+- ` CSV written: .../fairface_predictions_val.csv`
+- ` SCHEMA VALID`
+- ` INFERENCE COMPLETE`
 
 ## Option 1: Manual Download (Recommended - Simplest)
 
@@ -71,15 +71,15 @@ If padding=0.25 is unavailable, you can use the alternative with more margin:
 ```
 FairFace/
 ├── data/
-│   ├── fairface_label_val.csv       ✅ Downloaded
-│   ├── fairface_label_train.csv     ✅ Downloaded
+│   ├── fairface_label_val.csv        Downloaded
+│   ├── fairface_label_train.csv      Downloaded
 │   └── test_*.csv (test samples)
 ├── faces/                           (or face_images/)
 │   └── val/                         ⏳ TO BE DOWNLOADED
 │       ├── 0001.jpg
 │       ├── 0002.jpg
 │       └── ... (10,954 total)
-├── predict.py                       ✅ Present
+├── predict.py                        Present
 ├── predict_bbox.py
 ├── README.md
 └── ...other files...
@@ -156,11 +156,11 @@ If it's the second, update the inference script path accordingly.
 
 | Step | Status | File/Output |
 |------|--------|------------|
-| 1. Download label CSV | ✅ Done | `FairFace/data/fairface_label_val.csv` (10,954 records) |
-| 2. Prepare local FairFace data | ✅ Done | local validation split available in `data/fairface-img-margin025-trainval` |
-| 3. Run inference | ✅ Done | `data/processed/fairface_predictions_val.csv` (10,954 rows) |
-| 4. Validate schema | ✅ Done | `✓ SCHEMA VALID` |
-| 5. Generate audit/report | ✅ Done | `report/audit_report_val_gender.html` (12 metric rows) |
+| 1. Download label CSV |  Done | `FairFace/data/fairface_label_val.csv` (10,954 records) |
+| 2. Prepare local FairFace data |  Done | local validation split available in `data/fairface-img-margin025-trainval` |
+| 3. Run inference |  Done | `data/processed/fairface_predictions_val.csv` (10,954 rows) |
+| 4. Validate schema |  Done | ` SCHEMA VALID` |
+| 5. Generate audit/report |  Done | `report/audit_report_val_gender.html` (12 metric rows) |
 
 ---
 

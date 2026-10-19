@@ -1,5 +1,5 @@
 # Track 10 — AIF360 API — BinaryLabelDataset & Cross-Validation
-**Stream:** C (Fairness Engine) · **Priority:** 🔴 Critical · **Owner Focus:** Tisha (WP4)
+**Stream:** C (Fairness Engine) · **Priority:**  Critical · **Owner Focus:** Tisha (WP4)
 **Estimated Time:** 45 min · **Feeds:** `fairness/aif360_backend.py`
 
 ## Instructions

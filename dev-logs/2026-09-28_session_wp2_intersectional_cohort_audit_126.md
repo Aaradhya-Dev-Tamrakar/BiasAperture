@@ -5,7 +5,7 @@
 **Track:** WP2 (Stream A: Data Ingestion & Governance) & WP3 (Reporting)  
 **Related Issue:** [Issue #25](https://github.com/fuseai-fellowship/BiasAperture-A-Diagnostic-Framework-for-Demographic-Bias-Auditing-in-Facial-Analysis-Models/issues/25)  
 **Branch:** `feat/stream-data`  
-**Status:** ✅ Implemented & Tested (Issue #25 remains Open for review)
+**Status:**  Implemented & Tested (Issue #25 remains Open for review)
 
 ---
 

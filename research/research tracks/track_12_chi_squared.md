@@ -1,5 +1,5 @@
 # Track 12 — Chi-Squared Significance Testing
-**Stream:** C (Fairness Engine) · **Priority:** 🔴 Critical · **Owner Focus:** Tisha (WP4)
+**Stream:** C (Fairness Engine) · **Priority:**  Critical · **Owner Focus:** Tisha (WP4)
 **Estimated Time:** 30 min · **Feeds:** `fairness/statistics.py`
 
 ## Instructions

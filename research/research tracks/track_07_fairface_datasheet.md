@@ -1,5 +1,5 @@
 # Track 07 — FairFace Datasheet Draft
-**Stream:** B (Report Generation) · **Priority:** 🟡 Medium · **Owner Focus:** Aaradhya (WP3)
+**Stream:** B (Report Generation) · **Priority:**  Medium · **Owner Focus:** Aaradhya (WP3)
 **Estimated Time:** 30 min · **Feeds:** Report dataset section
 
 ## Instructions

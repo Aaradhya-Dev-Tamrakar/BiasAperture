@@ -1,5 +1,5 @@
 # Track 03 — Pandas Data Validation Patterns
-**Stream:** A (Data Pipeline) · **Priority:** 🔴 Critical · **Owner Focus:** Aaradhya (WP2)
+**Stream:** A (Data Pipeline) · **Priority:**  Critical · **Owner Focus:** Aaradhya (WP2)
 **Estimated Time:** 30 min · **Feeds:** `data_ingestion.py`
 
 ## Instructions

@@ -5,7 +5,7 @@
 **Track:** WP4 (Fairness Backends & Statistical Engine)  
 **Related Issue:** [Issue #23](https://github.com/fuseai-fellowship/BiasAperture-A-Diagnostic-Framework-for-Demographic-Bias-Auditing-in-Facial-Analysis-Models/issues/23)  
 **Branch:** `feat/wp4-engine`  
-**Status:** ✅ Implemented & Tested (Issue #23 remains Open for review)
+**Status:**  Implemented & Tested (Issue #23 remains Open for review)
 
 ---
 

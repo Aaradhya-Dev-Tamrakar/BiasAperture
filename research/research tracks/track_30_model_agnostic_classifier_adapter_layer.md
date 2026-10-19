@@ -1,5 +1,5 @@
 # Track 30 — Model-Agnostic Classifier Adapter Layer
-**Stream:** I (Modular Architecture) · **Priority:** 🔴 High · **Owner Focus:** Open (orchestrator-claimed)
+**Stream:** I (Modular Architecture) · **Priority:**  High · **Owner Focus:** Open (orchestrator-claimed)
 **Estimated Time:** 45 min · **Feeds:** model_interface.py roadmap
 
 ## Instructions

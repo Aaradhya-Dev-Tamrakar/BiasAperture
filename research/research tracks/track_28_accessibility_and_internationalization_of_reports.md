@@ -1,5 +1,5 @@
 # Track 28 — Accessibility & Internationalization of Reports
-**Stream:** H (UI/UX) · **Priority:** 🟡 Medium · **Owner Focus:** Open (orchestrator-claimed)
+**Stream:** H (UI/UX) · **Priority:**  Medium · **Owner Focus:** Open (orchestrator-claimed)
 **Estimated Time:** 45 min · **Feeds:** Phase-2 report UX spec
 
 ## Instructions

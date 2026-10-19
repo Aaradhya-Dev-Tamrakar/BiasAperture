@@ -5,7 +5,7 @@
 **Track:** WP3 (Reporting Engine) & WP5 (Integration Pipeline)  
 **Related Issue:** [Issue #24](https://github.com/fuseai-fellowship/BiasAperture-A-Diagnostic-Framework-for-Demographic-Bias-Auditing-in-Facial-Analysis-Models/issues/24)  
 **Branch:** `feat/wp4-engine`  
-**Status:** ✅ Implemented & Tested (Issue #24 remains Open for review)
+**Status:**  Implemented & Tested (Issue #24 remains Open for review)
 
 ---
 

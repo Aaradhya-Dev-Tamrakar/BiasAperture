@@ -118,14 +118,14 @@ The novelty of BiasAperture lies not in reinventing individual mathematical equa
 │ Tool / Framework  │ CV & 7-Race  │ Dual-Backend │ Stat Guards  │ Regulatory   │ Targeted Local SHAP   │
 │                   │ Ingestion    │ Cross-Check  │ (n≥30 + CI)  │ Mapping      │ on Flagged Disparity  │
 ├───────────────────┼──────────────┼──────────────┼──────────────┼──────────────┼───────────────────────┤
-│ Aequitas          │ ✗            │ ✗            │ ✗            │ ✗            │ ✗ (Global plots only) │
-│ Fairlearn         │ ✗ (Tabular)  │ ✗            │ ✗            │ ✗            │ ✗                     │
-│ AIF360            │ ✗ (Tabular)  │ ✗            │ ✗            │ ✗            │ ✗                     │
-│ Google What-If    │ ✗ (Interactive) ✗           │ ✗            │ ✗            │ ✗                     │
-│ JFAM (Alg. Audit) │ ✗ (Unlabeled)│ ✗            │ Partial      │ ✗            │ ✗                     │
-│ FAT Forensics     │ ✗            │ ✗            │ ✗            │ ✗            │ Partial (Own module)  │
+│ Aequitas          │             │             │             │             │  (Global plots only) │
+│ Fairlearn         │  (Tabular)  │             │             │             │                      │
+│ AIF360            │  (Tabular)  │             │             │             │                      │
+│ Google What-If    │  (Interactive)            │             │             │                      │
+│ JFAM (Alg. Audit) │  (Unlabeled)│             │ Partial      │             │                      │
+│ FAT Forensics     │             │             │             │             │ Partial (Own module)  │
 ├───────────────────┼──────────────┼──────────────┼──────────────┼──────────────┼───────────────────────┤
-│ **BiasAperture**  │ **✓ (Native)**│ **✓ (Locked)**│ **✓ (Hard)** │ **✓ (EU/NIST)**│ **✓ (Targeted Post)** │
+│ **BiasAperture**  │ ** (Native)**│ ** (Locked)**│ ** (Hard)** │ ** (EU/NIST)**│ ** (Targeted Post)** │
 └───────────────────┴──────────────┴──────────────┴──────────────┴──────────────┴───────────────────────┘
 ```
 
@@ -210,9 +210,9 @@ Overall Progress: [██████████████████░░]
 
 With the core diagnostic pipeline implemented and tested across 56 unit and integration tests, final work focuses on:
 
-1. ✅ `bias_aperture/data_ingestion.py` complete with validation modes & OvR transformer (Stream A complete).
-2. ✅ `bias_aperture/report/generator.py` and Jinja2 HTML templates complete with zero-network offline guarantee (Stream B complete).
-3. ✅ `bias_aperture/fairness/` backends, statistical engines (BCa bootstrap, χ² FWER), and explainability module complete (WP4 complete).
-4. ✅ `bias_aperture/cli.py` entrypoint wired and tested (WP5).
-5. ✅ Generate the first gender audit report from `data/processed/fairface_predictions_val.csv` (`report/audit_report_val_gender.html`).
+1.  `bias_aperture/data_ingestion.py` complete with validation modes & OvR transformer (Stream A complete).
+2.  `bias_aperture/report/generator.py` and Jinja2 HTML templates complete with zero-network offline guarantee (Stream B complete).
+3.  `bias_aperture/fairness/` backends, statistical engines (BCa bootstrap, χ² FWER), and explainability module complete (WP4 complete).
+4.  `bias_aperture/cli.py` entrypoint wired and tested (WP5).
+5.  Generate the first gender audit report from `data/processed/fairface_predictions_val.csv` (`report/audit_report_val_gender.html`).
 6. Review the audit report and finalize the empirical tables in `report/main.pdf`.

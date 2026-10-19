@@ -1,5 +1,5 @@
 # Track 26 — Interactive Drill-Down Report UX
-**Stream:** H (UI/UX) · **Priority:** 🔴 High · **Owner Focus:** Open (orchestrator-claimed)
+**Stream:** H (UI/UX) · **Priority:**  High · **Owner Focus:** Open (orchestrator-claimed)
 **Estimated Time:** 45 min · **Feeds:** Resolves open coordination flag — pass/fail dashboard semantics (needs Aaradhya/Tisha sign-off)
 
 ## Instructions

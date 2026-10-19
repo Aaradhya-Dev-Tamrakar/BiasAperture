@@ -1,5 +1,5 @@
 # Track 31 — Config-Driven "Audit-as-Code" Profiles
-**Stream:** I (Modular Architecture) · **Priority:** 🟡 Medium · **Owner Focus:** Open (orchestrator-claimed)
+**Stream:** I (Modular Architecture) · **Priority:**  Medium · **Owner Focus:** Open (orchestrator-claimed)
 **Estimated Time:** 30 min · **Feeds:** cli.py roadmap
 
 ## Instructions
