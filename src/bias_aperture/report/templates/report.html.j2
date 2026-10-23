@@ -502,6 +502,14 @@
                     <span class="meta-label">Audit Date</span>
                     <strong>{{ context.timestamp }}</strong>
                 </div>
+                <div class="meta-item">
+                    <span class="meta-label">What is being predicted</span>
+                    <strong>Binary Classification (Positive Outcome)</strong>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Baseline comparison</span>
+                    <strong>Group vs Global Mean (T2) / Pairwise Extremes (T1)</strong>
+                </div>
             </div>
         </header>
 
@@ -513,9 +521,9 @@
 
         <!-- 0. Executive Summary Strip -->
         <div class="exec-summary">
-            <div class="exec-stat{% if exec_summary.flagged_significant_count > 0 %} exec-stat-alert{% endif %}">
-                <span class="exec-stat-value">{{ exec_summary.flagged_significant_count }} / {{ exec_summary.valid_subgroups }}</span>
-                <span class="exec-stat-label">Subgroups with significant disparity (p &lt; 0.05)</span>
+            <div class="exec-stat{% if exec_summary.flagged_breach_count > 0 %} exec-stat-alert{% elif exec_summary.flagged_significant_count > 0 %} exec-stat-alert{% endif %}">
+                <span class="exec-stat-value">{{ exec_summary.flagged_breach_count }} / {{ exec_summary.valid_subgroups }}</span>
+                <span class="exec-stat-label">Subgroups breaching tolerance (p &lt; 0.05)</span>
             </div>
             <div class="exec-stat">
                 <span class="exec-stat-value">
@@ -526,10 +534,10 @@
                     {% endif %}
                 </span>
                 <span class="exec-stat-label">
-                    {% if exec_summary.worst_is_overall %}
-                        Worst disparity cohort ({{ exec_summary.flagged_metric_instances_count }} metric failures)
+                    {% if exec_summary.flagged_metric_breach_count > 0 %}
+                        Worst disparity cohort ({{ exec_summary.flagged_metric_breach_count }} metric breaches)
                     {% else %}
-                        Largest deviation subgroup
+                        Worst disparity cohort (All within tolerance)
                     {% endif %}
                 </span>
             </div>
@@ -616,11 +624,11 @@
 
         <!-- 1. Executive Summary & Core Four Headline Metrics -->
         <div class="section-card section-headline">
-            <h2>1. Headline Fairness Metrics (Core Four — Cross-Group Overview)</h2>
+            <h2>1. Headline Fairness Metrics (Core Four — Max Gap Across Any Two Groups)</h2>
             <p style="font-size: 0.9rem; color: var(--text-muted);">
-                Summary metrics evaluated across all eligible demographic strata (n ≥ 30 per NFR-003). Accompanied by 95% stratified BCa bootstrap confidence intervals and Pearson's χ² test of independence. Plotted on a calibrated [0.0, 1.0] domain with null-point reference and threshold lines.
+                Summary metrics evaluating the overall demographic spread across all eligible cohorts (n ≥ 30 per NFR-003). For difference metrics, this measures the maximum pairwise difference between the highest- and lowest-performing groups. Accompanied by 95% stratified BCa bootstrap confidence intervals and Pearson's χ² test of independence. Plotted on a calibrated [0.0, 1.0] domain with null-point reference and threshold lines.
             </p>
-            {% macro ci_whisker_svg(value, ci_lower, ci_upper, null_point=0.0) %}
+            {% macro ci_whisker_svg(value, ci_lower, ci_upper, null_point=0.0, p_val=none) %}
                 {# Fixed truthful [0.0, 1.0] domain with explicit scale ticks and threshold markers.
                    w = 220, h = 38. x0 = 10, pw = 200. #}
                 {% set x0 = 10 %}
@@ -664,11 +672,17 @@
                     <line x1="{{ x_lower }}" y1="{{ y_whisker - 4 }}" x2="{{ x_lower }}" y2="{{ y_whisker + 4 }}" stroke="#64748b" stroke-width="2" />
                     <line x1="{{ x_upper }}" y1="{{ y_whisker - 4 }}" x2="{{ x_upper }}" y2="{{ y_whisker + 4 }}" stroke="#64748b" stroke-width="2" />
 
-                    <!-- Point Estimate: Double encoded (Diamond for breach, circle for in-tolerance) -->
-                    {% set is_breach = (ci_lower > null_point or ci_upper < null_point or (null_point == 1.0 and ci_upper < 0.80)) %}
-                    {% if is_breach %}
+                    <!-- Point Estimate: Calibrated 3-state encoding -->
+                    {% set is_breach = (null_point == 1.0 and value < 0.80) or (null_point == 0.0 and value > 0.10) %}
+                    {% set is_sig = (p_val is not none and p_val < 0.05) %}
+                    {% if is_breach and is_sig %}
+                        <!-- Crimson Diamond for Practical Breach + Significance -->
                         <rect x="{{ x_val - 4 }}" y="{{ y_whisker - 4 }}" width="8" height="8" transform="rotate(45 {{ x_val }} {{ y_whisker }})" fill="#991b1b" stroke="#7f1d1d" stroke-width="0.75" />
+                    {% elif is_sig %}
+                        <!-- Amber Triangle for Significant but Within Tolerance -->
+                        <polygon points="{{ x_val }},{{ y_whisker - 5 }} {{ x_val - 4 }},{{ y_whisker + 3 }} {{ x_val + 4 }},{{ y_whisker + 3 }}" fill="#d97706" stroke="#b45309" stroke-width="0.5" />
                     {% else %}
+                        <!-- Navy Circle for In-Tolerance -->
                         <circle cx="{{ x_val }}" cy="{{ y_whisker }}" r="4" fill="#1b365d" stroke="#0f172a" stroke-width="0.5" />
                     {% endif %}
                 </svg>
@@ -729,7 +743,7 @@
                         </td>
                         <td class="ci-bar-cell">
                             {% if m.metric_value is not none and m.ci_lower is not none and m.ci_upper is not none %}
-                                {{ ci_whisker_svg(m.metric_value, m.ci_lower, m.ci_upper, 1.0 if m.metric_name == 'disparate_impact_ratio' else 0.0) }}
+                                {{ ci_whisker_svg(m.metric_value, m.ci_lower, m.ci_upper, 1.0 if m.metric_name == 'disparate_impact_ratio' else 0.0, m.p_value) }}
                             {% else %}
                                 —
                             {% endif %}
@@ -737,8 +751,11 @@
                         <td>
                             {% if m.p_value is not none %}
                                 p={{ "%.4f"|format(m.p_value) }}
-                                {% if m.p_value < 0.05 %}
-                                    <span class="badge badge-fail">p &lt; 0.05</span>
+                                {% set m_breach = (m.metric_name == 'disparate_impact_ratio' and m.metric_value is not none and m.metric_value < 0.80) or (m.metric_name != 'disparate_impact_ratio' and m.metric_value is not none and m.metric_value > 0.10) %}
+                                {% if m.p_value < 0.05 and m_breach %}
+                                    <span class="badge badge-fail">p &lt; 0.05 · Breach</span>
+                                {% elif m.p_value < 0.05 %}
+                                    <span class="badge badge-warn">p &lt; 0.05 · Within Tol.</span>
                                 {% else %}
                                     <span class="badge badge-pass">p ≥ 0.05</span>
                                 {% endif %}
@@ -755,15 +772,15 @@
 
         <!-- 2. Per-Subgroup Disparity Analysis -->
         <div class="section-card section-subgroups">
-            <h2>2. Per-Subgroup Disparity Matrix</h2>
+            <h2>2. Per-Subgroup Disparity Matrix (Each Group vs Average)</h2>
             <p style="font-size: 0.9rem; color: var(--text-muted);">
-                Detailed stratification across individual demographic groups, ordered by largest deviation from the null (no-disparity) point, most significant first. Subgroups below the NFR-003 sample threshold (n &lt; 30) are strictly flagged, uncomputed to prevent small-sample estimation artifacts, and summarised separately below.
+                Detailed stratification across individual demographic groups, measuring each group's drift from the overall population average. Ordered by largest deviation from the null (no-disparity) point, most significant first. Subgroups below the NFR-003 sample threshold (n &lt; 30) are strictly flagged, uncomputed to prevent small-sample estimation artifacts, and summarised separately below.
             </p>
             {% macro metric_bars_svg(bars) %}
                 {# Small-multiple bar per Core Four metric present on this
                    subgroup: bar length = deviation from null point, scaled
                    against a fixed 0.30 reference span (values beyond that
-                   clip visually to keep rows a uniform height); red = p<0.05. #}
+                   clip visually to keep rows a uniform height); crimson = FAIL (breach+sig), amber = WARN (sig within tol), navy = PASS. #}
                 {% set ref_span = 0.30 %}
                 {% set bar_h = 12 %}
                 {% set gap = 4 %}
@@ -777,9 +794,12 @@
                         {% set bar_len = frac * track_w %}
                         <text x="0" y="{{ y + bar_h - 2 }}" font-size="9" fill="#475569">{{ b.label }}</text>
                         <rect x="{{ label_w }}" y="{{ y }}" width="{{ track_w }}" height="{{ bar_h }}" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="0.5" rx="2" />
-                        {% if b.significant %}
-                            {# Breach bar: 100% solid crimson fill with distinct dark border #}
+                        {% if b.status == 'FAIL' %}
+                            {# Breach bar: solid crimson fill with distinct dark border #}
                             <rect x="{{ label_w }}" y="{{ y }}" width="{{ bar_len }}" height="{{ bar_h }}" fill="#991b1b" stroke="#7f1d1d" stroke-width="0.5" rx="2" />
+                        {% elif b.status == 'WARN' %}
+                            {# Significant but within tolerance bar: amber fill with dark amber border #}
+                            <rect x="{{ label_w }}" y="{{ y }}" width="{{ bar_len }}" height="{{ bar_h }}" fill="#d97706" stroke="#b45309" stroke-width="0.5" rx="2" />
                         {% else %}
                             {# In-tolerance bar: navy with 0.40 fill-opacity and 1px solid stroke (distinct in B&W laser print) #}
                             <rect x="{{ label_w }}" y="{{ y }}" width="{{ bar_len }}" height="{{ bar_h }}" fill="#1b365d" fill-opacity="0.40" stroke="#1b365d" stroke-width="1" rx="2" />
@@ -792,11 +812,11 @@
                     <tr>
                         <th title="Demographic subgroup analyzed (e.g. perceived race or age bracket)">Subgroup</th>
                         <th title="Sample size n for this demographic subgroup">Sample Size (n)</th>
-                        <th title="Demographic Parity Difference: Positive prediction rate gap from baseline">DPD</th>
-                        <th title="Equalized Odds Difference: Error rate divergence across false positives and false negatives">EOD (Max-Gap)</th>
-                        <th title="Equal Opportunity Difference: True positive rate gap across cohorts">EOP</th>
+                        <th title="Demographic Parity Difference: Group positive prediction rate vs population average">DPD (vs Mean)</th>
+                        <th title="Equalized Odds Difference: Error rate divergence across false positives and false negatives">EOD (vs Mean)</th>
+                        <th title="Equal Opportunity Difference: True positive rate gap vs population average">EOP (vs Mean)</th>
                         <th title="Disparate Impact Ratio: Selection rate ratio relative to benchmark group (80% legal standard)">DIR (Symmetric)</th>
-                        <th class="metric-bars-cell" title="Visual comparison of metric deviations from no-disparity point (red = statistically significant p < 0.05)">Deviation from Null (red = p &lt; 0.05)</th>
+                        <th class="metric-bars-cell" title="Visual comparison of metric deviations from no-disparity point (crimson = breach p < 0.05, amber = p < 0.05 within tol, navy = in-tol)">Deviation from Null</th>
                         <th title="Statistical integrity flag (insufficient sample guard n < 30 or valid)">Data Integrity Status</th>
                     </tr>
                 </thead>

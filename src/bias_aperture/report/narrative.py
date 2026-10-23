@@ -116,6 +116,10 @@ def synthesize_plain_language_narrative(
 ) -> PlainLanguageSummary:
     """Synthesize a deterministic plain-language narrative from audit context."""
     flagged_sig_count: int = exec_summary.get("flagged_significant_count", 0)
+    flagged_breach_count: int = exec_summary.get("flagged_breach_count", 0)
+    flagged_metric_breach_count: int = exec_summary.get(
+        "flagged_metric_breach_count", 0
+    )
     valid_subgroups: int = exec_summary.get("valid_subgroups", 0)
     insufficient_count: int = exec_summary.get("insufficient_count", 0)
     worst_group_label: str | None = exec_summary.get("worst_group_label")
@@ -123,38 +127,31 @@ def synthesize_plain_language_narrative(
     worst_metric_val: float | None = exec_summary.get("worst_metric_value")
     worst_is_overall: bool = exec_summary.get("worst_is_overall", False)
 
-    # 1. Determine Verdict Level and Badge
-    has_disparities = flagged_sig_count > 0
-    verdict_badge = "PASS"
-    verdict_badge_class = "badge-pass"
+    # 1. Determine Verdict Level and Badge (3-state calibrated gate)
+    # A failure strictly requires both practical breach AND statistical significance.
+    # Check flagged_breach_count and whether worst_metric_val breaches threshold.
+    has_practical_breach = flagged_breach_count > 0 or flagged_metric_breach_count > 0
+    if not has_practical_breach and worst_metric_val is not None:
+        if worst_metric_label == "DIR" and worst_metric_val < 0.80:
+            has_practical_breach = True
+        elif worst_metric_label in ("DPD", "EOD", "EOP") and worst_metric_val > 0.10:
+            has_practical_breach = True
 
-    if has_disparities:
-        # Check severity of the disparity breach
-        is_severe = False
-        if worst_metric_val is not None:
-            if worst_metric_label == "DIR" and worst_metric_val < 0.80:
-                is_severe = True
-            elif (
-                worst_metric_label in ("DPD", "EOD", "EOP") and worst_metric_val > 0.15
-            ):
-                is_severe = True
-
-        if is_severe or flagged_sig_count >= max(1, valid_subgroups // 2):
-            verdict_badge = "FAIL"
-            verdict_badge_class = "badge-fail"
-            verdict_title = (
-                "Demographic Disparity Flagged: Remediation & Review Required"
-            )
-        else:
-            verdict_badge = "WARN"
-            verdict_badge_class = "badge-warn"
-            verdict_title = (
-                "Marginal Disparity Observed: Supervisory Review Recommended"
-            )
+    if has_practical_breach:
+        verdict_badge = "FAIL"
+        verdict_badge_class = "badge-fail"
+        verdict_title = "Demographic Disparity Flagged: Remediation & Review Required"
+        has_disparities = True
+    elif flagged_sig_count > 0:
+        verdict_badge = "WARN"
+        verdict_badge_class = "badge-warn"
+        verdict_title = "Marginal Disparity Observed: Supervisory Review Recommended"
+        has_disparities = True
     else:
         verdict_badge = "PASS"
         verdict_badge_class = "badge-pass"
         verdict_title = "Within Defined Fairness Tolerances"
+        has_disparities = False
 
     # 2. Verdict Narrative
     total_audited = context.total_subjects
@@ -250,11 +247,19 @@ def synthesize_plain_language_narrative(
             "dataset rather than direct physical causation."
         )
     else:
-        surrogate_drivers_narrative = (
-            "Surrogate proxy attribution was not triggered because demographic "
-            "disparities remained within statistical tolerances, "
-            "or subject records were not supplied for secondary modeling."
-        )
+        if flagged_breach_count > 0 or flagged_metric_breach_count > 0:
+            surrogate_drivers_narrative = (
+                "Demographic disparities were flagged, but root-cause proxy drivers "
+                "could not be computed because auxiliary subject covariates "
+                "(such as image quality metrics or secondary demographic attributes) "
+                "were not supplied for secondary surrogate modeling."
+            )
+        else:
+            surrogate_drivers_narrative = (
+                "Surrogate proxy attribution was not triggered because demographic "
+                "disparities remained within defined statistical tolerances "
+                "(EEOC 4/5ths rule DIR ≥ 0.80, parity differences ≤ 0.10)."
+            )
 
     # 5. Sample Size Integrity Explanation (n < 30)
     if insufficient_count > 0:

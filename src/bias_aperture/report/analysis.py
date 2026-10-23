@@ -24,6 +24,25 @@ _METRIC_SHORT_LABELS: dict[str, tuple[str, str]] = {
     "disparate_impact_ratio": ("dir", "DIR"),
 }
 
+TOLERANCE_THRESHOLDS: dict[str, dict[str, Any]] = {
+    "disparate_impact_ratio": {"direction": "min", "threshold": 0.80},
+    "demographic_parity_difference": {"direction": "max", "threshold": 0.10},
+    "equalized_odds_difference": {"direction": "max", "threshold": 0.10},
+    "equal_opportunity_difference": {"direction": "max", "threshold": 0.10},
+}
+
+
+def is_threshold_breach(metric_name: str, value: float | None) -> bool:
+    """Return True if metric value breaches standard fairness tolerance."""
+    if value is None:
+        return False
+    cfg = TOLERANCE_THRESHOLDS.get(metric_name)
+    if not cfg:
+        return False
+    if cfg["direction"] == "min":
+        return value < cfg["threshold"]
+    return value > cfg["threshold"]
+
 
 def _build_subgroup_matrix(
     subgroup_metrics: Sequence[MetricResult],
@@ -61,6 +80,15 @@ def _build_subgroup_matrix(
 
             null_point = _NULL_POINT.get(m.metric_name, 0.0)
             deviation = abs(m.metric_value - null_point)
+            significant = m.p_value is not None and m.p_value < ALPHA
+            breached = is_threshold_breach(m.metric_name, m.metric_value)
+            if significant and breached:
+                status = "FAIL"
+            elif significant:
+                status = "WARN"
+            else:
+                status = "PASS"
+
             groups[g]["metric_bars"].append(
                 {
                     "label": short_label,
@@ -68,7 +96,9 @@ def _build_subgroup_matrix(
                     "null_point": null_point,
                     "deviation": deviation,
                     "p_value": m.p_value,
-                    "significant": m.p_value is not None and m.p_value < ALPHA,
+                    "significant": significant,
+                    "breached": breached,
+                    "status": status,
                 }
             )
             groups[g]["max_deviation"] = max(groups[g]["max_deviation"], deviation)
@@ -100,11 +130,22 @@ def _build_executive_summary(
         for g in valid_groups
         if g["min_p_value"] is not None and g["min_p_value"] < ALPHA
     ]
+    flagged_breach_groups = [
+        g
+        for g in valid_groups
+        if any(b.get("status") == "FAIL" for b in g.get("metric_bars", []))
+    ]
     flagged_metric_instances = sum(
         1
         for g in valid_groups
         for b in g.get("metric_bars", [])
         if b.get("significant")
+    )
+    flagged_metric_breach_count = sum(
+        1
+        for g in valid_groups
+        for b in g.get("metric_bars", [])
+        if b.get("status") == "FAIL"
     )
 
     worst_group_label: str | None = None
@@ -112,7 +153,9 @@ def _build_executive_summary(
     worst_metric_value: float | None = None
     worst_is_overall: bool = False
 
-    # Prefer cross-group headline disparity from Table 1 (subgroup == 'ALL')
+    # 1. Headline summary disparity from Table 1 (subgroup == 'ALL')
+    headline_metric_label: str | None = None
+    headline_metric_value: float | None = None
     if summary_metrics:
         valid_summary = [m for m in summary_metrics if m.metric_value is not None]
         if valid_summary:
@@ -122,17 +165,16 @@ def _build_executive_summary(
                 return abs(m.metric_value - np) if m.metric_value is not None else 0.0
 
             worst_summary_m = max(valid_summary, key=_summary_deviation)
-            worst_metric_value = worst_summary_m.metric_value
-            worst_group_label = "Overall (Table 1)"
+            headline_metric_value = worst_summary_m.metric_value
             short_info = _METRIC_SHORT_LABELS.get(worst_summary_m.metric_name)
-            worst_metric_label = (
+            headline_metric_label = (
                 short_info[1] if short_info else worst_summary_m.metric_name
             )
-            worst_is_overall = True
 
-    # Fallback to Table 2 subgroup rows if summary_metrics was absent or unpopulated
-    if worst_metric_value is None and valid_groups:
-        worst_group = valid_groups[0]
+    # 2. Dynamically resolve worst demographic cohort strictly from Table 2 subgroups
+    candidate_groups = flagged_breach_groups if flagged_breach_groups else valid_groups
+    if candidate_groups:
+        worst_group = candidate_groups[0]
         worst_group_label = worst_group["label"]
         if worst_group.get("metric_bars"):
             worst_metric_bar = max(
@@ -140,15 +182,34 @@ def _build_executive_summary(
             )
             worst_metric_label = worst_metric_bar["label"]
             worst_metric_value = worst_metric_bar["value"]
+    elif not valid_groups:
+        worst_group_label = "None (All cohorts suppressed)"
+    else:
+        worst_group_label = "None (All groups within tolerance)"
+
+    # Card 3 displays the headline disparity from Table 1 if present
+    # (worst_is_overall = True), otherwise falls back to Table 2 worst metric.
+    if headline_metric_label is not None:
+        display_metric_label = headline_metric_label
+        display_metric_value = headline_metric_value
+        worst_is_overall = True
+    else:
+        display_metric_label = worst_metric_label
+        display_metric_value = worst_metric_value
+        worst_is_overall = False
 
     return {
         "total_subgroups": len(groups),
         "valid_subgroups": len(valid_groups),
         "insufficient_count": len(insufficient_groups),
         "flagged_significant_count": len(flagged_significant),
+        "flagged_breach_count": len(flagged_breach_groups),
         "flagged_metric_instances_count": flagged_metric_instances,
+        "flagged_metric_breach_count": flagged_metric_breach_count,
         "worst_group_label": worst_group_label,
-        "worst_metric_label": worst_metric_label,
-        "worst_metric_value": worst_metric_value,
+        "worst_metric_label": display_metric_label,
+        "worst_metric_value": display_metric_value,
         "worst_is_overall": worst_is_overall,
+        "headline_metric_label": headline_metric_label,
+        "headline_metric_value": headline_metric_value,
     }
