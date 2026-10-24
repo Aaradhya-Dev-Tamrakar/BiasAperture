@@ -172,3 +172,62 @@ def test_adjust_family_pvalues_wiring() -> None:
     assert adjusted[1].adjusted_p_value == pytest.approx(0.04, abs=1e-4)
     assert adjusted[0].adjustment_method == "holm_bonferroni"
     assert adjusted[0].p_value == adjusted[0].adjusted_p_value
+
+
+def test_subgroup_bootstrap_enforces_minimum_and_forwards_requested_budget(
+    monkeypatch,
+) -> None:
+    import bias_aperture.fairness.statistics as statistics_module
+
+    y_true = np.array([1] * 50 + [0] * 50)
+    y_pred = np.array([1] * 35 + [0] * 15 + [1] * 15 + [0] * 35)
+    sensitive = np.array(["A"] * 50 + ["B"] * 50)
+    budgets: list[int] = []
+    point_estimates: list[float] = []
+
+    def fake_ci(*args, n_resamples=1000, **kwargs):
+        budgets.append(n_resamples)
+        point_estimates.append(args[3](args[0], args[1], args[2]))
+        return 0.1, 0.3
+
+    monkeypatch.setattr(statistics_module, "compute_stratified_bootstrap_ci", fake_ci)
+    compute_subgroup_bootstrap_ci(
+        y_true, y_pred, sensitive, "A", "demographic_parity_difference", 200
+    )
+    compute_subgroup_bootstrap_ci(
+        y_true, y_pred, sensitive, "A", "demographic_parity_difference", 1500
+    )
+
+    assert budgets == [1000, 1500]
+    assert point_estimates == pytest.approx([0.2, 0.2])
+
+
+def test_degenerate_bca_interval_is_unavailable_not_zero_width() -> None:
+    y_true = np.array([1] * 50 + [0] * 50)
+    y_pred = np.zeros(100, dtype=int)
+    sensitive = np.array(["A"] * 50 + ["B"] * 50)
+
+    ci = compute_subgroup_bootstrap_ci(
+        y_true, y_pred, sensitive, "A", "demographic_parity_difference"
+    )
+
+    assert ci == (None, None)
+
+
+def test_chi_square_failure_is_unavailable_not_non_significant(monkeypatch) -> None:
+    import bias_aperture.fairness.statistics as statistics_module
+
+    def fail(*args, **kwargs):
+        raise RuntimeError("forced test failure")
+
+    monkeypatch.setattr(statistics_module.stats, "chi2_contingency", fail)
+    monkeypatch.setattr(statistics_module.stats, "fisher_exact", fail)
+    statistic, p_value, dof = compute_contingency_chi2(
+        np.array([1, 0, 1, 0]),
+        np.array([1, 0, 0, 1]),
+        np.array(["A", "A", "B", "B"]),
+    )
+
+    assert statistic is None
+    assert p_value is None
+    assert dof == 1

@@ -216,6 +216,7 @@ def _build_subgroup_rows(
     group_rates: dict[str, dict[str, float | None]],
     eligibility: dict[str, EligibilityReport],
     total_n: int,
+    n_bootstrap_resamples: int = 1000,
 ) -> list[MetricResult]:
     """Build per-subgroup MetricResult rows for all Core Four metrics.
 
@@ -250,7 +251,12 @@ def _build_subgroup_rows(
             "demographic_parity_difference", y_true, y_pred, rest_sensitive
         )
         grp_dpd_ci = compute_subgroup_bootstrap_ci(
-            y_true, y_pred, sensitive, g, "demographic_parity_difference"
+            y_true,
+            y_pred,
+            sensitive,
+            g,
+            "demographic_parity_difference",
+            n_resamples=n_bootstrap_resamples,
         )
         results.append(
             MetricResult(
@@ -277,7 +283,12 @@ def _build_subgroup_rows(
                 "equal_opportunity_difference", y_true, y_pred, rest_sensitive
             )
             grp_eop_ci = compute_subgroup_bootstrap_ci(
-                y_true, y_pred, sensitive, g, "equal_opportunity_difference"
+                y_true,
+                y_pred,
+                sensitive,
+                g,
+                "equal_opportunity_difference",
+                n_resamples=n_bootstrap_resamples,
             )
             results.append(
                 MetricResult(
@@ -310,7 +321,12 @@ def _build_subgroup_rows(
                 "equalized_odds_difference", y_true, y_pred, rest_sensitive
             )
             grp_eod_ci = compute_subgroup_bootstrap_ci(
-                y_true, y_pred, sensitive, g, "equalized_odds_difference"
+                y_true,
+                y_pred,
+                sensitive,
+                g,
+                "equalized_odds_difference",
+                n_resamples=n_bootstrap_resamples,
             )
             results.append(
                 MetricResult(
@@ -340,7 +356,12 @@ def _build_subgroup_rows(
             "disparate_impact_ratio", y_true, y_pred, rest_sensitive
         )
         grp_dir_ci = compute_subgroup_bootstrap_ci(
-            y_true, y_pred, sensitive, g, "disparate_impact_ratio"
+            y_true,
+            y_pred,
+            sensitive,
+            g,
+            "disparate_impact_ratio",
+            n_resamples=n_bootstrap_resamples,
         )
         results.append(
             MetricResult(
@@ -445,7 +466,13 @@ def _build_core_metric_results(
     # ── Per-Subgroup Rows ──────────────────────────────────────────
     results.extend(
         _build_subgroup_rows(
-            y_true, y_pred, sensitive, group_rates, eligibility, total_n
+            y_true,
+            y_pred,
+            sensitive,
+            group_rates,
+            eligibility,
+            total_n,
+            n_bootstrap_resamples=n_bootstrap_resamples,
         )
     )
 

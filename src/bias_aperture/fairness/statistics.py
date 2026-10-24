@@ -38,8 +38,8 @@ class StatTestResult:
     """Outcome of a metric-specific statistical significance test."""
 
     test_name: str
-    statistic: float
-    raw_p: float
+    statistic: float | None
+    raw_p: float | None
     dof: int
     hypothesis_family: str
 
@@ -51,7 +51,7 @@ def compute_contingency_chi2(
     y_true: np.ndarray,
     y_pred: np.ndarray,
     sensitive: np.ndarray,
-) -> tuple[float, float, int]:
+) -> tuple[float | None, float | None, int]:
     """Compute Pearson's chi-squared test of independence across demographic groups.
 
     Constructs a 2 x K contingency table of positive/negative predictions across
@@ -76,7 +76,7 @@ def compute_contingency_chi2(
 
     groups = np.unique(sensitive)
     if len(groups) < 2:
-        return 0.0, 1.0, 0
+        return None, None, 0
 
     table = []
     for g in groups:
@@ -88,23 +88,23 @@ def compute_contingency_chi2(
 
     table_arr = np.array(table).T  # Shape: (2, K)
 
-    # If 2x2 and any expected count < 5, fallback to Fisher's exact
-    if table_arr.shape == (2, 2):
-        row_sums = table_arr.sum(axis=1)
-        col_sums = table_arr.sum(axis=0)
-        total = table_arr.sum()
-        if total > 0:
-            expected = np.outer(row_sums, col_sums) / total
-            if (expected < 5).any():
-                res = stats.fisher_exact(table_arr)
-                return float(res.statistic), float(res.pvalue), 1
-
     try:
+        # If 2x2 and any expected count < 5, fallback to Fisher's exact
+        if table_arr.shape == (2, 2):
+            row_sums = table_arr.sum(axis=1)
+            col_sums = table_arr.sum(axis=0)
+            total = table_arr.sum()
+            if total > 0:
+                expected = np.outer(row_sums, col_sums) / total
+                if (expected < 5).any():
+                    res = stats.fisher_exact(table_arr)
+                    return float(res.statistic), float(res.pvalue), 1
+
         chi2, p_val, dof, _ = stats.chi2_contingency(table_arr)
         return float(chi2), float(p_val), int(dof)
     except Exception as exc:
-        logger.warning("chi2_contingency failed (%s); returning p=1.0", exc)
-        return 0.0, 1.0, len(groups) - 1
+        logger.warning("Contingency test failed (%s); test result unavailable", exc)
+        return None, None, len(groups) - 1
 
 
 def holm_bonferroni_correction(
@@ -186,8 +186,8 @@ def compute_metric_specific_test(
         if pos_mask.sum() == 0 or len(np.unique(sensitive[pos_mask])) < 2:
             return StatTestResult(
                 test_name="equal_opportunity_tpr_chi2",
-                statistic=0.0,
-                raw_p=1.0,
+                statistic=None,
+                raw_p=None,
                 dof=0,
                 hypothesis_family="conditional_odds",
             )
@@ -206,20 +206,24 @@ def compute_metric_specific_test(
         pos_mask = y_true == 1
         neg_mask = y_true == 0
 
-        p_tpr, stat_tpr, dof_tpr = 1.0, 0.0, 0
+        p_tpr, stat_tpr, dof_tpr = None, None, 0
         if pos_mask.sum() > 0 and len(np.unique(sensitive[pos_mask])) >= 2:
             stat_tpr, p_tpr, dof_tpr = compute_contingency_chi2(
                 y_true[pos_mask], y_pred[pos_mask], sensitive[pos_mask]
             )
 
-        p_fpr, stat_fpr, dof_fpr = 1.0, 0.0, 0
+        p_fpr, stat_fpr, dof_fpr = None, None, 0
         if neg_mask.sum() > 0 and len(np.unique(sensitive[neg_mask])) >= 2:
             stat_fpr, p_fpr, dof_fpr = compute_contingency_chi2(
                 y_true[neg_mask], y_pred[neg_mask], sensitive[neg_mask]
             )
 
-        joint_p = float(min(1.0, 2.0 * min(p_tpr, p_fpr)))
-        joint_stat = float(max(stat_tpr, stat_fpr))
+        if p_tpr is None or p_fpr is None:
+            joint_p = None
+            joint_stat = None
+        else:
+            joint_p = float(min(1.0, 2.0 * min(p_tpr, p_fpr)))
+            joint_stat = float(max(stat_tpr, stat_fpr))
         joint_dof = int(max(dof_tpr, dof_fpr))
 
         return StatTestResult(
@@ -306,7 +310,7 @@ def compute_stratified_bootstrap_ci(
     n_resamples: int = MIN_BOOTSTRAP_RESAMPLES,
     alpha: float = ALPHA,
     seed: int | None = 42,
-) -> tuple[float, float]:
+) -> tuple[float | None, float | None]:
     """Compute 95% stratified BCa bootstrap confidence interval (R-009).
 
     Resampling is strictly conducted *within* each observed sensitive stratum
@@ -345,7 +349,7 @@ def compute_stratified_bootstrap_ci(
     n = len(sensitive)
 
     if n == 0:
-        return 0.0, 1.0
+        return None, None
 
     # Point estimate on full sample
     theta_hat = float(metric_fn(y_true, y_pred, sensitive))
@@ -378,28 +382,20 @@ def compute_stratified_bootstrap_ci(
             continue
 
     if valid_count < int(0.9 * n_resamples):
-        # Degenerate sampling support: fallback to empirical percentiles
-        # if sufficient, else point estimate
-        if valid_count >= 20:
-            low = float(np.percentile(boot_thetas[:valid_count], 100 * (alpha / 2)))
-            high = float(
-                np.percentile(boot_thetas[:valid_count], 100 * (1 - alpha / 2))
-            )
-            return float(np.clip(low, 0.0, 1.0)), float(np.clip(high, 0.0, 1.0))
-        return float(np.clip(theta_hat, 0.0, 1.0)), float(np.clip(theta_hat, 0.0, 1.0))
+        logger.warning(
+            "Only %d of %d bootstrap replicates were valid; interval unavailable",
+            valid_count,
+            n_resamples,
+        )
+        return None, None
 
     valid_thetas = boot_thetas[:valid_count]
-
-    # Percentile fallback helper
-    def percentile_ci() -> tuple[float, float]:
-        low = float(np.percentile(valid_thetas, 100 * (alpha / 2)))
-        high = float(np.percentile(valid_thetas, 100 * (1 - alpha / 2)))
-        return float(np.clip(low, 0.0, 1.0)), float(np.clip(high, 0.0, 1.0))
 
     # 1. Bias correction z0
     prop_less = np.mean(valid_thetas < theta_hat)
     if prop_less <= 0.0 or prop_less >= 1.0:
-        return percentile_ci()
+        logger.warning("BCa bias correction is degenerate; interval unavailable")
+        return None, None
 
     z0 = stats.norm.ppf(prop_less)
 
@@ -439,7 +435,8 @@ def compute_stratified_bootstrap_ci(
             a = num / denom if denom != 0 else 0.0
 
         if abs(a) > 0.5 or np.isnan(a):
-            return percentile_ci()
+            logger.warning("BCa acceleration is degenerate; interval unavailable")
+            return None, None
 
         # 3. BCa percentiles
         z_alpha = stats.norm.ppf(alpha / 2)
@@ -449,24 +446,30 @@ def compute_stratified_bootstrap_ci(
         denom2 = 1 - a * (z0 + z_1_alpha)
 
         if denom1 == 0 or denom2 == 0:
-            return percentile_ci()
+            logger.warning("BCa adjustment denominator is zero; interval unavailable")
+            return None, None
 
         a1 = stats.norm.cdf(z0 + (z0 + z_alpha) / denom1)
         a2 = stats.norm.cdf(z0 + (z0 + z_1_alpha) / denom2)
 
         if not (0.0 < a1 < 1.0 and 0.0 < a2 < 1.0):
-            return percentile_ci()
+            logger.warning("BCa adjusted quantiles are invalid; interval unavailable")
+            return None, None
 
         ci_low = float(np.percentile(valid_thetas, 100 * a1))
         ci_high = float(np.percentile(valid_thetas, 100 * a2))
 
+        if not np.isfinite(ci_low) or not np.isfinite(ci_high) or ci_low > ci_high:
+            logger.warning("BCa bounds are invalid; interval unavailable")
+            return None, None
+
         return float(np.clip(ci_low, 0.0, 1.0)), float(np.clip(ci_high, 0.0, 1.0))
     except Exception as exc:
         logger.warning(
-            "BCa jackknife acceleration failed (%s); falling back to percentile CI",
+            "BCa jackknife acceleration failed (%s); interval unavailable",
             exc,
         )
-        return percentile_ci()
+        return None, None
 
 
 def _evaluate_subgroup_metric(
@@ -529,15 +532,17 @@ def compute_subgroup_bootstrap_ci(
     sensitive: np.ndarray,
     subgroup: str,
     metric_name: str,
-    n_resamples: int = 200,
+    n_resamples: int = MIN_BOOTSTRAP_RESAMPLES,
     alpha: float = ALPHA,
     seed: int | None = 42,
 ) -> tuple[float | None, float | None]:
-    """Compute empirical percentile bootstrap confidence interval for a subgroup metric.
+    """Compute a stratified BCa interval for a subgroup-versus-overall metric.
 
     Resamples with replacement stratified by protected group, evaluating disparity
     between the target subgroup and the overall population on each resample.
-    Returns (None, None) if sample size or validity criteria are not met.
+    The interval uses the same subgroup-versus-overall estimand as the point
+    estimate. Returns (None, None) when sample-size, BCa, or validity criteria
+    are not met; it never substitutes a point-width interval.
     """
     y_true = np.asarray(y_true, dtype=int)
     y_pred = np.asarray(y_pred, dtype=int)
@@ -549,42 +554,28 @@ def compute_subgroup_bootstrap_ci(
 
     if (sensitive == subgroup).sum() < MIN_SUBGROUP_SAMPLE_SIZE:
         return None, None
-
-    point_est = _evaluate_subgroup_metric(
-        metric_name, y_true, y_pred, sensitive, subgroup
-    )
-    if point_est is None:
+    if (
+        _evaluate_subgroup_metric(metric_name, y_true, y_pred, sensitive, subgroup)
+        is None
+    ):
         return None, None
 
-    rng = np.random.default_rng(seed)
-    group_indices = {g: np.where(sensitive == g)[0] for g in groups}
-
-    boot_thetas = np.empty(n_resamples, dtype=float)
-    valid_count = 0
-
-    for _b in range(n_resamples):
-        resampled_idx_list = []
-        for _g, idx in group_indices.items():
-            if len(idx) > 0:
-                sampled = rng.choice(idx, size=len(idx), replace=True)
-                resampled_idx_list.append(sampled)
-        boot_idx = np.concatenate(resampled_idx_list)
-
-        val = _evaluate_subgroup_metric(
-            metric_name,
-            y_true[boot_idx],
-            y_pred[boot_idx],
-            sensitive[boot_idx],
-            subgroup,
+    def subgroup_metric(
+        sample_true: np.ndarray, sample_pred: np.ndarray, sample_sensitive: np.ndarray
+    ) -> float:
+        value = _evaluate_subgroup_metric(
+            metric_name, sample_true, sample_pred, sample_sensitive, subgroup
         )
-        if val is not None and not np.isnan(val) and not np.isinf(val):
-            boot_thetas[valid_count] = val
-            valid_count += 1
+        if value is None:
+            raise ValueError("subgroup metric lacks conditional support")
+        return value
 
-    if valid_count < 20:
-        return float(np.clip(point_est, 0.0, 1.0)), float(np.clip(point_est, 0.0, 1.0))
-
-    valid = boot_thetas[:valid_count]
-    low = float(np.percentile(valid, 100 * (alpha / 2)))
-    high = float(np.percentile(valid, 100 * (1 - alpha / 2)))
-    return float(np.clip(low, 0.0, 1.0)), float(np.clip(high, 0.0, 1.0))
+    return compute_stratified_bootstrap_ci(
+        y_true,
+        y_pred,
+        sensitive,
+        subgroup_metric,
+        n_resamples=max(n_resamples, MIN_BOOTSTRAP_RESAMPLES),
+        alpha=alpha,
+        seed=seed,
+    )

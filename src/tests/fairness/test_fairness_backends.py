@@ -88,3 +88,34 @@ def test_subgroup_sample_size_guard_in_backend() -> None:
     for r in black_rows:
         assert r.insufficient_sample is True
         assert r.metric_value is None
+
+
+def test_requested_bootstrap_budget_reaches_subgroup_intervals(monkeypatch) -> None:
+    import bias_aperture.fairness.backend_adapters as backend_module
+
+    records = [
+        SubjectRecord(
+            image_id=f"img_{i}",
+            race="White" if i < 40 else "Black",
+            gender="Female",
+            age="20-29",
+            true_label=str(i % 2),
+            predicted_label=str((i // 2) % 2),
+        )
+        for i in range(80)
+    ]
+    requested_budgets: list[int] = []
+
+    def fake_ci(*args, n_resamples=1000, **kwargs):
+        requested_budgets.append(n_resamples)
+        return 0.1, 0.2
+
+    monkeypatch.setattr(backend_module, "compute_stratified_bootstrap_ci", fake_ci)
+    monkeypatch.setattr(backend_module, "compute_subgroup_bootstrap_ci", fake_ci)
+
+    FairlearnBackend().evaluate(
+        records, protected_attr="race", n_bootstrap_resamples=1250
+    )
+
+    assert requested_budgets
+    assert set(requested_budgets) == {1250}

@@ -618,7 +618,7 @@
         <div class="section-card section-headline">
             <h2>1. Headline Fairness Metrics (Core Four — Cross-Group Overview)</h2>
             <p style="font-size: 0.9rem; color: var(--text-muted);">
-                Summary metrics evaluated across all eligible demographic strata (n ≥ 30 per NFR-003). Accompanied by 95% stratified BCa bootstrap confidence intervals and Pearson's χ² test of independence. Plotted on a calibrated [0.0, 1.0] domain with null-point reference and threshold lines.
+                Summary metrics evaluated across all eligible demographic strata (n ≥ 30 per NFR-003). Confidence intervals use 95% stratified BCa bootstrap resampling with at least 1,000 draws. If BCa estimation is degenerate or unsupported, interval bounds are omitted rather than replaced with percentile or zero-width bounds. Statistical tests are shown separately. Plotted on a calibrated [0.0, 1.0] domain with null-point reference and threshold lines.
             </p>
             {% macro ci_whisker_svg(value, ci_lower, ci_upper, null_point=0.0) %}
                 {# Fixed truthful [0.0, 1.0] domain with explicit scale ticks and threshold markers.
@@ -677,7 +677,7 @@
             <!-- How to Read These Metrics Reference Guide -->
             <details class="metric-guide-details" style="margin: 1.25rem 0; border: 1px solid var(--border-color); border-radius: 6px; background-color: #f8fafc;" open>
                 <summary style="cursor: pointer; padding: 0.75rem 1rem; font-weight: 600; font-size: 0.88rem; color: var(--structure);">
-                    📖 How to Read These Metrics (In Plain English)
+                    How to Read These Metrics (In Plain English)
                 </summary>
                 <div style="padding: 0 1rem 1rem 1rem;">
                     <div class="metric-guide-grid">
