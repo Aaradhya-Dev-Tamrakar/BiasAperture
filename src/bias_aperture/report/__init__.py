@@ -2,6 +2,7 @@
 
 Exports:
 - ``HTMLReportGenerator``: Standalone offline HTML report compiler
+- ``PDFReportGenerator``: Headless Blink PDF compiler
 - ``ReportContext``: Aggregated context data model for report generation
 - ``REGULATORY_MAPPING``: Static metric to EU AI Act / NIST AI RMF mapping
 """
@@ -22,6 +23,11 @@ from bias_aperture.report.narrative import (
     PlainLanguageSummary,
     synthesize_plain_language_narrative,
 )
+from bias_aperture.report.pdf import (
+    PDFReportGenerator,
+    convert_html_to_pdf,
+    find_blink_browser,
+)
 from bias_aperture.report.reconciler import (
     ReconciliationIssue,
     ReconciliationSummary,
@@ -33,11 +39,14 @@ __all__ = [
     "METRIC_GLOSSARY",
     "ModelMetadata",
     "ModelMetadataRegistry",
+    "PDFReportGenerator",
     "PlainLanguageSummary",
     "REGULATORY_MAPPING",
     "ReconciliationIssue",
     "ReconciliationSummary",
     "ReportContext",
     "ReportReconciler",
+    "convert_html_to_pdf",
+    "find_blink_browser",
     "synthesize_plain_language_narrative",
 ]

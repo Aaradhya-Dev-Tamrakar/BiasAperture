@@ -14,7 +14,7 @@ from bias_aperture.fairness import (
     CrossValidationOrchestrator,
     FairlearnBackend,
 )
-from bias_aperture.report import HTMLReportGenerator, ReportContext
+from bias_aperture.report import HTMLReportGenerator, PDFReportGenerator, ReportContext
 from bias_aperture.schema import MetricResult
 
 logger = logging.getLogger(__name__)
@@ -58,6 +58,7 @@ class AuditPipeline:
         dataset_name: str = "FairFace Benchmark Dataset",
         explain: bool = True,
         model_description: str | None = None,
+        report_format: str | None = None,
     ) -> AuditResult:
         """Execute the full audit pipeline and return structured results."""
 
@@ -166,6 +167,7 @@ class AuditPipeline:
                     )
                 ),
                 model_description=model_description,
+                report_format=report_format,
             )
 
         return AuditResult(
@@ -229,8 +231,9 @@ class AuditPipeline:
         backend: str,
         backend_status: str,
         model_description: str | None = None,
+        report_format: str | None = None,
     ) -> Path:
-        """Compile and save the offline compliance report."""
+        """Compile and save compliance reports in HTML, PDF, or both formats."""
         logger.info("Compiling offline compliance report to: %s...", output_report)
         context_kwargs: dict[str, Any] = {
             "metrics": metrics,
@@ -247,7 +250,49 @@ class AuditPipeline:
             context_kwargs["model_description"] = model_description
 
         context = ReportContext(**context_kwargs)
-        generator = HTMLReportGenerator()
-        saved_path = generator.save(context, output_report)
-        logger.info("Audit complete. Standalone report saved to: %s", saved_path)
-        return saved_path
+
+        # Resolve format: explicit flag overrides file extension, otherwise auto-detect
+        target_path = Path(output_report).resolve()
+        fmt = (report_format or "").strip().lower()
+        if not fmt:
+            fmt = "pdf" if target_path.suffix.lower() == ".pdf" else "html"
+
+        if fmt == "pdf":
+            target_pdf = (
+                target_path
+                if target_path.suffix.lower() == ".pdf"
+                else target_path.with_suffix(".pdf")
+            )
+            pdf_generator = PDFReportGenerator()
+            saved_path = pdf_generator.save(context, target_pdf, keep_html=False)
+            logger.info(
+                "Audit complete. Standalone PDF report saved to: %s", saved_path
+            )
+            return saved_path
+        elif fmt == "both":
+            target_pdf = (
+                target_path
+                if target_path.suffix.lower() == ".pdf"
+                else target_path.with_suffix(".pdf")
+            )
+            target_html = target_pdf.with_suffix(".html")
+            pdf_generator = PDFReportGenerator()
+            saved_path = pdf_generator.save(context, target_pdf, keep_html=True)
+            logger.info(
+                "Audit complete. Dual format reports saved to: %s and %s",
+                target_html,
+                target_pdf,
+            )
+            return saved_path
+        else:
+            target_html = (
+                target_path.with_suffix(".html")
+                if target_path.suffix.lower() == ".pdf"
+                else target_path
+            )
+            generator = HTMLReportGenerator()
+            saved_path = generator.save(context, target_html)
+            logger.info(
+                "Audit complete. Standalone HTML report saved to: %s", saved_path
+            )
+            return saved_path

@@ -77,6 +77,7 @@ def main(argv: list[str] | None = None) -> int:
             dataset_name=args.dataset_name,
             explain=args.explain,
             model_description=getattr(args, "model_description", None),
+            report_format=getattr(args, "format", None),
         )
     except (ValueError, RuntimeError) as exc:
         logger.error("Audit failed: %s", exc)

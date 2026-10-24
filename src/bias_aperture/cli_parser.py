@@ -82,6 +82,17 @@ def _add_audit_arguments(parser: argparse.ArgumentParser) -> None:
         help="Output report destination path.",
     )
     parser.add_argument(
+        "--format",
+        "-f",
+        type=str,
+        default=None,
+        choices=["html", "pdf", "both"],
+        help=(
+            "Output report format: html, pdf, or both "
+            "(default: auto-detected from output file suffix, otherwise html)."
+        ),
+    )
+    parser.add_argument(
         "--model-name",
         type=str,
         default="FairFace ResNet-34 Multi-Task Classifier",
