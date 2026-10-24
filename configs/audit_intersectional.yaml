@@ -1,0 +1,15 @@
+# BiasAperture Intersectional Audit Configuration File
+# Evaluates compounded disparities across compound subgroups (e.g., race x gender)
+
+audit:
+  predictions_file: "data/sample_predictions.csv"
+  protected_attr: "race_gender"
+  backend: "fairlearn"
+  bca_resamples: 1000
+  explain: true
+
+report:
+  output_report: "bias_aperture_intersectional_report.html"
+  model_name: "FairFace ResNet-34 Multi-Task Classifier"
+  dataset_name: "FairFace Benchmark Dataset"
+  model_description: "Intersectional demographic audit evaluating compounded disparities across compound axes."

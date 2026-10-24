@@ -1,0 +1,34 @@
+# BiasAperture Audit Configuration File
+# Standard default configuration for demographic fairness evaluation
+
+audit:
+  # Path to predictions CSV or JSON file
+  predictions_file: "data/sample_predictions.csv"
+
+  # Demographic attribute to audit: race, gender, age, or race_gender
+  protected_attr: "race"
+
+  # Fairness computation backend: dual, fairlearn, or aif360
+  backend: "dual"
+
+  # Stratified BCa bootstrap resamples (minimum 1000 for statistical validity)
+  bca_resamples: 1000
+
+  # Column name mapping
+  true_label_col: "true_label"
+  predicted_label_col: "predicted_label"
+  race_col: "race"
+  gender_col: "gender"
+  age_col: "age"
+
+  # Explainability attribution on flagged disparities
+  explain: true
+
+report:
+  # Output report destination
+  output_report: "bias_aperture_report.html"
+
+  # Model metadata for Model Card presentation
+  model_name: "FairFace ResNet-34 Multi-Task Classifier"
+  dataset_name: "FairFace Benchmark Dataset"
+  model_description: "Deep convolutional multi-task classifier evaluated across demographic subgroups."

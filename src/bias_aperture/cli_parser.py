@@ -4,15 +4,25 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
+from typing import Any
 
 
 def _add_audit_arguments(parser: argparse.ArgumentParser) -> None:
     """Configure arguments for the audit command."""
     parser.add_argument(
+        "--config",
+        "-c",
+        type=Path,
+        default=None,
+        help=(
+            "Path to YAML audit configuration file (e.g., configs/audit_default.yaml)."
+        ),
+    )
+    parser.add_argument(
         "--predictions-file",
         "-i",
         type=Path,
-        required=True,
+        default=None,
         help="Path to predictions CSV/JSON file.",
     )
     parser.add_argument(
@@ -113,8 +123,17 @@ def _add_audit_arguments(parser: argparse.ArgumentParser) -> None:
     )
 
 
-def build_parser() -> argparse.ArgumentParser:
-    """Construct CLI argument parser supporting both flat and subcommand invocation."""
+def build_parser(
+    config_defaults: dict[str, Any] | None = None,
+) -> argparse.ArgumentParser:
+    """Construct CLI argument parser supporting both flat and subcommand invocation.
+
+    Parameters
+    ----------
+    config_defaults : dict[str, Any] | None
+        Optional dictionary of default parameter values loaded from a
+        YAML configuration.
+    """
     parser = argparse.ArgumentParser(
         prog="bias-aperture",
         description=(
@@ -130,4 +149,9 @@ def build_parser() -> argparse.ArgumentParser:
     )
     _add_audit_arguments(audit_parser)
     _add_audit_arguments(parser)
+
+    if config_defaults:
+        parser.set_defaults(**config_defaults)
+        audit_parser.set_defaults(**config_defaults)
+
     return parser

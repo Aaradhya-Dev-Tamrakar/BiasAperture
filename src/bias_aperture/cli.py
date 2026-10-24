@@ -2,10 +2,14 @@
 
 from __future__ import annotations
 
+import argparse
 import logging
 import sys
+from pathlib import Path
+from typing import Any
 
 from bias_aperture.cli_parser import _add_audit_arguments, build_parser
+from bias_aperture.config import load_audit_config
 from bias_aperture.pipeline import AuditPipeline, AuditResult
 
 logger = logging.getLogger(__name__)
@@ -29,19 +33,46 @@ def _configure_logging() -> None:
         root.setLevel(logging.INFO)
 
 
+def _pre_parse_config(argv: list[str]) -> Path | None:
+    """Extract --config / -c from argument vector without raising on unknown args."""
+    config_parser = argparse.ArgumentParser(add_help=False)
+    config_parser.add_argument("--config", "-c", type=Path, default=None)
+    known, _ = config_parser.parse_known_args(argv)
+    return known.config
+
+
 def main(argv: list[str] | None = None) -> int:
     """Main CLI entrypoint — thin shell delegating to AuditPipeline."""
     if argv is None:
         argv = sys.argv[1:]
 
     # Support both `bias-aperture audit ...` and `bias-aperture ...`
-    if argv and argv[0] == "audit":
-        argv = argv[1:]
-
-    parser = build_parser()
-    args = parser.parse_args(argv)
+    clean_argv = list(argv)
+    if clean_argv and clean_argv[0] == "audit":
+        clean_argv = clean_argv[1:]
 
     _configure_logging()
+
+    # Pre-parse --config to load declarative configuration file before full CLI parse
+    config_defaults: dict[str, Any] = {}
+    config_path = _pre_parse_config(clean_argv)
+    if config_path is not None:
+        try:
+            config_defaults = load_audit_config(config_path)
+            logger.info("Loaded audit configuration from: %s", config_path)
+        except (FileNotFoundError, ValueError) as exc:
+            logger.error("Configuration error: %s", exc)
+            return 1
+
+    parser = build_parser(config_defaults=config_defaults)
+    args = parser.parse_args(clean_argv)
+
+    if not args.predictions_file:
+        logger.error(
+            "Missing required input: specify --predictions-file/-i or define "
+            "'predictions_file' in configuration file."
+        )
+        return 2
 
     if args.bca_resamples < 1000:
         logger.error(
