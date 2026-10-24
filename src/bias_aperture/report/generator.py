@@ -137,9 +137,7 @@ class ReportContext:
             ],
             "has_explanation": primary is not None
             and bool(primary.feature_attributions)
-            or any(
-                explanation.base64_visualizations for explanation in resolved
-            ),
+            or any(explanation.base64_visualizations for explanation in resolved),
         }
 
 

@@ -189,13 +189,16 @@ def _rgb_to_lab(rgb_patch: np.ndarray) -> tuple[float, float]:
         values / 12.92,
         ((values + 0.055) / 1.055) ** 2.4,
     )
-    xyz = np.array(
-        [
-            [0.4124564, 0.3575761, 0.1804375],
-            [0.2126729, 0.7151522, 0.0721750],
-            [0.0193339, 0.1191920, 0.9503041],
-        ]
-    ) @ linear
+    xyz = (
+        np.array(
+            [
+                [0.4124564, 0.3575761, 0.1804375],
+                [0.2126729, 0.7151522, 0.0721750],
+                [0.0193339, 0.1191920, 0.9503041],
+            ]
+        )
+        @ linear
+    )
     reference = xyz / np.array([0.95047, 1.0, 1.08883])
     delta = 6 / 29
     transformed = np.where(
@@ -282,7 +285,7 @@ def render_spatial_svg(
         category = ita_category or classify_ita(ita_value)
         label = (
             f'<text x="0" y="{values.shape[0] + 1}" font-size="1.5">'
-            f'ITA {ita_value:.1f} deg ({category})</text>'
+            f"ITA {ita_value:.1f} deg ({category})</text>"
         )
     return (
         f'<svg class="spatial-attribution" xmlns="http://www.w3.org/2000/svg" '
@@ -357,9 +360,7 @@ class SpatialShapEngine:
             executor = ThreadPoolExecutor(max_workers=1)
             future = executor.submit(self._run_spatial_shap, paths, predict)
             try:
-                attribution_map, ita_value = future.result(
-                    timeout=self.timeout_seconds
-                )
+                attribution_map, ita_value = future.result(timeout=self.timeout_seconds)
             finally:
                 executor.shutdown(wait=False, cancel_futures=True)
             category = classify_ita(ita_value) if ita_value is not None else None
@@ -408,8 +409,7 @@ class SpatialShapEngine:
             metric_name=result.metric_name,
             proxy_warning=True,
             details=(
-                f"{reason} Subject records were not supplied for surrogate "
-                "attribution."
+                f"{reason} Subject records were not supplied for surrogate attribution."
             ),
         )
 
