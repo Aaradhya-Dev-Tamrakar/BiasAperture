@@ -919,6 +919,16 @@
                 </table>
             </div>
             {% endif %}
+            {% if global_explanation.spatial_visualizations %}
+            <div style="margin: 1.5rem 0;">
+                <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem;">
+                    Spatial Attribution Heatmaps
+                </h4>
+                {% for visualization in global_explanation.spatial_visualizations %}
+                    <div class="spatial-attribution">{{ visualization | safe }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
         </div>
         {% endif %}
 

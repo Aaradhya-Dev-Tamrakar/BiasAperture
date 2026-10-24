@@ -129,8 +129,17 @@ class ReportContext:
             "primary_explanation": primary,
             "triggered_pairs": deduped_pairs,
             "feature_importances": primary.feature_attributions if primary else {},
+            "spatial_visualizations": [
+                visualization
+                for explanation in resolved
+                for visualization in explanation.base64_visualizations
+                if visualization.lstrip().startswith("<svg")
+            ],
             "has_explanation": primary is not None
-            and bool(primary.feature_attributions),
+            and bool(primary.feature_attributions)
+            or any(
+                explanation.base64_visualizations for explanation in resolved
+            ),
         }
 
 
