@@ -232,7 +232,7 @@ def run_cli() -> None:
     results = fuzzer.run_full_adversarial_gauntlet()
 
     print("=" * 80)
-    print("  👁️ BIASAPERTURE ADVERSARIAL AUDIT FUZZER")
+    print("  BIASAPERTURE ADVERSARIAL AUDIT FUZZER")
     print("=" * 80)
     print(f"- Execution Time:         {results['runtime_ms']} ms")
     print(f"- NFR-003 Minimum Cutoff: {results['min_subgroup_limit']} samples")
