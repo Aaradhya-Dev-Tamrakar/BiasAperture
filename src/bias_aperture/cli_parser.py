@@ -82,6 +82,13 @@ def _add_audit_arguments(parser: argparse.ArgumentParser) -> None:
         help="Output report destination path.",
     )
     parser.add_argument(
+        "--dataset",
+        type=str,
+        default="fairface",
+        choices=["fairface", "utkface"],
+        help="Demographic benchmark dataset: fairface (default) or utkface.",
+    )
+    parser.add_argument(
         "--model-name",
         type=str,
         default="FairFace ResNet-34 Multi-Task Classifier",

@@ -66,6 +66,23 @@ To eliminate confounding geometric noise (head tilts, variable focal distances, 
 - **Margin Ratio**: Pre-aligned images use a padding margin ratio of 0.25 (or 1.25 for context sensitivity), centered on detected facial bounding boxes.
 - **Resolution**: Normalized to $224 \times 224$ pixels, standardized with ImageNet mean and standard deviation tensors for Vision Transformer (ViT) and ResNet ingestion.
 
+### 2.3 Multi-Dataset Architecture & Registry (`dataset_adapters.py`)
+To extend diagnostic evaluation beyond FairFace, BiasAperture provides an extensible dataset adapter framework (`DatasetAdapter` and `DatasetRegistry`):
+1. **FairFace Adapter (`fairface`)**:
+   - Ingests canonical 7-race, 9-age, 2-gender annotations.
+   - Enforces standard categorization without label remapping.
+2. **UTKFace Adapter (`utkface`)**:
+   - Ingests filenames or CSV records formatted with UTKFace nomenclature: `[age]_[gender]_[race]_[date].jpg`.
+   - Age discretization: Maps continuous integer ages into standard FairFace age brackets (`0-2`, `3-9`, `10-19`, `20-29`, etc.).
+   - Race taxonomy mapping:
+     - `0` -> `White`
+     - `1` -> `Black`
+     - `2` -> `East Asian`
+     - `3` -> `Indian`
+     - `4` -> `Latino_Hispanic`
+   - Explicit quality caveats: UTKFace carries inherent DEX age-estimator noise and race taxonomy collapse (conflating Southeast Asian into East Asian/Indian, and omitting Middle Eastern). These caveats are documented in `ReportContext.dataset_limitations` and propagated into the compliance report.
+
+
 ---
 
 ## 3. Cohort Integrity & Fail-Fast Guarantees

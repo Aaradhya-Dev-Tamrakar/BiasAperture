@@ -33,6 +33,7 @@ class IngestionValidator:
     """Reusable schema, row, duplicate, and anomaly validation methods."""
 
     config: IngestionConfig
+    dataset_adapter: Any = None
 
     def _validate_columns(
         self,
@@ -78,10 +79,22 @@ class IngestionValidator:
             ],
             issue_counts_by_type={"missing_column": len(missing_cols)},
         )
+        ds_name = (
+            self.dataset_adapter.name
+            if getattr(self, "dataset_adapter", None)
+            else "fairface"
+        )
+        limitations = (
+            self.dataset_adapter.label_limitations
+            if getattr(self, "dataset_adapter", None)
+            else ()
+        )
         return IngestionResult(
             records=[],
             validation_summary=summary,
             cohort_profile=None,
+            dataset_name=ds_name,
+            label_limitations=limitations,
         )
 
     def _validate_and_convert_row(

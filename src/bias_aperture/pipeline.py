@@ -58,14 +58,22 @@ class AuditPipeline:
         dataset_name: str = "FairFace Benchmark Dataset",
         explain: bool = True,
         model_description: str | None = None,
+        dataset: str = "fairface",
     ) -> AuditResult:
         """Execute the full audit pipeline and return structured results."""
 
         # 1. Ingestion
         logger.info("Ingesting predictions from: %s", predictions_file)
+        logger.info("Dataset benchmark adapter: %s", dataset)
         logger.info("Protected demographic axis: %s", protected_attr)
         logger.info("Computational backend: %s", backend)
         logger.info("Bootstrap resamples (BCa): %d", bca_resamples)
+
+        if (
+            dataset.lower() == "utkface"
+            and dataset_name == "FairFace Benchmark Dataset"
+        ):
+            dataset_name = "UTKFace Benchmark Dataset"
 
         # Self-healing column name resolution for standard FairFace CSV layouts
         if predictions_file.suffix.lower() == ".csv" and predictions_file.exists():
@@ -101,6 +109,7 @@ class AuditPipeline:
                 race_col=race_col,
                 gender_col=gender_col,
                 age_col=age_col,
+                dataset=dataset,
             )
         )
         result = ingestion.ingest_file(predictions_file)
@@ -146,15 +155,15 @@ class AuditPipeline:
         saved_path: Path | None = None
         if output_report is not None:
             saved_path = self._generate_report(
-                metrics,
-                records,
-                output_report,
-                model_name,
-                dataset_name,
-                protected_attr,
-                explanations,
-                backend,
-                (
+                metrics=metrics,
+                records=records,
+                output_report=output_report,
+                model_name=model_name,
+                dataset_name=dataset_name,
+                protected_attr=protected_attr,
+                explanations=explanations,
+                backend=backend,
+                backend_status=(
                     "Cross-library validation incomplete. Unavailable backend(s): "
                     + ", ".join(orchestrator.backend_failures)
                     if orchestrator.backend_failures
@@ -166,6 +175,7 @@ class AuditPipeline:
                     )
                 ),
                 model_description=model_description,
+                dataset_limitations=result.label_limitations,
             )
 
         return AuditResult(
@@ -229,6 +239,7 @@ class AuditPipeline:
         backend: str,
         backend_status: str,
         model_description: str | None = None,
+        dataset_limitations: tuple[str, ...] = (),
     ) -> Path:
         """Compile and save the offline compliance report."""
         logger.info("Compiling offline compliance report to: %s...", output_report)
@@ -242,6 +253,7 @@ class AuditPipeline:
             "attributions": explanations,
             "backend": backend,
             "backend_status": backend_status,
+            "dataset_limitations": dataset_limitations,
         }
         if model_description:
             context_kwargs["model_description"] = model_description

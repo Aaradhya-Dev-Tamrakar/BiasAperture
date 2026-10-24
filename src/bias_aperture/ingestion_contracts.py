@@ -160,6 +160,7 @@ class IngestionConfig:
     deduplicate_strategy: Literal[
         "keep_all", "drop_exact_or_raise_conflicts", "drop_duplicates"
     ] = "drop_exact_or_raise_conflicts"
+    dataset: str = "fairface"
 
 
 @dataclass(frozen=True, slots=True)
@@ -169,3 +170,5 @@ class IngestionResult:
     records: list[SubjectRecord]
     validation_summary: ValidationSummary
     cohort_profile: SubgroupCohortProfile | None
+    dataset_name: str = "fairface"
+    label_limitations: tuple[str, ...] = field(default_factory=tuple)

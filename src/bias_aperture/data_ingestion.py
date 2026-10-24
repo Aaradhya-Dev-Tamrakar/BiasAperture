@@ -12,6 +12,7 @@ Features:
 - Subgroup cohort profiling: sample sizes (n_a), positive support (n_{Y=1,a}),
   negative support (n_{Y=0,a}), and NFR-003 threshold screening (n >= 30).
 - Multi-class One-vs-Rest (OvR) transformation for targets with M > 2 classes.
+- Multi-dataset benchmark adapters (FairFace, UTKFace).
 """
 
 from __future__ import annotations
@@ -25,6 +26,12 @@ from typing import Any
 
 import pandas as pd
 
+from bias_aperture.dataset_adapters import (
+    DatasetAdapter,
+    DatasetRegistry,
+    FairFaceAdapter,
+    UTKFaceAdapter,
+)
 from bias_aperture.ingestion_contracts import (
     DEFAULT_AGE_COL,
     DEFAULT_GENDER_COL,
@@ -62,6 +69,9 @@ __all__ = [
     "DEFAULT_IMAGE_COL",
     "DEFAULT_RACE_COL",
     "IMAGE_COL_ALIASES",
+    "DatasetAdapter",
+    "DatasetRegistry",
+    "FairFaceAdapter",
     "IngestionConfig",
     "IngestionResult",
     "OvRTransformer",
@@ -69,6 +79,7 @@ __all__ = [
     "SchemaValidationError",
     "SubgroupCellStats",
     "SubgroupCohortProfile",
+    "UTKFaceAdapter",
     "ValidationIssue",
     "ValidationMode",
     "ValidationSeverity",
@@ -91,6 +102,8 @@ class DataIngestionPipeline(IngestionValidator):
 
     def __init__(self, config: IngestionConfig) -> None:
         self.config = config
+        dataset_type = getattr(config, "dataset", "fairface")
+        self.dataset_adapter = DatasetRegistry.get(dataset_type)
 
     def ingest_file(
         self,
@@ -137,6 +150,10 @@ class DataIngestionPipeline(IngestionValidator):
     ) -> IngestionResult:
         """Ingest and validate an iterable of dictionary rows."""
         resolved_rows = list(rows)
+        if getattr(self, "dataset_adapter", None) is not None:
+            resolved_rows = [
+                self.dataset_adapter.normalize_record(r) for r in resolved_rows
+            ]
         total_count = len(resolved_rows)
 
         if total_count == 0:
@@ -150,10 +167,22 @@ class DataIngestionPipeline(IngestionValidator):
             profile = self.compute_cohort_profile(
                 [], task_positive_label=task_positive_label
             )
+            ds_name = (
+                self.dataset_adapter.name
+                if getattr(self, "dataset_adapter", None)
+                else "fairface"
+            )
+            limitations = (
+                self.dataset_adapter.label_limitations
+                if getattr(self, "dataset_adapter", None)
+                else ()
+            )
             return IngestionResult(
                 records=[],
                 validation_summary=summary,
                 cohort_profile=profile,
+                dataset_name=ds_name,
+                label_limitations=limitations,
             )
 
         # Stage 1: Column presence validation
@@ -221,10 +250,23 @@ class DataIngestionPipeline(IngestionValidator):
             valid_records, task_positive_label=task_positive_label
         )
 
+        ds_name = (
+            self.dataset_adapter.name
+            if getattr(self, "dataset_adapter", None)
+            else "fairface"
+        )
+        limitations = (
+            self.dataset_adapter.label_limitations
+            if getattr(self, "dataset_adapter", None)
+            else ()
+        )
+
         return IngestionResult(
             records=valid_records,
             validation_summary=summary,
             cohort_profile=profile,
+            dataset_name=ds_name,
+            label_limitations=limitations,
         )
 
     @classmethod

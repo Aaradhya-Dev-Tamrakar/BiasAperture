@@ -74,6 +74,7 @@ class ReportContext:
     attributions: Sequence[ExplanationResult] = field(default_factory=tuple)
     backend: str = "unspecified"
     backend_status: str = "Execution status was not supplied."
+    dataset_limitations: Sequence[str] = field(default_factory=tuple)
 
     def __post_init__(self) -> None:
         if not self.attributions and self.explanations:
@@ -147,11 +148,7 @@ class HTMLReportGenerator:
         )
 
     def _prepare_template_context(self, context: ReportContext) -> dict[str, Any]:
-        """Format metrics into structured presentation dictionaries.
-
-        Delegates analytical computation to standalone helpers so this
-        method is a thin composition point.
-        """
+        """Format metrics into structured presentation dictionaries."""
         summary_metrics = [m for m in context.metrics if m.subgroup == "ALL"]
         subgroup_metrics = [m for m in context.metrics if m.subgroup != "ALL"]
 
@@ -186,6 +183,7 @@ class HTMLReportGenerator:
             "has_attributions": bool(resolved_attributions),
             "attributions": resolved_attributions,
             "global_explanation": global_explanation,
+            "dataset_limitations": context.dataset_limitations,
         }
 
     def generate(self, context: ReportContext) -> str:
@@ -217,6 +215,8 @@ class HTMLReportGenerator:
 
         Returns
         -------
+        Path
+            Absolute path to the saved file.
         """
         html = self.generate(context)
         out = Path(output_path).resolve()
