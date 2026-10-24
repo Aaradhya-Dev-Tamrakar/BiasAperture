@@ -243,11 +243,11 @@ def classify_ita(ita_value: float) -> str:
     """Map an ITA value to the six Fitzpatrick skin-tone categories."""
     if ita_value > 55:
         return "Very Light"
-    if ita_value > 41:
+    if ita_value >= 41:
         return "Light"
-    if ita_value > 28:
+    if ita_value >= 28:
         return "Intermediate"
-    if ita_value > 10:
+    if ita_value >= 10:
         return "Tan"
     if ita_value > -30:
         return "Brown"
